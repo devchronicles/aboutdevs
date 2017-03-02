@@ -4,7 +4,7 @@
   "description": "Freelancer job search made ridiculously easy",
   "main": "index.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=development babel-node ./src/server/index.js",
+    "start": "cross-env NODE_ENV=development nodemon --exec \"babel-node ./src/server/index.js\"",
     "hot-server": "webpack-dev-server --hot --config ./webpack.config.dev.js",
     "test": "mocha ./test --compilers js:babel-register",
     "test-db": "cross-env NODE_ENV=development mocha --timeout 15000 --compilers js:babel-register ./test/integration/db/*Spec.js",
@@ -69,6 +69,7 @@
     "json-loader": "^0.5.4",
     "mocha": "^3.0.2",
     "node-sass": "^4.5.0",
+    "nodemon": "^1.11.0",
     "npm": "^3.3.4",
     "path": "^0.12.7",
     "raw-loader": "^0.5.1",

@@ -1,3 +1,3 @@
-# pushpad
+# IndieJobs
 
-Open-source dashboard project. 
+Freelance job search made ridiculously easy
