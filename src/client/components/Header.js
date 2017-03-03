@@ -5,7 +5,9 @@ const IndexPage = () => (
         <a className="logo">
             INDIE JOBS
         </a>
-        <a>Fuck this</a>
+        <button>
+            Entrar
+        </button>
     </header>
 );
 

@@ -1,6 +1,9 @@
 @import '_variables';
+@import 'forms.scss';
 @import 'header';
 @import 'hero';
+@import 'searchbar';
+@import 'react-select';
 
 body {
     font-family: 'Roboto', sans-serif;

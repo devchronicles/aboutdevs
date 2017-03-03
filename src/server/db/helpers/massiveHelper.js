@@ -13,7 +13,7 @@ export function buildMassive(connectionString) {
     if (!connectionString) throw Error('\'connectionString\' should be truthy');
 
     // builds the massive instance
-    let massiveInstance = massive.connectSync({connectionString: connectionString});
+    const massiveInstance = massive.connectSync({ connectionString });
 
     // promisefies the main instance and all entities declared in the entities array
     Promise.promisifyAll(massiveInstance);

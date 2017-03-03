@@ -1,4 +1,4 @@
-import {safeRead} from '../../../common/helpers/objectHelpers';
+import { safeRead } from '../../../common/helpers/objectHelpers';
 
 /**
  * Creates a user object from an OAuth Google profile
@@ -10,10 +10,10 @@ export function createFromGoogleProfile(db, profile) {
     if (!db) throw Error('\'db\' should be truthy');
     if (!profile) throw Error('\'profile\' should be truthy');
 
-    let user = {
+    const user = {
         display_name: profile.displayName,
-        photo_url: safeRead((p) => p.photos[0].value, profile, null),
-        email: safeRead((p) => p.emails[0].value, profile, null),
+        photo_url: safeRead(p => p.photos[0].value, profile, null),
+        email: safeRead(p => p.emails[0].value, profile, null),
         oauth_profiles: {
             google: {
                 id: profile.id,
@@ -39,7 +39,7 @@ export function updateFromGoogleProfile(db, existingUser, profile) {
         existingUser.display_name = profile.displayName;
     }
     if (!existingUser.photo_url) {
-        existingUser.photo_url = safeRead((p) => p.photos[0].value, profile, null);
+        existingUser.photo_url = safeRead(p => p.photos[0].value, profile, null);
     }
     if (!existingUser.oauth_profiles) {
         existingUser.oauth_profiles = {};
@@ -61,20 +61,17 @@ export function findOrCreateFromGoogleProfile(db, profile) {
     if (!db) throw Error('\'db\' should be truthy');
     if (!profile) throw Error('\'profile\' should be truthy');
 
-    let email = safeRead((p) => p.emails[0].value, profile, null);
+    const email = safeRead(p => p.emails[0].value, profile, null);
 
-    if (!email)
-        throw Error('Google profile is not valid');
+    if (!email) { throw Error('Google profile is not valid'); }
 
-    return db.user.findOneAsync({email: email})
-        .then(user => {
-            if (!user)
-                return createFromGoogleProfile(db, profile);
+    return db.user.findOneAsync({ email })
+        .then((user) => {
+            if (!user) { return createFromGoogleProfile(db, profile); }
 
             // if the existing user is associated with Google already (u.oauth_profiles.google.id exists), returns it
-            let existingUserGoogleId = safeRead(u => u.oauth_profiles.google.id, user, null);
-            if (existingUserGoogleId)
-                return user;
+            const existingUserGoogleId = safeRead(u => u.oauth_profiles.google.id, user, null);
+            if (existingUserGoogleId) { return user; }
 
             // if not, let's associate the user with the given Google profile
             return updateFromGoogleProfile(db, user, profile);

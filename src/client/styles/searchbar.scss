@@ -1,0 +1,17 @@
+.search-bar {
+    display: flex;
+    flex-direction: horizontal;
+    width: 700px;
+    .city-select {
+        text-align: left;
+        width: 250px;
+    }
+    input {
+        flex-grow: 1; // will grow to ocuppy the remaining space
+        border-radius: 0 $radius-md $radius-md 0;
+        border-left: 0;
+    }
+    button {
+        margin-left: $gutter-md;
+    }
+}

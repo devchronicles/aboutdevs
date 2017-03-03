@@ -1,6 +1,6 @@
 import express from 'express';
 import db from '../db/db';
-var router = express.Router();
+const router = express.Router();
 
 
 /**
@@ -16,15 +16,14 @@ router.route('/test').get((req, res) => {
  * Get user
  */
 router.route('/users/:id').get((req, res) => {
-    let entityId = req.params.id;
-    db.user.findOneAsync({id: entityId})
-        .then(u => {
-            if(u)
-                res.status(200).send(u);
-            else
+    const entityId = req.params.id;
+    db.user.findOneAsync({ id: entityId })
+        .then((u) => {
+            if (u) { res.status(200).send(u); } else {
                 res.status(404).send({
                     error: 'Could not find user'
                 });
+            }
         });
 });
 

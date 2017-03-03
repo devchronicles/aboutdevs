@@ -9,16 +9,16 @@ div.hero {
     height: $hero-height;
     justify-content: center;
     text-align: center;
-    background-image: linear-gradient(to bottom,#1f364d,#0e2439);
-    border-bottom: 1px solid #1F364D;
-;
+    background-image: linear-gradient(to bottom, $color-dark-light, $color-dark);
+    border-bottom: 1px solid lighten($color-dark, 5%);
+
     h1 {
         margin: 0;
         padding: 0;
     }
 
     h2 {
-        margin-top: $gutter-md;
+        margin-top: 2 * $gutter-md;
         color: #9cb3c9;
     }
 }

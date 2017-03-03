@@ -1,0 +1,11 @@
+@import '~react-select/scss/select.scss';
+@import '_variables';
+
+$select-input-border-radius:        4px 0 0 4px;
+$select-input-border-width:         0;
+$select-input-bg:                   lighten($color-dark-light, 10%);
+$select-text-color:                 white;
+$select-padding-vertical:           $input-padding-vertical;
+$select-padding-horizontal:         $input-padding-horizontal;
+
+@import '~react-select/scss/default';

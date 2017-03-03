@@ -1,0 +1,16 @@
+@import '_variables';
+
+input[type="text"] {
+    padding: $input-padding-vertical $input-padding-horizontal;
+    border-radius: $radius-md;
+    border: 0;
+}
+
+button {
+    color: $color-white;
+    padding: $input-padding-vertical $input-padding-horizontal;
+    background-image: linear-gradient(to right,#e052a0,#f15c41);
+    border-radius: $radius-md;
+    border: 0;
+    cursor: pointer;
+}

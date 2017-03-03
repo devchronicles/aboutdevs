@@ -1,5 +1,5 @@
 // configurations for the dev environment
-if(process.env.NODE_ENV != 'development') throw Error('Cannot read dev config outside a development environment');
+if (process.env.NODE_ENV != 'development') throw Error('Cannot read dev config outside a development environment');
 
 // Postgres settings
 const POSTGRES_USER = 'postgres';

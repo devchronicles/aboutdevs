@@ -8,7 +8,7 @@
     "hot-server": "webpack-dev-server --hot --config ./webpack.config.dev.js",
     "test": "mocha ./test --compilers js:babel-register",
     "test-db": "cross-env NODE_ENV=development mocha --timeout 15000 --compilers js:babel-register ./test/integration/db/*Spec.js",
-    "coverage": "babel-node node_modules/isparta/bin/isparta cover --report text --report html node_modules/mocha/bin/_mocha --",
+    "lint-fix": "eslint --fix ./src",
     "db-install": "cross-env COMMAND=create_dev_dbs PGPASSWORD=indiejobs node ./db/installDB.js",
     "db-drop": "cross-env COMMAND=drop_dev_dbs PGPASSWORD=indiejobs node ./db/installDB.js",
     "db-generate": "cross-env COMMAND=generate_scripts PGPASSWORD=indiejobs node ./db/installDB.js"
@@ -43,6 +43,7 @@
     "react-redux": "^5.0.3",
     "react-router": "^3.0.2",
     "react-router-redux": "^4.0.8",
+    "react-select": "^1.0.0-rc.3",
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0"
   },

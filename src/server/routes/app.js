@@ -5,14 +5,14 @@ require.extensions['.html'] = function (module, filename) {
     module.exports = fs.readFileSync(filename, 'utf8');
 };
 
-var router = express.Router();
+const router = express.Router();
 
 /**
  * Function  that actually sends the application to the client
  * @param response
  */
 function sendApp(response) {
-    let wrap = require('../../client/index.html')
+    const wrap = require('../../client/index.html')
         .replace(/\$\{css\}/g, '')
         .replace(/\$\{js\}/g, 'http://localhost:8080/bundle.js');
     response.status(200).send(wrap);

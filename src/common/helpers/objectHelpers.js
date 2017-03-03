@@ -12,8 +12,7 @@ export function safeRead(expression, object, defaultValue) {
 
     try {
         return expression(object);
-    }
-    catch(ex) {
+    } catch (ex) {
         return defaultValue;
     }
 }

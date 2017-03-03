@@ -1,5 +1,5 @@
 import db from '../db/db';
-import {findOrCreateFromGoogleProfile} from '../db/entityHelpers/userHelper';
+import { findOrCreateFromGoogleProfile } from '../db/entityHelpers/userHelper';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth2';
 
 /**
@@ -9,12 +9,12 @@ import { Strategy as GoogleStrategy } from 'passport-google-oauth2';
 export default function (passport) {
     if (!passport) throw Error('\'passport\' should be truthy');
 
-    passport.serializeUser(function (userId, done) {
+    passport.serializeUser((userId, done) => {
         done(null, userId);
     });
 
-    passport.deserializeUser(function (userId, done) {
-        db.user.findOneAsync({id: userId})
+    passport.deserializeUser((userId, done) => {
+        db.user.findOneAsync({ id: userId })
             .then(u => done(null, u))
             .catch(done);
     });
@@ -26,7 +26,7 @@ export default function (passport) {
             clientSecret: 'PwMafDzb_qCik76-Y0fVPs7z',
             callbackURL: 'http://localhost:4000/auth/google/callback'
         },
-        function (accessToken, refreshToken, profile, done) {
+        (accessToken, refreshToken, profile, done) => {
             findOrCreateFromGoogleProfile(db, profile)
                 .then(u => done(null, u.id))
                 .catch(done);
