@@ -1,0 +1,5 @@
+// creates a width that will shrink if there's not enough space
+@mixin elastic-width($width) {
+    width: $width;
+    max-width: 100%;
+}

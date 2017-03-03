@@ -1,9 +1,10 @@
-header {
-    &.header {
-        display: flex;
-        width: 100%;
-        max-width: 1000px;
-        align-items: flex-start;
-        justify-content: space-between;
-    }
+@import '_variables';
+@import '_mixins';
+
+header.header {
+    @include elastic-width($max-container-width);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: $header-height;
 }

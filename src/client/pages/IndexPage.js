@@ -1,10 +1,8 @@
 import React from 'react';
-
+import Hero from '../components/Hero';
 
 const IndexPage = () => (
-    <div>
-        
-    </div>
+    <Hero />
 );
 
 export default IndexPage;

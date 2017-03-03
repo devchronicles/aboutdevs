@@ -1,11 +1,11 @@
-@import 'variables';
+@import '_variables';
 @import 'header';
+@import 'hero';
 
 body {
     font-family: 'Roboto', sans-serif;
     background-color: #0E2439;
     color: white;
-    margin: $gutter-md;
 
     .container {
         display: flex;

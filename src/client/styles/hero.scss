@@ -1,0 +1,24 @@
+@import '_variables';
+@import '_mixins';
+
+div.hero {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: $hero-height;
+    justify-content: center;
+    text-align: center;
+    background-image: linear-gradient(to bottom,#1f364d,#0e2439);
+    border-bottom: 1px solid #1F364D;
+;
+    h1 {
+        margin: 0;
+        padding: 0;
+    }
+
+    h2 {
+        margin-top: $gutter-md;
+        color: #9cb3c9;
+    }
+}
