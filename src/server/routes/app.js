@@ -1,5 +1,6 @@
 import express from 'express';
 import fs from 'fs';
+
 require.extensions['.html'] = function (module, filename) {
     module.exports = fs.readFileSync(filename, 'utf8');
 };
@@ -28,10 +29,12 @@ router.route('/login').get((req, res) => {
  * Wild-card route
  */
 router.route('*').get((req, res) => {
-    if(!req.user)
-        res.redirect('/login');
-    else
-        sendApp(res);
+    sendApp(res);
+    // if (!req.user) {
+    //     res.redirect('/login');
+    // } else {
+    //     sendApp(res);
+    // }
 });
 
 export default router;
