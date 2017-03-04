@@ -6,7 +6,8 @@ input[type="text"] {
     border: 0;
 }
 
-button {
+button, a.button {
+    text-decoration: none;
     color: $color-white;
     padding: $input-padding-vertical $input-padding-horizontal;
     background-image: linear-gradient(to right,$color-shining-1,$color-shining-2);

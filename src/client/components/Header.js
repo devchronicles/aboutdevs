@@ -1,13 +1,12 @@
 import React from 'react';
+import { Link } from 'react-router';
 
 const IndexPage = () => (
     <header className="header">
         <a className="logo">
             INDIE JOBS
         </a>
-        <button>
-            Entrar
-        </button>
+        <Link to="/login" className="button">Entrar</Link>
     </header>
 );
 

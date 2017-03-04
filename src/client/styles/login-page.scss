@@ -1,0 +1,25 @@
+@import '_variables';
+
+.login-page-wrapper {
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: $radius-md;
+    height: 100%;
+
+    .login-card {
+        background-color: $color-dark-light;
+        border-radius: $radius-md;
+    
+        display: flex;
+        flex-direction: column;
+
+        width: 300px;
+
+        .title {
+            padding: $gutter-md;
+        }
+    }
+}
