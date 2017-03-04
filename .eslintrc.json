@@ -39,6 +39,7 @@
                     "children"
                 ]
             }
-        ]
+        ],
+        "react/no-array-index-key": "off"
     }
 }

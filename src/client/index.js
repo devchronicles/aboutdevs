@@ -6,6 +6,7 @@ import configureStore from './redux/store';
 import App from './pages/App';
 import IndexPage from './pages/IndexPage';
 import '../../node_modules/normalize.css/normalize.css';
+import '../../node_modules/font-awesome/css/font-awesome.css';
 import './styles/styles.scss';
 
 const store = configureStore();

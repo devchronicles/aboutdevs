@@ -2,13 +2,22 @@
 @import 'forms.scss';
 @import 'header';
 @import 'hero';
-@import 'searchbar';
+@import 'search-bar';
+@import 'profile-card';
+@import 'search-result';
 @import 'react-select';
 
 body {
     font-family: 'Roboto', sans-serif;
-    background-color: #0E2439;
-    color: white;
+    background-color: $color-dark;
+    color: $color-white;
+
+    .page-wrapper {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 
     .container {
         display: flex;

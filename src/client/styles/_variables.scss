@@ -1,6 +1,10 @@
 // general
 $max-container-width:       1000px;
+
+$gutter-xs:                 4px;
+$gutter-sm:                 8px;
 $gutter-md:                 16px;
+
 $radius-md:                 4px;
 
 // colors
@@ -9,6 +13,8 @@ $color-dark:                #0E2439;
 $color-dark-light:          #1f364d;
 $color-shining-1:           #e052a0;
 $color-shining-2:           #f15c41;
+$color-shining-3:           #308ce8;
+$color-shining-4:           #526bf4;
 
 // forms
 $input-padding-vertical:    8px;
@@ -16,6 +22,6 @@ $input-padding-horizontal:  12px;
 
 // header
 $header-height:             56px;
-$hero-height:               320px;
+$hero-height:               300px;
 
 

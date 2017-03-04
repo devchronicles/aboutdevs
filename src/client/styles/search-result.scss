@@ -1,0 +1,11 @@
+@import '_variables';
+@import '_mixins';
+
+.search-result {
+    @include elastic-width($max-container-width + 2 * $gutter-md);
+    margin-top: $gutter-md;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding:0;
+}

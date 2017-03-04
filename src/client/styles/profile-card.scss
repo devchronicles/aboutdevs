@@ -1,0 +1,119 @@
+@import '_variables';
+
+.profile-card {
+    box-sizing: border-box;
+    width: calc((100% - (6 * #{$gutter-md}))/ 3);
+    margin: $gutter-md;
+    background-color: $color-dark-light;
+    border-radius: $radius-md;
+    
+    display: flex;
+    flex-direction: column;
+
+    transition: all .1s ease-in-out;
+
+    a.card-body {
+        color: $color-white;
+        text-decoration: none;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        overflow: hidden;
+        padding: $gutter-md;
+
+        .image {
+            margin-top: $gutter-sm;
+            box-sizing: border-box;
+            border: 12px solid $color-dark;
+            padding: $gutter-md;
+            height: 134px;
+            width: 134px;
+            border-radius: 9999px;
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+        }
+
+        .display-name {
+            font-size: 22px;
+            margin: $gutter-md 0 0 0;
+        }
+
+        .profession {
+            //border: 1px solid $color-white;
+            background-color: $color-dark;
+            border-radius: $radius-md;
+            padding: $input-padding-vertical $input-padding-horizontal;
+            font-size: 0.9rem;
+            margin: $gutter-md 0 0 0;
+        }
+
+        .bio {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            margin: $gutter-md 0 0 0;
+            /* Required for text-overflow to do anything */
+            height: 10em;
+        }
+
+        .professional-area {
+            color: lighten($color-dark-light, 50%);
+            border-radius: $radius-md;
+            padding: $input-padding-vertical/2 $input-padding-horizontal/2;
+            font-size: 0.9rem;
+            margin: $gutter-md 0 0 0;
+            width: 100%;
+            box-sizing: border-box;
+            text-align: center;
+            .fa {
+                margin-right: $gutter-sm;
+            }
+        }
+    }
+
+    .card-footer {
+        box-sizing: border-box;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.9em;
+        border-top: 1px solid $color-dark;
+        //background-color: darken($color-dark-light, 5%);
+        padding: $gutter-md;
+        border-radius: 0 0 $radius-md $radius-md;
+
+        .recomendations {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+
+            .recomendation-count {
+                margin-right: $gutter-sm;
+
+                .number {
+                    margin-right: $gutter-xs;
+                    color: lighten($color-dark-light, 50%)
+                }
+
+                .fa {
+                    color: lighten($color-dark-light, 20%)
+                }
+            }
+        }
+
+        button {
+            border: 1px solid $color-white;
+            background: transparent;
+            &:hover {
+                border-color: $color-shining-4;
+                background-image: linear-gradient(to right,$color-shining-3,$color-shining-4);
+            }
+        }
+    }
+
+    &:hover {
+        transform: scale(1.05);
+        background-color: lighten($color-dark-light, 5%);
+    }
+}
