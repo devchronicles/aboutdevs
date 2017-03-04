@@ -17,21 +17,4 @@ describe('basicEntitiAccess', () => {
             .then(() => done())
             .catch(done);
     });
-
-    it('can save, find and delete tasks', (done) => {
-        // we need a user for the task
-        db.user.saveAsync({
-            email: 'andrerpena@gmail.com',
-            display_name: 'André Pena'
-        })
-            .then((user) => {
-                const task = {
-                    user_id: user.id,
-                    text: 'Do something coooool!'
-                };
-                assertCanSaveFindAndDelete(db, 'task', task, done)
-                    .then(() => done())
-                    .catch(done);
-            });
-    });
 });
