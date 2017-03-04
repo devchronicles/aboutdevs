@@ -6,7 +6,6 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    border-radius: $radius-md;
     height: 100%;
 
     .login-card {
@@ -20,6 +19,46 @@
 
         .title {
             padding: $gutter-md;
+        }
+
+        .body {
+            border-top: 1px solid $color-dark;
+            padding: $gutter-md;
+            display: flex;
+            flex-direction: column;
+
+            a.social-button {
+                margin: $gutter-sm 0;
+                text-decoration: none;
+                color: $color-dark;          
+                background-color: $color-white;      
+                border-radius: $radius-md * 2 $radius-md $radius-md $radius-md * 2; // this is a hack is it is beautiful :(
+
+                .fa {
+                    padding: $gutter-sm;
+                    width: 40px;
+                    text-align: center;
+                    color: $color-white;
+                    border-radius: $radius-md 0 0 $radius-md;
+
+                    &.fa-facebook {
+                        background-color: #3b5998;
+                    }
+
+                    &.fa-google {
+                        background-color: #dd4b39;
+                    }
+
+                    &.fa-linkedin {
+                        background-color: #007bb5;
+                    }
+                }
+
+                .text {
+                    margin-left: $gutter-md;
+                }
+            }
+
         }
     }
 }
