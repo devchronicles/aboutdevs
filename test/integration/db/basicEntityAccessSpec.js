@@ -1,16 +1,15 @@
 import setupSession from './setupSession';
-import {assertCanSaveFindAndDelete} from './dbTestHelper';
+import { assertCanSaveFindAndDelete } from './dbTestHelper';
 
 
-describe('basicEntitiAccess', function () {
-
+describe('basicEntitiAccess', () => {
     let db = null;
-    setupSession(before, after, beforeEach, afterEach, $db => {
+    setupSession(before, after, beforeEach, afterEach, ($db) => {
         db = $db;
     });
 
-    it('can save, find and delete users', done => {
-        let user = {
+    it('can save, find and delete users', (done) => {
+        const user = {
             email: 'andrerpena@gmail.com',
             display_name: 'André Pena'
         };
@@ -19,14 +18,14 @@ describe('basicEntitiAccess', function () {
             .catch(done);
     });
 
-    it('can save, find and delete tasks', done => {
+    it('can save, find and delete tasks', (done) => {
         // we need a user for the task
         db.user.saveAsync({
             email: 'andrerpena@gmail.com',
             display_name: 'André Pena'
         })
             .then((user) => {
-                let task = {
+                const task = {
                     user_id: user.id,
                     text: 'Do something coooool!'
                 };

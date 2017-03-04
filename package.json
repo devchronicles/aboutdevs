@@ -8,7 +8,7 @@
     "hot-server": "webpack-dev-server --hot --config ./webpack.config.dev.js",
     "test": "mocha ./test --compilers js:babel-register",
     "test-db": "cross-env NODE_ENV=development mocha --timeout 15000 --compilers js:babel-register ./test/integration/db/*Spec.js",
-    "lint-fix": "eslint --fix ./src",
+    "lint-fix": "eslint --fix ./src ./test",
     "db-install": "cross-env COMMAND=create_dev_dbs PGPASSWORD=indiejobs node ./db/installDB.js",
     "db-drop": "cross-env COMMAND=drop_dev_dbs PGPASSWORD=indiejobs node ./db/installDB.js",
     "db-generate": "cross-env COMMAND=generate_scripts PGPASSWORD=indiejobs node ./db/installDB.js"

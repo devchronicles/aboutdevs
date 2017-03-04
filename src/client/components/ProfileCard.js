@@ -3,13 +3,12 @@ import React, { PropTypes } from 'react';
 const ProfileCard = ({ profile }) => (
     <li className="profile-card">
         <a className="card-body" href="#">
-            <div className="image" style={{ backgroundImage: `url(${profile.profilePicture})` }}>
-            </div>
+            <div className="image" style={{ backgroundImage: `url(${profile.profilePicture})` }} />
             <p className="display-name"> {profile.displayName} </p>
             <p className="profession"> {profile.profession} </p>
             <p className="bio"> {profile.bio} </p>
             <p className="professional-area">
-                <i className="fa fa-briefcase" aria-hidden="true"></i>
+                <i className="fa fa-briefcase" aria-hidden="true" />
                 <span>Consultoria · Contabilidade</span>
             </p>
         </a>
@@ -17,11 +16,11 @@ const ProfileCard = ({ profile }) => (
             <span className="recomendations">
                 <span className="recomendation-count">
                     <span className="number">34</span>
-                    <i className="fa fa-thumbs-up" aria-hidden="true"></i>
+                    <i className="fa fa-thumbs-up" aria-hidden="true" />
                 </span>
                 <span className="recomendation-count">
                     <span className="number">2</span>
-                    <i className="fa fa-thumbs-down" aria-hidden="true"></i>
+                    <i className="fa fa-thumbs-down" aria-hidden="true" />
                 </span>
             </span>
             <button>

@@ -37,4 +37,4 @@ export const profiles = [
         profession: 'Contador',
         category: 'Consultoria / Contabilidade'
     }
-]
+];

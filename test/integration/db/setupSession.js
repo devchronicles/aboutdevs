@@ -10,7 +10,7 @@ function truncateData(db) {
     if (!db) throw Error('\'db\' should be truthy');
 
     // concatenates all entities from the database
-    let entitiesAsString = entities.map(e => `"${e}"`).join(', ');
+    const entitiesAsString = entities.map(e => `"${e}"`).join(', ');
 
     // nukes the database (puff.. nothing left)
     return db.runAsync(`truncate ${entitiesAsString} cascade`);
@@ -29,16 +29,15 @@ export default function setupSession(before, after, beforeEach, afterEach, callb
 
     // runs before all tests in a file
     before((done) => {
-            try {
-                db = buildMassive(config.db.connectionString);
-                callback(db);
-                done();
-            }
-            catch (ex) {
-                if (db) db.end();
-                done(ex);
-            }
+        try {
+            db = buildMassive(config.db.connectionString);
+            callback(db);
+            done();
+        } catch (ex) {
+            if (db) db.end();
+            done(ex);
         }
+    }
     );
 
     // runs before each test in a file
@@ -51,4 +50,4 @@ export default function setupSession(before, after, beforeEach, afterEach, callb
     after((done) => {
         done();
     });
-};
+}
