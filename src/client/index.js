@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { Router, IndexRoute, Route, browserHistory } from 'react-router';
+
+import Router from './Router';
 import configureStore from './redux/store';
-import App from './pages/App';
-import IndexPage from './pages/IndexPage';
+
 import '../../node_modules/normalize.css/normalize.css';
 import '../../node_modules/font-awesome/css/font-awesome.css';
 import './styles/styles.scss';
@@ -18,11 +18,7 @@ if (module.hot) {
 /* global document:true */
 ReactDOM.render(
     <Provider store={store}>
-        <Router history={browserHistory}>
-            <Route path="/" component={App}>
-                <IndexRoute component={IndexPage} />
-            </Route>
-        </Router>
+        <Router />
     </Provider>,
     document.getElementById('app')
 );
