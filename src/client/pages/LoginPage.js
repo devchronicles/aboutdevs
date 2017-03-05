@@ -22,7 +22,7 @@ const Login = () => (
                 Entrar no IndieJobs
             </div>
             <div className="body">
-                <SocialButton text="Entrar com o Google" url="#" faClass="google" />
+                <SocialButton text="Entrar com o Google" url="/auth/google" faClass="google" />
                 <SocialButton text="Entrar com o Facebook" url="#" faClass="facebook" />
                 <SocialButton text="Entrar com o LinkedIn" url="#" faClass="linkedin" />
             </div>
