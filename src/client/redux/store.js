@@ -7,7 +7,9 @@ export default (initialState = {}) => {
     let middleware = applyMiddleware(thunk);
 
     if (process.env.NODE_ENV !== 'production') {
+        /*eslint-disable*/
         const devToolsExtension = window.devToolsExtension;
+        /*eslint-enable*/
         if (typeof devToolsExtension === 'function') {
             middleware = compose(middleware, devToolsExtension());
         }
@@ -17,7 +19,9 @@ export default (initialState = {}) => {
 
     if (module.hot) {
         module.hot.accept('./reducers', () => {
+            /*eslint-disable*/
             store.replaceReducer(require('./reducers').default);
+            /*eslint-enable*/
         });
     }
 

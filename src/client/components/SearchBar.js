@@ -8,7 +8,9 @@ const SearchBar = () => {
     ];
 
     function logChange(val) {
-        console.log(`Selected: ${val}`);
+        /*eslint-disable*/
+        console.log(`Selected: ${val}`); 
+        /*eslint-enable*/
     }
 
     return (

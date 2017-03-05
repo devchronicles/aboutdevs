@@ -1,3 +1,4 @@
+/*eslint-disable*/
 let config;
 switch (process.env.NODE_ENV) {
 case 'development':
@@ -8,3 +9,4 @@ default:
     break;
 }
 export default config;
+/*eslint-enable*/

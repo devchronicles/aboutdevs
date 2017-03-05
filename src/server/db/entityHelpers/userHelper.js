@@ -69,7 +69,8 @@ export function findOrCreateFromGoogleProfile(db, profile) {
         .then((user) => {
             if (!user) { return createFromGoogleProfile(db, profile); }
 
-            // if the existing user is associated with Google already (u.oauth_profiles.google.id exists), returns it
+            // if the existing user is associated with Google already
+            // (u.oauth_profiles.google.id exists), returns it
             const existingUserGoogleId = safeRead(u => u.oauth_profiles.google.id, user, null);
             if (existingUserGoogleId) { return user; }
 

@@ -1,6 +1,8 @@
 /**
- * Evaluates the given expression for the given object. Returns the given defaultValue if there's an error.
- * This is useful when you want to read a long expression line a.b.c.d.e... without caring whether or not any of the parts are null
+ * Evaluates the given expression for the given object.
+ * Returns the given defaultValue if there's an error.
+ * This is useful when you want to read a long expression line a.b.c.d.e...
+ * without caring whether or not any of the parts are null
  * @param expression
  * @param object
  * @param defaultValue

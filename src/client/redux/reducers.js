@@ -1,7 +1,8 @@
 import { routerReducer } from 'react-router-redux';
 import { combineReducers } from 'redux';
-import { SEARCH_START, SEARCH_ENDED } from './actions';
 import { Record } from 'immutable';
+
+import { SEARCH_START, SEARCH_ENDED } from './actions';
 
 export const SearchState = new Record({
     cityId: -1,

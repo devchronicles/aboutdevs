@@ -11,7 +11,9 @@ export const profiles = [
         profilePicture: 'https://www.gravatar.com/avatar/7deca8ec973c3c0875e9a36e1e3e2c44?s=328&d=identicon&r=PG',
         bio: loremIpsum,
         profession: 'Contador',
-        category: 'Consultoria / Contabilidade'
+        category: 'Consultoria / Contabilidade',
+        thumbsUp: 43,
+        thumbsDown: 12
     },
     {
         name: 'joaomoreno',
@@ -19,7 +21,9 @@ export const profiles = [
         profilePicture: 'https://i.stack.imgur.com/BfziW.png?s=328&g=1',
         bio: loremIpsum,
         profession: 'Contadora',
-        category: 'Consultoria / Contabilidade'
+        category: 'Consultoria / Contabilidade',
+        thumbsUp: 43,
+        thumbsDown: 12
     },
     {
         name: 'joaomoreno',
@@ -27,7 +31,9 @@ export const profiles = [
         profilePicture: 'https://i.stack.imgur.com/zUoEd.jpg?s=328&g=1',
         bio: loremIpsum,
         profession: 'Contador',
-        category: 'Consultoria / Contabilidade'
+        category: 'Consultoria / Contabilidade',
+        thumbsUp: 43,
+        thumbsDown: 12
     },
     {
         name: 'joaomoreno',
@@ -35,6 +41,8 @@ export const profiles = [
         profilePicture: 'https://www.gravatar.com/avatar/7deca8ec973c3c0875e9a36e1e3e2c44?s=328&d=identicon&r=PG',
         bio: loremIpsum,
         profession: 'Contador',
-        category: 'Consultoria / Contabilidade'
+        category: 'Consultoria / Contabilidade',
+        thumbsUp: 43,
+        thumbsDown: 12
     }
 ];

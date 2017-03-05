@@ -9,17 +9,17 @@ const ProfileCard = ({ profile }) => (
             <p className="bio"> {profile.bio} </p>
             <p className="professional-area">
                 <i className="fa fa-briefcase" aria-hidden="true" />
-                <span>Consultoria · Contabilidade</span>
+                <span>{profile.category}</span>
             </p>
         </a>
         <div className="card-footer">
             <span className="recomendations">
                 <span className="recomendation-count">
-                    <span className="number">34</span>
+                    <span className="number">{profile.thumbsUp}</span>
                     <i className="fa fa-thumbs-up" aria-hidden="true" />
                 </span>
                 <span className="recomendation-count">
-                    <span className="number">2</span>
+                    <span className="number">{profile.thumbsDown}</span>
                     <i className="fa fa-thumbs-down" aria-hidden="true" />
                 </span>
             </span>

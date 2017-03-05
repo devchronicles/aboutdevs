@@ -31,5 +31,7 @@ app.use('/api', apiRoute);
 app.use('', appRoute);
 
 app.listen(4000, '0.0.0.0', () => {
+    /*eslint-disable*/
     console.log(colors.green(`IndieJobs started at http://localhost:4000/. NODE_ENV: ${process.env.NODE_ENV}`));
+    /*eslint-enable*/
 });
