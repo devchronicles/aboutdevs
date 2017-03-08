@@ -2,5 +2,7 @@
 // TODO: There are ways to make this automatically and eliminate the need for this. Do it
 export default [
     'notification',
-    'user'
+    'user',
+    'geo_state',
+    'geo_city'
 ];

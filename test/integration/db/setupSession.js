@@ -1,4 +1,4 @@
-import config from '../config.test';
+import config from '../../../config/config';
 import { buildMassive } from '../../../src/server/db/helpers/massiveHelper';
 import entities from '../../../src/server/db/entities';
 
@@ -30,7 +30,7 @@ export default function setupSession(before, after, beforeEach, afterEach, callb
     // runs before all tests in a file
     before((done) => {
         try {
-            db = buildMassive(config.db.connectionString);
+            db = buildMassive(config.db.testConnectionString);
             callback(db);
             done();
         } catch (ex) {

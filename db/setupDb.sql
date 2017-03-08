@@ -35,6 +35,24 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
+-- Name: geo_city; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE geo_city (
+    id integer NOT NULL,
+    geonameid integer NOT NULL,
+    name character varying(100) NOT NULL,
+    latitude double precision NOT NULL,
+    longitude double precision NOT NULL,
+    stateid integer,
+    population integer NOT NULL,
+    column_8 integer
+);
+
+
+ALTER TABLE geo_city OWNER TO postgres;
+
+--
 -- Name: geo_state; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -73,22 +91,6 @@ ALTER SEQUENCE geo_states_id_seq OWNED BY geo_state.id;
 
 
 --
--- Name: get_city; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE get_city (
-    id integer NOT NULL,
-    geonameid integer NOT NULL,
-    name character varying(100) NOT NULL,
-    latitude double precision NOT NULL,
-    longitude double precision NOT NULL,
-    stateid integer
-);
-
-
-ALTER TABLE get_city OWNER TO postgres;
-
---
 -- Name: get_city_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -106,7 +108,7 @@ ALTER TABLE get_city_id_seq OWNER TO postgres;
 -- Name: get_city_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE get_city_id_seq OWNED BY get_city.id;
+ALTER SEQUENCE get_city_id_seq OWNED BY geo_city.id;
 
 
 --
@@ -204,17 +206,17 @@ COMMENT ON COLUMN "user".oauth_profiles IS 'A JSON containing information return
 
 
 --
+-- Name: geo_city id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY geo_city ALTER COLUMN id SET DEFAULT nextval('get_city_id_seq'::regclass);
+
+
+--
 -- Name: geo_state id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY geo_state ALTER COLUMN id SET DEFAULT nextval('geo_states_id_seq'::regclass);
-
-
---
--- Name: get_city id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY get_city ALTER COLUMN id SET DEFAULT nextval('get_city_id_seq'::regclass);
 
 
 --
@@ -233,10 +235,10 @@ ALTER TABLE ONLY geo_state
 
 
 --
--- Name: get_city get_city_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: geo_city get_city_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY get_city
+ALTER TABLE ONLY geo_city
     ADD CONSTRAINT get_city_pkey PRIMARY KEY (id);
 
 
@@ -265,6 +267,13 @@ ALTER TABLE ONLY "user"
 
 
 --
+-- Name: geo_city_geonameid_uindex; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX geo_city_geonameid_uindex ON geo_city USING btree (geonameid);
+
+
+--
 -- Name: geo_states_geoNameId_uindex; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -286,17 +295,10 @@ CREATE UNIQUE INDEX geo_states_name_uindex ON geo_state USING btree (name);
 
 
 --
--- Name: get_city_geoNameId_uindex; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE UNIQUE INDEX "get_city_geoNameId_uindex" ON get_city USING btree (geonameid);
-
-
---
 -- Name: get_city_id_uindex; Type: INDEX; Schema: public; Owner: postgres
 --
 
-CREATE UNIQUE INDEX get_city_id_uindex ON get_city USING btree (id);
+CREATE UNIQUE INDEX get_city_id_uindex ON geo_city USING btree (id);
 
 
 --
@@ -307,10 +309,10 @@ CREATE UNIQUE INDEX user_email_uindex ON "user" USING btree (email);
 
 
 --
--- Name: get_city get_city_geo_state_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: geo_city get_city_geo_state_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY get_city
+ALTER TABLE ONLY geo_city
     ADD CONSTRAINT get_city_geo_state_id_fk FOREIGN KEY (stateid) REFERENCES geo_state(id);
 
 
