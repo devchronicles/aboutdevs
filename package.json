@@ -12,6 +12,7 @@
     "db-install": "cross-env COMMAND=create_dev_dbs PGPASSWORD=indiejobs node ./db/installDB.js",
     "db-drop": "cross-env COMMAND=drop_dev_dbs PGPASSWORD=indiejobs node ./db/installDB.js",
     "db-generate": "cross-env COMMAND=generate_scripts PGPASSWORD=indiejobs node ./db/installDB.js",
+    "db-reinstall": "npm run db-drop && npm run db-install",
     "get-geo-data": "cross-env NODE_ENV=development babel-node ./tools/get-geo-data.js",
     "save-geo-data": "cross-env NODE_ENV=development babel-node ./tools/save-geo-data"
   },
