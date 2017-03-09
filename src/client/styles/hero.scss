@@ -19,6 +19,6 @@ div.hero {
 
     h2 {
         margin-top: 2 * $gutter-md;
-        color: #9cb3c9;
+        color: lighten($color-dark-light, 50%);
     }
 }

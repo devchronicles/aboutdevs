@@ -1,30 +1,33 @@
-import React from 'react';
-import Select from 'react-select';
+import React, { PropTypes } from 'react';
+import SearchBarSimple from './SearchBarSimple';
+import SearchBarAdvanced from './SearchBarAdvanced';
 
-const SearchBar = () => {
-    const options = [
-        { value: 'one', label: 'Juiz de Fora · MG' },
-        { value: 'two', label: 'Two' }
-    ];
+const SearchBar = ({ type }) => {
+    let searchComponent = null;
 
-    function logChange(val) {
-        /*eslint-disable*/
-        console.log(`Selected: ${val}`); 
-        /*eslint-enable*/
+    switch (type) {
+        case 'simple':
+            searchComponent = <SearchBarSimple />;
+            break;
+        case 'advanced':
+            searchComponent = <SearchBarAdvanced />;
+            break;
+        default:
+            throw Error(`Unsupported search type. Type: ${type}`);
     }
 
     return (
-        <div className="search-bar">
-            <Select
-                className="city-select"
-                name="form-field-name"
-                value="one"
-                options={options}
-                onChange={logChange}
-            />
-            <input id="search-text" name="search-text" type="text" placeholder="Ex: Diarista" />
-            <button>Pesquisar</button>
+        <div className="search-wrapper">
+            {searchComponent}
+            <div className="search-type-toggle">
+                <span>Avançada</span>
+                <i className="fa fa-angle-down" aria-hidden="true" />
+            </div>
         </div>);
+};
+
+SearchBar.propTypes = {
+    type: PropTypes.string.isRequired
 };
 
 export default SearchBar;

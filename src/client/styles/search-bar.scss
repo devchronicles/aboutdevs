@@ -1,17 +1,30 @@
-.search-bar {
-    display: flex;
-    flex-direction: horizontal;
-    width: 700px;
-    .city-select {
-        text-align: left;
-        width: 250px;
+.search-wrapper {
+
+    .search-bar {
+        display: flex;
+        flex-direction: horizontal;
+        width: 700px;
+        .city-select {
+            text-align: left;
+            width: 250px;
+        }
+        input {
+            flex-grow: 1; // will grow to ocuppy the remaining space
+            border-radius: 0 $radius-md $radius-md 0;
+            border-left: 0;
+        }
+        button {
+            margin-left: $gutter-md;
+        }
     }
-    input {
-        flex-grow: 1; // will grow to ocuppy the remaining space
-        border-radius: 0 $radius-md $radius-md 0;
-        border-left: 0;
+
+    .search-type-toggle {
+        margin-top: $gutter-sm;
+        color: lighten($color-dark-light, 50%);
+        cursor: pointer;
+        .fa {
+            margin-left: $gutter-xs;
+        }
     }
-    button {
-        margin-left: $gutter-md;
-    }
+
 }

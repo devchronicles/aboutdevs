@@ -56,7 +56,7 @@ function getGeonameChildrenAsync(geonameId) {
             }
             return result;
         })
-        .catch(error => {
+        .catch((error) => {
             throw Error(error);
         });
 }
@@ -83,7 +83,7 @@ getGeonameChildrenAsync(3469034)
             .then(() => states);
     })
     .then((states) => {
-        var fileContent = JSON.stringify({ states }, null, 4);
+        const fileContent = JSON.stringify({ states }, null, 4);
         fs.writeFileSync('./data/geo.json', fileContent);
     })
-    .catch(ex => { console.log(ex); });
+    .catch((ex) => { console.log(ex); });
