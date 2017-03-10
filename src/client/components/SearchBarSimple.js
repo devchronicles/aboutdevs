@@ -18,3 +18,5 @@ SimpleSearch.propTypes = {
         terms: PropTypes.string.isRequired
     }).isRequired
 };
+
+export default SimpleSearch;

@@ -1,5 +1,3 @@
-import fs from 'fs';
-import axios from 'axios';
 import config from '../config/config';
 import { buildMassive } from '../src/server/db/helpers/massiveHelper';
 import geo from '../data/geo.json';

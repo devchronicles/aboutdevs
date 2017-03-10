@@ -1,17 +1,27 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+
+import SearchWrapper from '../components/SearchWrapper';
 import Hero from '../components/Hero';
+import SearchBar from '../components/SearchBar';
 import SearchResult from '../components/SearchResult';
 
-import { searchChange } from '../redux/search/searchActions';
+
+import { searchTypeToggle } from '../redux/search/searchActions';
 import { profiles } from '../lib/stubs';
 
-const IndexPage = () => (
-    <div className="page-wrapper">
+const IndexPage = ({ search, searchActions }) => <div className="page-wrapper">
+    <SearchWrapper>
         <Hero />
-        <SearchResult profiles={profiles} />
-    </div>
-);
+        <SearchBar {...search} {...searchActions} />
+    </SearchWrapper>
+    <SearchResult profiles={profiles} />
+</div>;
+
+IndexPage.propTypes = {
+    search: PropTypes.object.isRequired,
+    searchActions: PropTypes.object.isRequired
+};
 
 // CONNECT
 
@@ -19,9 +29,11 @@ const mapStateToProps = state => ({
     search: state.search
 });
 
-const mapDispatchToProps = {
-    searchChange
-};
+const mapDispatchToProps = dispatch => ({
+    searchActions: {
+        searchTypeToggle: () => dispatch(searchTypeToggle())
+    }
+});
 
 export default connect(
     mapStateToProps,

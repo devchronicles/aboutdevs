@@ -1,33 +1,58 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import SearchBarSimple from './SearchBarSimple';
 import SearchBarAdvanced from './SearchBarAdvanced';
 
-const SearchBar = ({ type }) => {
-    let searchComponent = null;
+class SearchBar extends Component {
 
-    switch (type) {
-        case 'simple':
-            searchComponent = <SearchBarSimple />;
-            break;
-        case 'advanced':
-            searchComponent = <SearchBarAdvanced />;
-            break;
-        default:
-            throw Error(`Unsupported search type. Type: ${type}`);
+    constructor(props) {
+        super(props);
+        this.handleToggleType = this.handleToggleType.bind(this);
     }
 
-    return (
-        <div className="search-wrapper">
-            {searchComponent}
-            <div className="search-type-toggle">
-                <span>Avançada</span>
-                <i className="fa fa-angle-down" aria-hidden="true" />
+    handleToggleType() {
+        const { searchTypeToggle } = this.props;
+        searchTypeToggle();
+    }
+
+    render() {
+        const {
+            type,
+            simpleSearch,
+            advancedSearch
+        } = this.props;
+
+        let searchComponent = null;
+
+        switch (type) {
+            case 'simple':
+                searchComponent = <SearchBarSimple simpleSearch={simpleSearch} />;
+                break;
+            case 'advanced':
+                searchComponent = <SearchBarAdvanced advancedSearch={advancedSearch} />;
+                break;
+            default:
+                throw Error(`Unsupported search type. Type: ${type}`);
+        }
+
+        return (
+            <div>
+                {searchComponent}
+                <button
+                    type="button"
+                    className="search-type-toggle"
+                    onClick={this.handleToggleType}
+                >
+                    <span>Avançada</span>
+                    <i className="fa fa-angle-down" aria-hidden="true" />
+                </button>
             </div>
-        </div>);
-};
+        );
+    }
+}
 
 SearchBar.propTypes = {
-    type: PropTypes.string.isRequired
+    type: PropTypes.string.isRequired,
+    searchTypeToggle: PropTypes.func.isRequired
 };
 
 export default SearchBar;
