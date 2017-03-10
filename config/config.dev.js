@@ -2,7 +2,7 @@
 if (process.env.NODE_ENV !== 'development') throw Error('Cannot read dev config outside a development environment');
 
 // Postgres settings
-const POSTGRES_USER = 'postgres';
+const POSTGRES_USER = 'indiejobs';
 const POSTGRES_PASSWORD = 'indiejobs';
 const POSTGRES_DATABASE = 'indiejobs';
 const POSTGRES_TEST_DATABASE = 'indiejobs_tests';
