@@ -22,7 +22,7 @@
         }
     }
 
-    .search-bar {
+    .simple-search {
         display: flex;
         flex-direction: horizontal;
         width: 700px;
@@ -38,6 +38,10 @@
         button {
             margin-left: $gutter-md;
         }
+    }
+
+    .advanced-search {
+        
     }
 
     .search-type-toggle {

@@ -20,3 +20,15 @@ button, a.button {
         background-image: linear-gradient(to right,$color-shining-3,$color-shining-4);
     }
 }
+
+form, *.form {
+    .form-row {
+        display: flex;
+        flex-direction: column;
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+    }
+}

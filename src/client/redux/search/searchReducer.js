@@ -20,7 +20,7 @@ function searchReducer(state = defaultSearchState, { payload, type }) {
         case SEARCH_TYPE_TOGGLE:
             return {
                 ...defaultSearchState,
-                type: defaultSearchState.state === 'simple' ? 'advanced' : 'simple'
+                type: state.type === 'simple' ? 'advanced' : 'simple'
             };
         default:
             return state;

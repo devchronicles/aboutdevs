@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 
 const SimpleSearch = simpleSearch => (
-    <div className="search-bar">
+    <div className="simple-search">
         <input
             id="search-text"
             name="search-text"
