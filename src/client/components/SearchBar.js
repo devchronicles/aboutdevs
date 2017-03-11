@@ -23,6 +23,9 @@ class SearchBar extends Component {
 
         let searchComponent = null;
 
+        const toggleText = type === 'advanced' ? 'Menos opções' : 'Mais opções';
+        const toggleAngle = type === 'advanced' ? 'up' : 'down';
+
         switch (type) {
             case 'simple':
                 searchComponent = <SearchBarSimple simpleSearch={simpleSearch} />;
@@ -35,15 +38,15 @@ class SearchBar extends Component {
         }
 
         return (
-            <div>
+            <div className="search-criteria">
                 {searchComponent}
                 <button
                     type="button"
-                    className="search-type-toggle"
+                    className="search-type-toggle no-border"
                     onClick={this.handleToggleType}
                 >
-                    <span>Avançada</span>
-                    <i className="fa fa-angle-down" aria-hidden="true" />
+                    <span>{toggleText}</span>
+                    <i className={`fa fa-angle-${toggleAngle}`} aria-hidden="true" />
                 </button>
             </div>
         );

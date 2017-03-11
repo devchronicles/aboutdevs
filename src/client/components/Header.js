@@ -6,7 +6,7 @@ const IndexPage = () => (
         <a className="logo">
             INDIE JOBS
         </a>
-        <Link to="/login" className="button">Entrar</Link>
+        <Link to="/login" className="button vibrant" >Entrar</Link>
     </header>
 );
 

@@ -1,5 +1,6 @@
 @import '_variables';
 
+// input
 input[type="text"] {
     padding: $input-padding-vertical $input-padding-horizontal;
     border-radius: $radius-md;
@@ -10,25 +11,81 @@ button, a.button {
     text-decoration: none;
     color: $color-white;
     padding: $input-padding-vertical $input-padding-horizontal;
-    background-image: linear-gradient(to right,$color-shining-1,$color-shining-2);
+
+    border: 1px solid white;
+    background: transparent;
+    
     border-radius: $radius-md;
-    border: 0;
     cursor: pointer;
     font-weight: 600;
 
     &:hover {
         background-image: linear-gradient(to right,$color-shining-3,$color-shining-4);
     }
+
+    &.vibrant {
+        border: 0;
+        background-image: linear-gradient(to right,$color-shining-1,$color-shining-2);
+    }
+
+    &.no-border {
+        border: 0;
+        &:focus {
+            outline: 0;
+        }
+    }
 }
 
+// forms
 form, *.form {
     .form-row {
         display: flex;
-        flex-direction: column;
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            text-align: left;
+        flex-direction: row;
+        margin-bottom: $gutter-md;
+        &.stretch {
+            align-self: stretch;
+        }
+
+        .form-column {
+            box-sizing: border-box;
+            padding: 0 $gutter-sm;
+            flex-basis: 0;
+            flex-grow: 1;
+            .form-group {
+                display: flex;
+                flex-direction: column;
+                text-align: left;
+                label {
+                    margin-bottom: $gutter-xs;
+                }    
+            }
+        }
+    }
+}
+
+// button-group
+.button-group {
+    display: flex;
+    align-items: row;
+
+    button:first-child:not(:last-child) {
+        border-bottom-right-radius: 0;
+        border-top-right-radius: 0;
+    }
+
+    button:not(:first-child):not(:last-child) {
+        border-radius: 0;
+    }
+
+    button:last-child:not(:first-child) {
+        border-bottom-left-radius: 0;
+        border-top-left-radius: 0;
+    }
+
+    button {
+        border-color: lighten($color-dark-light, 5%);
+        &.pushed {
+            background: lighten($color-dark-light, 5%);
         }
     }
 }

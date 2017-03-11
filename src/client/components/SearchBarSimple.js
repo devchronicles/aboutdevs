@@ -9,7 +9,7 @@ const SimpleSearch = simpleSearch => (
             placeholder="Ex: Diarista"
             value={simpleSearch.terms}
         />
-        <button>Pesquisar</button>
+        <button className="vibrant">Pesquisar</button>
     </div>
 );
 
