@@ -2,17 +2,25 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.6.1
--- Dumped by pg_dump version 9.6.1
+-- Dumped from database version 9.5.6
+-- Dumped by pg_dump version 9.5.6
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 SET row_security = off;
+
+--
+-- Name: topology; Type: SCHEMA; Schema: -; Owner: postgres
+--
+
+CREATE SCHEMA topology;
+
+
+ALTER SCHEMA topology OWNER TO postgres;
 
 --
 -- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
@@ -28,7 +36,183 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 
+--
+-- Name: postgis; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS postgis WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION postgis; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION postgis IS 'PostGIS geometry, geography, and raster spatial types and functions';
+
+
+--
+-- Name: postgis_topology; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS postgis_topology WITH SCHEMA topology;
+
+
+--
+-- Name: EXTENSION postgis_topology; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION postgis_topology IS 'PostGIS topology spatial types and functions';
+
+
+--
+-- Name: unaccent; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS unaccent WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION unaccent; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION unaccent IS 'text search dictionary that removes accents';
+
+
 SET search_path = public, pg_catalog;
+
+--
+-- Name: ptu; Type: TEXT SEARCH CONFIGURATION; Schema: public; Owner: postgres
+--
+
+CREATE TEXT SEARCH CONFIGURATION ptu (
+    PARSER = pg_catalog."default" );
+
+ALTER TEXT SEARCH CONFIGURATION ptu
+    ADD MAPPING FOR asciiword WITH portuguese_stem;
+
+ALTER TEXT SEARCH CONFIGURATION ptu
+    ADD MAPPING FOR word WITH unaccent, portuguese_stem;
+
+ALTER TEXT SEARCH CONFIGURATION ptu
+    ADD MAPPING FOR numword WITH simple;
+
+ALTER TEXT SEARCH CONFIGURATION ptu
+    ADD MAPPING FOR email WITH simple;
+
+ALTER TEXT SEARCH CONFIGURATION ptu
+    ADD MAPPING FOR url WITH simple;
+
+ALTER TEXT SEARCH CONFIGURATION ptu
+    ADD MAPPING FOR host WITH simple;
+
+ALTER TEXT SEARCH CONFIGURATION ptu
+    ADD MAPPING FOR sfloat WITH simple;
+
+ALTER TEXT SEARCH CONFIGURATION ptu
+    ADD MAPPING FOR version WITH simple;
+
+ALTER TEXT SEARCH CONFIGURATION ptu
+    ADD MAPPING FOR hword_numpart WITH simple;
+
+ALTER TEXT SEARCH CONFIGURATION ptu
+    ADD MAPPING FOR hword_part WITH unaccent, portuguese_stem;
+
+ALTER TEXT SEARCH CONFIGURATION ptu
+    ADD MAPPING FOR hword_asciipart WITH portuguese_stem;
+
+ALTER TEXT SEARCH CONFIGURATION ptu
+    ADD MAPPING FOR numhword WITH simple;
+
+ALTER TEXT SEARCH CONFIGURATION ptu
+    ADD MAPPING FOR asciihword WITH portuguese_stem;
+
+ALTER TEXT SEARCH CONFIGURATION ptu
+    ADD MAPPING FOR hword WITH unaccent, portuguese_stem;
+
+ALTER TEXT SEARCH CONFIGURATION ptu
+    ADD MAPPING FOR url_path WITH simple;
+
+ALTER TEXT SEARCH CONFIGURATION ptu
+    ADD MAPPING FOR file WITH simple;
+
+ALTER TEXT SEARCH CONFIGURATION ptu
+    ADD MAPPING FOR "float" WITH simple;
+
+ALTER TEXT SEARCH CONFIGURATION ptu
+    ADD MAPPING FOR "int" WITH simple;
+
+ALTER TEXT SEARCH CONFIGURATION ptu
+    ADD MAPPING FOR uint WITH simple;
+
+
+ALTER TEXT SEARCH CONFIGURATION ptu OWNER TO postgres;
+
+--
+-- Name: su; Type: TEXT SEARCH CONFIGURATION; Schema: public; Owner: postgres
+--
+
+CREATE TEXT SEARCH CONFIGURATION su (
+    PARSER = pg_catalog."default" );
+
+ALTER TEXT SEARCH CONFIGURATION su
+    ADD MAPPING FOR asciiword WITH simple;
+
+ALTER TEXT SEARCH CONFIGURATION su
+    ADD MAPPING FOR word WITH unaccent, simple;
+
+ALTER TEXT SEARCH CONFIGURATION su
+    ADD MAPPING FOR numword WITH simple;
+
+ALTER TEXT SEARCH CONFIGURATION su
+    ADD MAPPING FOR email WITH simple;
+
+ALTER TEXT SEARCH CONFIGURATION su
+    ADD MAPPING FOR url WITH simple;
+
+ALTER TEXT SEARCH CONFIGURATION su
+    ADD MAPPING FOR host WITH simple;
+
+ALTER TEXT SEARCH CONFIGURATION su
+    ADD MAPPING FOR sfloat WITH simple;
+
+ALTER TEXT SEARCH CONFIGURATION su
+    ADD MAPPING FOR version WITH simple;
+
+ALTER TEXT SEARCH CONFIGURATION su
+    ADD MAPPING FOR hword_numpart WITH simple;
+
+ALTER TEXT SEARCH CONFIGURATION su
+    ADD MAPPING FOR hword_part WITH unaccent, simple;
+
+ALTER TEXT SEARCH CONFIGURATION su
+    ADD MAPPING FOR hword_asciipart WITH simple;
+
+ALTER TEXT SEARCH CONFIGURATION su
+    ADD MAPPING FOR numhword WITH simple;
+
+ALTER TEXT SEARCH CONFIGURATION su
+    ADD MAPPING FOR asciihword WITH simple;
+
+ALTER TEXT SEARCH CONFIGURATION su
+    ADD MAPPING FOR hword WITH unaccent, simple;
+
+ALTER TEXT SEARCH CONFIGURATION su
+    ADD MAPPING FOR url_path WITH simple;
+
+ALTER TEXT SEARCH CONFIGURATION su
+    ADD MAPPING FOR file WITH simple;
+
+ALTER TEXT SEARCH CONFIGURATION su
+    ADD MAPPING FOR "float" WITH simple;
+
+ALTER TEXT SEARCH CONFIGURATION su
+    ADD MAPPING FOR "int" WITH simple;
+
+ALTER TEXT SEARCH CONFIGURATION su
+    ADD MAPPING FOR uint WITH simple;
+
+
+ALTER TEXT SEARCH CONFIGURATION su OWNER TO postgres;
 
 SET default_tablespace = '';
 
@@ -45,8 +229,7 @@ CREATE TABLE geo_city (
     latitude double precision NOT NULL,
     longitude double precision NOT NULL,
     stateid integer,
-    population integer NOT NULL,
-    column_8 integer
+    population integer NOT NULL
 );
 
 
@@ -206,28 +389,36 @@ COMMENT ON COLUMN "user".oauth_profiles IS 'A JSON containing information return
 
 
 --
--- Name: geo_city id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY geo_city ALTER COLUMN id SET DEFAULT nextval('get_city_id_seq'::regclass);
 
 
 --
--- Name: geo_state id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY geo_state ALTER COLUMN id SET DEFAULT nextval('geo_states_id_seq'::regclass);
 
 
 --
--- Name: notification id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY notification ALTER COLUMN id SET DEFAULT nextval('notification_id_seq'::regclass);
 
 
 --
--- Name: geo_state geo_states_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: geo_city_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY geo_city
+    ADD CONSTRAINT geo_city_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: geo_states_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY geo_state
@@ -235,15 +426,7 @@ ALTER TABLE ONLY geo_state
 
 
 --
--- Name: geo_city get_city_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY geo_city
-    ADD CONSTRAINT get_city_pkey PRIMARY KEY (id);
-
-
---
--- Name: notification notification_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: notification_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY notification
@@ -251,7 +434,7 @@ ALTER TABLE ONLY notification
 
 
 --
--- Name: user user_email_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: user_email_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY "user"
@@ -259,7 +442,7 @@ ALTER TABLE ONLY "user"
 
 
 --
--- Name: user user_id_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: user_id_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY "user"
@@ -271,6 +454,13 @@ ALTER TABLE ONLY "user"
 --
 
 CREATE UNIQUE INDEX geo_city_geonameid_uindex ON geo_city USING btree (geonameid);
+
+
+--
+-- Name: geo_city_name_tsindex; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX geo_city_name_tsindex ON geo_city USING gin (to_tsvector('su'::regconfig, (name)::text));
 
 
 --
@@ -309,19 +499,29 @@ CREATE UNIQUE INDEX user_email_uindex ON "user" USING btree (email);
 
 
 --
--- Name: geo_city get_city_geo_state_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: geo_city_geo_state_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY geo_city
-    ADD CONSTRAINT get_city_geo_state_id_fk FOREIGN KEY (stateid) REFERENCES geo_state(id);
+    ADD CONSTRAINT geo_city_geo_state_id_fk FOREIGN KEY (stateid) REFERENCES geo_state(id);
 
 
 --
--- Name: notification notification_user_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: notification_user_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY notification
     ADD CONSTRAINT notification_user_id_fk FOREIGN KEY (user_id) REFERENCES "user"(id);
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
 --

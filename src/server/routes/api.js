@@ -6,7 +6,7 @@ const router = express.Router();
 /**
  * Test API
  */
-router.route('/test').get((req, res) => {
+router.route('/cities').get((req, res) => {
     res.status(200).send({
         text: 'your text has passed'
     });
