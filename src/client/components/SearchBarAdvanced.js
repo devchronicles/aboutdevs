@@ -1,16 +1,7 @@
 import React, { PropTypes } from 'react';
-import Select from 'react-select';
 import FormGroup from './FormGroup';
 import ButtonGroup from './ButtonGroup';
-
-var options = [
-    { value: 'one', label: 'One' },
-    { value: 'two', label: 'Two' }
-];
-
-function logChange(val) {
-    console.log("Selected: " + val);
-}
+import SelectCity from './SelectCity';
 
 const SearchBarAdvanced = advancedSearch => (
     <div className="advanced-search form">
@@ -30,12 +21,7 @@ const SearchBarAdvanced = advancedSearch => (
         <div className="form-row stretch">
             <div className="form-column grow">
                 <FormGroup label="Cidade" labelFor="text">
-                    <Select
-                        name="form-field-name"
-                        value="one"
-                        options={options}
-                        onChange={logChange}
-                    />
+                    <SelectCity />
                 </FormGroup>
             </div>
             <div className="form-column grow">
