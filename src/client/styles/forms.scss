@@ -49,8 +49,7 @@ form, *.form {
         .form-column {
             box-sizing: border-box;
             padding: 0 $gutter-sm;
-            flex-basis: 0;
-            flex-grow: 1;
+            
             .form-group {
                 display: flex;
                 flex-direction: column;
@@ -58,6 +57,11 @@ form, *.form {
                 label {
                     margin-bottom: $gutter-xs;
                 }    
+            }
+
+            &.eq {
+                flex-basis: 0;
+                flex-grow: 1;
             }
         }
     }

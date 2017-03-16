@@ -6,25 +6,19 @@ import SelectCity from './SelectCity';
 const SearchBarAdvanced = advancedSearch => (
     <div className="advanced-search form">
         <div className="form-row stretch">
-            <div className="form-column grow">
+            <div className="form-column eq">
                 <FormGroup label="Profissional" labelFor="text">
                     <input type="text" placeholder="Ex:Diarista" name="text" />
                 </FormGroup>
             </div>
         </div>
-        <div className="form-row">
-            <ButtonGroup>
-                <button className="pushed">Escolher local</button>
-                <button>Perto de mim</button>
-            </ButtonGroup>
-        </div>
         <div className="form-row stretch">
-            <div className="form-column grow">
+            <div className="form-column" style={{ width: '60%' }}>
                 <FormGroup label="Cidade" labelFor="text">
                     <SelectCity />
                 </FormGroup>
             </div>
-            <div className="form-column grow">
+            <div className="form-column" style={{ width: '40%' }}>
                 <FormGroup label="Bairro" labelFor="text">
                     <input type="text" placeholder="Ex:Diarista" name="text" />
                 </FormGroup>
