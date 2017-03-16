@@ -8,7 +8,7 @@ const SearchBarAdvanced = advancedSearch => (
         <div className="form-row stretch">
             <div className="form-column eq">
                 <FormGroup label="Profissional" labelFor="text">
-                    <input type="text" placeholder="Ex:Diarista" name="text" />
+                    <input type="text" name="text" />
                 </FormGroup>
             </div>
         </div>
@@ -20,7 +20,7 @@ const SearchBarAdvanced = advancedSearch => (
             </div>
             <div className="form-column" style={{ width: '40%' }}>
                 <FormGroup label="Bairro" labelFor="text">
-                    <input type="text" placeholder="Ex:Diarista" name="text" />
+                    <input type="text" name="text" />
                 </FormGroup>
             </div>
         </div>

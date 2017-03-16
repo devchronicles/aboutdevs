@@ -6,7 +6,7 @@ const SimpleSearch = simpleSearch => (
             id="search-text"
             name="search-text"
             type="text"
-            placeholder="Ex: Diarista"
+            placeholder="Ex: Diarista em São Paulo"
             value={simpleSearch.terms}
         />
         <button className="vibrant">Pesquisar</button>

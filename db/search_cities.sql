@@ -1,4 +1,4 @@
-select sq.id, sq.name, s.shortname as state from (
+select sq.id, sq.name, s.shortname as state, (sq.name || ' · ' || s.shortname) as completeName from (
     SELECT
         c.id,
         c.name,

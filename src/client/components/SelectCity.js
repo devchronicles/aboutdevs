@@ -22,8 +22,7 @@ class SelectCity extends Component {
             axios.get(`/api/cities?q=${input}`)
                 .then((res) => {
                     callback(null, {
-                        options: res.data,
-                        cache: false
+                        options: res.data
                     });
                 });
         }, 500);
@@ -36,11 +35,19 @@ class SelectCity extends Component {
     render() {
         const { value } = this.props;
 
-        const myValue = { id: 1980, name: 'Juiz de Fora' }
-
-
         return (
-            <Async value={myValue} onChange={this.handleChange} loadOptions={this.loadValues} valueKey="id" labelKey="name" />
+            <Async
+                value={value}
+                onChange={this.handleChange}
+                loadOptions={this.loadValues}
+                valueKey="id"
+                labelKey="completename"
+                // localization
+                placeholder=""
+                loadingPlaceholder="Carregando..."
+                searchPromptText="Digite para pesquisar"
+                noResultsText="Não veio nada :("
+            />
         );
     }
 }
