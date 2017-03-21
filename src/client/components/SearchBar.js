@@ -12,24 +12,33 @@ class SearchBar extends Component {
     }
 
     handleProfessionalChange(event) {
-        console.log(event.target.value);
+        const { searchActions: { changeCriteria } } = this.props;
+        changeCriteria({
+            professional: event.target.value
+        });
     }
 
     handleCityChange() {
 
     }
 
-    handleNeighborhoodChanged() {
-
+    handleNeighborhoodChanged(event) {
+        const { searchActions: { changeCriteria } } = this.props;
+        changeCriteria({
+            neighborhood: event.target.value
+        });
     }
 
     render() {
+
+        const { search: { professional, neighborhood } } = this.props;
+
         return <div className="search-criteria">
             <div className="advanced-search form">
                 <div className="form-row stretch">
                     <div className="form-column eq">
                         <FormGroup label="Profissional" labelFor="text">
-                            <input type="text" name="text" onChange={this.handleProfessionalChange} />
+                            <input type="text" name="text" value={professional} onChange={this.handleProfessionalChange} />
                         </FormGroup>
                     </div>
                 </div>
@@ -41,7 +50,7 @@ class SearchBar extends Component {
                     </div>
                     <div className="form-column" style={{ width: '40%' }}>
                         <FormGroup label="Bairro" labelFor="text">
-                            <input type="text" name="text" />
+                            <input type="text" name="text" value={neighborhood} onChange={this.handleNeighborhoodChanged} />
                         </FormGroup>
                     </div>
                 </div>

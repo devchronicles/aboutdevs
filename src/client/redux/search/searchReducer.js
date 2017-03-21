@@ -10,7 +10,7 @@ const defaultSearchState = {
 function searchReducer(state = defaultSearchState, { payload, type }) {
     switch (type) {
         case CHANGE_SEARCH_CRITERIA:
-            return Object.assign(state, payload);
+            return Object.assign({}, state, payload);
         default:
             return state;
     }
