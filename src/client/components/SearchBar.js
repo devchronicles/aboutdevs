@@ -18,8 +18,12 @@ class SearchBar extends Component {
         });
     }
 
-    handleCityChange() {
-
+    handleCityChange(city) {
+        const { searchActions: { changeCriteria } } = this.props;
+        changeCriteria({
+            cityId: city.id,
+            cityName: city.name
+        });
     }
 
     handleNeighborhoodChanged(event) {
@@ -31,7 +35,13 @@ class SearchBar extends Component {
 
     render() {
 
-        const { search: { professional, neighborhood } } = this.props;
+        const { search: { professional, neighborhood, cityId, cityName } } = this.props;
+
+        const city = {
+            cityId,
+            cityName
+        };
+
 
         return <div className="search-criteria">
             <div className="advanced-search form">
@@ -45,7 +55,7 @@ class SearchBar extends Component {
                 <div className="form-row stretch">
                     <div className="form-column" style={{ width: '60%' }}>
                         <FormGroup label="Cidade" labelFor="text">
-                            <SelectCity />
+                            <SelectCity value={city} onChange={this.handleCityChange} />
                         </FormGroup>
                     </div>
                     <div className="form-column" style={{ width: '40%' }}>

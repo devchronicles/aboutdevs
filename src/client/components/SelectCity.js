@@ -29,15 +29,20 @@ class SelectCity extends Component {
     }
 
     handleChange(row) {
-        debugger;
+        const { onChange } = this.props;
+        onChange(row);
     }
 
     render() {
         const { value } = this.props;
+        const adjustedValue = {
+            id: value.cityId,
+            completename: value.cityName
+        };
 
         return (
             <Async
-                value={value}
+                value={adjustedValue}
                 onChange={this.handleChange}
                 loadOptions={this.loadValues}
                 valueKey="id"
@@ -53,7 +58,8 @@ class SelectCity extends Component {
 }
 
 SelectCity.propTypes = {
-    value: PropTypes.object
+    value: PropTypes.object.isRequired,
+    onChange: PropTypes.func.isRequired
 };
 
 export default SelectCity;
