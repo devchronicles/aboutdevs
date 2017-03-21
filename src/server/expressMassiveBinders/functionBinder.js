@@ -8,9 +8,12 @@ export default {
      */
     bind(condition, func, ...params) {
         return (req, res) => {
-            if (!condition(req, res)) {
+            const evaluatedCondition = condition(req.query, res.post);
+            if (!evaluatedCondition) {
                 res.status(200).send([]);
             } else {
+                console.log('criteria');
+                console.log(evaluatedCondition);
                 // get each of the parameters
                 const funcParams = params.map(p => p(req.query, req.post));
                 console.log(funcParams);

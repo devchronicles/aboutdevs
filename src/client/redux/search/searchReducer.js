@@ -1,27 +1,16 @@
-import { SEARCH_TYPE_TOGGLE } from './searchActions';
+import { CHANGE_SEARCH_CRITERIA } from './searchActions';
 
 const defaultSearchState = {
-    type: 'simple',
-    simpleSearch: {
-        terms: ''
-    },
-    advancedSearch: {
-        terms: '',
-        cityId: -1,
-        cityName: '',
-        neighborhood: '',
-        useLocation: false,
-        locationRange: -1
-    }
+    professional: '',
+    cityId: -1,
+    cityName: '',
+    neighborhood: ''
 };
 
 function searchReducer(state = defaultSearchState, { payload, type }) {
     switch (type) {
-        case SEARCH_TYPE_TOGGLE:
-            return {
-                ...defaultSearchState,
-                type: state.type === 'simple' ? 'advanced' : 'simple'
-            };
+        case CHANGE_SEARCH_CRITERIA:
+            return Object.assign(state, payload);
         default:
             return state;
     }

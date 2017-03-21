@@ -5,11 +5,10 @@ import fbinder from '../expressMassiveBinders/functionBinder';
 const router = express.Router();
 
 
-
 /**
  * Test API
  */
-router.route('/cities').get(fbinder.bind(q => q, db.search_cities, q => {
+router.route('/cities').get(fbinder.bind(q => q.q, db.search_cities, (q) => {
     const criteria = q.q ? q.q.replace(/[^a-zA-Z0-9\s]/g, '') : '';
     const finalCriteria = `'${criteria}':*`;
     return finalCriteria;

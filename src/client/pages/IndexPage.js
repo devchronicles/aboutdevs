@@ -13,7 +13,7 @@ import { profiles } from '../lib/stubs';
 const IndexPage = ({ search, searchActions }) => <div className="page-wrapper">
     <SearchWrapper>
         <Hero />
-        <SearchBar {...search} {...searchActions} />
+        <SearchBar search={search} searchActions={searchActions} />
     </SearchWrapper>
     <SearchResult profiles={profiles} />
 </div>;

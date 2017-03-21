@@ -25,22 +25,6 @@
     .search-criteria {
         width: 500px + 2 * $gutter-sm;
 
-
-        
-        .simple-search {
-            padding: 0 $gutter-sm;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            display: flex;
-            input {
-                flex-grow: 1; // will grow to ocuppy the remaining space
-            }
-            button {
-                margin-left: $gutter-md;
-            }
-        }
-
         .advanced-search {
             display: flex;
             flex-direction: column;
@@ -49,17 +33,7 @@
                 margin-top: $gutter-md;
             }
         }
-
-        .search-type-toggle {
-            padding: 0;
-            background: transparent;
-            margin-top: $gutter-md;
-            color: lighten($color-dark-light, 50%);
-            cursor: pointer;
-            .fa {
-                margin-left: $gutter-xs;
-            }
-        }
+        
     }
 
 }

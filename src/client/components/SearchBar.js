@@ -1,61 +1,59 @@
 import React, { Component, PropTypes } from 'react';
-import SearchBarSimple from './SearchBarSimple';
-import SearchBarAdvanced from './SearchBarAdvanced';
+import FormGroup from './FormGroup';
+import SelectCity from './SelectCity';
 
 class SearchBar extends Component {
 
-    constructor(props) {
-        super(props);
-        this.handleToggleType = this.handleToggleType.bind(this);
+    constructor() {
+        super();
+        this.handleProfessionalChange = this.handleProfessionalChange.bind(this);
+        this.handleCityChange = this.handleCityChange.bind(this);
+        this.handleNeighborhoodChanged = this.handleNeighborhoodChanged.bind(this);
     }
 
-    handleToggleType() {
-        const { searchTypeToggle } = this.props;
-        searchTypeToggle();
+    handleProfessionalChange(event) {
+        console.log(event.target.value);
+    }
+
+    handleCityChange() {
+
+    }
+
+    handleNeighborhoodChanged() {
+
     }
 
     render() {
-        const {
-            type,
-            simpleSearch,
-            advancedSearch
-        } = this.props;
-
-        let searchComponent = null;
-
-        const toggleText = type === 'advanced' ? 'Menos opções' : 'Mais opções';
-        const toggleAngle = type === 'advanced' ? 'up' : 'down';
-
-        switch (type) {
-            case 'simple':
-                searchComponent = <SearchBarSimple simpleSearch={simpleSearch} />;
-                break;
-            case 'advanced':
-                searchComponent = <SearchBarAdvanced advancedSearch={advancedSearch} />;
-                break;
-            default:
-                throw Error(`Unsupported search type. Type: ${type}`);
-        }
-
-        return (
-            <div className="search-criteria">
-                {searchComponent}
-                <button
-                    type="button"
-                    className="search-type-toggle no-border"
-                    onClick={this.handleToggleType}
-                >
-                    <span>{toggleText}</span>
-                    <i className={`fa fa-angle-${toggleAngle}`} aria-hidden="true" />
-                </button>
+        return <div className="search-criteria">
+            <div className="advanced-search form">
+                <div className="form-row stretch">
+                    <div className="form-column eq">
+                        <FormGroup label="Profissional" labelFor="text">
+                            <input type="text" name="text" onChange={this.handleProfessionalChange} />
+                        </FormGroup>
+                    </div>
+                </div>
+                <div className="form-row stretch">
+                    <div className="form-column" style={{ width: '60%' }}>
+                        <FormGroup label="Cidade" labelFor="text">
+                            <SelectCity />
+                        </FormGroup>
+                    </div>
+                    <div className="form-column" style={{ width: '40%' }}>
+                        <FormGroup label="Bairro" labelFor="text">
+                            <input type="text" name="text" />
+                        </FormGroup>
+                    </div>
+                </div>
+                <button className="vibrant">Pesquisar</button>
             </div>
-        );
+        </div>;
     }
 }
 
 SearchBar.propTypes = {
-    type: PropTypes.string.isRequired,
-    searchTypeToggle: PropTypes.func.isRequired
+    searchActions: PropTypes.object.isRequired,
+    search: PropTypes.object.isRequired
 };
 
 export default SearchBar;
