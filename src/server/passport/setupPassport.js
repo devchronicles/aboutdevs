@@ -28,7 +28,7 @@ export default function (passport) {
         },
         (accessToken, refreshToken, profile, done) => {
             findOrCreateFromGoogleProfile(db, profile)
-                .then(u => done(null, u.id))
+                .then(u => done(null, u.id)) // this will call passport.serializeUser
                 .catch(done);
         }
     ));
