@@ -11,20 +11,25 @@ const router = express.Router();
  * Function  that actually sends the application to the client
  * @param response
  */
-function sendApp(response) {
+function sendApp(res, preloadedState) {
     /*eslint-disable*/
     const wrap = require('../../client/index.html')
         .replace(/\$\{css\}/g, '')
-        .replace(/\$\{js\}/g, 'http://localhost:8080/bundle.js');
+        .replace(/\$\{js\}/g, 'http://localhost:8080/bundle.js')
+        .replace(/\$\{preloadedState\}/g, JSON.stringify(preloadedState).replace(/</g, '\\u003c'))
     /*eslint-enable*/
-    response.status(200).send(wrap);
+    res.status(200).send(wrap);
 }
 
 /**
  * Wild-card route
  */
 router.route('*').get((req, res) => {
-    sendApp(res);
+    sendApp(res, {
+        loggedUser: {
+            name: 'andre'
+        }
+    });
 });
 
 export default router;

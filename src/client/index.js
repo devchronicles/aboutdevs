@@ -9,7 +9,9 @@ import '../../node_modules/normalize.css/normalize.css';
 import '../../node_modules/font-awesome/css/font-awesome.css';
 import './styles/styles.scss';
 
-const store = configureStore();
+/* eslint-disable */
+const store = configureStore(window.__PRELOADED_STATE__);
+/* eslint-enable */
 
 if (module.hot) {
     module.hot.accept();
