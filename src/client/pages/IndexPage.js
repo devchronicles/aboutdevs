@@ -25,6 +25,7 @@ IndexPage.propTypes = {
 // CONNECT
 
 const mapStateToProps = state => ({
+    loggedUser: state.loggedUser,
     search: state.search
 });
 
