@@ -1,5 +1,7 @@
 const defaultLoggedUserState = {
-    name: ''
+    id: undefined,
+    displayName: undefined,
+    photoUrl: undefined
 };
 
 function searchReducer(state = defaultLoggedUserState, { payload, type }) {

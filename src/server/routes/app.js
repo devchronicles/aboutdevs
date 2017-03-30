@@ -25,10 +25,13 @@ function sendApp(res, preloadedState) {
  * Wild-card route
  */
 router.route('*').get((req, res) => {
+    const user = req.user ? req.user : {
+        id: undefined,
+        displayName: undefined,
+        photoUrl: undefined
+    };
     sendApp(res, {
-        loggedUser: {
-            name: 'andre'
-        }
+        loggedUser: user
     });
 });
 

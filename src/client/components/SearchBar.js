@@ -34,7 +34,6 @@ class SearchBar extends Component {
     }
 
     render() {
-
         const { search: { professional, neighborhood, cityId, cityName } } = this.props;
 
         const city = {
@@ -43,7 +42,7 @@ class SearchBar extends Component {
         };
 
 
-        return <div className="search-criteria">
+        return (<div className="search-criteria">
             <div className="advanced-search form">
                 <div className="form-row stretch">
                     <div className="form-column eq">
@@ -66,7 +65,7 @@ class SearchBar extends Component {
                 </div>
                 <button className="vibrant">Pesquisar</button>
             </div>
-        </div>;
+        </div>);
     }
 }
 

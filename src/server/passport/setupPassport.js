@@ -15,7 +15,14 @@ export default function (passport) {
 
     passport.deserializeUser((userId, done) => {
         db.user.findOneAsync({ id: userId })
-            .then(u => done(null, u))
+            .then((u) => {
+                const user = {
+                    id: u.id,
+                    displayName: u.display_name,
+                    photoUrl: u.photo_url
+                };
+                done(null, user);
+            })
             .catch(done);
     });
 
