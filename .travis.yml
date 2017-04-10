@@ -10,6 +10,7 @@ branches:
   only:
     - master
     - /^greenkeeper-.*$/
+    - /^greenkeeper/.*$/
 after_success:
   - npm run coverage
   - cat ./coverage/lcov.info | node_modules/.bin/coveralls --verbose
