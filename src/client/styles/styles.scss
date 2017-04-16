@@ -1,11 +1,13 @@
 @import '_variables';
 @import 'forms.scss';
 @import 'header';
+@import 'logged-user-dropdown-menu';
 @import 'search-bar';
 @import 'profile-card';
 @import 'search-result';
 @import 'react-select';
 @import 'login-page';
+
 
 body {
     font-family: 'Roboto', sans-serif;

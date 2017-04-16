@@ -17,6 +17,7 @@ const IndexPage = ({ search, searchActions }) => <div className="page-wrapper">
     </SearchWrapper>
     <SearchResult profiles={profiles} />
 </div>;
+
 IndexPage.propTypes = {
     search: PropTypes.object.isRequired,
     searchActions: PropTypes.object.isRequired
