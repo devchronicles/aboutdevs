@@ -1,11 +1,11 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
+import LoggedUserDropdown from './LoggedUserDropdown';
 
 const Header = ({ loggedUser }) => {
-    const userDropdown = <a href="#"> {loggedUser.displayName} </a>;
-    const loginButton = <Link to="/login" className="button vibrant" >Entrar</Link>;
-
-    const rightComponent = loggedUser.id ? userDropdown : loginButton;
+    const rightComponent = loggedUser.id
+        ? <LoggedUserDropdown loggedUser={loggedUser} />
+        : <Link to="/login" className="button vibrant" >Entrar</Link>;
 
     return (<header className="header">
         <a className="logo">

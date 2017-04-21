@@ -10,7 +10,10 @@ $radius-md:                 4px;
 // colors
 $color-white:               white;
 $color-dark:                #0E2439;
+$color-darker:              darken($color-dark, 5%);
 $color-dark-light:          #1f364d;
+$color-dark-light-darker:   darken($color-dark-light, 5%);
+$color-dark-lighter:        lighten($color-dark-light, 5%);
 $color-shining-1:           #e052a0;
 $color-shining-2:           #f15c41;
 $color-shining-3:           #308ce8;
