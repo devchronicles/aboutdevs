@@ -37,6 +37,12 @@ module.exports = {
                 APP_ENV: JSON.stringify('browser')
             }
         })
-    ]
+    ],
+
+    devServer: {
+        headers: {
+            "Access-Control-Allow-Origin": "*"
+        }
+    }
 
 };
