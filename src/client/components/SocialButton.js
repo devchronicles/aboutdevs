@@ -1,4 +1,7 @@
+import activity from 'react-activity';
 import React, { Component, PropTypes } from 'react';
+
+const Dots = activity.Dots;
 
 class SocialButton extends Component {
 
@@ -21,13 +24,13 @@ class SocialButton extends Component {
     render() {
         const { url, faClass, text } = this.props;
 
-        const finalText = this.state.loading ? '...' : text;
+        const finalText = this.state.loading ? <Dots size={20} /> : text;
 
 
         return (<a className="social-button" href={url} onClick={this.handleLinkClick} >
             <i className={`fa fa-${faClass}`} aria-hidden="true" />
             <span className="text">
-                {finalText}
+                { finalText }
             </span>
         </a>);
     }

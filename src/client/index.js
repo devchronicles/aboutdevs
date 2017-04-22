@@ -7,6 +7,7 @@ import configureStore from './redux/store';
 
 import '../../node_modules/normalize.css/normalize.css';
 import '../../node_modules/font-awesome/css/font-awesome.css';
+import '../../node_modules/react-activity/dist/react-activity.css';
 import './styles/styles.scss';
 
 /* eslint-disable */
