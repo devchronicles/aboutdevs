@@ -17,4 +17,9 @@ router.route('/google').get(passport.authenticate('google', {
         'https://www.googleapis.com/auth/userinfo.email']
 }));
 
+router.get('/logout', (req, res) => {
+    req.logout();
+    res.redirect('/');
+});
+
 export default router;

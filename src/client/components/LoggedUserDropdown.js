@@ -70,7 +70,7 @@ class LoggedUserDropdown extends Component {
                         </a>
                         <a
                             className="dropdown-item"
-                            href="/andrerpena"
+                            href="/auth/logout"
                             data-ga-click="Header, go to profile, text:your profile"
                         >
                             Sair
