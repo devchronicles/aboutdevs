@@ -2,27 +2,60 @@ import React, { Component, PropTypes } from 'react';
 
 class LoggedUserDropdown extends Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.handleOpen = this.handleOpen.bind(this);
+        this.setWrapperRef = this.setWrapperRef.bind(this);
+        this.handleClickOutside = this.handleClickOutside.bind(this);
         this.state = {
-            open: true
+            open: false
         };
     }
+
+    componentDidMount() {
+        document.addEventListener('mousedown', this.handleClickOutside);
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener('mousedown', this.handleClickOutside);
+    }
+
+    /**
+     * Set the wrapper ref
+     */
+    setWrapperRef(node) {
+        this.wrapperRef = node;
+    }
+
 
     handleOpen() {
         this.setState({ open: !this.state.open });
     }
 
+    /**
+     * Alert if clicked on outside of element
+     */
+    handleClickOutside(event) {
+        if (this.state.open && this.wrapperRef && !this.wrapperRef.contains(event.target)) {
+            this.setState({ open: false });
+        }
+    }
+
     render() {
         const { loggedUser } = this.props;
+        const dropdownClass = this.state.open ? 'visible' : '';
+
         return (
-            <div>
-                <a className="head-nav-link">
-                    <img alt="@andrerpena" className="avatar" src={loggedUser.photoUrl} height="20" width="20" />
+            <div ref={this.setWrapperRef}>
+                <button className="head-nav-link" onClick={this.handleOpen}>
+                    <img
+                        alt="@andrerpena"
+                        className="avatar"
+                        src={loggedUser.photoUrl}
+                        height="20" width="20" />
                     <i className="fa fa-caret-down" aria-hidden="true" />
-                </a>
-                <div className="dropdown-menu-wrapper">
+                </button>
+                <div className={`dropdown-menu-wrapper ${dropdownClass}`}>
                     <div className="dropdown-menu">
                         <div className="dropdown-header header-nav-current-user css-truncate">
                             Logado como <strong className="css-truncate-target">andrerpena</strong>
@@ -49,7 +82,7 @@ class LoggedUserDropdown extends Component {
     }
 }
 
-LoggedUserDropdown.PropTypes = {
+LoggedUserDropdown.propTypes = {
     loggedUser: PropTypes.object.isRequired
 };
 

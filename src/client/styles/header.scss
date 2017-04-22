@@ -8,4 +8,12 @@ header.header {
     justify-content: space-between;
     height: $header-height;
     position: relative;
+
+    button.head-nav-link {
+        border: none;
+        cursor: pointer;
+        i.fa {
+            margin-left: $gutter-sm * 0.8;
+        }
+    }
 }
