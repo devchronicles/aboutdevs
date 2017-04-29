@@ -7,7 +7,7 @@
     position: absolute;
     width: 200px;
     right:0;
-    background-color: $color-dark-light;
+    background-color: $color-dark-lighter;
     border: 1px solid $color-dark-light-darker;
 
     &.visible {
@@ -19,7 +19,7 @@
         right: 9px;
         position: absolute;
         border: 8px solid transparent;
-        border-bottom-color: #1f364d;
+        border-bottom-color: $color-dark-lighter;
         content: ""
     }
 
@@ -37,7 +37,7 @@
             display: block;
             padding: $gutter-sm;
             &:hover {
-                background-color: $color-dark-lighter;
+                background-color: $color-dark-light;
             }
         }
 
