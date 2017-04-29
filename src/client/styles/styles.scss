@@ -11,8 +11,10 @@
 
 body {
     font-family: 'Roboto', sans-serif;
+    font-size: $font-size;
     background-color: $color-dark;
     color: $color-white;
+    line-height: 1.4em;
     margin: 0;
 
     .page-wrapper {

@@ -1,10 +1,16 @@
 @import '_variables';
 
 // input
+
+input, textarea, select, button {
+    font-size: $font-size;
+}
+
 input[type="text"] {
     padding: $input-padding-vertical $input-padding-horizontal;
     border-radius: $radius-md;
     border: 0;
+    height: 34px;
 }
 
 button, a.button {
