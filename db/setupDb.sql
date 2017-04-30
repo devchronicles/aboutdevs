@@ -2,11 +2,12 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.5.6
--- Dumped by pg_dump version 9.5.6
+-- Dumped from database version 9.6.2
+-- Dumped by pg_dump version 9.6.2
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
@@ -34,34 +35,6 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 --
 
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
-
-
---
--- Name: postgis; Type: EXTENSION; Schema: -; Owner: 
---
-
-CREATE EXTENSION IF NOT EXISTS postgis WITH SCHEMA public;
-
-
---
--- Name: EXTENSION postgis; Type: COMMENT; Schema: -; Owner: 
---
-
-COMMENT ON EXTENSION postgis IS 'PostGIS geometry, geography, and raster spatial types and functions';
-
-
---
--- Name: postgis_topology; Type: EXTENSION; Schema: -; Owner: 
---
-
-CREATE EXTENSION IF NOT EXISTS postgis_topology WITH SCHEMA topology;
-
-
---
--- Name: EXTENSION postgis_topology; Type: COMMENT; Schema: -; Owner: 
---
-
-COMMENT ON EXTENSION postgis_topology IS 'PostGIS topology spatial types and functions';
 
 
 --
@@ -375,7 +348,9 @@ CREATE TABLE "user" (
     display_name character varying(50) NOT NULL,
     email character varying(255) NOT NULL,
     photo_url character varying(255),
-    oauth_profiles json
+    oauth_profiles json,
+    status smallint DEFAULT 0 NOT NULL,
+    type smallint DEFAULT 0 NOT NULL
 );
 
 
@@ -389,28 +364,28 @@ COMMENT ON COLUMN "user".oauth_profiles IS 'A JSON containing information return
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: geo_city id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY geo_city ALTER COLUMN id SET DEFAULT nextval('get_city_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: geo_state id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY geo_state ALTER COLUMN id SET DEFAULT nextval('geo_states_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: notification id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY notification ALTER COLUMN id SET DEFAULT nextval('notification_id_seq'::regclass);
 
 
 --
--- Name: geo_city_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: geo_city geo_city_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY geo_city
@@ -418,7 +393,7 @@ ALTER TABLE ONLY geo_city
 
 
 --
--- Name: geo_states_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: geo_state geo_states_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY geo_state
@@ -426,7 +401,7 @@ ALTER TABLE ONLY geo_state
 
 
 --
--- Name: notification_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: notification notification_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY notification
@@ -434,7 +409,7 @@ ALTER TABLE ONLY notification
 
 
 --
--- Name: user_email_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: user user_email_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY "user"
@@ -442,7 +417,7 @@ ALTER TABLE ONLY "user"
 
 
 --
--- Name: user_id_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: user user_id_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY "user"
@@ -499,7 +474,7 @@ CREATE UNIQUE INDEX user_email_uindex ON "user" USING btree (email);
 
 
 --
--- Name: geo_city_geo_state_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: geo_city geo_city_geo_state_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY geo_city
@@ -507,21 +482,11 @@ ALTER TABLE ONLY geo_city
 
 
 --
--- Name: notification_user_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: notification notification_user_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY notification
     ADD CONSTRAINT notification_user_id_fk FOREIGN KEY (user_id) REFERENCES "user"(id);
-
-
---
--- Name: public; Type: ACL; Schema: -; Owner: postgres
---
-
-REVOKE ALL ON SCHEMA public FROM PUBLIC;
-REVOKE ALL ON SCHEMA public FROM postgres;
-GRANT ALL ON SCHEMA public TO postgres;
-GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
 --

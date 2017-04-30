@@ -8,3 +8,9 @@ $select-padding-horizontal:         $input-padding-horizontal;
 $select-input-height:               34px;
 
 @import '~react-select/scss/default';
+
+// hack
+
+.Select-placeholder, .Select--single > .Select-control .Select-value {
+    top: 1px !important;
+}
