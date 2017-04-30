@@ -17,6 +17,10 @@
             "error",
             "never"
         ],
+        "max-len": [
+            1,
+            140
+        ],
         "linebreak-style": "off",
         "import/prefer-default-export": "off",
         "no-param-reassign": "off",
