@@ -8,21 +8,20 @@
             "name": "Launch",
             "type": "node",
             "request": "launch",
+            "protocol": "inspector",
             "program": "${workspaceRoot}/src/server/index.js",
             "stopOnEntry": false,
             "args": [],
             "cwd": "${workspaceRoot}",
             "preLaunchTask": null,
-            "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/babel-node",
+            "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/babel-node.cmd",
             "runtimeArgs": [
                 "--nolazy"
             ],
             "sourceMaps": true,
             "env": {
                 "NODE_ENV": "development"
-            },
-            "externalConsole": false,
-            "outDir": null
+            }
         },
         {
             "name": "Populate-Cities",
@@ -40,9 +39,7 @@
             "sourceMaps": true,
             "env": {
                 "NODE_ENV": "development"
-            },
-            "externalConsole": false,
-            "outDir": null
+            }
         },
         {
             "type": "node",

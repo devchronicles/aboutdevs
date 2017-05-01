@@ -16,6 +16,9 @@ export default function (passport) {
     passport.deserializeUser((userId, done) => {
         db.user.findOneAsync({ id: userId })
             .then((u) => {
+                if (!u) {
+                    done(null, null);
+                }
                 const user = {
                     id: u.id,
                     displayName: u.display_name,

@@ -41,5 +41,3 @@ commands[selectedCommand].split('\n').forEach((command) => {
     console.log(exec.execSync(command).toString());
 });
 
-
-
