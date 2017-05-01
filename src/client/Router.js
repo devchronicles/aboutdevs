@@ -12,8 +12,8 @@ import LoginPage from './pages/LoginPage';
 const RouterPage = () => (
     <BrowserRouter>
         <Switch>
-            <Route exact path="/" component={App} />
             <Route exact path="/login" component={LoginPage} />
+            <Route path="/" component={App} />
         </Switch>
     </BrowserRouter>);
 

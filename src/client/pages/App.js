@@ -1,13 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Switch, Route } from 'react-router';
 import Header from '../components/Header';
 import IndexPage from './IndexPage';
+import EditProfilePage from './EditProfilePage';
+
 
 const App = ({ loggedUser }) => (
     <div className="container">
         <Header loggedUser={loggedUser} />
-        <IndexPage />
+        <Switch>
+            <Route exact path="/config/edituserprofile" component={EditProfilePage} />
+            <Route exact path="/" component={IndexPage} />
+        </Switch>
     </div>
 );
 
