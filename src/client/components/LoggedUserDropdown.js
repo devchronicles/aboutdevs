@@ -53,7 +53,8 @@ class LoggedUserDropdown extends Component {
                         alt="@andrerpena"
                         className="avatar"
                         src={loggedUser.photoUrl}
-                        height="20" width="20" />
+                        height="20" width="20"
+                    />
                     <i className="fa fa-caret-down" aria-hidden="true" />
                 </button>
                 <div className={`dropdown-menu-wrapper ${dropdownClass}`}>

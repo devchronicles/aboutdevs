@@ -31,9 +31,8 @@ const stateShorts = {
     Tocantins: 'TO'
 };
 
-const stateAlias = {
-    'Federal District': 'Distrito Federal'
-};
+const federalDistrictKey = 'Federal District';
+const federalDistrictRealName = 'Distrito Federal';
 
 /**
  * Returns a promise that, when resolved, returns a list of all children of the given geonameId
@@ -67,6 +66,9 @@ getGeonameChildrenAsync(3469034)
         states.forEach((state) => {
             state.shortname = stateShorts[state.name];
             if (!state.shortname) throw Error(`Could not find shortname for ${state.name}`);
+            if (state.name === federalDistrictKey) {
+                state.name = federalDistrictRealName;
+            }
         });
         return states;
     })

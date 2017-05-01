@@ -1,7 +1,11 @@
 import { assert } from 'chai';
 import setupSession from './setupSession';
 import googleProfileSample from './resources/googleProfileSample';
-import { createFromGoogleProfile, updateFromGoogleProfile, findOrCreateFromGoogleProfile } from '../../../src/server/db/entityHelpers/userHelper';
+import {
+    createFromGoogleProfile,
+    updateFromGoogleProfile,
+    findOrCreateFromGoogleProfile
+} from '../../../src/server/db/entityHelpers/userHelper';
 
 
 describe('userHelper', () => {
