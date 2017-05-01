@@ -1,5 +1,6 @@
 import activity from 'react-activity';
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 const Dots = activity.Dots;
 

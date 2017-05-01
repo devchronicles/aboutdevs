@@ -1,5 +1,6 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import LoggedUserDropdown from './LoggedUserDropdown';
 
 const Header = ({ loggedUser }) => {
@@ -15,7 +16,7 @@ const Header = ({ loggedUser }) => {
     </header>);
 };
 
-Header.PropTypes = {
+Header.propTypes = {
     loggedUser: PropTypes.object.isRequired
 };
 
