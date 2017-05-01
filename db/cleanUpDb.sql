@@ -1,0 +1,1 @@
+TRUNCATE "geo_city", "geo_state", "notification", "user"

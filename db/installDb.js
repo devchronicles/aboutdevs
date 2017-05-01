@@ -17,10 +17,16 @@ const commands = {
         psql -f db/setupDb.sql -U ${userName} -d ${dbTestsName}
     `,
     drop_dev_dbs: `
-        echo ===dropping the ${dbName} dev db===
+        echo ===Dropping the ${dbName} dev db===
         dropdb -U ${userName} ${dbName}
-        echo ===dropping the ${dbTestsName} dev db===
+        echo ===Dropping the ${dbTestsName} dev db===
         dropdb -U ${userName} ${dbTestsName}
+    `,
+    clean_up_dev_dbs: `
+        echo ===Cleaning up the ${dbName} dev db===
+        psql -f db/cleanUpDb.sql -U ${userName} -d ${dbName}
+        echo ===dropping the ${dbTestsName} dev db===
+        psql -f db/cleanUpDb.sql -U ${userName} -d ${dbTestsName}
     `,
     generate_scripts: `
         echo ===Create the setupDb.sql file===
@@ -28,10 +34,10 @@ const commands = {
     `
 };
 
-console.log("===Starting DB Command===");
+console.log('===Starting DB Command===');
 console.log(`Executing ${selectedCommand}`);
 
-commands[selectedCommand].split('\n').forEach(command => {
+commands[selectedCommand].split('\n').forEach((command) => {
     console.log(exec.execSync(command).toString());
 });
 
