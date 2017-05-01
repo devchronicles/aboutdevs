@@ -1,7 +1,6 @@
 import { applyMiddleware, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import reducers from './reducers';
-import observe from './storeObserver';
 
 
 export default (initialState = {}) => {
@@ -25,11 +24,6 @@ export default (initialState = {}) => {
             /*eslint-enable*/
         });
     }
-
-    observe(store,
-        state => state.routing.locationBeforeTransitions.search,
-        (s, previousValue, currentValue) => console.log('Some property changed from ', previousValue, 'to', currentValue)
-    );
 
     return store;
 };

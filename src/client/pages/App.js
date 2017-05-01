@@ -1,11 +1,12 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
+import IndexPage from './IndexPage';
 
-const App = ({ loggedUser, children }) => (
+const App = ({ loggedUser }) => (
     <div className="container">
         <Header loggedUser={loggedUser} />
-        {children}
+        <IndexPage />
     </div>
 );
 
