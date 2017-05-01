@@ -9,6 +9,11 @@ header.header {
     height: $header-height;
     position: relative;
 
+    a.logo {
+        text-decoration: none;
+        color: $color-white;
+    }
+
     button.head-nav-link {
         border: none;
         cursor: pointer;

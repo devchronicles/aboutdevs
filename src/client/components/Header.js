@@ -9,9 +9,9 @@ const Header = ({ loggedUser }) => {
         : <Link to="/login" className="button vibrant" >Entrar</Link>;
 
     return (<header className="header">
-        <a className="logo">
+        <Link to="/" className="logo">
             INDIE JOBS
-            </a>
+            </Link>
         {rightComponent}
     </header>);
 };
