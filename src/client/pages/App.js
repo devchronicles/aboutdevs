@@ -4,14 +4,14 @@ import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router';
 import Header from '../components/Header';
 import IndexPage from './IndexPage';
-import EditProfilePage from './EditProfilePage';
+import ProfileEditPage from './ProfileEditPage';
 
 
 const App = ({ loggedUser }) => (
     <div className="container">
         <Header loggedUser={loggedUser} />
         <Switch>
-            <Route exact path="/config/edituserprofile" component={EditProfilePage} />
+            <Route exact path="/config/edituserprofile" component={ProfileEditPage} />
             <Route exact path="/" component={IndexPage} />
         </Switch>
     </div>

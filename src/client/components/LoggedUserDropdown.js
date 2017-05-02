@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 class LoggedUserDropdown extends Component {
 
     constructor(props) {
         super(props);
         this.handleOpen = this.handleOpen.bind(this);
+        this.handleLinkClick = this.handleLinkClick.bind(this);
         this.setWrapperRef = this.setWrapperRef.bind(this);
         this.handleClickOutside = this.handleClickOutside.bind(this);
         this.state = {
@@ -31,6 +33,10 @@ class LoggedUserDropdown extends Component {
 
     handleOpen() {
         this.setState({ open: !this.state.open });
+    }
+
+    handleLinkClick() {
+        this.setState({ open: false });
     }
 
     /**
@@ -60,23 +66,30 @@ class LoggedUserDropdown extends Component {
                 <div className={`dropdown-menu-wrapper ${dropdownClass}`}>
                     <div className="dropdown-menu">
                         <div className="dropdown-header header-nav-current-user css-truncate">
-                            Logado como <strong className="css-truncate-target">andrerpena</strong>
+                            Olá, <strong className="css-truncate-target">andrerpena</strong>
                         </div>
                         <div className="dropdown-divider" />
-                        <a
+                        <Link
                             className="dropdown-item"
-                            href="/andrerpena"
-                            data-ga-click="Header, go to profile, text:your profile"
+                            to={`/${loggedUser.id}`}
+                            onClick={this.handleLinkClick}
                         >
                             Seu perfil
-                        </a>
-                        <a
+                        </Link>
+                        <Link
                             className="dropdown-item"
-                            href="/auth/logout"
-                            data-ga-click="Header, go to profile, text:your profile"
+                            to="/config/edituserprofile"
+                            onClick={this.handleLinkClick}
+                        >
+                            Editar perfil
+                        </Link>
+                        <Link
+                            className="dropdown-item"
+                            to="/auth/logout"
+                            onClick={this.handleLinkClick}
                         >
                             Sair
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </div>

@@ -1,0 +1,32 @@
+@import '_variables';
+@import '_mixins';
+
+// contains styles for the "document" pages (view and edit)
+
+.document-wrapper {
+    @include elastic-width($max-container-width + 2 * $gutter-md);
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding:0;
+
+    .document {
+        min-height: 200px;
+        box-sizing: border-box;
+        margin: $gutter-md;
+        background-color: $color-dark-light;
+        border-radius: $radius-md;
+
+        .image {
+            margin-top: $gutter-sm;
+            box-sizing: border-box;
+            border: 12px solid $color-dark;
+            padding: $gutter-md;
+            height: 134px;
+            width: 134px;
+            border-radius: 9999px;
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+        }
+    }
+}
