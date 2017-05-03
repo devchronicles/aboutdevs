@@ -1,9 +1,9 @@
 import express from 'express';
 import db from '../db/db';
 import fbinder from '../expressMassiveBinders/functionBinder';
+import * as apiHelper from '../apiHelper';
 
 const router = express.Router();
-
 
 /**
  * Test API
@@ -14,42 +14,49 @@ router.route('/cities').get(fbinder.bind(q => q.q, db.search_cities, (q) => {
     return finalCriteria;
 }));
 
+router.route('/users/getmyprofiledataforediting').get((req, res) => {
+    try {
+        const user = req.user ? req.user : null;
+        if (user === null) {
+            throw Error('The user is not logged in');
+        }
+        db.user.findOneAsync({ id: user.id })
+            .then((u) => {
+                if (u) {
+                    apiHelper.sendOk(res, {
+                        id: u.id,
+                        name: '',
+                        displayName: u.display_name,
+                        photoUrl: u.photo_url
+                    });
+                } else {
+                    apiHelper.sendError(res, 'Could not find user');
+                }
+            })
+            .catch(apiHelper.apiExceptionCatcher(res));
+    } catch (ex) {
+        apiHelper.sendError(res, ex);
+    }
+});
+
 /**
  * Get user
  */
 router.route('/users/:id').get((req, res) => {
-    const entityId = req.params.id;
-    db.user.findOneAsync({ id: entityId })
-        .then((u) => {
-            if (u) { res.status(200).send(u); } else {
-                res.status(404).send({
-                    error: 'Could not find user'
-                });
-            }
-        });
-});
-
-router.route('/users/getmyprofiledataforediting').get((req, res) => {
-    const user = req.user ? req.user : null;
-    if (user === null) {
-        throw Error('No user is logged in');
+    try {
+        const entityId = req.params.id;
+        db.user.findOneAsync({ id: entityId })
+            .then((u) => {
+                if (u) {
+                    apiHelper.sendOk(res, u);
+                } else {
+                    apiHelper.sendError(res, 'Could not find user');
+                }
+            })
+            .catch(apiHelper.apiExceptionCatcher(res));
+    } catch (ex) {
+        apiHelper.sendError(res, ex);
     }
-    console.log(user);
-    db.user.findOneAsync({ id: user.id })
-        .then((u) => {
-            if (u) {
-                res.status(200).send({
-                    id: u.id,
-                    name: '',
-                    displayName: u.displayName,
-                    photoUrl: u.photoUrl
-                });
-            } else {
-                res.status(404).send({
-                    error: 'Could not find user'
-                });
-            }
-        });
 });
 
 export default router;
