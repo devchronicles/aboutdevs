@@ -29,4 +29,27 @@ router.route('/users/:id').get((req, res) => {
         });
 });
 
+router.route('/users/getmyprofiledataforediting').get((req, res) => {
+    const user = req.user ? req.user : null;
+    if (user === null) {
+        throw Error('No user is logged in');
+    }
+    console.log(user);
+    db.user.findOneAsync({ id: user.id })
+        .then((u) => {
+            if (u) {
+                res.status(200).send({
+                    id: u.id,
+                    name: '',
+                    displayName: u.displayName,
+                    photoUrl: u.photoUrl
+                });
+            } else {
+                res.status(404).send({
+                    error: 'Could not find user'
+                });
+            }
+        });
+});
+
 export default router;

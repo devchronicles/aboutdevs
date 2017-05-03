@@ -1,29 +1,41 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 
+
 const SimpleForm = (props) => {
     const { handleSubmit, pristine, reset, submitting } = props;
     return (
         <form onSubmit={handleSubmit}>
             <div>
-                <label htmlFor="firstName">First Name</label>
+                <label htmlFor="name">First Name</label>
                 <div>
                     <Field
-                        name="firstName"
+                        name="name"
                         component="input"
                         type="text"
-                        placeholder="First Name"
+                        placeholder="name"
                     />
                 </div>
             </div>
             <div>
-                <label htmlFor="lastName">Last Name</label>
+                <label htmlFor="displayName">Last Name</label>
                 <div>
                     <Field
-                        name="lastName"
+                        name="displayName"
                         component="input"
                         type="text"
-                        placeholder="Last Name"
+                        placeholder="display name"
+                    />
+                </div>
+            </div>
+            <div>
+                <label htmlFor="photoUrl">Last Name</label>
+                <div>
+                    <Field
+                        name="photoUrl"
+                        component="input"
+                        type="text"
+                        placeholder="photo url"
                     />
                 </div>
             </div>

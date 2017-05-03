@@ -1,0 +1,11 @@
+- loggedUser
+    - id: number,
+    - displayName: string,
+    - photoUrl: string
+- forms
+    - profileEdit
+        - id: number
+        - name
+        - displayName: string
+        - photoUrl
+        

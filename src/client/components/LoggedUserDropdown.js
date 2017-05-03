@@ -49,7 +49,7 @@ class LoggedUserDropdown extends Component {
     }
 
     render() {
-        const { loggedUser } = this.props;
+        const { loggedUser: { id, displayName, photoUrl } } = this.props;
         const dropdownClass = this.state.open ? 'visible' : '';
 
         return (
@@ -58,7 +58,7 @@ class LoggedUserDropdown extends Component {
                     <img
                         alt="@andrerpena"
                         className="avatar"
-                        src={loggedUser.photoUrl}
+                        src={photoUrl}
                         height="20" width="20"
                     />
                     <i className="fa fa-caret-down" aria-hidden="true" />
@@ -66,12 +66,12 @@ class LoggedUserDropdown extends Component {
                 <div className={`dropdown-menu-wrapper ${dropdownClass}`}>
                     <div className="dropdown-menu">
                         <div className="dropdown-header header-nav-current-user css-truncate">
-                            Olá, <strong className="css-truncate-target">andrerpena</strong>
+                            Olá, <strong className="css-truncate-target">{displayName}</strong>
                         </div>
                         <div className="dropdown-divider" />
                         <Link
                             className="dropdown-item"
-                            to={`/${loggedUser.id}`}
+                            to={`/${id}`}
                             onClick={this.handleLinkClick}
                         >
                             Seu perfil
