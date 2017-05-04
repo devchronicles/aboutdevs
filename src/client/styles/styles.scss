@@ -1,13 +1,19 @@
 @import '_variables';
-@import 'forms.scss';
+@import '_mixins';
+@import 'flex-helpers';
+
+@import 'forms';
 @import 'header';
 @import 'logged-user-dropdown-menu';
-@import 'document.scss';
+@import 'document';
+@import 'document-view-profile';
+@import 'document-edit-profile';
 @import 'search-bar';
 @import 'profile-card';
 @import 'search-result';
 @import 'react-select';
 @import 'login-page';
+
 
 body {
     font-family: 'Roboto', sans-serif;

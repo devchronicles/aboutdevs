@@ -24,7 +24,8 @@
     }
 
     .search-criteria {
-        width: 500px + 2 * $gutter-sm;
+        max-width: 500px + 2 * $gutter-sm;
+        width: 100%;
 
         .advanced-search {
             display: flex;

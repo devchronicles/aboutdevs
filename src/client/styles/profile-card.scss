@@ -102,14 +102,6 @@
             }
         }
 
-        button {
-            border: 1px solid $color-white;
-            background: transparent;
-            &:hover {
-                border-color: $color-shining-4;
-                background-image: linear-gradient(to right,$color-shining-3,$color-shining-4);
-            }
-        }
     }
 
     &:hover {

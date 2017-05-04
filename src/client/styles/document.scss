@@ -4,7 +4,7 @@
 // contains styles for the "document" pages (view and edit)
 
 .document-wrapper {
-    @include elastic-width($max-container-width + 2 * $gutter-md);
+    @include elastic-width($max-container-width);
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -13,12 +13,14 @@
     .document {
         min-height: 200px;
         box-sizing: border-box;
-        margin: $gutter-md;
         background-color: $color-dark-light;
         border-radius: $radius-md;
 
+        .document-section {
+            padding: $gutter-md;
+        }
+
         .image {
-            margin-top: $gutter-sm;
             box-sizing: border-box;
             border: 12px solid $color-dark;
             padding: $gutter-md;
