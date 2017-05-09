@@ -26,19 +26,7 @@ class ProfileEditPage extends Component {
 
         return (<div className="page-wrapper">
             <div className="document-wrapper">
-                <div className="document">
-                    <div className="document-edit-header">
-                        <div className="document-section flex-v-center">
-                            <div className="image" style={{ backgroundImage: `url(${loggedUser.photoUrl})` }} />
-                            <div className="edit-profile-image-button-wrapper">
-                                <button className="edit-profile-image-button">Alterar imagem de perfil</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="document-section">
-                        <ProfileEditForm onSubmit={this.onFormSubmit} initialValues={formValues} />
-                    </div>
-                </div>
+                <ProfileEditForm onSubmit={this.onFormSubmit} initialValues={formValues} loggedUser={loggedUser} />
             </div>
         </div>);
     }
