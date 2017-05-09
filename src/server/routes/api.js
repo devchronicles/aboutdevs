@@ -2,6 +2,7 @@ import express from 'express';
 import db from '../db/db';
 import fbinder from '../expressMassiveBinders/functionBinder';
 import * as apiHelper from '../apiHelper';
+import { extractUserNameFromEmail } from '../db/entityHelpers/userHelper';
 
 const router = express.Router();
 
@@ -25,7 +26,7 @@ router.route('/users/getmyprofiledataforediting').get((req, res) => {
                 if (u) {
                     apiHelper.sendOk(res, {
                         id: u.id,
-                        name: '',
+                        name: extractUserNameFromEmail(u.email),
                         displayName: u.display_name,
                         photoUrl: u.photo_url
                     });
