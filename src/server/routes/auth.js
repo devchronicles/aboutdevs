@@ -47,7 +47,7 @@ router.route('/verifyuserprofile').get((req, res) => {
 
 router.get('/logout', (req, res) => {
     req.logout();
-    res.redirect('/');
+    redirectToHome(res);
 });
 
 export default router;
