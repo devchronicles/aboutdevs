@@ -83,13 +83,12 @@ class LoggedUserDropdown extends Component {
                         >
                             Editar perfil
                         </Link>
-                        <Link
+                        <a
                             className="dropdown-item"
-                            to="/auth/logout"
-                            onClick={this.handleLinkClick}
+                            href="/auth/logout"
                         >
                             Sair
-                        </Link>
+                        </a>
                     </div>
                 </div>
             </div>
