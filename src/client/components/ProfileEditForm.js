@@ -1,6 +1,8 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import FormGroup from './FormGroup';
+import FormRow from './FormRow';
+import InputGroup from './InputGroup';
 
 
 const SimpleForm = (props) => {
@@ -16,28 +18,36 @@ const SimpleForm = (props) => {
                         <div className="edit-profile-image-button-wrapper">
                             <button className="edit-profile-image-button">Alterar imagem de perfil</button>
                         </div>
-                        <FormGroup label="Seu nome de usuário / URL" labelFor="name">
-                            <Field
-                                name="name"
-                                component="input"
-                                type="text"
-                                placeholder="name"
-                            />
-                        </FormGroup>
+                        <FormRow>
+                            <FormGroup label="Nome do usuário" labelFor="name" help="A URL acima será publicamente visível se você for um profissional.">
+                                <InputGroup addOnBefore="http://indiejobs.com.br/">
+                                    <Field
+                                        name="name"
+                                        component="input"
+                                        type="text"
+                                        placeholder="name"
+                                        className="form-control"
+                                    />
+                                </InputGroup>
+                            </FormGroup>
+                        </FormRow>
+
+                        <FormRow>
+                            <FormGroup label="Nome de exibição" labelFor="displayName" help="É assim que seu nome será exibido aos outros." >
+                                <InputGroup>
+                                    <Field
+                                        name="displayName"
+                                        component="input"
+                                        type="text"
+                                        placeholder="Nome de exibição"
+                                        className="form-control"
+                                    />
+                                </InputGroup>
+                            </FormGroup>
+                        </FormRow>
                     </div>
                 </div>
                 <div className="document-section">
-                    <div>
-                        <label htmlFor="displayName">Last Name</label>
-                        <div>
-                            <Field
-                                name="displayName"
-                                component="input"
-                                type="text"
-                                placeholder="display name"
-                            />
-                        </div>
-                    </div>
                     <div>
                         <label htmlFor="photoUrl">Last Name</label>
                         <div>

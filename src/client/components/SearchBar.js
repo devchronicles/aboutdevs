@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import FormGroup from './FormGroup';
 import SelectCity from './SelectCity';
+import FormRow from './FormRow';
+import FormColumn from './FormColumn';
 
 class SearchBar extends Component {
 
@@ -45,25 +47,25 @@ class SearchBar extends Component {
 
         return (<div className="search-criteria">
             <div className="advanced-search form">
-                <div className="form-row stretch">
-                    <div className="form-column eq">
+                <FormRow>
+                    <FormColumn eq>
                         <FormGroup label="Profissional" labelFor="text">
                             <input type="text" name="text" value={professional} onChange={this.handleProfessionalChange} />
                         </FormGroup>
-                    </div>
-                </div>
-                <div className="form-row stretch">
-                    <div className="form-column" style={{ width: '60%' }}>
+                    </FormColumn>
+                </FormRow>
+                <FormRow>
+                    <FormColumn style={{ width: '60%' }}>
                         <FormGroup label="Cidade" labelFor="text">
                             <SelectCity value={city} onChange={this.handleCityChange} />
                         </FormGroup>
-                    </div>
-                    <div className="form-column" style={{ width: '40%' }}>
+                    </FormColumn>
+                    <FormColumn style={{ width: '40%' }}>
                         <FormGroup label="Bairro" labelFor="text">
                             <input type="text" name="text" value={neighborhood} onChange={this.handleNeighborhoodChanged} />
                         </FormGroup>
-                    </div>
-                </div>
+                    </FormColumn>
+                </FormRow>
                 <button className="vibrant">Pesquisar</button>
             </div>
         </div>);

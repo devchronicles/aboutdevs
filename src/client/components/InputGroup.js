@@ -1,12 +1,15 @@
 import React from 'react';
 
-const InputGroup = ({ label, addOnBefore, children }) => {
+const InputGroup = ({ addOnBefore, addOnAfter, children }) => {
 
-    const addOnBeforeComponent = addOnBefore ? <span className="input-group-addon">https://example.com/users/</span> : null;
+    const addOnBeforeComponent = addOnBefore ? <span className="input-group-addon">{addOnBefore}</span> : null;
+    const addOnAfterComponent = addOnAfter ? <span className="input-group-addon">{addOnAfter}</span> : null;
+
     return (
         <div className="input-group">
-            <addOnBeforeComponent />
+            {addOnBeforeComponent}
             {children}
+            {addOnAfterComponent}
         </div>
     );
 };
