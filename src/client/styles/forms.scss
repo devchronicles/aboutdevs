@@ -19,13 +19,12 @@ button, a.button {
     color: $color-white;
     padding: $input-padding-vertical $input-padding-horizontal;
 
-    border: 1px solid white;
+    border: 1px solid $color-white;
     background: transparent;
     
     border-radius: $radius-md;
     cursor: pointer;
     font-weight: 600;
-
 
     &:hover {
         border-color: $color-shining-4;
@@ -35,6 +34,9 @@ button, a.button {
     &.vibrant {
         border: 0;
         background-image: linear-gradient(to right,$color-shining-1,$color-shining-2);
+        &:hover {
+            background-image: linear-gradient(to right,$color-shining-3,$color-shining-4);
+        }
     }
 
     &.no-border {
@@ -47,6 +49,7 @@ button, a.button {
 
 // forms
 form, *.form {
+    margin: 0;
     .form-row {
         display: flex;
         flex-direction: row;
