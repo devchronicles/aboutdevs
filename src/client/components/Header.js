@@ -12,7 +12,26 @@ const Header = ({ loggedUser }) => {
         <Link to="/" className="logo">
             INDIE JOBS
             </Link>
-        {rightComponent}
+        <ul>
+            <li>
+                <a href="#">Quanto custa?</a>
+            </li>
+            <li>
+                <a href="#">Como funciona?</a>
+            </li>
+            <li>
+                <a href="#">Perguntas frequentes</a>
+            </li>
+            <li>
+                <a href="#">Blog</a>
+            </li>
+            <li>
+                <a href="#">Contato</a>
+            </li>
+            <li>
+                {rightComponent}
+            </li>
+        </ul>
     </header>);
 };
 

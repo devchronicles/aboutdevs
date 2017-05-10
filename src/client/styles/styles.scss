@@ -39,3 +39,12 @@ body {
         align-items: center;
     }
 }
+
+li {
+    list-style: none;
+}
+
+a {
+    color: $color-white;
+    text-decoration: none;
+}

@@ -9,6 +9,17 @@ header.header {
     height: $header-height;
     position: relative;
 
+    ul {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        li {
+            padding-left: $gutter-md;
+            display: flex;
+            justify-content: center;
+        }
+    }
+
     a.logo {
         text-decoration: none;
         color: $color-white;
