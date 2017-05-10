@@ -78,6 +78,13 @@ class LoggedUserDropdown extends Component {
                         </Link>
                         <Link
                             className="dropdown-item"
+                            to={'/'}
+                            onClick={this.handleLinkClick}
+                        >
+                            Suas conexões
+                        </Link>
+                        <Link
+                            className="dropdown-item"
                             to="/config/edituserprofile"
                             onClick={this.handleLinkClick}
                         >
