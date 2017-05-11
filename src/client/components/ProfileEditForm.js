@@ -47,7 +47,10 @@ const SimpleForm = (props) => {
                 <div className="document-section flex-column flex-align-items-center">
                     <FormRow>
                         <FormGroup label="Tipo de usuário" labelFor="displayName" help="Selecione 'Sou um profissional' se você tem interesse em criar um perfil público para divulgar seus serviços. Caso contrário, selecione 'Estou em busca de profissionais'." >
-                            <UserTypeToggle userType={0} onChange={() => { }} />
+                            <Field
+                                name="type"
+                                component={UserTypeToggle}
+                            />
                         </FormGroup>
                     </FormRow>
                     <FormRow>

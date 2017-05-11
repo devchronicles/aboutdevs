@@ -15,11 +15,18 @@
         &:not(:hover) {
             color: $color-dark-lightest;
         }
+        
         &.pushed {
             color: $color-white;
             .fa {
+                display: "inline-block";
                 color: $color-shining-1;
                 margin-right: $gutter-xs;
+            }
+        }
+        &:not(.pushed) {
+            .fa {
+                display: none;
             }
         }
     }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import ProfileEditForm from '../components/ProfileEditForm';
@@ -22,7 +23,6 @@ class ProfileEditPage extends Component {
 
     render() {
         const { loggedUser, formValues } = this.props;
-        console.log(formValues);
 
         return (<div className="page-wrapper">
             <div className="document-wrapper">
@@ -32,6 +32,16 @@ class ProfileEditPage extends Component {
     }
 }
 
+ProfileEditPage.propTypes = {
+    loggedUser: PropTypes.object.isRequired,
+    actions: PropTypes.object,
+    formValues: PropTypes.object
+};
+
+ProfileEditPage.defaultProps = {
+    actions: undefined,
+    formValues: undefined
+};
 
 const mapStateToProps = state => ({
     loggedUser: state.loggedUser,

@@ -28,7 +28,8 @@ router.route('/users/getmyprofiledataforediting').get((req, res) => {
                         id: u.id,
                         name: extractUserNameFromEmail(u.email),
                         displayName: u.display_name,
-                        photoUrl: u.photo_url
+                        photoUrl: u.photo_url,
+                        type: u.type
                     });
                 } else {
                     apiHelper.sendError(res, 'Could not find user');

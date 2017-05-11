@@ -18,7 +18,6 @@ export function profileEditLoadData() {
                         dispatch({ type: PROFILE_EDIT_LOAD_ERROR });
                         break;
                     case 200:
-                        console.log(response.data);
                         dispatch({ type: PROFILE_EDIT_LOAD_SUCCESS, payload: response.data });
                         dispatch(initialize('profile-edit', response.data));
                         break;
