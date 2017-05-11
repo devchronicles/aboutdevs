@@ -3,4 +3,24 @@
 
 .edit-profile-image-button-wrapper {
     margin: $gutter-md 0;
+
+    
+}
+
+.user-type-toggle {
+    box-sizing: border-box;
+    width: 100%;
+    button {
+        flex: 1 1 auto;
+        &:not(:hover) {
+            color: $color-dark-lightest;
+        }
+        &.pushed {
+            color: $color-white;
+            .fa {
+                color: $color-shining-1;
+                margin-right: $gutter-xs;
+            }
+        }
+    }
 }

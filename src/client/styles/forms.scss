@@ -7,10 +7,13 @@ input, textarea, select, button {
     color: #333;
 }
 
-input[type="text"] {
+input[type="text"], textarea {
     padding: $input-padding-vertical $input-padding-horizontal;
     border-radius: $radius-md;
     border: 0;
+}
+
+input[type="text"] {
     height: 34px;
 }
 
@@ -117,7 +120,7 @@ form, *.form {
 // button-group
 .button-group {
     display: flex;
-    align-items: row;
+    flex-direction: row;
 
     button:first-child:not(:last-child) {
         border-bottom-right-radius: 0;
@@ -134,9 +137,8 @@ form, *.form {
     }
 
     button {
-        border-color: lighten($color-dark-light, 5%);
         &.pushed {
-            background: lighten($color-dark-light, 5%);
+            box-shadow: inset $color-shadow;
         }
     }
 }
@@ -144,5 +146,6 @@ form, *.form {
 .form-text {
     display: block;
     color: $color-dark-lightest;
-    padding-top: $gutter-xs;
+    padding-top: $gutter-sm;
+    line-height: 1.2em;
 }

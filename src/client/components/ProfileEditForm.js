@@ -30,7 +30,6 @@ const SimpleForm = (props) => {
                             </InputGroup>
                         </FormGroup>
                     </FormRow>
-
                     <FormRow>
                         <FormGroup label="Nome de exibição" labelFor="displayName" help="É assim que seu nome será exibido aos outros." >
                             <InputGroup>
@@ -42,6 +41,57 @@ const SimpleForm = (props) => {
                                     className="form-control"
                                 />
                             </InputGroup>
+                        </FormGroup>
+                    </FormRow>
+                </div>
+                <div className="document-section flex-column flex-align-items-center">
+                    <FormRow>
+                        <FormGroup label="Tipo de usuário" labelFor="displayName" help="Selecione 'Sou um profissional' se você tem interesse em criar um perfil público para divulgar seus serviços. Caso contrário, selecione 'Estou em busca de profissionais'." >
+                            <UserTypeToggle userType={0} onChange={() => { }} />
+                        </FormGroup>
+                    </FormRow>
+                    <FormRow>
+                        <FormGroup label="Profissão" labelFor="profession" help="Escreva o que melhor descreve a sua profissão." >
+                            <InputGroup>
+                                <Field
+                                    name="profession"
+                                    component="input"
+                                    type="text"
+                                    className="form-control"
+                                />
+                            </InputGroup>
+                        </FormGroup>
+                    </FormRow>
+                    <FormRow>
+                        <FormGroup label="Área de atuação" labelFor="professional-area" help="Escolha a área de atuação que melhor descreve suas atividades.">
+                            <InputGroup>
+                                <Field
+                                    name="professional-area"
+                                    component="input"
+                                    type="text"
+                                    className="form-control"
+                                />
+                            </InputGroup>
+                        </FormGroup>
+                    </FormRow>
+                    <FormRow>
+                        <FormGroup label="Biografia" labelFor="displayName" help="Fale um pouco sobre você, sua formação e sua carreira." >
+                            <Field
+                                name="bio"
+                                component="textarea"
+                                type="text"
+                                className="form-control"
+                            />
+                        </FormGroup>
+                    </FormRow>
+                    <FormRow>
+                        <FormGroup label="Servições que você presta" labelFor="activities" help="Descreva, brevemente, os tipos de serviço que você presta." >
+                            <Field
+                                name="activities"
+                                component="textarea"
+                                type="text"
+                                className="form-control"
+                            />
                         </FormGroup>
                     </FormRow>
                 </div>

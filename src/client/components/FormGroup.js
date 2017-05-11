@@ -8,12 +8,16 @@ const FormGroup = ({ label, labelFor, help, children }) => {
         {children}
         {helpComponent}
     </div>);
-}
+};
 
 FormGroup.propTypes = {
     label: PropTypes.string.isRequired,
-    labelFor: PropTypes.string.isRequired,
+    labelFor: PropTypes.string,
     children: PropTypes.object.isRequired
+};
+
+FormGroup.defaultProps = {
+    labelFor: null
 };
 
 export default FormGroup;
