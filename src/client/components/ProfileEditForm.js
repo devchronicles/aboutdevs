@@ -66,22 +66,11 @@ const SimpleForm = (props) => {
                         </FormGroup>
                     </FormRow>
                     <FormRow>
-                        <FormGroup label="Área de atuação" labelFor="professional-area" help="Escolha a área de atuação que melhor descreve suas atividades.">
-                            <InputGroup>
-                                <Field
-                                    name="professional-area"
-                                    component="input"
-                                    type="text"
-                                    className="form-control"
-                                />
-                            </InputGroup>
-                        </FormGroup>
-                    </FormRow>
-                    <FormRow>
                         <FormGroup label="Biografia" labelFor="displayName" help="Fale um pouco sobre você, sua formação e sua carreira." >
                             <Field
                                 name="bio"
                                 component="textarea"
+                                rows={6}
                                 type="text"
                                 className="form-control"
                             />
@@ -92,6 +81,7 @@ const SimpleForm = (props) => {
                             <Field
                                 name="activities"
                                 component="textarea"
+                                rows={6}
                                 type="text"
                                 className="form-control"
                             />
