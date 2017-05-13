@@ -37,7 +37,7 @@ describe('geocodeApiHelper', () => {
             .then((res) => {
                 assert.equal(res.length, 1);
                 assert.equal(res[0].friendlyName, 'Rua Morais e Castro, 300, Passos, Juiz de Fora, MG');
-                assert.equal(res[0].id, 'R. Morais e Castro, 300 - Passos, Juiz de Fora - MG, 36026-500, Brazil');
+                assert.equal(res[0].id, 'R. Morais e Castro, 300 - Passos, Juiz de Fora - MG, 36025-160, Brazil');
                 done();
             })
             .catch(done);

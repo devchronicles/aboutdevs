@@ -1,6 +1,14 @@
 import axios from 'axios';
 import config from '../../../config/config';
 
+/**
+ * Validates if the result corresponds to a valid address.
+ */
+function validateResult(result) {
+    // States and countries are not allowed. The address must necessarity have a route (street)
+    return result.address_components.filter(c => c.types.includes('route')).length > 0;
+}
+
 function findAddressComponentByType(result, type) {
     if (result === null || result === undefined) throw Error('Argument \'result\' should be null or undefined');
     if (type === null || type === undefined) throw Error('Argument \'type\' should be null or undefined');
@@ -60,13 +68,14 @@ export default {
             }
             const encodedAddress = encodeURIComponent(partialAddress);
             const key = config.google.geocodeApiKey;
-            const googleGeoCodeApiAdress = `https://maps.google.com/maps/api/geocode/json?address=${encodedAddress}&key=${key}`;
+            const googleGeoCodeApiAdress = `https://maps.google.com/maps/api/geocode/json?address=${encodedAddress}&components=country:BR&key=${key}`;
             axios.get(googleGeoCodeApiAdress)
                 .then((res) => {
+                    console.log(JSON.stringify(res.data, null, 4));
                     if (res.data.errorMessage) {
                         reject(res.data.errorMessage);
                     } else {
-                        const result = res.data.results.map(getFriendlyAddress);
+                        const result = res.data.results.filter(validateResult).map(getFriendlyAddress);
                         fulfill(result);
                     }
                 })

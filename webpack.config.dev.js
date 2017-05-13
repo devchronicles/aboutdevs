@@ -16,10 +16,6 @@ module.exports = {
 
     devtool: 'source-map',
 
-    resolve: {
-        extensions: ['.js', '.jsx', '.json']
-    },
-
     module: {
         rules: [
             { test: /\.js|\.jsx/, use: ['react-hot-loader/webpack', 'babel-loader'] },
