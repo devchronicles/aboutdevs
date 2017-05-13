@@ -54,10 +54,13 @@ function getFriendlyAddress(result) {
 
 export default {
     getAddresses(partialAddress) {
-        const encodedAddress = encodeURIComponent(partialAddress);
-        const key = config.google.geocodeApiKey;
-        const googleGeoCodeApiAdress = `https://maps.google.com/maps/api/geocode/json?address=${encodedAddress}&key=${key}`;
         return new Promise((fulfill, reject) => {
+            if (!partialAddress || !partialAddress.trim()) {
+                fulfill([]);
+            }
+            const encodedAddress = encodeURIComponent(partialAddress);
+            const key = config.google.geocodeApiKey;
+            const googleGeoCodeApiAdress = `https://maps.google.com/maps/api/geocode/json?address=${encodedAddress}&key=${key}`;
             axios.get(googleGeoCodeApiAdress)
                 .then((res) => {
                     if (res.data.errorMessage) {

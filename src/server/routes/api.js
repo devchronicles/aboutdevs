@@ -15,12 +15,7 @@ router.route('/cities').get(fbinder.bind(q => q.q, db.search_cities, (q) => {
 }));
 
 router.route('/address').get((req, res) => {
-    const address = req.q;
-    if (!address) {
-        apiHelper.sendOk(res, []);
-    }
-
-    geocodeApiHelper.getAddresses(address);
+    apiHelper.sendPromise(res, geocodeApiHelper.getAddresses(req.query.q));
 });
 
 router.route('/users/getmyprofiledataforediting').get((req, res) => {

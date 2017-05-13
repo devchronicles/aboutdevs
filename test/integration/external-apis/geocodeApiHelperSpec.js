@@ -65,12 +65,25 @@ describe('geocodeApiHelper', () => {
             .catch(done);
     });
 
-    it('Should when the address is not valid', (done) => {
+    it('Should work when the address is not valid', (done) => {
         geocodeApiHelper.getAddresses('This is not a valid city')
             .then((res) => {
                 assert.equal(res.length, 0);
                 done();
             })
+            .catch(done);
+    });
+
+    it('Should work with null, undefined, empty string and space-only strings', (done) => {
+        const promises = [
+            geocodeApiHelper.getAddresses().then((res) => { assert.equal(res.length, 0); }),
+            geocodeApiHelper.getAddresses(undefined).then((res) => { assert.equal(res.length, 0); }),
+            geocodeApiHelper.getAddresses(null).then((res) => { assert.equal(res.length, 0); }),
+            geocodeApiHelper.getAddresses('').then((res) => { assert.equal(res.length, 0); }),
+            geocodeApiHelper.getAddresses('                           ').then((res) => { assert.equal(res.length, 0); })
+        ];
+        Promise.all(promises)
+            .then(done())
             .catch(done);
     });
 });

@@ -13,7 +13,8 @@ export function apiExceptionCatcher(res) {
  */
 export function sendError(res, error) {
     const resultError = error instanceof Error ? error.message : error;
-    res.status(500).send({ error: resultError });
+    const finalError = process.env.NODE_ENV === 'development' ? resultError : 'Something went wrong in the server';
+    res.status(500).send({ error: finalError });
 }
 
 /**
@@ -24,3 +25,10 @@ export function sendError(res, error) {
 export function sendOk(res, data) {
     res.status(200).send(data);
 }
+
+export function sendPromise(res, promise) {
+    promise
+        .then(result => sendOk(res, result))
+        .catch(e => sendError(res, e));
+}
+
