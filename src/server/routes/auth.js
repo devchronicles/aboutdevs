@@ -1,7 +1,7 @@
 import express from 'express';
 import passport from 'passport';
 import db from '../db/db';
-import { redirectToHome, redirectToProfileEdit } from '../urlHelper';
+import { redirectToHome, redirectToProfileEdit } from '../helpers/urlHelper';
 
 const router = express.Router();
 

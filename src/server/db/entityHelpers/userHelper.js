@@ -15,8 +15,6 @@ export function extractUserNameFromEmail(email) {
 export function getUniqueUserNameSuggestion(db, email) {
     if (db === null || db === undefined) throw Error('Argument \'db\' should be null or undefined');
     if (email === null || email === undefined) throw Error('Argument \'email\' should be null or undefined');
-
-
 }
 
 /**

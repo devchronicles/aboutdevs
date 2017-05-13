@@ -1,19 +1,27 @@
 import express from 'express';
 import db from '../db/db';
 import fbinder from '../expressMassiveBinders/functionBinder';
-import * as apiHelper from '../apiHelper';
+import * as apiHelper from '../helpers/apiHelper';
+import geocodeApiHelper from '../helpers/geocodeApiHelper';
 import { extractUserNameFromEmail } from '../db/entityHelpers/userHelper';
+
 
 const router = express.Router();
 
-/**
- * Test API
- */
 router.route('/cities').get(fbinder.bind(q => q.q, db.search_cities, (q) => {
     const criteria = q.q ? q.q.replace(/[^a-zA-Z0-9\s]/g, '') : '';
     const finalCriteria = `'${criteria}':*`;
     return finalCriteria;
 }));
+
+router.route('/address').get((req, res) => {
+    const address = req.q;
+    if (!address) {
+        apiHelper.sendOk(res, []);
+    }
+
+    geocodeApiHelper.getAddresses(address);
+});
 
 router.route('/users/getmyprofiledataforediting').get((req, res) => {
     try {
