@@ -42,5 +42,36 @@ describe('geocodeApiHelper', () => {
             })
             .catch(done);
     });
+
+    it('Should work with city only', (done) => {
+        geocodeApiHelper.getAddresses('Juiz de Fora MG')
+            .then((res) => {
+                assert.equal(res.length, 1);
+                assert.equal(res[0].friendlyName, 'Juiz de Fora, MG');
+                assert.equal(res[0].id, 'Juiz de Fora, MG, Brazil');
+                done();
+            })
+            .catch(done);
+    });
+
+    it('Should work with double country', (done) => {
+        geocodeApiHelper.getAddresses('Juiz de Fora MG Brazil Brazil')
+            .then((res) => {
+                assert.equal(res.length, 1);
+                assert.equal(res[0].friendlyName, 'Juiz de Fora, MG');
+                assert.equal(res[0].id, 'Juiz de Fora, MG, Brazil');
+                done();
+            })
+            .catch(done);
+    });
+
+    it('Should when the address is not valid', (done) => {
+        geocodeApiHelper.getAddresses('This is not a valid city')
+            .then((res) => {
+                assert.equal(res.length, 0);
+                done();
+            })
+            .catch(done);
+    });
 });
 
