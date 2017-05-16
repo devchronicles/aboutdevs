@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import LoggedUserDropdown from './LoggedUserDropdown';
+import Logo from './Logo';
 
 const Header = ({ loggedUser }) => {
     const rightComponent = loggedUser.id
@@ -9,9 +10,9 @@ const Header = ({ loggedUser }) => {
         : <Link to="/login" className="button vibrant" >Entrar</Link>;
 
     return (<header className="header">
-        <Link to="/" className="logo">
-            INDIE JOBS
-            </Link>
+        <Link to="/">
+            <Logo />
+        </Link>
         <ul>
             <li>
                 <a href="#">Quanto custa?</a>
