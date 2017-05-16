@@ -4,6 +4,7 @@ import FormGroup from './FormGroup';
 import FormRow from './FormRow';
 import InputGroup from './InputGroup';
 import UserTypeToggle from './UserTypeToggle';
+import SelectAddress from './SelectAddress';
 
 
 const SimpleForm = (props) => {
@@ -84,6 +85,16 @@ const SimpleForm = (props) => {
                                 rows={6}
                                 type="text"
                                 className="form-control"
+                            />
+                        </FormGroup>
+                    </FormRow>
+                </div>
+                <div className="document-section flex-column flex-align-items-center">
+                    <FormRow>
+                        <FormGroup label="Endereço" labelFor="address" help="Selecione seu endereço." >
+                            <Field
+                                name="address"
+                                component={SelectAddress}
                             />
                         </FormGroup>
                     </FormRow>

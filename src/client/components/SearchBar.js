@@ -66,7 +66,7 @@ class SearchBar extends Component {
                         </FormGroup>
                     </FormColumn>
                 </FormRow>
-                <button className="vibrant">Pesquisar</button>
+                <button className="vibrant">Pesquisar 2</button>
             </div>
         </div>);
     }
