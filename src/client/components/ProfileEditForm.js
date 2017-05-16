@@ -1,5 +1,6 @@
 import React from 'react';
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm, formValueSelector } from 'redux-form';
+import { connect } from 'react-redux';
 import FormGroup from './FormGroup';
 import FormRow from './FormRow';
 import InputGroup from './InputGroup';
@@ -8,9 +9,8 @@ import SelectAddress from './SelectAddress';
 import DocumentSection from './DocumentSection';
 
 
-const SimpleForm = (props) => {
-    const { handleSubmit, pristine, reset, submitting, loggedUser } = props;
-
+let ProfileEditForm = (props) => {
+    const { handleSubmit, pristine, reset, submitting, loggedUser, formValues } = props;
     return (
         <div className="document">
             <form onSubmit={handleSubmit}>
@@ -20,7 +20,13 @@ const SimpleForm = (props) => {
                         <button className="edit-profile-image-button">Alterar imagem de perfil</button>
                     </div>
                     <FormRow>
-                        <FormGroup label="Tipo de usuário" labelFor="displayName" help="Selecione 'Sou um profissional' se você tem interesse em criar um perfil público para divulgar seus serviços. Caso contrário, selecione 'Estou em busca de profissionais'." >
+                        <FormGroup
+                            label="Tipo de usuário"
+                            labelFor="displayName"
+                            help={"Selecione 'Sou um profissional' se você tem interesse em criar um perfil público " +
+                                "para divulgar seus serviços. Caso contrário, selecione 'Estou em busca de profissionais'."
+                            }
+                        >
                             <Field
                                 name="type"
                                 component={UserTypeToggle}
@@ -28,7 +34,10 @@ const SimpleForm = (props) => {
                         </FormGroup>
                     </FormRow>
                     <FormRow>
-                        <FormGroup label="Nome do usuário" labelFor="name" help="A URL acima será publicamente visível se você for um profissional.">
+                        <FormGroup
+                            label="Nome do usuário"
+                            labelFor="name"
+                            help="A URL acima será publicamente visível se você for um profissional.">
                             <InputGroup addOnBefore="http://indiejobs.com.br/">
                                 <Field
                                     name="name"
@@ -54,7 +63,7 @@ const SimpleForm = (props) => {
                         </FormGroup>
                     </FormRow>
                 </DocumentSection>
-                <DocumentSection className="flex-column flex-align-items-center">
+                <DocumentSection visible={formValues.type === 0} className="flex-column flex-align-items-center">
                     <FormRow>
                         <FormGroup label="Profissão" labelFor="profession" help="Escreva o que melhor descreve a sua profissão." >
                             <InputGroup>
@@ -79,7 +88,11 @@ const SimpleForm = (props) => {
                         </FormGroup>
                     </FormRow>
                     <FormRow>
-                        <FormGroup label="Servições que você presta" labelFor="activities" help="Descreva, brevemente, os tipos de serviço que você presta." >
+                        <FormGroup
+                            label="Servições que você presta"
+                            labelFor="activities"
+                            help="Descreva, brevemente, os tipos de serviço que você presta."
+                        >
                             <Field
                                 name="activities"
                                 component="textarea"
@@ -105,10 +118,23 @@ const SimpleForm = (props) => {
                     <button type="submit" className="vibrant" disabled={pristine || submitting}>Salvar</button>
                 </DocumentSection>
             </form>
-        </div>
+        </div >
     );
 };
 
-export default reduxForm({
+
+// Decorate with redux-form
+ProfileEditForm = reduxForm({
     form: 'profile-edit' // a unique identifier for this form
-})(SimpleForm);
+})(ProfileEditForm);
+
+// Decorate with connect to read form values
+
+const selector = formValueSelector('profile-edit');
+ProfileEditForm = connect(state => ({
+    formValues: {
+        type: selector(state, 'type')
+    }
+}))(ProfileEditForm);
+
+export default ProfileEditForm;

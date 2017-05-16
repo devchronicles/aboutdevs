@@ -1,22 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const DocumentSection = ({ className, children }) => {
-    return (<div className={`document-section ${className}`}>
+const DocumentSection = ({ className, visible, children }) => {
+    const finalClassName = !visible ? className += ' hidden' : className;
+    return (<div className={`document-section ${finalClassName}`}>
         {children}
     </div>);
 };
 
 DocumentSection.propTypes = {
-    className: PropTypes.string.isRequired,
+    className: PropTypes.string,
+    visible: PropTypes.bool,
     children: PropTypes.oneOfType([
-        React.PropTypes.arrayOf(PropTypes.node),
-        React.PropTypes.node
+        PropTypes.arrayOf(PropTypes.node),
+        PropTypes.node
     ])
 };
 
 DocumentSection.defaultProps = {
-    labelFor: null,
+    className: null,
+    visible: true,
     children: null
 };
 

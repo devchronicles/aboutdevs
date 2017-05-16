@@ -14,8 +14,8 @@ FormGroup.propTypes = {
     label: PropTypes.string.isRequired,
     labelFor: PropTypes.string,
     children: PropTypes.oneOfType([
-        React.PropTypes.arrayOf(PropTypes.node),
-        React.PropTypes.node
+        PropTypes.arrayOf(PropTypes.node),
+        PropTypes.node
     ])
 };
 
