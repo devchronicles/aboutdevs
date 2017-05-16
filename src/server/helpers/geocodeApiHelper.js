@@ -42,10 +42,6 @@ function getState(result) {
     return getAddressInformationByType('short_name', 'administrative_area_level_1', result);
 }
 
-function getAddressIdentifier(result) {
-    return result.formatted_address;
-}
-
 function getFriendlyAddress(result) {
     const addressComponents = [
         getStreet(result),
@@ -54,10 +50,7 @@ function getFriendlyAddress(result) {
         getCity(result),
         getState(result)
     ].filter(v => v);
-    return {
-        friendlyName: addressComponents.join(', '),
-        id: getAddressIdentifier(result)
-    };
+    return addressComponents.join(', ');
 }
 
 export default {
@@ -71,7 +64,6 @@ export default {
             const googleGeoCodeApiAdress = `https://maps.google.com/maps/api/geocode/json?address=${encodedAddress}&components=country:BR&key=${key}`;
             axios.get(googleGeoCodeApiAdress)
                 .then((res) => {
-                    console.log(JSON.stringify(res.data, null, 4));
                     if (res.data.errorMessage) {
                         reject(res.data.errorMessage);
                     } else {

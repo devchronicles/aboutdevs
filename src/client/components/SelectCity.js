@@ -46,13 +46,17 @@ class SelectCity extends Component {
                 value={adjustedValue}
                 onChange={this.handleChange}
                 loadOptions={this.loadValues}
+                filterOption={o => o}
+                ignoreCase={false}
+                ignoreAccents={false}
+                cache={false}
                 valueKey="id"
                 labelKey="completename"
                 // localization
                 placeholder=""
                 loadingPlaceholder="Carregando..."
                 searchPromptText="Digite para pesquisar"
-                noResultsText="Não veio nada :("
+                noResultsText="Não foi possível encontrar a cidade"
             />
         );
     }

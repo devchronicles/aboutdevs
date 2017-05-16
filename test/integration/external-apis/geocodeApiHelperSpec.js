@@ -6,8 +6,7 @@ describe('geocodeApiHelper', () => {
         geocodeApiHelper.getAddresses('Rua Henrique Surerus, 28, Juiz de Fora, MG')
             .then((res) => {
                 assert.equal(res.length, 1);
-                assert.equal(res[0].friendlyName, 'Rua Henrique Surerus, 28, Centro, Juiz de Fora, MG');
-                assert.equal(res[0].id, 'Rua Henrique Surerus, 28 - Centro, Juiz de Fora - MG, Brazil');
+                assert.equal(res[0], 'Rua Henrique Surerus, 28, Centro, Juiz de Fora, MG');
                 done();
             })
             .catch(done);
@@ -16,8 +15,7 @@ describe('geocodeApiHelper', () => {
         geocodeApiHelper.getAddresses(' r Henrique Surerus, 28  Juiz de Fora, /')
             .then((res) => {
                 assert.equal(res.length, 1);
-                assert.equal(res[0].friendlyName, 'Rua Henrique Surerus, 28, Centro, Juiz de Fora, MG');
-                assert.equal(res[0].id, 'Rua Henrique Surerus, 28 - Centro, Juiz de Fora - MG, Brazil');
+                assert.equal(res[0], 'Rua Henrique Surerus, 28, Centro, Juiz de Fora, MG');
                 done();
             })
             .catch(done);
@@ -26,8 +24,7 @@ describe('geocodeApiHelper', () => {
         geocodeApiHelper.getAddresses('Henrique Surerus JF')
             .then((res) => {
                 assert.equal(res.length, 1);
-                assert.equal(res[0].friendlyName, 'Rua Henrique Surerus, Centro, Juiz de Fora, MG');
-                assert.equal(res[0].id, 'Rua Henrique Surerus - Centro, Juiz de Fora - MG, Brazil');
+                assert.equal(res[0], 'Rua Henrique Surerus, Centro, Juiz de Fora, MG');
                 done();
             })
             .catch(done);
@@ -36,30 +33,16 @@ describe('geocodeApiHelper', () => {
         geocodeApiHelper.getAddresses('Shopping Alameda JF')
             .then((res) => {
                 assert.equal(res.length, 1);
-                assert.equal(res[0].friendlyName, 'Rua Morais e Castro, 300, Passos, Juiz de Fora, MG');
-                assert.equal(res[0].id, 'R. Morais e Castro, 300 - Passos, Juiz de Fora - MG, 36025-160, Brazil');
+                assert.equal(res[0], 'Rua Morais e Castro, 300, Passos, Juiz de Fora, MG');
                 done();
             })
             .catch(done);
     });
 
-    it('Should work with city only', (done) => {
+    it('Should not work with city only', (done) => {
         geocodeApiHelper.getAddresses('Juiz de Fora MG')
             .then((res) => {
-                assert.equal(res.length, 1);
-                assert.equal(res[0].friendlyName, 'Juiz de Fora, MG');
-                assert.equal(res[0].id, 'Juiz de Fora, MG, Brazil');
-                done();
-            })
-            .catch(done);
-    });
-
-    it('Should work with double country', (done) => {
-        geocodeApiHelper.getAddresses('Juiz de Fora MG Brazil Brazil')
-            .then((res) => {
-                assert.equal(res.length, 1);
-                assert.equal(res[0].friendlyName, 'Juiz de Fora, MG');
-                assert.equal(res[0].id, 'Juiz de Fora, MG, Brazil');
+                assert.equal(res.length, 0);
                 done();
             })
             .catch(done);

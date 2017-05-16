@@ -18,7 +18,7 @@ class SelectCity extends Component {
         this.currentFetchTimeout = setTimeout(() => {
             getAddresses(input)
                 .then((res) => {
-                    const options = res.data.map(i => ({ value: i.friendlyName, label: i.friendlyName }));
+                    const options = res.data.map(i => ({ value: i, label: i }));
                     callback(null, { options });
                 })
                 .catch(error => callback(error));
@@ -33,17 +33,26 @@ class SelectCity extends Component {
 
     render() {
         const { value } = this.props.input;
+        const adjustedValue = {
+            value,
+            label: value
+        };
 
         return (
             <Async
-                value={value}
+                value={adjustedValue}
                 onChange={this.handleChange}
                 loadOptions={this.loadValues}
+                filterOption={o => o}
+                labelKey="label"
+                valueKey="value"
                 // localization
                 placeholder=""
                 loadingPlaceholder="Carregando..."
                 searchPromptText="Digite para pesquisar"
                 noResultsText="Não foi possível encontrar o endereço"
+                ignoreCase={false}
+                ignoreAccents={false}
                 cache={false}
             />
         );
