@@ -268,6 +268,60 @@ ALTER SEQUENCE get_city_id_seq OWNED BY geo_city.id;
 
 
 --
+-- Name: location_cache; Type: TABLE; Schema: public; Owner: indiejobs
+--
+
+CREATE TABLE location_cache (
+    id integer NOT NULL,
+    search integer NOT NULL
+);
+
+
+ALTER TABLE location_cache OWNER TO indiejobs;
+
+--
+-- Name: location_cache_id_seq; Type: SEQUENCE; Schema: public; Owner: indiejobs
+--
+
+CREATE SEQUENCE location_cache_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE location_cache_id_seq OWNER TO indiejobs;
+
+--
+-- Name: location_cache_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: indiejobs
+--
+
+ALTER SEQUENCE location_cache_id_seq OWNED BY location_cache.id;
+
+
+--
+-- Name: location_cache_search_seq; Type: SEQUENCE; Schema: public; Owner: indiejobs
+--
+
+CREATE SEQUENCE location_cache_search_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE location_cache_search_seq OWNER TO indiejobs;
+
+--
+-- Name: location_cache_search_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: indiejobs
+--
+
+ALTER SEQUENCE location_cache_search_seq OWNED BY location_cache.search;
+
+
+--
 -- Name: notification; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -413,6 +467,20 @@ ALTER TABLE ONLY geo_state ALTER COLUMN id SET DEFAULT nextval('geo_states_id_se
 
 
 --
+-- Name: location_cache id; Type: DEFAULT; Schema: public; Owner: indiejobs
+--
+
+ALTER TABLE ONLY location_cache ALTER COLUMN id SET DEFAULT nextval('location_cache_id_seq'::regclass);
+
+
+--
+-- Name: location_cache search; Type: DEFAULT; Schema: public; Owner: indiejobs
+--
+
+ALTER TABLE ONLY location_cache ALTER COLUMN search SET DEFAULT nextval('location_cache_search_seq'::regclass);
+
+
+--
 -- Name: notification id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -440,6 +508,14 @@ ALTER TABLE ONLY geo_city
 
 ALTER TABLE ONLY geo_state
     ADD CONSTRAINT geo_states_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: location_cache location_cache_pkey; Type: CONSTRAINT; Schema: public; Owner: indiejobs
+--
+
+ALTER TABLE ONLY location_cache
+    ADD CONSTRAINT location_cache_pkey PRIMARY KEY (id);
 
 
 --
@@ -514,6 +590,20 @@ CREATE UNIQUE INDEX geo_states_name_uindex ON geo_state USING btree (name);
 --
 
 CREATE UNIQUE INDEX get_city_id_uindex ON geo_city USING btree (id);
+
+
+--
+-- Name: location_cache_id_uindex; Type: INDEX; Schema: public; Owner: indiejobs
+--
+
+CREATE UNIQUE INDEX location_cache_id_uindex ON location_cache USING btree (id);
+
+
+--
+-- Name: location_cache_search_uindex; Type: INDEX; Schema: public; Owner: indiejobs
+--
+
+CREATE UNIQUE INDEX location_cache_search_uindex ON location_cache USING btree (search);
 
 
 --
