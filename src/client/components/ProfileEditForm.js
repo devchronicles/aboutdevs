@@ -5,6 +5,7 @@ import FormRow from './FormRow';
 import InputGroup from './InputGroup';
 import UserTypeToggle from './UserTypeToggle';
 import SelectAddress from './SelectAddress';
+import DocumentSection from './DocumentSection';
 
 
 const SimpleForm = (props) => {
@@ -13,11 +14,19 @@ const SimpleForm = (props) => {
     return (
         <div className="document">
             <form onSubmit={handleSubmit}>
-                <div className="document-section flex-column flex-align-items-center">
+                <DocumentSection className="flex-column flex-align-items-center">
                     <div className="image" style={{ backgroundImage: `url(${loggedUser.photoUrl})` }} />
                     <div className="edit-profile-image-button-wrapper">
                         <button className="edit-profile-image-button">Alterar imagem de perfil</button>
                     </div>
+                    <FormRow>
+                        <FormGroup label="Tipo de usuário" labelFor="displayName" help="Selecione 'Sou um profissional' se você tem interesse em criar um perfil público para divulgar seus serviços. Caso contrário, selecione 'Estou em busca de profissionais'." >
+                            <Field
+                                name="type"
+                                component={UserTypeToggle}
+                            />
+                        </FormGroup>
+                    </FormRow>
                     <FormRow>
                         <FormGroup label="Nome do usuário" labelFor="name" help="A URL acima será publicamente visível se você for um profissional.">
                             <InputGroup addOnBefore="http://indiejobs.com.br/">
@@ -44,16 +53,8 @@ const SimpleForm = (props) => {
                             </InputGroup>
                         </FormGroup>
                     </FormRow>
-                </div>
-                <div className="document-section flex-column flex-align-items-center">
-                    <FormRow>
-                        <FormGroup label="Tipo de usuário" labelFor="displayName" help="Selecione 'Sou um profissional' se você tem interesse em criar um perfil público para divulgar seus serviços. Caso contrário, selecione 'Estou em busca de profissionais'." >
-                            <Field
-                                name="type"
-                                component={UserTypeToggle}
-                            />
-                        </FormGroup>
-                    </FormRow>
+                </DocumentSection>
+                <DocumentSection className="flex-column flex-align-items-center">
                     <FormRow>
                         <FormGroup label="Profissão" labelFor="profession" help="Escreva o que melhor descreve a sua profissão." >
                             <InputGroup>
@@ -88,8 +89,8 @@ const SimpleForm = (props) => {
                             />
                         </FormGroup>
                     </FormRow>
-                </div>
-                <div className="document-section flex-column flex-align-items-center">
+                </DocumentSection>
+                <DocumentSection className="flex-column flex-align-items-center">
                     <FormRow>
                         <FormGroup label="Endereço" labelFor="address" help="Selecione seu endereço." >
                             <Field
@@ -98,11 +99,11 @@ const SimpleForm = (props) => {
                             />
                         </FormGroup>
                     </FormRow>
-                </div>
-                <div className="document-section flex-row-reverse button-bar">
+                </DocumentSection>
+                <DocumentSection className="flex-row-reverse button-bar">
                     <a className="button" href="/">Cancelar</a>
                     <button type="submit" className="vibrant" disabled={pristine || submitting}>Salvar</button>
-                </div>
+                </DocumentSection>
             </form>
         </div>
     );

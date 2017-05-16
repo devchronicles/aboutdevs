@@ -13,11 +13,15 @@ const FormGroup = ({ label, labelFor, help, children }) => {
 FormGroup.propTypes = {
     label: PropTypes.string.isRequired,
     labelFor: PropTypes.string,
-    children: PropTypes.object.isRequired
+    children: PropTypes.oneOfType([
+        React.PropTypes.arrayOf(PropTypes.node),
+        React.PropTypes.node
+    ])
 };
 
 FormGroup.defaultProps = {
-    labelFor: null
+    labelFor: null,
+    children: null
 };
 
 export default FormGroup;
