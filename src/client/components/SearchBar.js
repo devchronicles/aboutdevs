@@ -66,7 +66,10 @@ class SearchBar extends Component {
                         </FormGroup>
                     </FormColumn>
                 </FormRow>
-                <button className="vibrant">Pesquisar 2</button>
+                <button className="vibrant">
+                    <i className="fa fa-search" aria-hidden="true" />
+                    <span>Pesquisar</span>
+                </button>
             </div>
         </div>);
     }

@@ -22,7 +22,7 @@ class SelectCity extends Component {
                     callback(null, { options });
                 })
                 .catch(error => callback(error));
-        }, 500);
+        }, 800);
     }
 
 

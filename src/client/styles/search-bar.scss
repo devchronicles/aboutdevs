@@ -32,6 +32,9 @@
             align-items: center;
             button.vibrant {
                 margin-top: $gutter-md;
+                .fa {
+                    margin-right: $gutter-sm;
+                }
             }
         }
         
