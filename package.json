@@ -17,7 +17,8 @@
     "db-generate": "cross-env COMMAND=generate_scripts PGPASSWORD=indiejobs node ./db/installDb.js",
     "db-reinstall": "npm run db-drop && npm run db-install",
     "get-geo-data": "cross-env NODE_ENV=development babel-node ./tools/get-geo-data.js",
-    "save-geo-data": "cross-env NODE_ENV=development babel-node ./tools/save-geo-data"
+    "save-geo-data": "cross-env NODE_ENV=development babel-node ./tools/save-geo-data",
+    "print-config": "babel-node ./tools/print-config.js"
   },
   "repository": {
     "type": "git",

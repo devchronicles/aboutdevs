@@ -4,5 +4,6 @@ export default [
     'notification',
     'user',
     'geo_state',
-    'geo_city'
+    'geo_city',
+    'location_cache'
 ];

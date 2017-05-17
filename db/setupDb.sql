@@ -273,7 +273,8 @@ ALTER SEQUENCE get_city_id_seq OWNED BY geo_city.id;
 
 CREATE TABLE location_cache (
     id integer NOT NULL,
-    search integer NOT NULL
+    search character varying(200) NOT NULL,
+    cache json NOT NULL
 );
 
 
