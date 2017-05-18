@@ -5,7 +5,6 @@ import * as apiHelper from '../helpers/apiHelper';
 import * as geocodeApiHelper from '../helpers/geocodeApiHelper';
 import { extractUserNameFromEmail } from '../db/entityHelpers/userHelper';
 
-
 const router = express.Router();
 
 router.route('/cities').get(fbinder.bind(q => q.q, db.search_cities, (q) => {
@@ -15,7 +14,7 @@ router.route('/cities').get(fbinder.bind(q => q.q, db.search_cities, (q) => {
 }));
 
 router.route('/address').get((req, res) => {
-    apiHelper.sendPromise(res, geocodeApiHelper.getAddresses(req.query.q));
+    apiHelper.sendPromise(res, geocodeApiHelper.getAddresses(req.query.q, db));
 });
 
 router.route('/users/getmyprofiledataforediting').get((req, res) => {

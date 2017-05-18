@@ -10,6 +10,7 @@ describe('searchHelperSpec', () => {
             assert.equal(searchHelper.normalize('==Hey-909-'), 'hey 909');
             assert.equal(searchHelper.normalize('Cachaça----,2 '), 'cachaca 2');
             assert.equal(searchHelper.normalize(''), '');
+            assert.equal(searchHelper.normalize('          '), '');
             assert.equal(searchHelper.normalize(null), '');
             assert.equal(searchHelper.normalize(undefined), '');
         });

@@ -66,17 +66,18 @@ export function getAddresses(searchTerm, db) {
         const normalizedSearchTerm = searchHelper.normalize(searchTerm);
         if (!normalizedSearchTerm) {
             fulfill([]);
+        } else {
+            getAddressesFromCache(normalizedSearchTerm, db)
+                .then((lc) => {
+                    if (lc) return lc;
+                    return getAddressesFromGoogle(normalizedSearchTerm)
+                        .then(lg => saveLocationToCache(normalizedSearchTerm, lg, db))
+                        .catch(reject);
+                })
+                .then(r => geocodeApiFormattingHelper.getFormattedAddresses(r))
+                .then(r => fulfill(r))
+                .catch(reject);
         }
-        getAddressesFromCache(normalizedSearchTerm, db)
-            .then((lc) => {
-                if (lc) return lc;
-                return getAddressesFromGoogle(normalizedSearchTerm)
-                    .then(lg => saveLocationToCache(normalizedSearchTerm, lg, db))
-                    .catch(reject);
-            })
-            .then(r => geocodeApiFormattingHelper.getFormattedAddresses(r))
-            .then(r => fulfill(r))
-            .catch(reject);
     });
 }
 
