@@ -5,5 +5,6 @@ export default [
     'user',
     'geo_state',
     'geo_city',
-    'location_cache'
+    'location_cache',
+    'profession'
 ];
