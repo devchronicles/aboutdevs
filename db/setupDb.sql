@@ -381,37 +381,17 @@ ALTER SEQUENCE notification_id_seq OWNED BY notification.id;
 
 
 --
--- Name: professional_area; Type: TABLE; Schema: public; Owner: indiejobs
+-- Name: profession; Type: TABLE; Schema: public; Owner: indiejobs
 --
 
-CREATE TABLE professional_area (
-    id integer NOT NULL,
-    name character varying(255) NOT NULL
+CREATE TABLE profession (
+    id uuid NOT NULL,
+    name_canonical character varying(200) NOT NULL,
+    name_feminine character varying(200)
 );
 
 
-ALTER TABLE professional_area OWNER TO indiejobs;
-
---
--- Name: professional_area_id_seq; Type: SEQUENCE; Schema: public; Owner: indiejobs
---
-
-CREATE SEQUENCE professional_area_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE professional_area_id_seq OWNER TO indiejobs;
-
---
--- Name: professional_area_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: indiejobs
---
-
-ALTER SEQUENCE professional_area_id_seq OWNED BY professional_area.id;
-
+ALTER TABLE profession OWNER TO indiejobs;
 
 --
 -- Name: user_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
@@ -439,8 +419,7 @@ CREATE TABLE "user" (
     oauth_profiles json,
     status smallint DEFAULT 0 NOT NULL,
     type smallint DEFAULT 0 NOT NULL,
-    profession character varying(50),
-    professional_area integer
+    profession character varying(50)
 );
 
 
@@ -489,13 +468,6 @@ ALTER TABLE ONLY notification ALTER COLUMN id SET DEFAULT nextval('notification_
 
 
 --
--- Name: professional_area id; Type: DEFAULT; Schema: public; Owner: indiejobs
---
-
-ALTER TABLE ONLY professional_area ALTER COLUMN id SET DEFAULT nextval('professional_area_id_seq'::regclass);
-
-
---
 -- Name: geo_city geo_city_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -528,11 +500,11 @@ ALTER TABLE ONLY notification
 
 
 --
--- Name: professional_area professional_area_pkey; Type: CONSTRAINT; Schema: public; Owner: indiejobs
+-- Name: profession profession_pkey; Type: CONSTRAINT; Schema: public; Owner: indiejobs
 --
 
-ALTER TABLE ONLY professional_area
-    ADD CONSTRAINT professional_area_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY profession
+    ADD CONSTRAINT profession_pkey PRIMARY KEY (id);
 
 
 --
@@ -608,17 +580,24 @@ CREATE UNIQUE INDEX location_cache_search_uindex ON location_cache USING btree (
 
 
 --
--- Name: professional_area_id_uindex; Type: INDEX; Schema: public; Owner: indiejobs
+-- Name: profession_id_uindex; Type: INDEX; Schema: public; Owner: indiejobs
 --
 
-CREATE UNIQUE INDEX professional_area_id_uindex ON professional_area USING btree (id);
+CREATE UNIQUE INDEX profession_id_uindex ON profession USING btree (id);
 
 
 --
--- Name: professional_area_name_uindex; Type: INDEX; Schema: public; Owner: indiejobs
+-- Name: profession_name_canonical_uindex; Type: INDEX; Schema: public; Owner: indiejobs
 --
 
-CREATE UNIQUE INDEX professional_area_name_uindex ON professional_area USING btree (name);
+CREATE UNIQUE INDEX profession_name_canonical_uindex ON profession USING btree (name_canonical);
+
+
+--
+-- Name: profession_name_feminine_uindex; Type: INDEX; Schema: public; Owner: indiejobs
+--
+
+CREATE UNIQUE INDEX profession_name_feminine_uindex ON profession USING btree (name_feminine);
 
 
 --
@@ -642,14 +621,6 @@ ALTER TABLE ONLY geo_city
 
 ALTER TABLE ONLY notification
     ADD CONSTRAINT notification_user_id_fk FOREIGN KEY (user_id) REFERENCES "user"(id);
-
-
---
--- Name: user user_professional_area_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY "user"
-    ADD CONSTRAINT user_professional_area_id_fk FOREIGN KEY (professional_area) REFERENCES professional_area(id);
 
 
 --
