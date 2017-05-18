@@ -34,11 +34,18 @@ describe('geocodeApiHelperSpec', () => {
                     assert.equal(res[0], 'Rua Morais e Castro, 300, Passos, Juiz de Fora, MG');
                 }));
 
-        it('Should not work with city only',
+        it('Should not work with city only by default',
             () => geocodeApiHelper.getAddressesFromGoogle('Juiz de Fora MG')
                 .then(r => geocodeApiFormattingHelper.getFormattedAddresses(r))
                 .then((res) => {
                     assert.equal(res.length, 0);
+                }));
+
+        it('Should work with city only when specified',
+            () => geocodeApiHelper.getAddressesFromGoogle('Juiz de Fora MG')
+                .then(r => geocodeApiFormattingHelper.getFormattedAddresses(r, true))
+                .then((res) => {
+                    assert.equal(res.length, 1);
                 }));
 
         it('Should work when the address is not valid',
@@ -60,7 +67,7 @@ describe('geocodeApiHelperSpec', () => {
                 .then((r) => {
                     assert.isNotOk(r);
                 })
-                .then(() => geocodeApiHelper.getAddresses(searchTerm, db))
+                .then(() => geocodeApiHelper.getAddresses(searchTerm, false, db))
                 .then((l) => {
                     assert.equal(1, l.length);
                 })

@@ -61,7 +61,7 @@ export function getAddressesFromGoogle(searchTerm) {
     });
 }
 
-export function getAddresses(searchTerm, db) {
+export function getAddresses(searchTerm, allowCities, db) {
     return new Promise((fulfill, reject) => {
         const normalizedSearchTerm = searchHelper.normalize(searchTerm);
         if (!normalizedSearchTerm) {
@@ -74,7 +74,7 @@ export function getAddresses(searchTerm, db) {
                         .then(lg => saveLocationToCache(normalizedSearchTerm, lg, db))
                         .catch(reject);
                 })
-                .then(r => geocodeApiFormattingHelper.getFormattedAddresses(r))
+                .then(r => geocodeApiFormattingHelper.getFormattedAddresses(r, allowCities))
                 .then(r => fulfill(r))
                 .catch(reject);
         }

@@ -1,9 +1,9 @@
 /**
  * Validates if the result corresponds to a valid address.
  */
-function validateResult(result) {
-    // States and countries are not allowed. The address must necessarity have a route (street)
-    return result.address_components.filter(c => c.types.includes('route')).length > 0;
+function validateResult(allowCities = false) {
+    const minimumAddressComponentType = allowCities ? 'administrative_area_level_2' : 'route';
+    return r => r.address_components.filter(c => c.types.includes(minimumAddressComponentType)).length > 0;
 }
 
 function findAddressComponentByType(result, type) {
@@ -50,7 +50,7 @@ function getFriendlyAddress(result) {
     return addressComponents.join(', ');
 }
 
-export function getFormattedAddresses(data) {
+export function getFormattedAddresses(data, allowCities = false) {
     if (!data || !data.results || !data.results.length) return [];
-    return data.results.filter(validateResult).map(getFriendlyAddress);
+    return data.results.filter(validateResult(allowCities)).map(getFriendlyAddress);
 }

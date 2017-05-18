@@ -14,7 +14,8 @@ router.route('/cities').get(fbinder.bind(q => q.q, db.search_cities, (q) => {
 }));
 
 router.route('/address').get((req, res) => {
-    apiHelper.sendPromise(res, geocodeApiHelper.getAddresses(req.query.q, db));
+    const allowCities = req.query.allowcities;
+    apiHelper.sendPromise(res, geocodeApiHelper.getAddresses(req.query.q, allowCities, db));
 });
 
 router.route('/users/getmyprofiledataforediting').get((req, res) => {

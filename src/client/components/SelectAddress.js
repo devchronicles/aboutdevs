@@ -12,11 +12,12 @@ class SelectLocation extends Component {
     }
 
     loadValues(input, callback) {
+        const { allowCities } = this.props;
         if (this.currentFetchTimeout) {
             clearTimeout(this.currentFetchTimeout);
         }
         this.currentFetchTimeout = setTimeout(() => {
-            getAddresses(input)
+            getAddresses(input, allowCities)
                 .then((res) => {
                     const options = res.data.map(i => ({ value: i, label: i }));
                     callback(null, { options });
@@ -60,7 +61,12 @@ class SelectLocation extends Component {
 }
 
 SelectLocation.propTypes = {
-    input: PropTypes.object.isRequired
+    input: PropTypes.object.isRequired,
+    allowCities: PropTypes.bool
+};
+
+SelectLocation.defaultProps = {
+    allowCities: false
 };
 
 export default SelectLocation;

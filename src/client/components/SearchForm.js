@@ -28,6 +28,7 @@ let SearchForm = (props) => {
                         <Field
                             name="location"
                             component={SelectAddress}
+                            allowCities
                         />
                     </FormGroup>
                 </FormColumn>
