@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Async } from 'react-select';
 import { getAddresses } from '../httpClient';
 
-class SelectCity extends Component {
+class SelectLocation extends Component {
 
     constructor() {
         super();
@@ -59,8 +59,8 @@ class SelectCity extends Component {
     }
 }
 
-SelectCity.propTypes = {
+SelectLocation.propTypes = {
     input: PropTypes.object.isRequired
 };
 
-export default SelectCity;
+export default SelectLocation;
