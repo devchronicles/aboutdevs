@@ -2,7 +2,7 @@ import express from 'express';
 import db from '../db/db';
 import fbinder from '../expressMassiveBinders/functionBinder';
 import * as apiHelper from '../helpers/apiHelper';
-import geocodeApiHelper from '../helpers/geocodeApiHelper';
+import * as geocodeApiHelper from '../helpers/geocodeApiHelper';
 import { extractUserNameFromEmail } from '../db/entityHelpers/userHelper';
 
 
