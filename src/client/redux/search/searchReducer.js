@@ -2,9 +2,7 @@ import { CHANGE_SEARCH_CRITERIA } from './searchActions';
 
 const defaultSearchState = {
     professional: '',
-    cityId: -1,
-    cityName: '',
-    neighborhood: ''
+    location: ''
 };
 
 function searchReducer(state = defaultSearchState, { payload, type }) {

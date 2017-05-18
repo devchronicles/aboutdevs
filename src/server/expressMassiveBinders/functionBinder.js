@@ -12,19 +12,10 @@ export default {
             if (!evaluatedCondition) {
                 res.status(200).send([]);
             } else {
-                console.log('criteria');
-                console.log(evaluatedCondition);
                 // get each of the parameters
                 const funcParams = params.map(p => p(req.query, req.post));
-                console.log(funcParams);
                 funcParams.push((error, result) => {
-                    console.log(result);
                     if (error) {
-                        if (process.env.NODE_ENV === 'development') {
-                            /*eslint-disable*/
-                            console.error(error);
-                            /*eslint-enable*/
-                        }
                         res.status(200).send([]);
                     } else {
                         res.status(200).send(result);

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import FormGroup from './FormGroup';
-import SelectCity from './SelectCity';
+import SelectAddress from './SelectAddress';
 import FormRow from './FormRow';
 import FormColumn from './FormColumn';
 
@@ -10,59 +10,35 @@ class SearchBar extends Component {
     constructor() {
         super();
         this.handleProfessionalChange = this.handleProfessionalChange.bind(this);
-        this.handleCityChange = this.handleCityChange.bind(this);
-        this.handleNeighborhoodChanged = this.handleNeighborhoodChanged.bind(this);
+        this.handleCityChange = this.handleLocationChange.bind(this);
     }
 
     handleProfessionalChange(event) {
         const { searchActions: { changeCriteria } } = this.props;
-        changeCriteria({
-            professional: event.target.value
-        });
+        changeCriteria({ professional: event.target.value });
     }
 
-    handleCityChange(city) {
+    handleLocationChange(location) {
         const { searchActions: { changeCriteria } } = this.props;
-        changeCriteria({
-            cityId: city.id,
-            cityName: city.name
-        });
-    }
-
-    handleNeighborhoodChanged(event) {
-        const { searchActions: { changeCriteria } } = this.props;
-        changeCriteria({
-            neighborhood: event.target.value
-        });
+        changeCriteria({ location });
     }
 
     render() {
-        const { search: { professional, neighborhood, cityId, cityName } } = this.props;
-
-        const city = {
-            cityId,
-            cityName
-        };
-
+        const { search: { professional, location } } = this.props;
 
         return (<div className="search-criteria">
             <div className="advanced-search form">
                 <FormRow>
                     <FormColumn eq>
-                        <FormGroup label="Profissional" labelFor="text">
+                        <FormGroup label="Profissional ou serviço" labelFor="text">
                             <input type="text" name="text" value={professional} onChange={this.handleProfessionalChange} />
                         </FormGroup>
                     </FormColumn>
                 </FormRow>
                 <FormRow>
-                    <FormColumn style={{ width: '60%' }}>
-                        <FormGroup label="Cidade" labelFor="text">
-                            <SelectCity value={city} onChange={this.handleCityChange} />
-                        </FormGroup>
-                    </FormColumn>
-                    <FormColumn style={{ width: '40%' }}>
-                        <FormGroup label="Bairro" labelFor="text">
-                            <input type="text" name="text" value={neighborhood} onChange={this.handleNeighborhoodChanged} />
+                    <FormColumn eq>
+                        <FormGroup label="Localizado próximo a" labelFor="text">
+                            <SelectAddress value={location} onChange={this.handleLocationChange} />
                         </FormGroup>
                     </FormColumn>
                 </FormRow>
