@@ -13,6 +13,7 @@ const FormGroup = ({ label, labelFor, help, children }) => {
 FormGroup.propTypes = {
     label: PropTypes.string.isRequired,
     labelFor: PropTypes.string,
+    help: PropTypes.string,    
     children: PropTypes.oneOfType([
         PropTypes.arrayOf(PropTypes.node),
         PropTypes.node

@@ -8,7 +8,9 @@ const FormColumn = ({ eq, style, children }) => (
 );
 
 FormColumn.propTypes = {
-    children: PropTypes.object.isRequired
+    children: PropTypes.object.isRequired,
+    style: PropTypes.object,
+    eq: PropTypes.bool
 };
 
 export default FormColumn;

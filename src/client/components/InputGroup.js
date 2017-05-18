@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const InputGroup = ({ addOnBefore, addOnAfter, children }) => {
     const addOnBeforeComponent = addOnBefore ? <span className="input-group-addon">{addOnBefore}</span> : null;
@@ -12,5 +13,10 @@ const InputGroup = ({ addOnBefore, addOnAfter, children }) => {
         </div>
     );
 };
+
+InputGroup.propTypes = {
+    addOnBefore: PropTypes.any,
+    addOnAfter: PropTypes.any
+}
 
 export default InputGroup;
