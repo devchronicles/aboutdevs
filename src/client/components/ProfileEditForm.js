@@ -5,7 +5,7 @@ import FormGroup from './FormGroup';
 import FormRow from './FormRow';
 import InputGroup from './InputGroup';
 import UserTypeToggle from './UserTypeToggle';
-import SelectAddress from './SelectAddress';
+import SelectLocation from './SelectLocation';
 import DocumentSection from './DocumentSection';
 
 
@@ -108,7 +108,7 @@ let ProfileEditForm = (props) => {
                         <FormGroup label="Endereço" labelFor="address" help="Selecione seu endereço." >
                             <Field
                                 name="address"
-                                component={SelectAddress}
+                                component={SelectLocation}
                             />
                         </FormGroup>
                     </FormRow>

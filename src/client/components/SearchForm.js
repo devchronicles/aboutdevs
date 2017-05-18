@@ -2,7 +2,7 @@ import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import PropTypes from 'prop-types';
 import FormGroup from './FormGroup';
-import SelectAddress from './SelectAddress';
+import SelectLocation from './SelectLocation';
 import FormRow from './FormRow';
 import FormColumn from './FormColumn';
 
@@ -27,7 +27,7 @@ let SearchForm = (props) => {
                     <FormGroup label="Localizado próximo a" labelFor="location">
                         <Field
                             name="location"
-                            component={SelectAddress}
+                            component={SelectLocation}
                             allowCities
                         />
                     </FormGroup>
