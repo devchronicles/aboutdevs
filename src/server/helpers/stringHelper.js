@@ -129,5 +129,5 @@ export function replaceNonAlphaNumericCharactersWithSpaces(str) {
  * @param {string} str The input string
  */
 export function normalizeSpaces(str) {
-    return str.replace(/ +(?= )/g,'');
+    return str.replace(/ +(?= )/g, '');
 }

@@ -8,13 +8,13 @@ import SearchResult from '../components/SearchResult';
 
 import { profiles } from '../lib/stubs';
 
-const IndexPage = () => <div className="page-wrapper">
+const IndexPage = () => (<div className="page-wrapper">
     <SearchWrapper>
         <Hero />
         <SearchForm />
     </SearchWrapper>
     <SearchResult profiles={profiles} />
-</div>;
+</div>);
 
 
 // CONNECT

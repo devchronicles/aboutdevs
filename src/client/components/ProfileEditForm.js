@@ -37,7 +37,8 @@ let ProfileEditForm = (props) => {
                         <FormGroup
                             label="Nome do usuário"
                             labelFor="name"
-                            help="A URL acima será publicamente visível se você for um profissional.">
+                            help="A URL acima será publicamente visível se você for um profissional."
+                        >
                             <InputGroup addOnBefore="http://indiejobs.com.br/">
                                 <Field
                                     name="name"

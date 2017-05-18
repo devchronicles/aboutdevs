@@ -5,6 +5,6 @@ export function getProfileData() {
 }
 
 export function getAddresses(address, allowCities = false) {
-    const queryString = allowCities ?  `q=${address}&allowcities=true` : `q=${address}`;
+    const queryString = allowCities ? `q=${address}&allowcities=true` : `q=${address}`;
     return axios.get(`/api/address?${queryString}`);
 }
