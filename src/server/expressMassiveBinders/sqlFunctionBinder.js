@@ -6,23 +6,22 @@ export default {
      * @param {*} func
      * @param {*} params
      */
-    bind(condition, func, ...params) {
+    bind(condition, sqlFunction, getParameters, formatEachResult) {
         return (req, res) => {
-            const evaluatedCondition = condition(req.query, res.post);
+            const evaluatedCondition = condition(req.query, req.post);
             if (!evaluatedCondition) {
                 res.status(200).send([]);
             } else {
-                // get each of the parameters
-                const funcParams = params.map(p => p(req.query, req.post));
-                funcParams.push((error, result) => {
+                const functionParameters = getParameters(req.query, req.post);
+                functionParameters.push((error, results) => {
                     if (error) {
                         res.status(200).send([]);
                     } else {
-                        res.status(200).send(result);
+                        const finalResults = formatEachResult ? results.map(formatEachResult) : results;
+                        res.status(200).send(finalResults);
                     }
                 });
-
-                func(...funcParams);
+                sqlFunction(...functionParameters);
             }
         };
     }

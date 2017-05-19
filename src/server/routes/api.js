@@ -1,22 +1,23 @@
 import express from 'express';
 import db from '../db/db';
-import fbinder from '../expressMassiveBinders/functionBinder';
+import sqlFunctionBinder from '../expressMassiveBinders/sqlFunctionBinder';
 import * as apiHelper from '../helpers/apiHelper';
+import * as searchHelper from '../helpers/searchHelper';
 import * as geocodeApiHelper from '../helpers/geocodeApiHelper';
 import { extractUserNameFromEmail } from '../db/entityHelpers/userHelper';
 
 const router = express.Router();
 
-router.route('/cities').get(fbinder.bind(q => q.q, db.search_cities, (q) => {
-    const criteria = q.q ? q.q.replace(/[^a-zA-Z0-9\s]/g, '') : '';
-    const finalCriteria = `'${criteria}':*`;
-    return finalCriteria;
-}));
-
 router.route('/address').get((req, res) => {
     const allowCities = req.query.allowcities;
     apiHelper.sendPromise(res, geocodeApiHelper.getAddresses(req.query.q, allowCities, db));
 });
+
+router.route('/professions').get(
+    sqlFunctionBinder.bind(q => q.q, db.search_professions,
+        q => [searchHelper.convertToTsVector(searchHelper.normalize(q.q))],
+        r => ({ name: r.name_canonical })
+    ));
 
 router.route('/users/getmyprofiledataforediting').get((req, res) => {
     try {

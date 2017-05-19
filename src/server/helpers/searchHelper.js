@@ -12,3 +12,10 @@ export function normalize(search) {
     normalizedSearch = normalizedSearch.trim();
     return normalizedSearch;
 }
+
+export function convertToTsVector(search) {
+    if (!search) {
+        return '';
+    }
+    return search.split(' ').join(' & ');
+}
