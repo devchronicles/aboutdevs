@@ -6,6 +6,7 @@ import FormRow from './FormRow';
 import InputGroup from './InputGroup';
 import UserTypeToggle from './UserTypeToggle';
 import SelectLocation from './SelectLocation';
+import SelectProfession from './SelectProfession';
 import DocumentSection from './DocumentSection';
 
 
@@ -67,14 +68,10 @@ let ProfileEditForm = (props) => {
                 <DocumentSection visible={formValues.type === 0} className="flex-column flex-align-items-center">
                     <FormRow>
                         <FormGroup label="Profissão" labelFor="profession" help="Escreva o que melhor descreve a sua profissão." >
-                            <InputGroup>
-                                <Field
-                                    name="profession"
-                                    component="input"
-                                    type="text"
-                                    className="form-control"
-                                />
-                            </InputGroup>
+                            <Field
+                                name="profession"
+                                component={SelectProfession}
+                            />
                         </FormGroup>
                     </FormRow>
                     <FormRow>

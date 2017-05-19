@@ -16,7 +16,7 @@ router.route('/address').get((req, res) => {
 router.route('/professions').get(
     sqlFunctionBinder.bind(q => q.q, db.search_professions,
         q => [searchHelper.convertToTsVector(searchHelper.normalize(q.q))],
-        r => ({ name: r.name_canonical })
+        r => (r.name_canonical)
     ));
 
 router.route('/users/getmyprofiledataforediting').get((req, res) => {
