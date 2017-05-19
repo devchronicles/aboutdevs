@@ -580,6 +580,13 @@ CREATE UNIQUE INDEX location_cache_search_uindex ON location_cache USING btree (
 
 
 --
+-- Name: name_canonical_idx; Type: INDEX; Schema: public; Owner: indiejobs
+--
+
+CREATE INDEX name_canonical_idx ON profession USING gin (to_tsvector('ptu'::regconfig, (name_canonical)::text));
+
+
+--
 -- Name: profession_id_uindex; Type: INDEX; Schema: public; Owner: indiejobs
 --
 
