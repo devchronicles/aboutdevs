@@ -12,6 +12,7 @@ input[type="text"], textarea {
     padding: $input-padding-vertical $input-padding-horizontal;
     border-radius: $radius-md;
     border: 0;
+    box-sizing: border-box;
     &.invalid {
         border: 2px solid $color-shining-2;
         &:focus {

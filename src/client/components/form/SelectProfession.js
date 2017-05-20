@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Async } from 'react-select';
-import { getAddresses } from '../httpClient';
+import { getProfessions } from '../../httpClient';
 
-class SelectLocation extends Component {
+class SelectProfession extends Component {
 
     constructor() {
         super();
@@ -12,12 +12,11 @@ class SelectLocation extends Component {
     }
 
     loadValues(input, callback) {
-        const { allowCities } = this.props;
         if (this.currentFetchTimeout) {
             clearTimeout(this.currentFetchTimeout);
         }
         this.currentFetchTimeout = setTimeout(() => {
-            getAddresses(input, allowCities)
+            getProfessions(input)
                 .then((res) => {
                     const options = res.data.map(i => ({ value: i, label: i }));
                     callback(null, { options });
@@ -51,7 +50,7 @@ class SelectLocation extends Component {
                 placeholder=""
                 loadingPlaceholder="Carregando..."
                 searchPromptText="Digite para pesquisar"
-                noResultsText="Não foi possível encontrar o endereço"
+                noResultsText="Profissão não encontrada, mas pode deixar assim mesmo"
                 ignoreCase={false}
                 ignoreAccents={false}
                 cache={false}
@@ -60,13 +59,12 @@ class SelectLocation extends Component {
     }
 }
 
-SelectLocation.propTypes = {
-    input: PropTypes.object.isRequired,
-    allowCities: PropTypes.bool
+SelectProfession.propTypes = {
+    input: PropTypes.object.isRequired
 };
 
-SelectLocation.defaultProps = {
+SelectProfession.defaultProps = {
     allowCities: false
 };
 
-export default SelectLocation;
+export default SelectProfession;

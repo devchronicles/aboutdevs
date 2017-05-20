@@ -1,10 +1,7 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import PropTypes from 'prop-types';
-import FormGroup from './form/FormGroup';
-import SelectLocation from './SelectLocation';
-import FormRow from './form/FormRow';
-import FormColumn from './form/FormColumn';
+import { SelectLocation, FormRow, FormColumn, FormGroup } from './form/index';
 
 let SearchForm = (props) => {
     const { handleSubmit } = props;
