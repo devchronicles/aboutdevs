@@ -87,18 +87,27 @@ form, *.form {
 
 .input-group {
     display: flex;
-    align-self: stretch;
+    flex-direction: row;
+    box-sizing: border-box;
+    width: 100%;
 
-
-    .form-control {
+    .form-control, .Select {
         flex: 1 1 auto;
         &:not(:first-child) {
             border-bottom-left-radius: 0;
             border-top-left-radius: 0;
+            .Select-control {
+                border-bottom-left-radius: 0;
+                border-top-left-radius: 0;
+            }
         }
         &:not(:last-child) {
             border-bottom-right-radius: 0;
             border-top-right-radius: 0;
+            .Select-control {
+                border-bottom-right-radius: 0;
+                border-top-right-radius: 0;
+            }
         }
     }
 
@@ -107,6 +116,10 @@ form, *.form {
         background-color: $color-dark;
         padding: $input-padding-vertical $input-padding-horizontal;
         border-radius: $radius-md;
+        min-width: 40px;
+        display:flex;
+        align-items: center;
+        flex-direction: column;
     }
 }
 

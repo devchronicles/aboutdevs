@@ -3,6 +3,7 @@ import { Field, reduxForm, formValueSelector } from 'redux-form';
 import { connect } from 'react-redux';
 import FormGroup from './FormGroup';
 import FormRow from './FormRow';
+import FaIcon from './FaIcon';
 import InputGroup from './InputGroup';
 import UserTypeToggle from './UserTypeToggle';
 import SelectLocation from './SelectLocation';
@@ -40,7 +41,7 @@ let ProfileEditForm = (props) => {
                             labelFor="name"
                             help="A URL acima será publicamente visível se você for um profissional."
                         >
-                            <InputGroup addOnBefore="http://indiejobs.com.br/">
+                            <InputGroup addOnBefore="indiejobs.com.br/">
                                 <Field
                                     name="name"
                                     component="input"
@@ -53,7 +54,7 @@ let ProfileEditForm = (props) => {
                     </FormRow>
                     <FormRow>
                         <FormGroup label="Nome de exibição" labelFor="displayName" help="É assim que seu nome será exibido aos outros." >
-                            <InputGroup>
+                            <InputGroup addOnBefore={<FaIcon icon="user" />}>
                                 <Field
                                     name="displayName"
                                     component="input"
@@ -68,10 +69,12 @@ let ProfileEditForm = (props) => {
                 <DocumentSection visible={formValues.type === 0} className="flex-column flex-align-items-center">
                     <FormRow>
                         <FormGroup label="Profissão" labelFor="profession" help="Escreva o que melhor descreve a sua profissão." >
-                            <Field
-                                name="profession"
-                                component={SelectProfession}
-                            />
+                            <InputGroup addOnBefore={<FaIcon icon="briefcase" />}>
+                                <Field
+                                    name="profession"
+                                    component={SelectProfession}
+                                />
+                            </InputGroup>
                         </FormGroup>
                     </FormRow>
                     <FormRow>
@@ -103,11 +106,39 @@ let ProfileEditForm = (props) => {
                 </DocumentSection>
                 <DocumentSection className="flex-column flex-align-items-center">
                     <FormRow>
-                        <FormGroup label="Endereço" labelFor="address" help="Selecione seu endereço." >
-                            <Field
-                                name="address"
-                                component={SelectLocation}
-                            />
+                        <FormGroup label="Endereço" labelFor="address" help="Seu endereço não será exibido. Ele será usado somente para geo-localização." >
+                            <InputGroup addOnBefore={<FaIcon icon="map-marker" />}>
+                                <Field
+                                    name="address"
+                                    component={SelectLocation}
+                                />
+                            </InputGroup>
+                        </FormGroup>
+                    </FormRow>
+                </DocumentSection>
+                <DocumentSection className="flex-column flex-align-items-center">
+                    <FormRow>
+                        <FormGroup label="Whatsapp" labelFor="whatsapp" help="Seu Whatsapp será exibido aos usuários com os quais você se conectar" >
+                            <InputGroup addOnBefore={<FaIcon icon="whatsapp" />}>
+                                <Field
+                                    name="whatsapp"
+                                    component="input"
+                                    type="text"
+                                    className="form-control"
+                                />
+                            </InputGroup>
+                        </FormGroup>
+                    </FormRow>
+                    <FormRow>
+                        <FormGroup label="Telefone alternativo" labelFor="alternatePhone" help="Seu telefone alternativo será exibido aos usuários com os quais você se conectar " >
+                            <InputGroup addOnBefore={<FaIcon icon="phone" />}>
+                                <Field
+                                    name="alternatePhone"
+                                    component="input"
+                                    type="text"
+                                    className="form-control"
+                                />
+                            </InputGroup>
                         </FormGroup>
                     </FormRow>
                 </DocumentSection>
