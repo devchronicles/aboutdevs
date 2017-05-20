@@ -63,17 +63,15 @@ let ProfileEditForm = (props) => {
                         />
                     </FormRow>
                     <FormRow>
-                        <FormGroup label="Nome de exibição" labelFor="displayName" help="É assim que seu nome será exibido aos outros." >
-                            <InputGroup addOnBefore={<FaIcon icon="user" />}>
-                                <Field
-                                    name="displayName"
-                                    component="input"
-                                    type="text"
-                                    placeholder="Nome de exibição"
-                                    className="form-control"
-                                />
-                            </InputGroup>
-                        </FormGroup>
+                        <Field
+                            name="displayName"
+                            label="Nome de exibição"
+                            component={FormField}
+                            innerComponent={TextBox}
+                            help="É assim que seu nome será exibido aos outros."
+                            addOnBefore={<FaIcon icon="user" />}
+                            validate={[required]}
+                        />
                     </FormRow>
                 </DocumentSection>
                 <DocumentSection visible={formValues ? formValues.type === 0 : true} className="flex-column flex-align-items-center">

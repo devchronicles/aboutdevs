@@ -20,7 +20,7 @@ const FormField = (field) => {
     let errorMessage;
     switch (field.meta.error) {
         case 'required':
-            errorMessage = 'Este campo precisa ser preenchido.';
+            errorMessage = 'Campo obrigatório.';
             break;
         default:
             errorMessage = undefined;
