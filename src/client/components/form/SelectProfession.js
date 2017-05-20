@@ -32,7 +32,8 @@ class SelectProfession extends Component {
     }
 
     render() {
-        const { value } = this.props.input;
+        const { input: { value }, meta: { error, touched } } = this.props;
+        const className = error && touched ? 'invalid' : '';
         const adjustedValue = {
             value,
             label: value
@@ -54,13 +55,15 @@ class SelectProfession extends Component {
                 ignoreCase={false}
                 ignoreAccents={false}
                 cache={false}
+                className={className}
             />
         );
     }
 }
 
 SelectProfession.propTypes = {
-    input: PropTypes.object.isRequired
+    input: PropTypes.object.isRequired,
+    meta: PropTypes.object.isRequired
 };
 
 SelectProfession.defaultProps = {

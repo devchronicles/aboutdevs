@@ -1,11 +1,8 @@
 import React from 'react';
 import { Field, reduxForm, getFormValues, getFormSyncErrors, getFormSubmitErrors } from 'redux-form';
 import { connect } from 'react-redux';
-import FormGroup from './form/FormGroup';
-import FormRow from './form/FormRow';
 import FaIcon from './FaIcon';
-import { TextBox, TextArea, FormField, SelectLocation, SelectProfession } from './form/index';
-import InputGroup from './form/InputGroup';
+import { TextBox, TextArea, FormField, FormGroup, FormRow, InputGroup, SelectLocation, SelectProfession } from './form/index';
 import UserTypeToggle from './UserTypeToggle';
 import DocumentSection from './DocumentSection';
 import normalizePhone from '../lib/redux-form/normalizePhone';
@@ -72,14 +69,15 @@ let ProfileEditForm = (props) => {
                 </DocumentSection>
                 <DocumentSection visible={formValues ? formValues.type === 0 : true} className="flex-column flex-align-items-center">
                     <FormRow>
-                        <FormGroup label="Profissão" labelFor="profession" help="Escreva o que melhor descreve a sua profissão." >
-                            <InputGroup addOnBefore={<FaIcon icon="briefcase" />}>
-                                <Field
-                                    name="profession"
-                                    component={SelectProfession}
-                                />
-                            </InputGroup>
-                        </FormGroup>
+                        <Field
+                            name="profession"
+                            label="Profissão"
+                            component={FormField}
+                            innerComponent={SelectProfession}
+                            help="Escreva o que melhor descreve a sua profissão."
+                            addOnBefore={<FaIcon icon="briefcase" />}
+                            validate={[validationRequiredIfProfessional]}
+                        />
                     </FormRow>
                     <FormRow>
                         <Field
@@ -104,14 +102,14 @@ let ProfileEditForm = (props) => {
                 </DocumentSection>
                 <DocumentSection className="flex-column flex-align-items-center">
                     <FormRow>
-                        <FormGroup label="Endereço" labelFor="address" help="Seu endereço não será exibido. Ele será usado somente para geo-localização." >
-                            <InputGroup addOnBefore={<FaIcon icon="map-marker" />}>
-                                <Field
-                                    name="address"
-                                    component={SelectLocation}
-                                />
-                            </InputGroup>
-                        </FormGroup>
+                        <Field
+                            name="address"
+                            label="Endereço"
+                            component={FormField}
+                            innerComponent={SelectLocation}
+                            help="Seu endereço não será exibido. Ele será usado somente para geo-localização."
+                            validate={[validateRequired]}
+                        />
                     </FormRow>
                 </DocumentSection>
                 <DocumentSection className="flex-column flex-align-items-center">

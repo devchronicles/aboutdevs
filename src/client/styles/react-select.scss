@@ -14,3 +14,9 @@ $select-input-height:               34px;
 .Select-placeholder, .Select--single > .Select-control .Select-value {
     top: 1px !important;
 }
+
+.Select.invalid {
+    .Select-control {
+        border: 2px solid $color-shining-2;
+    }
+}

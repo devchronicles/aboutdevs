@@ -33,7 +33,8 @@ class SelectLocation extends Component {
     }
 
     render() {
-        const { value } = this.props.input;
+        const { input: { value }, meta: { error, touched } } = this.props;
+        const className = error && touched ? 'invalid' : '';
         const adjustedValue = {
             value,
             label: value
@@ -55,6 +56,7 @@ class SelectLocation extends Component {
                 ignoreCase={false}
                 ignoreAccents={false}
                 cache={false}
+                className={className}
             />
         );
     }
@@ -62,6 +64,7 @@ class SelectLocation extends Component {
 
 SelectLocation.propTypes = {
     input: PropTypes.object.isRequired,
+    meta: PropTypes.object.isRequired,
     allowCities: PropTypes.bool
 };
 
