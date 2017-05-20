@@ -12,6 +12,12 @@ input[type="text"], textarea {
     padding: $input-padding-vertical $input-padding-horizontal;
     border-radius: $radius-md;
     border: 0;
+    &.invalid {
+        border: 2px solid $color-shining-2;
+        &:focus {
+            outline: none;
+        }
+    }
 }
 
 input[type="text"] {
@@ -157,9 +163,12 @@ form, *.form {
     }
 }
 
-.form-text {
+.form-help {
     display: block;
     color: $color-dark-lightest;
     padding-top: $gutter-sm;
     line-height: 1.2em;
+    &.error {
+        color: $color-shining-2;
+    }
 }

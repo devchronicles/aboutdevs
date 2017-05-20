@@ -1,19 +1,31 @@
 import React from 'react';
-import { Field, reduxForm, formValueSelector } from 'redux-form';
+import { Field, reduxForm, getFormValues, getFormSyncErrors, getFormSubmitErrors } from 'redux-form';
 import { connect } from 'react-redux';
-import FormGroup from './FormGroup';
-import FormRow from './FormRow';
+import FormGroup from './form/FormGroup';
+import FormRow from './form/FormRow';
 import FaIcon from './FaIcon';
-import InputGroup from './InputGroup';
+import TextBox from './form/TextBox';
+import InputGroup from './form/InputGroup';
 import UserTypeToggle from './UserTypeToggle';
 import SelectLocation from './SelectLocation';
 import SelectProfession from './SelectProfession';
 import DocumentSection from './DocumentSection';
-import normalizePhone from '../lib/redux-form-normalizers/normalizePhone';
-
+import normalizePhone from '../lib/redux-form/normalizePhone';
+import { required } from '../lib/redux-form/fieldValidation';
+import { FormField } from './form/index';
 
 let ProfileEditForm = (props) => {
-    const { handleSubmit, pristine, reset, submitting, loggedUser, formValues } = props;
+    const {
+        formValues,
+        formSyncErrors,
+        formSubmitErrors,
+        handleSubmit,
+        pristine,
+        reset,
+        submitting,
+        loggedUser
+    } = props;
+
     return (
         <div className="document">
             <form onSubmit={handleSubmit}>
@@ -40,21 +52,15 @@ let ProfileEditForm = (props) => {
                         </FormGroup>
                     </FormRow>
                     <FormRow>
-                        <FormGroup
+                        <Field
+                            name="name"
                             label="Nome do usuário"
-                            labelFor="name"
+                            component={FormField}
+                            innerComponent={TextBox}
                             help="A URL acima será publicamente visível se você for um profissional."
-                        >
-                            <InputGroup addOnBefore="indiejobs.com.br/">
-                                <Field
-                                    name="name"
-                                    component="input"
-                                    type="text"
-                                    placeholder="name"
-                                    className="form-control"
-                                />
-                            </InputGroup>
-                        </FormGroup>
+                            addOnBefore="indiejobs.com.br/"
+                            validate={[required]}
+                        />
                     </FormRow>
                     <FormRow>
                         <FormGroup label="Nome de exibição" labelFor="displayName" help="É assim que seu nome será exibido aos outros." >
@@ -70,7 +76,7 @@ let ProfileEditForm = (props) => {
                         </FormGroup>
                     </FormRow>
                 </DocumentSection>
-                <DocumentSection visible={formValues.type === 0} className="flex-column flex-align-items-center">
+                <DocumentSection visible={formValues ? formValues.type === 0 : true} className="flex-column flex-align-items-center">
                     <FormRow>
                         <FormGroup label="Profissão" labelFor="profession" help="Escreva o que melhor descreve a sua profissão." >
                             <InputGroup addOnBefore={<FaIcon icon="briefcase" />}>
@@ -152,24 +158,25 @@ let ProfileEditForm = (props) => {
                     <a className="button" href="/">Cancelar</a>
                     <button type="submit" className="vibrant" disabled={pristine || submitting}>Salvar</button>
                 </DocumentSection>
-            </form>
+            </form >
         </div >
     );
 };
 
+const FORM_NAME = 'profile-edit';
 
 // Decorate with redux-form
 ProfileEditForm = reduxForm({
-    form: 'profile-edit' // a unique identifier for this form
+    form: FORM_NAME // a unique identifier for this form,
 })(ProfileEditForm);
 
 // Decorate with connect to read form values
 
-const selector = formValueSelector('profile-edit');
+
 ProfileEditForm = connect(state => ({
-    formValues: {
-        type: selector(state, 'type')
-    }
+    formValues: getFormValues(FORM_NAME)(state),
+    formSyncErrors: getFormSyncErrors(FORM_NAME)(state),
+    formSubmitErrors: getFormSubmitErrors(FORM_NAME)(state)
 }))(ProfileEditForm);
 
 export default ProfileEditForm;
