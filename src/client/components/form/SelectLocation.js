@@ -33,7 +33,7 @@ class SelectLocation extends Component {
     }
 
     render() {
-        const { input: { value }, meta: { error, touched } } = this.props;
+        const { input: { value, onBlur }, meta: { error, touched } } = this.props;
         const className = error && touched ? 'invalid' : '';
         const adjustedValue = {
             value,
@@ -57,6 +57,7 @@ class SelectLocation extends Component {
                 ignoreAccents={false}
                 cache={false}
                 className={className}
+                onBlur={() => onBlur(value)}
             />
         );
     }

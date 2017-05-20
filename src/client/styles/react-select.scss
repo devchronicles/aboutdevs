@@ -18,5 +18,8 @@ $select-input-height:               34px;
 .Select.invalid {
     .Select-control {
         border: 2px solid $color-shining-2;
+        .Select-input {
+            height: 30px;
+        }
     }
 }
