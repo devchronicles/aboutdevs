@@ -3,8 +3,9 @@
 
 .edit-profile-image-button-wrapper {
     margin: $gutter-md 0;
-
-    
+    .fa {
+        margin-right: $gutter-sm;
+    }
 }
 
 .user-type-toggle {
@@ -21,7 +22,7 @@
             .fa {
                 display: "inline-block";
                 color: $color-shining-1;
-                margin-right: $gutter-xs;
+                margin-right: $gutter-sm;
             }
         }
         &:not(.pushed) {

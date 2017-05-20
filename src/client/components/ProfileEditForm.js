@@ -9,6 +9,7 @@ import UserTypeToggle from './UserTypeToggle';
 import SelectLocation from './SelectLocation';
 import SelectProfession from './SelectProfession';
 import DocumentSection from './DocumentSection';
+import normalizePhone from '../lib/redux-form-normalizers/normalizePhone';
 
 
 let ProfileEditForm = (props) => {
@@ -19,7 +20,10 @@ let ProfileEditForm = (props) => {
                 <DocumentSection className="flex-column flex-align-items-center">
                     <div className="image" style={{ backgroundImage: `url(${loggedUser.photoUrl})` }} />
                     <div className="edit-profile-image-button-wrapper">
-                        <button className="edit-profile-image-button">Alterar imagem de perfil</button>
+                        <button className="edit-profile-image-button">
+                            <FaIcon icon="camera" />
+                            Alterar imagem de perfil
+                        </button>
                     </div>
                     <FormRow>
                         <FormGroup
@@ -125,6 +129,7 @@ let ProfileEditForm = (props) => {
                                     component="input"
                                     type="text"
                                     className="form-control"
+                                    normalize={normalizePhone}
                                 />
                             </InputGroup>
                         </FormGroup>
@@ -137,6 +142,7 @@ let ProfileEditForm = (props) => {
                                     component="input"
                                     type="text"
                                     className="form-control"
+                                    normalize={normalizePhone}
                                 />
                             </InputGroup>
                         </FormGroup>
