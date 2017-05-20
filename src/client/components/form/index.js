@@ -4,3 +4,4 @@ export FormGroup from './FormGroup';
 export FormRow from './FormRow';
 export InputGroup from './InputGroup';
 export TextBox from './TextBox';
+export TextArea from './TextArea';

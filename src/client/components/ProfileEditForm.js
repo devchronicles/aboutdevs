@@ -4,15 +4,14 @@ import { connect } from 'react-redux';
 import FormGroup from './form/FormGroup';
 import FormRow from './form/FormRow';
 import FaIcon from './FaIcon';
-import TextBox from './form/TextBox';
+import { TextBox, TextArea, FormField } from './form/index';
 import InputGroup from './form/InputGroup';
 import UserTypeToggle from './UserTypeToggle';
 import SelectLocation from './SelectLocation';
 import SelectProfession from './SelectProfession';
 import DocumentSection from './DocumentSection';
 import normalizePhone from '../lib/redux-form/normalizePhone';
-import { required } from '../lib/redux-form/fieldValidation';
-import { FormField } from './form/index';
+import { validateRequired, validatePhone, validateAtLeastOnePhone } from '../lib/redux-form/fieldValidation';
 
 let ProfileEditForm = (props) => {
     const {
@@ -21,7 +20,6 @@ let ProfileEditForm = (props) => {
         formSubmitErrors,
         handleSubmit,
         pristine,
-        reset,
         submitting,
         loggedUser
     } = props;
@@ -59,7 +57,7 @@ let ProfileEditForm = (props) => {
                             innerComponent={TextBox}
                             help="A URL acima será publicamente visível se você for um profissional."
                             addOnBefore="indiejobs.com.br/"
-                            validate={[required]}
+                            validate={[validateRequired]}
                         />
                     </FormRow>
                     <FormRow>
@@ -70,7 +68,7 @@ let ProfileEditForm = (props) => {
                             innerComponent={TextBox}
                             help="É assim que seu nome será exibido aos outros."
                             addOnBefore={<FaIcon icon="user" />}
-                            validate={[required]}
+                            validate={[validateRequired]}
                         />
                     </FormRow>
                 </DocumentSection>
@@ -86,30 +84,24 @@ let ProfileEditForm = (props) => {
                         </FormGroup>
                     </FormRow>
                     <FormRow>
-                        <FormGroup label="Biografia" labelFor="displayName" help="Fale um pouco sobre você, sua formação e sua carreira." >
-                            <Field
-                                name="bio"
-                                component="textarea"
-                                rows={6}
-                                type="text"
-                                className="form-control"
-                            />
-                        </FormGroup>
+                        <Field
+                            name="bio"
+                            label="Biografia"
+                            component={FormField}
+                            innerComponent={TextArea}
+                            help="Fale um pouco sobre você, sua formação e sua carreira."
+                            validate={[validateRequired]}
+                        />
                     </FormRow>
                     <FormRow>
-                        <FormGroup
+                        <Field
+                            name="activities"
                             label="Servições que você presta"
-                            labelFor="activities"
+                            component={FormField}
+                            innerComponent={TextArea}
                             help="Descreva, brevemente, os tipos de serviço que você presta."
-                        >
-                            <Field
-                                name="activities"
-                                component="textarea"
-                                rows={6}
-                                type="text"
-                                className="form-control"
-                            />
-                        </FormGroup>
+                            validate={[validateRequired]}
+                        />
                     </FormRow>
                 </DocumentSection>
                 <DocumentSection className="flex-column flex-align-items-center">
@@ -126,30 +118,28 @@ let ProfileEditForm = (props) => {
                 </DocumentSection>
                 <DocumentSection className="flex-column flex-align-items-center">
                     <FormRow>
-                        <FormGroup label="Whatsapp" labelFor="whatsapp" help="Seu Whatsapp será exibido aos usuários com os quais você se conectar" >
-                            <InputGroup addOnBefore={<FaIcon icon="whatsapp" />}>
-                                <Field
-                                    name="whatsapp"
-                                    component="input"
-                                    type="text"
-                                    className="form-control"
-                                    normalize={normalizePhone}
-                                />
-                            </InputGroup>
-                        </FormGroup>
+                        <Field
+                            name="whatsapp"
+                            label="Whatsapp"
+                            component={FormField}
+                            innerComponent={TextBox}
+                            help="Seu Whatsapp será exibido aos usuários com os quais você se conectar."
+                            addOnBefore={<FaIcon icon="whatsapp" />}
+                            validate={[validateAtLeastOnePhone, validatePhone]}
+                            normalize={normalizePhone}
+                        />
                     </FormRow>
                     <FormRow>
-                        <FormGroup label="Telefone alternativo" labelFor="alternatePhone" help="Seu telefone alternativo será exibido aos usuários com os quais você se conectar " >
-                            <InputGroup addOnBefore={<FaIcon icon="phone" />}>
-                                <Field
-                                    name="alternatePhone"
-                                    component="input"
-                                    type="text"
-                                    className="form-control"
-                                    normalize={normalizePhone}
-                                />
-                            </InputGroup>
-                        </FormGroup>
+                        <Field
+                            name="alternatePhone"
+                            label="Telefone alternativo"
+                            component={FormField}
+                            innerComponent={TextBox}
+                            help="Seu telefone alternativo será exibido aos usuários com os quais você se conectar."
+                            addOnBefore={<FaIcon icon="phone" />}
+                            validate={[validateAtLeastOnePhone, validatePhone]}
+                            normalize={normalizePhone}
+                        />
                     </FormRow>
                 </DocumentSection>
                 <DocumentSection className="flex-row-reverse button-bar">

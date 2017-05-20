@@ -17,6 +17,6 @@ const InputGroup = ({ addOnBefore, addOnAfter, children }) => {
 InputGroup.propTypes = {
     addOnBefore: PropTypes.any,
     addOnAfter: PropTypes.any
-}
+};
 
 export default InputGroup;

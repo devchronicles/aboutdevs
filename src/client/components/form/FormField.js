@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormGroup, InputGroup } from './index';
+import { getErrorMessage } from '../../lib/redux-form/fieldValidationMessageProvider';
 
 const FormField = (field) => {
     const {
@@ -17,14 +18,7 @@ const FormField = (field) => {
         meta: field.meta
     };
 
-    let errorMessage;
-    switch (field.meta.error) {
-        case 'required':
-            errorMessage = 'Campo obrigatório.';
-            break;
-        default:
-            errorMessage = undefined;
-    }
+    const errorMessage = field.meta.touched ? getErrorMessage(field.meta.error) : null;
 
     return (<FormGroup
         label={label}

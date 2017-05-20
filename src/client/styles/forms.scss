@@ -41,6 +41,11 @@ button, a.button {
         background-image: linear-gradient(to right,$color-shining-3,$color-shining-4);
     }
 
+    &:disabled {
+        opacity: 0.4;
+        cursor: no-drop;
+    }
+
     &.vibrant {
         border: 0;
         background-image: linear-gradient(to right,$color-shining-1,$color-shining-2);
