@@ -11,7 +11,7 @@ import SelectLocation from './SelectLocation';
 import SelectProfession from './SelectProfession';
 import DocumentSection from './DocumentSection';
 import normalizePhone from '../lib/redux-form/normalizePhone';
-import { validateRequired, validatePhone, validateAtLeastOnePhone } from '../lib/redux-form/fieldValidation';
+import { validateRequired, validationRequiredIfProfessional, validatePhone, validateAtLeastOnePhone } from '../lib/redux-form/fieldValidation';
 
 let ProfileEditForm = (props) => {
     const {
@@ -90,7 +90,7 @@ let ProfileEditForm = (props) => {
                             component={FormField}
                             innerComponent={TextArea}
                             help="Fale um pouco sobre você, sua formação e sua carreira."
-                            validate={[validateRequired]}
+                            validate={[validationRequiredIfProfessional]}
                         />
                     </FormRow>
                     <FormRow>
@@ -100,7 +100,7 @@ let ProfileEditForm = (props) => {
                             component={FormField}
                             innerComponent={TextArea}
                             help="Descreva, brevemente, os tipos de serviço que você presta."
-                            validate={[validateRequired]}
+                            validate={[validationRequiredIfProfessional]}
                         />
                     </FormRow>
                 </DocumentSection>
