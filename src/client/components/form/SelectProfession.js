@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Async } from 'react-select';
+import { AsyncCreatable } from 'react-select';
 import { getProfessions } from '../../httpClient';
+import * as stringHelper from '../../../common/helpers/stringHelper';
 
 class SelectProfession extends Component {
 
@@ -39,8 +40,13 @@ class SelectProfession extends Component {
             label: value
         };
 
+        const isOptionUnique = ({ option, options }) => {
+            const selectedValue = option.value ? option.value.toLowerCase() : '';
+            return !options.map(o => stringHelper.removeDiacritics(o.value).toLowerCase()).includes(selectedValue);
+        };
+
         return (
-            <Async
+            <AsyncCreatable
                 value={adjustedValue}
                 onChange={this.handleChange}
                 loadOptions={this.loadValues}
@@ -52,10 +58,12 @@ class SelectProfession extends Component {
                 loadingPlaceholder="Carregando..."
                 searchPromptText="Digite para pesquisar"
                 noResultsText="Profissão não encontrada, mas pode deixar assim mesmo"
+                promptTextCreator={label => `Criar profissão '${label}'`}
                 ignoreCase={false}
                 ignoreAccents={false}
                 cache={false}
                 className={className}
+                isOptionUnique={isOptionUnique}
                 onBlur={() => onBlur(value)}
             />
         );

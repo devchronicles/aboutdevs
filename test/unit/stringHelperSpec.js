@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import * as stringHelper from '../../src/server/helpers/stringHelper';
+import * as stringHelper from '../../src/common/helpers/stringHelper';
 
 describe('stringHelper', () => {
     describe('removeDiacritics', () => {

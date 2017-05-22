@@ -1,4 +1,4 @@
-import * as stringHelper from './stringHelper';
+import * as stringHelper from '../../common/helpers/stringHelper';
 
 export function normalize(search) {
     if (!search) {
