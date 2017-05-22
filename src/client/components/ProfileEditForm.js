@@ -6,7 +6,14 @@ import { TextBox, TextArea, FormField, FormGroup, FormFieldUserName, FormRow, Se
 import UserTypeToggle from './UserTypeToggle';
 import DocumentSection from './DocumentSection';
 import normalizePhone from '../lib/redux-form/normalizePhone';
-import { validateRequired, validationRequiredIfProfessional, validatePhone, validateAtLeastOnePhone } from '../lib/redux-form/fieldValidation';
+import {
+    validateRequired,
+    validationRequiredIfProfessional,
+    validatePhone,
+    validateAtLeastOnePhone
+} from '../lib/redux-form/fieldValidation';
+import asyncValidation from '../lib/redux-form/asyncValidation';
+
 
 let ProfileEditForm = (props) => {
     const {
@@ -148,7 +155,9 @@ const FORM_NAME = 'profile-edit';
 
 // Decorate with redux-form
 ProfileEditForm = reduxForm({
-    form: FORM_NAME // a unique identifier for this form,
+    form: FORM_NAME, // a unique identifier for this form,
+    asyncValidate: asyncValidation,
+    asyncBlurFields: ['name']
 })(ProfileEditForm);
 
 // Decorate with connect to read form values

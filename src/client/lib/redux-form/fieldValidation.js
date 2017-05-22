@@ -11,7 +11,6 @@ export function validationRequiredIfProfessional(value, values) {
     return (values.type === 0 && (value === null || value === undefined || value === '')) ? REQUIRED_IF_PROFESSIONAL : undefined;
 }
 
-
 export function validatePhone(value) {
     if (value === null || value === undefined || value === '') {
         return undefined;

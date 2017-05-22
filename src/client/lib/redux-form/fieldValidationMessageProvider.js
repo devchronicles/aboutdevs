@@ -1,4 +1,13 @@
-import { REQUIRED, REQUIRED_IF_PROFESSIONAL, INVALID_PHONE, AT_LEAST_ONE_PHONE } from './fieldValidation';
+import {
+    REQUIRED,
+    REQUIRED_IF_PROFESSIONAL,
+    INVALID_PHONE,
+    AT_LEAST_ONE_PHONE
+} from './fieldValidation';
+
+import {
+    USER_NAME_IS_TAKEN
+} from './asyncValidation';
 
 export function getErrorMessage(error) {
     switch (error) {
@@ -10,7 +19,13 @@ export function getErrorMessage(error) {
             return 'Telefone inválido.';
         case AT_LEAST_ONE_PHONE:
             return 'Pelo menos um dos telefones precisa ser preenchido.';
+        case USER_NAME_IS_TAKEN:
+            return 'Este nome de usuário já está sendo utilizado.';
         default:
-            return null;
+            break;
     }
+    if (error) {
+        return 'Algo deu errado';
+    }
+    return null;
 }
