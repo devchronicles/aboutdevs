@@ -2,7 +2,7 @@ import React from 'react';
 import { Field, reduxForm, getFormValues, getFormSyncErrors, getFormSubmitErrors } from 'redux-form';
 import { connect } from 'react-redux';
 import FaIcon from './FaIcon';
-import { TextBox, TextArea, FormField, FormGroup, FormRow, InputGroup, SelectLocation, SelectProfession } from './form/index';
+import { TextBox, TextArea, FormField, FormGroup, FormFieldUserName, FormRow, SelectLocation, SelectProfession } from './form/index';
 import UserTypeToggle from './UserTypeToggle';
 import DocumentSection from './DocumentSection';
 import normalizePhone from '../lib/redux-form/normalizePhone';
@@ -47,11 +47,7 @@ let ProfileEditForm = (props) => {
                     <FormRow>
                         <Field
                             name="name"
-                            label="Nome do usuário"
-                            component={FormField}
-                            innerComponent={TextBox}
-                            help="A URL acima será publicamente visível se você for um profissional."
-                            addOnBefore="indiejobs.com.br/"
+                            component={FormFieldUserName}
                             validate={[validateRequired]}
                         />
                     </FormRow>
@@ -108,6 +104,7 @@ let ProfileEditForm = (props) => {
                             component={FormField}
                             innerComponent={SelectLocation}
                             help="Seu endereço não será exibido. Ele será usado somente para geo-localização."
+                            addOnBefore={<FaIcon icon="map-marker" />}
                             validate={[validateRequired]}
                         />
                     </FormRow>

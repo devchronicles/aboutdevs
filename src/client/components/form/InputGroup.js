@@ -19,4 +19,10 @@ InputGroup.propTypes = {
     addOnAfter: PropTypes.any
 };
 
+InputGroup.defaultProps = {
+    addOnBefore: null,
+    addOnAfter: null
+};
+
+
 export default InputGroup;

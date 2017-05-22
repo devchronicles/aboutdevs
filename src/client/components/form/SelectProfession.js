@@ -58,7 +58,7 @@ class SelectProfession extends Component {
                 loadingPlaceholder="Carregando..."
                 searchPromptText="Digite para pesquisar"
                 noResultsText="Profissão não encontrada, mas pode deixar assim mesmo"
-                promptTextCreator={label => `Criar profissão '${label}'`}
+                promptTextCreator={label => `Criar opção '${label}'`}
                 ignoreCase={false}
                 ignoreAccents={false}
                 cache={false}

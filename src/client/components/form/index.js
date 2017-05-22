@@ -1,5 +1,6 @@
 export FormColumn from './FormColumn';
 export FormField from './FormField';
+export FormFieldUserName from './FormFieldUserName';
 export FormGroup from './FormGroup';
 export FormRow from './FormRow';
 export InputGroup from './InputGroup';
@@ -7,3 +8,4 @@ export TextBox from './TextBox';
 export TextArea from './TextArea';
 export SelectLocation from './SelectLocation';
 export SelectProfession from './SelectProfession';
+
