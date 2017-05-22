@@ -1,6 +1,6 @@
 import { v4 } from 'uuid';
 import config from '../config/config';
-import { buildMassive } from '../src/server/db/helpers/massiveHelper';
+import { buildMassive } from '../src/server/helpers/massiveHelper';
 import professions from '../data/professions.json';
 
 

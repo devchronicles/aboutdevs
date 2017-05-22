@@ -1,7 +1,7 @@
 import massive from 'massive';
 import Promise from 'bluebird';
 
-import entities from '../entities';
+import entities from '../db/entities';
 
 /**
  * This creates a promisified version of massive.

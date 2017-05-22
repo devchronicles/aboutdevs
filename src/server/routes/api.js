@@ -4,7 +4,7 @@ import sqlFunctionBinder from '../expressMassiveBinders/sqlFunctionBinder';
 import * as apiHelper from '../helpers/apiHelper';
 import * as searchHelper from '../helpers/searchHelper';
 import * as geocodeApiHelper from '../helpers/geocodeApiHelper';
-import { extractUserNameFromEmail } from '../db/entityHelpers/userHelper';
+import { extractUserNameFromEmail } from '../helpers/userHelper';
 
 const router = express.Router();
 
@@ -18,6 +18,32 @@ router.route('/professions').get(
         q => [searchHelper.convertToTsVector(searchHelper.normalize(q.q))],
         r => (r.name_canonical)
     ));
+
+router.route('/users/checkname').get((req, res) => {
+    try {
+        const user = req.user ? req.user : null;
+        if (user === null) {
+            throw Error('The user is not logged in');
+        }
+        db.user.findOneAsync({ id: user.id })
+            .then((u) => {
+                if (u) {
+                    apiHelper.sendOk(res, {
+                        id: u.id,
+                        name: extractUserNameFromEmail(u.email),
+                        displayName: u.display_name,
+                        photoUrl: u.photo_url,
+                        type: u.type
+                    });
+                } else {
+                    apiHelper.sendError(res, 'Could not find user');
+                }
+            })
+            .catch(apiHelper.apiExceptionCatcher(res));
+    } catch (ex) {
+        apiHelper.sendError(res, ex);
+    }
+});
 
 router.route('/users/getmyprofiledataforediting').get((req, res) => {
     try {

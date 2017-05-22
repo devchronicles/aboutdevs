@@ -1,5 +1,5 @@
 import config from '../config/config';
-import { buildMassive } from '../src/server/db/helpers/massiveHelper';
+import { buildMassive } from '../src/server/helpers/massiveHelper';
 import geo from '../data/geo.json';
 
 const db = buildMassive(config.db.connectionString);

@@ -1,6 +1,6 @@
 import { OAuth2Strategy as GoogleStrategy } from 'passport-google-oauth';
 import db from '../db/db';
-import { findOrCreateFromGoogleProfile } from '../db/entityHelpers/userHelper';
+import { findOrCreateFromGoogleProfile } from '../helpers/userHelper';
 
 /**
  * Setups up passport

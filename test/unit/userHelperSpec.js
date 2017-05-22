@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import { extractUserNameFromEmail } from '../../src/server/db/entityHelpers/userHelper';
+import { extractUserNameFromEmail } from '../../src/server/helpers/userHelper';
 
 describe('userHelper', () => {
     describe('extractUserNameFromEmail', () => {

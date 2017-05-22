@@ -5,7 +5,7 @@ import {
     createFromGoogleProfile,
     updateFromGoogleProfile,
     findOrCreateFromGoogleProfile
-} from '../../../src/server/db/entityHelpers/userHelper';
+} from '../../../src/server/helpers/userHelper';
 
 
 describe('userHelper', () => {

@@ -1,5 +1,5 @@
 import config from '../../../config/config';
-import { buildMassive } from '../../../src/server/db/helpers/massiveHelper';
+import { buildMassive } from '../../../src/server/helpers/massiveHelper';
 import entities from '../../../src/server/db/entities';
 
 /**
