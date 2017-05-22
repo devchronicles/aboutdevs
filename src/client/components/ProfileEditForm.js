@@ -88,7 +88,7 @@ let ProfileEditForm = (props) => {
                     <FormRow>
                         <Field
                             name="activities"
-                            label="Servições que você presta"
+                            label="Serviços que você presta"
                             component={FormField}
                             innerComponent={TextArea}
                             help="Descreva, brevemente, os tipos de serviço que você presta."

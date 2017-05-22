@@ -5,7 +5,7 @@ import { FormGroup, InputGroup, TextBox } from './index';
 import FaIcon from '../FaIcon';
 import { getErrorMessage } from '../../lib/redux-form/fieldValidationMessageProvider';
 
-const Dots = activity.Dots;
+const Spinner = activity.Spinner;
 
 const FormFieldUserName = (field) => {
     const innerComponentProps = {
@@ -16,9 +16,9 @@ const FormFieldUserName = (field) => {
     const errorMessage = field.meta.touched ? getErrorMessage(field.meta.error) : null;
 
     function getAddOnAfterComponent(f) {
-        if (f.meta.asyncValidating) return <Dots />;
-        if (f.meta.error) return <FaIcon icon="exclamation-triangle" />;
-        return <FaIcon icon="check" />;
+        if (f.meta.asyncValidating) return <Spinner size={10} />;
+        if (f.meta.error) return <FaIcon icon="exclamation-triangle" className="error" />;
+        return <FaIcon icon="check" className="ok" />;
     }
     const validationComponent = getAddOnAfterComponent(field);
 
