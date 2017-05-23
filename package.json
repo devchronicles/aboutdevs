@@ -18,7 +18,8 @@
     "db-reinstall": "npm run db-drop && npm run db-install",
     "tools-save-professional-data": "cross-env NODE_ENV=development babel-node ./tools/save-professional-data",
     "tools-print-config": "babel-node ./tools/print-config.js",
-    "tools-massive-repl": "massive -c postgres://indiejobs:indiejobs@localhost:5432/indiejobs"
+    "tools-massive-repl": "massive -c postgres://indiejobs:indiejobs@localhost:5432/indiejobs",
+    "apply-feminine-to-professionals": "babel-node ./tools/apply-feminine-to-professionals.js"
   },
   "repository": {
     "type": "git",
