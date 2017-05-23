@@ -13,3 +13,8 @@ export function getProfessions(searchTerm) {
     const queryString = `q=${searchTerm}`;
     return axios.get(`/api/professions?${queryString}`);
 }
+
+export function checkUserName(userName) {
+    const queryString = `q=${userName}`;
+    return axios.get(`/api/users/checkname?${queryString}`);
+}

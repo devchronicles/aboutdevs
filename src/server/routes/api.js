@@ -25,21 +25,13 @@ router.route('/users/checkname').get((req, res) => {
         if (user === null) {
             throw Error('The user is not logged in');
         }
-        db.user.findOneAsync({ id: user.id })
-            .then((u) => {
-                if (u) {
-                    apiHelper.sendOk(res, {
-                        id: u.id,
-                        name: extractUserNameFromEmail(u.email),
-                        displayName: u.display_name,
-                        photoUrl: u.photo_url,
-                        type: u.type
-                    });
-                } else {
-                    apiHelper.sendError(res, 'Could not find user');
-                }
-            })
-            .catch(apiHelper.apiExceptionCatcher(res));
+        const userName = req.query.q;
+        const id = user.id;
+
+        db.isUserNameAvailable(userName, id, (error, data) => {
+            if (error) apiHelper.sendError(res, error);
+            apiHelper.sendOk(res, data[0]);
+        });
     } catch (ex) {
         apiHelper.sendError(res, ex);
     }
