@@ -21,6 +21,7 @@ export default function (passport) {
                 }
                 const user = {
                     id: u.id,
+                    name: u.name,
                     displayName: u.display_name,
                     photoUrl: u.photo_url
                 };

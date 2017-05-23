@@ -1,4 +1,5 @@
 import { safeRead } from '../../common/helpers/objectHelpers';
+import * as stringHelper from '../../common/helpers/stringHelper';
 
 /**
  * Extracts the user name from the user's e-mail
@@ -12,11 +13,21 @@ export function extractUserNameFromEmail(email) {
 /**
  * Returns a suggested user name given the user e-mail
  */
-export function getUniqueUserNameSuggestion(db, email) {
+export function getValidUserName(db, userName) {
     if (db === null || db === undefined) throw Error('Argument \'db\' should be null or undefined');
-    if (email === null || email === undefined) throw Error('Argument \'email\' should be null or undefined');
+    if (userName === null || userName === undefined) throw Error('Argument \'email\' should be null or undefined');
 
-    
+    return db.user.findAsync({ 'name ilike': `${userName}%` })
+        .then((r) => {
+            if (r.length === 0) return userName;
+            // this isn't actually necessary. TODO: Remove this.
+            const lowerCaseUserNames = r.map(s => s.name.toLowerCase());
+            let finalUserName = userName.toLowerCase();
+            while (lowerCaseUserNames.includes(finalUserName)) {
+                finalUserName = stringHelper.incrementLast(finalUserName, true);
+            }
+            return finalUserName;
+        });
 }
 
 /**
@@ -29,18 +40,23 @@ export function createFromGoogleProfile(db, profile) {
     if (!db) throw Error('\'db\' should be truthy');
     if (!profile) throw Error('\'profile\' should be truthy');
 
-    const user = {
-        display_name: profile.displayName,
-        photo_url: safeRead(p => p.photos[0].value, profile, null),
-        email: safeRead(p => p.emails[0].value, profile, null),
-        oauth_profiles: {
-            google: {
-                id: profile.id,
-                raw: profile
+    const email = safeRead(p => p.emails[0].value, profile, null);
+    const photoUrl = safeRead(p => p.photos[0].value, profile, null);
+
+    return getValidUserName(db, extractUserNameFromEmail(email))
+        .then(userName => ({
+            name: userName,
+            display_name: profile.displayName,
+            photo_url: photoUrl,
+            email,
+            oauth_profiles: {
+                google: {
+                    id: profile.id,
+                    raw: profile
+                }
             }
-        }
-    };
-    return db.user.saveAsync(user);
+        }))
+        .then(user => db.user.saveAsync(user));
 }
 
 /**

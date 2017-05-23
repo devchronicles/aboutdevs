@@ -23,4 +23,24 @@ describe('stringHelper', () => {
             assert.equal(stringHelper.normalizeSpaces('Eu   sei'), 'Eu sei');
         });
     });
+    describe('incrementLast', () => {
+        it('When 0', () => {
+            assert.equal(stringHelper.incrementLast('something0'), 'something1');
+        });
+        it('When number with one digit', () => {
+            assert.equal(stringHelper.incrementLast('something9'), 'something10');
+        });
+        it('When big number', () => {
+            assert.equal(stringHelper.incrementLast('something9999'), 'something10000');
+        });
+        it('When number in the number', () => {
+            assert.equal(stringHelper.incrementLast('1some2thing9999'), '1some2thing10000');
+        });
+        it('When no number', () => {
+            assert.equal(stringHelper.incrementLast('1some2thing'), '1some2thing');
+        });
+        it('When no number padding addIfNoNumber', () => {
+            assert.equal(stringHelper.incrementLast('1some2thing', true), '1some2thing1');
+        });
+    });
 });

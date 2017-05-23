@@ -419,7 +419,8 @@ CREATE TABLE "user" (
     oauth_profiles json,
     status smallint DEFAULT 0 NOT NULL,
     type smallint DEFAULT 0 NOT NULL,
-    profession character varying(50)
+    profession character varying(50),
+    name character varying(255) NOT NULL
 );
 
 
@@ -612,6 +613,13 @@ CREATE UNIQUE INDEX profession_name_feminine_uindex ON profession USING btree (n
 --
 
 CREATE UNIQUE INDEX user_email_uindex ON "user" USING btree (email);
+
+
+--
+-- Name: user_name_uindex; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX user_name_uindex ON "user" USING btree (name);
 
 
 --

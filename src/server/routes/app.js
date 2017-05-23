@@ -27,6 +27,7 @@ function sendApp(res, preloadedState) {
 router.route('*').get((req, res) => {
     const user = req.user ? req.user : {
         id: undefined,
+        name: undefined,
         displayName: undefined,
         photoUrl: undefined
     };

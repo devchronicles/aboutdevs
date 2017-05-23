@@ -113,6 +113,7 @@ for (let i = 0; i < defaultDiacriticsRemovalMap.length; i++) {
  * @param {string} str The input string
  */
 export function removeDiacritics(str) {
+    if (str === null || str === undefined) throw Error('Argument \'str\' should be null or undefined');
     return str.replace(/[^\u0000-\u007E]/g, a => diacriticsMap[a] || a);
 }
 
@@ -121,6 +122,7 @@ export function removeDiacritics(str) {
  * @param {string} str The input string
  */
 export function replaceNonAlphaNumericCharactersWithSpaces(str) {
+    if (str === null || str === undefined) throw Error('Argument \'str\' should be null or undefined');
     return str.replace(/[^a-z0-9]+/gi, ' ');
 }
 
@@ -129,5 +131,22 @@ export function replaceNonAlphaNumericCharactersWithSpaces(str) {
  * @param {string} str The input string
  */
 export function normalizeSpaces(str) {
+    if (str === null || str === undefined) throw Error('Argument \'str\' should be null or undefined');
     return str.replace(/ +(?= )/g, '');
+}
+
+/**
+ * Increments the last integer number in the string. Optionally adds a number to it
+ * @param {string} str The string
+ * @param {boolean} addIfNoNumber Whether or not it should add a number in case the provided string has no number at the end
+ */
+export function incrementLast(str, addIfNoNumber) {
+    if (str === null || str === undefined) throw Error('Argument \'str\' should be null or undefined');
+    const regex = /[0-9]+$/;
+    if (str.match(regex)) {
+        return str.replace(regex, (match) => {
+            return parseInt(match, 10) + 1;
+        });
+    }
+    return addIfNoNumber ? str + 1 : str;
 }
