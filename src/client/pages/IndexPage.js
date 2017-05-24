@@ -1,21 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import SearchWrapper from '../components/SearchWrapper';
-import Hero from '../components/Hero';
-import SearchForm from '../components/SearchForm';
-import SearchResult from '../components/SearchResult';
-
-import { profiles } from '../lib/stubs';
+import IndexSearchForm from '../components/IndexSearchForm';
 
 const IndexPage = () => (<div className="page-wrapper">
-    <SearchWrapper>
-        <Hero />
-        <SearchForm />
-    </SearchWrapper>
-    <SearchResult profiles={profiles} />
+    <div className="index-page-wrapper">
+        <IndexSearchForm />
+    </div>
 </div>);
-
 
 // CONNECT
 

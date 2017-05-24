@@ -2,17 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const FormGroup = ({ label, labelFor, help, error, children }) => {
-    let helpComponent;
+    let labelComponent = null;
+    let helpComponent = null;
+
+    if (label) {
+        labelComponent = <label htmlFor={labelFor}>{label}</label>;
+    }
+
     if (error) {
         helpComponent = <small className="form-help error">{error} </small>;
     } else if (help) {
         helpComponent = <small className="form-help">{help} </small>;
-    } else {
-        helpComponent = null;
     }
 
     return (<div className="form-group">
-        <label htmlFor={labelFor}>{label}</label>
+        {labelComponent}
         {children}
         {helpComponent}
     </div>);

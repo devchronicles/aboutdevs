@@ -17,6 +17,9 @@
 @import 'layout';
 @import 'font-awesome';
 
+//pages
+@import 'index-page.scss';
+
 
 body {
     font-family: 'Roboto', sans-serif;
@@ -47,6 +50,10 @@ li {
 a {
     color: $color-white;
     text-decoration: none;
+}
+
+div {
+    box-sizing: border-box;
 }
 
 .hidden {
