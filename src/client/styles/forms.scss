@@ -1,23 +1,7 @@
 @import '_variables';
 
 
-::-webkit-input-placeholder { /* WebKit, Blink, Edge */
-    color: #aaa;
-}
-:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-   color: #aaa;
-   opacity: 1;
-}
-::-moz-placeholder { /* Mozilla Firefox 19+ */
-   color: #aaa;
-   opacity: 1;
-}
-:-ms-input-placeholder { /* Internet Explorer 10-11 */
-   color: #aaa;
-}
-::-ms-input-placeholder { /* Microsoft Edge */
-   color: #aaa;
-}
+
 
 // input
 
@@ -196,4 +180,22 @@ form, *.form {
     &.error {
         color: $color-shining-2;
     }
+}
+
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color: $color-placeholder;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color: $color-placeholder;
+   opacity: 1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color: $color-placeholder;
+   opacity: 1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color: $color-placeholder;
+}
+::-ms-input-placeholder { /* Microsoft Edge */
+   color: $color-placeholder;
 }

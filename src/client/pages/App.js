@@ -5,12 +5,13 @@ import { Switch, Route } from 'react-router';
 import Header from '../components/Header';
 import IndexPage from './IndexPage';
 import ProfileEditPage from './ProfileEditPage';
-
+import SearchPage from './SearchPage';
 
 const App = ({ loggedUser }) => (
     <div className="container">
         <Header loggedUser={loggedUser} />
         <Switch>
+            <Route exact path="/search" component={SearchPage} />
             <Route exact path="/config/edituserprofile" component={ProfileEditPage} />
             <Route exact path="/" component={IndexPage} />
         </Switch>

@@ -6,6 +6,7 @@ $select-input-border-width:         0;
 $select-padding-vertical:           $input-padding-vertical;
 $select-padding-horizontal:         $input-padding-horizontal;
 $select-input-height:               34px;
+$select-input-placeholder:          $color-placeholder;
 
 @import '~react-select/scss/default';
 
