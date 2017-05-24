@@ -13,4 +13,9 @@ FormColumn.propTypes = {
     eq: PropTypes.bool
 };
 
+FormColumn.defaultProps = {
+    style: null,
+    eq: null
+};
+
 export default FormColumn;

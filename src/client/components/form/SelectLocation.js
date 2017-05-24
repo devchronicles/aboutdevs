@@ -33,12 +33,12 @@ class SelectLocation extends Component {
     }
 
     render() {
-        const { input: { value, onBlur }, meta: { error, touched } } = this.props;
+        const { input: { value, onBlur }, meta: { error, touched }, placeholder } = this.props;
         const className = error && touched ? 'invalid' : '';
-        const adjustedValue = {
+        const adjustedValue = value ? {
             value,
             label: value
-        };
+        } : null;
 
         return (
             <Async
@@ -49,7 +49,7 @@ class SelectLocation extends Component {
                 labelKey="label"
                 valueKey="value"
                 // localization
-                placeholder=""
+                placeholder={placeholder}
                 loadingPlaceholder="Carregando..."
                 searchPromptText="Digite para pesquisar"
                 noResultsText="Não foi possível encontrar o endereço"
@@ -66,11 +66,13 @@ class SelectLocation extends Component {
 SelectLocation.propTypes = {
     input: PropTypes.object.isRequired,
     meta: PropTypes.object.isRequired,
-    allowCities: PropTypes.bool
+    allowCities: PropTypes.bool,
+    placeholder: PropTypes.string
 };
 
 SelectLocation.defaultProps = {
-    allowCities: false
+    allowCities: false,
+    placeholder: ''
 };
 
 export default SelectLocation;

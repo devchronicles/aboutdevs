@@ -1,6 +1,6 @@
 import { OAuth2Strategy as GoogleStrategy } from 'passport-google-oauth';
 import db from '../db/db';
-import { findOrCreateFromGoogleProfile } from '../helpers/userHelper';
+import * as userHelper from '../helpers/userHelper';
 
 /**
  * Setups up passport
@@ -15,18 +15,8 @@ export default function (passport) {
 
     passport.deserializeUser((userId, done) => {
         db.user.findOneAsync({ id: userId })
-            .then((u) => {
-                if (!u) {
-                    done(null, null);
-                }
-                const user = {
-                    id: u.id,
-                    name: u.name,
-                    displayName: u.display_name,
-                    photoUrl: u.photo_url
-                };
-                done(null, user);
-            })
+            .then(u => (u ? userHelper.getReduxDataForLoggedUser(u) : null))
+            .then(u => done(null, u))
             .catch(done);
     });
 
@@ -38,7 +28,7 @@ export default function (passport) {
             callbackURL: 'http://127.0.0.1:4000/auth/google/callback'
         },
         (accessToken, refreshToken, profile, done) => {
-            findOrCreateFromGoogleProfile(db, profile)
+            userHelper.findOrCreateFromGoogleProfile(db, profile)
                 .then(u => done(null, u.id)) // this will call passport.serializeUser
                 .catch(done);
         }

@@ -17,7 +17,7 @@ export default {
                     if (error) {
                         res.status(200).send([]);
                     } else {
-                        const finalResults = formatEachResult ? results.map(formatEachResult) : results;
+                        const finalResults = formatEachResult ? results.map(r => formatEachResult(r, req, res)) : results;
                         res.status(200).send(finalResults);
                     }
                 });

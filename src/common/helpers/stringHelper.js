@@ -144,9 +144,7 @@ export function incrementLast(str, addIfNoNumber) {
     if (str === null || str === undefined) throw Error('Argument \'str\' should be null or undefined');
     const regex = /[0-9]+$/;
     if (str.match(regex)) {
-        return str.replace(regex, (match) => {
-            return parseInt(match, 10) + 1;
-        });
+        return str.replace(regex, match => parseInt(match, 10) + 1);
     }
     return addIfNoNumber ? str + 1 : str;
 }

@@ -18,6 +18,7 @@ describe('userHelper', () => {
         it('When it does exist', () =>
             db.user.insertAsync({
                 name: 'foo',
+                gender: 0,
                 display_name: 'Foo',
                 email: 'foo@fooland.com'
             })
@@ -27,11 +28,13 @@ describe('userHelper', () => {
         it('When it does exist 2', () =>
             db.user.insertAsync({
                 name: 'foo',
+                gender: 0,
                 display_name: 'Foo',
                 email: 'foo@fooland.com'
             })
                 .then(() => db.user.insertAsync({
                     name: 'foo1',
+                    gender: 0,
                     display_name: 'Foo',
                     email: 'foo2@fooland.com'
                 }))
@@ -58,6 +61,7 @@ describe('userHelper', () => {
     it('updateFromGoogleProfile', () =>
         db.user.saveAsync({
             name: 'andrerpena',
+            gender: 0,
             email: 'andrerpena@gmail.com',
             display_name: 'André Pena'
         })
@@ -87,6 +91,7 @@ describe('userHelper', () => {
         it('when a user with the same e-mail address already existed', () =>
             db.user.saveAsync({
                 name: 'andrerpena',
+                gender: 0,
                 email: 'andrerpena@gmail.com',
                 display_name: 'André Pena'
             })

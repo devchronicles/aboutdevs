@@ -42,10 +42,12 @@ export function createFromGoogleProfile(db, profile) {
 
     const email = safeRead(p => p.emails[0].value, profile, null);
     const photoUrl = safeRead(p => p.photos[0].value, profile, null);
+    const gender = profile.gender === 'male' ? 0 : 1;
 
     return getValidUserName(db, extractUserNameFromEmail(email))
         .then(userName => ({
             name: userName,
+            gender,
             display_name: profile.displayName,
             photo_url: photoUrl,
             email,
@@ -70,6 +72,9 @@ export function updateFromGoogleProfile(db, existingUser, profile) {
     if (!existingUser) throw Error('\'existingUser\' should be truthy');
     if (!profile) throw Error('\'profile\' should be truthy');
 
+    if (!existingUser.gender) {
+        existingUser.gender = profile.gender === 'male' ? 0 : 1;
+    }
     if (!existingUser.display_name) {
         existingUser.display_name = profile.displayName;
     }
@@ -112,4 +117,15 @@ export function findOrCreateFromGoogleProfile(db, profile) {
             // if not, let's associate the user with the given Google profile
             return updateFromGoogleProfile(db, user, profile);
         });
+}
+
+export function getReduxDataForLoggedUser(user) {
+    if (user === null || user === undefined) throw Error('Argument \'user\' should be null or undefined');
+    return {
+        id: user.id,
+        name: user.name,
+        gender: user.gender,
+        displayName: user.display_name,
+        photoUrl: user.photo_url
+    };
 }

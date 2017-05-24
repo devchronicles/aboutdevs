@@ -11,6 +11,7 @@ describe('basicEntityAccess', () => {
     it('can save, find and delete users', (done) => {
         const user = {
             name: 'andrerpena',
+            gender: 0,
             email: 'andrerpena@gmail.com',
             display_name: 'André Pena'
         };

@@ -16,7 +16,10 @@ router.route('/address').get((req, res) => {
 router.route('/professions').get(
     sqlFunctionBinder.bind(q => q.q, db.search_professions,
         q => [searchHelper.convertToTsVector(searchHelper.normalize(q.q))],
-        r => (r.name_canonical)
+        (r, req) => {
+            const gender = req.user.gender;
+            return gender === 0 ? r.name_canonical : r.name_feminine;
+        }
     ));
 
 router.route('/users/checkname').get((req, res) => {

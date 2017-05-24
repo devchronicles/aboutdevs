@@ -27,7 +27,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // delay
-app.use((req, res, next) => { setTimeout(next, 2000); });
+app.use((req, res, next) => { setTimeout(next, 500); });
 
 // routes
 app.use('/auth', authRoute);

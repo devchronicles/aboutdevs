@@ -420,7 +420,8 @@ CREATE TABLE "user" (
     status smallint DEFAULT 0 NOT NULL,
     type smallint DEFAULT 0 NOT NULL,
     profession character varying(50),
-    name character varying(255) NOT NULL
+    name character varying(255) NOT NULL,
+    gender smallint NOT NULL
 );
 
 
