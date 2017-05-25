@@ -1,5 +1,8 @@
 @import 'variables';
 
-.logo .fa {
-    margin-right: $gutter-sm;
+.logo {
+    font-family: 'Telex', sans-serif;
+    .fa {
+        margin-right: $gutter-sm;
+    }
 }
