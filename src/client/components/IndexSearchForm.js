@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import PropTypes from 'prop-types';
-import { SelectLocation, FormRow, FormColumn, FormGroup } from './form/index';
+import { SelectLocation, FormRow, FormGroup } from './form/index';
 import IndexHero from './IndexHero';
 
 let IndexSearchForm = (props) => {

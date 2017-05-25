@@ -16,10 +16,10 @@ $hero-text-font-size: 25px;
         align-items: center;
         justify-content: center;
         margin-right: $gutter-md;
-        width: 2 * $hero-text-font-size + $gutter-md;
-        height: 2 * $hero-text-font-size + $gutter-md;
+        width: 52px;
+        height: 52px;
         .fa {
-            font-size: $hero-text-font-size * 1.2;
+            font-size: $hero-text-font-size * 1;
             margin-right: 0 !important;
         }
     }
