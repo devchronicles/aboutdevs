@@ -1,0 +1,38 @@
+@import '_variables';
+
+$hero-text-font-size: 25px;
+
+.index-hero {
+    display: flex;
+    flex-direction: row;
+    font-size: $hero-text-font-size;
+    align-items: center;
+
+    .icon-box {
+        border: 1px solid $color-white;
+        color: $color-white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-right: $gutter-md;
+        width: 2 * $hero-text-font-size + $gutter-md;
+        height: 2 * $hero-text-font-size + $gutter-md;
+        .fa {
+            font-size: $hero-text-font-size * 1.2;
+            margin-right: 0 !important;
+        }
+    }
+
+    .hero-text {
+        display: flex;
+        flex-direction: column;
+        .hero-logo {
+            font-family: 'Telex', sans-serif;
+            margin-bottom: $gutter-sm;
+        }
+        .hero-motto {
+            color: lighten($color-dark-light, 50%);
+        }
+    }
+}
