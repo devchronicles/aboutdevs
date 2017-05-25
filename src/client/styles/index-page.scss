@@ -1,14 +1,14 @@
 @import "_variables";
+$hero-text-font-size: 25px;
 
 body {
     background:
         linear-gradient(rgba($color-dark, 0.97),rgba($color-dark, 0.9)),
-        url('images/bg-1.jpeg');
+        url('images/bg-5.jpeg');
     background-size: cover;
 }
 
 .index-page-wrapper {
-
 
     display: flex;
     flex-direction: column;
@@ -17,7 +17,7 @@ body {
     height: calc(100% - #{$header-height});
     width: 100%;
 
-    .index-search-form{
+    .index-search-form {
         width: 100%;
         max-width: 500px;
         display: flex;
@@ -31,6 +31,54 @@ body {
 
         .logo-wrapper {
             margin-bottom: $gutter-md;
+        }
+
+        .index-hero {
+            display: flex;
+            flex-direction: row;
+            font-size: $hero-text-font-size;
+            align-items: center;
+
+            .icon-box {
+                border: 1px solid $color-white;
+                color: $color-white;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                margin-right: $gutter-md;
+                width: 52px;
+                height: 52px;
+                .fa {
+                    font-size: $hero-text-font-size * 1;
+                    margin-right: 0 !important;
+                }
+            }
+
+            .hero-text {
+                display: flex;
+                flex-direction: column;
+                .hero-logo {
+                    font-family: 'Telex', sans-serif;
+                    margin-bottom: $gutter-sm;
+                }
+                .hero-motto {
+                    color: lighten($color-dark-light, 50%);
+                }
+            }
+        }
+
+        .register-wrapper {
+            margin-top: 2 * $gutter-md;
+            padding: $gutter-sm;
+            border: 1px solid $color-dark-light;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            .text {
+                color: $color-dark-lightest;
+            }
         }
     }
 }

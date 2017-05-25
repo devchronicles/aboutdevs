@@ -58,11 +58,24 @@ button, a.button {
         }
     }
 
+    &.faded {
+        border: 1px solid  $color-dark-lightest;
+        color:   $color-dark-lightest;
+        &:hover {
+            color: $color-white;
+            background-image: linear-gradient(to right,$color-shining-3,$color-shining-4);
+        }
+    }
+
     &.no-border {
-        border: 0;
+        border: 1px solid $color-white;
         &:focus {
             outline: 0;
         }
+    }
+
+    &.big {
+        padding: 1.2 * $input-padding-vertical 1.2 $input-padding-horizontal;
     }
 }
 
