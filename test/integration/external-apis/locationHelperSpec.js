@@ -4,30 +4,30 @@ import * as geocodeApiFormattingHelper from '../../../src/server/helpers/geocode
 import setupSession from '../db/setupSession';
 
 describe('locationHelperSpec', () => {
-    describe('getAddressesFromGoogle', () => {
+    describe('getLocationsFromGoogle', () => {
         it('Should work with propertly formatted address',
-            () => locationHelper.getAddressesFromGoogle('Rua Henrique Surerus, 28, Juiz de Fora, MG')
+            () => locationHelper.getLocationsFromGoogle('Rua Henrique Surerus, 28, Juiz de Fora, MG')
                 .then(r => geocodeApiFormattingHelper.getFormattedAddresses(r))
                 .then((res) => {
                     assert.equal(res.length, 1);
                     assert.equal(res[0], 'Rua Henrique Surerus, 28, Centro, Juiz de Fora, MG');
                 }));
         it('Should work with propertly poorly formatted address',
-            () => locationHelper.getAddressesFromGoogle(' r Henrique Surerus, 28  Juiz de Fora, /')
+            () => locationHelper.getLocationsFromGoogle(' r Henrique Surerus, 28  Juiz de Fora, /')
                 .then(r => geocodeApiFormattingHelper.getFormattedAddresses(r))
                 .then((res) => {
                     assert.equal(res.length, 1);
                     assert.equal(res[0], 'Rua Henrique Surerus, 28, Centro, Juiz de Fora, MG');
                 }));
         it('Should work with propertly poorly formatted address 2',
-            () => locationHelper.getAddressesFromGoogle('Henrique Surerus JF')
+            () => locationHelper.getLocationsFromGoogle('Henrique Surerus JF')
                 .then(r => geocodeApiFormattingHelper.getFormattedAddresses(r))
                 .then((res) => {
                     assert.equal(res.length, 1);
                     assert.equal(res[0], 'Rua Henrique Surerus, Centro, Juiz de Fora, MG');
                 }));
         it('Should work with landmarks',
-            () => locationHelper.getAddressesFromGoogle('Shopping Alameda JF')
+            () => locationHelper.getLocationsFromGoogle('Shopping Alameda JF')
                 .then(r => geocodeApiFormattingHelper.getFormattedAddresses(r))
                 .then((res) => {
                     assert.equal(res.length, 1);
@@ -35,27 +35,27 @@ describe('locationHelperSpec', () => {
                 }));
 
         it('Should not work with city only by default',
-            () => locationHelper.getAddressesFromGoogle('Juiz de Fora MG')
+            () => locationHelper.getLocationsFromGoogle('Juiz de Fora MG')
                 .then(r => geocodeApiFormattingHelper.getFormattedAddresses(r))
                 .then((res) => {
                     assert.equal(res.length, 0);
                 }));
 
         it('Should work with city only when specified',
-            () => locationHelper.getAddressesFromGoogle('Juiz de Fora MG')
+            () => locationHelper.getLocationsFromGoogle('Juiz de Fora MG')
                 .then(r => geocodeApiFormattingHelper.getFormattedAddresses(r, true))
                 .then((res) => {
                     assert.equal(res.length, 1);
                 }));
 
         it('Should work when the address is not valid',
-            () => locationHelper.getAddressesFromGoogle('This is not a valid city')
+            () => locationHelper.getLocationsFromGoogle('This is not a valid city')
                 .then(r => geocodeApiFormattingHelper.getFormattedAddresses(r))
                 .then((res) => {
                     assert.equal(res.length, 0);
                 }));
     });
-    describe('getAddresses', () => {
+    describe('getLocations', () => {
         let db = null;
         setupSession(before, after, beforeEach, afterEach, ($db) => {
             db = $db;
@@ -67,7 +67,7 @@ describe('locationHelperSpec', () => {
                 .then((r) => {
                     assert.isNotOk(r);
                 })
-                .then(() => locationHelper.getAddresses(searchTerm, false, db))
+                .then(() => locationHelper.getLocations(searchTerm, false, db))
                 .then((l) => {
                     assert.equal(1, l.length);
                 })

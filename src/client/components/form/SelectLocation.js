@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Async } from 'react-select';
-import { getAddresses } from '../../httpClient';
+import * as httpClient from '../../httpClient';
 
 class SelectLocation extends Component {
 
@@ -17,7 +17,7 @@ class SelectLocation extends Component {
             clearTimeout(this.currentFetchTimeout);
         }
         this.currentFetchTimeout = setTimeout(() => {
-            getAddresses(input, allowCities)
+            httpClient.getLocations(input, allowCities)
                 .then((res) => {
                     const options = res.data.map(i => ({ value: i, label: i }));
                     callback(null, { options });

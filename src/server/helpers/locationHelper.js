@@ -23,7 +23,7 @@ function saveLocationToCache(searchTerm, location, db) {
  * @param {string} searchTerm The search term the user typed
  * @param {object} db The db object
  */
-export function getAddressesFromCache(searchTerm, db) {
+export function getLocationsFromCache(searchTerm, db) {
     if (searchTerm === null || searchTerm === undefined) throw Error('Argument \'partialAddress\' should be null or undefined');
     return new Promise((fulfill, reject) => {
         db.geo_location_cache.findOne({ search: searchTerm }, (error, locationCache) => {
@@ -42,7 +42,7 @@ export function getAddressesFromCache(searchTerm, db) {
  * Returns the location from Google, if it exists, or an object with an empty "results" array, otherwise
  * @param {string} searchTerm The search term the user typed
  */
-export function getAddressesFromGoogle(searchTerm) {
+export function getLocationsFromGoogle(searchTerm) {
     if (searchTerm === null || searchTerm === undefined) throw Error('Argument \'partialAddress\' should be null or undefined');
     return new Promise((fulfill, reject) => {
         const encodedLocation = encodeURIComponent(searchTerm);
@@ -61,16 +61,16 @@ export function getAddressesFromGoogle(searchTerm) {
     });
 }
 
-export function getAddresses(searchTerm, allowCities, db) {
+export function getLocations(searchTerm, allowCities, db) {
     return new Promise((fulfill, reject) => {
         const normalizedSearchTerm = searchHelper.normalize(searchTerm);
         if (!normalizedSearchTerm) {
             fulfill([]);
         } else {
-            getAddressesFromCache(normalizedSearchTerm, db)
+            getLocationsFromCache(normalizedSearchTerm, db)
                 .then((lc) => {
                     if (lc) return lc;
-                    return getAddressesFromGoogle(normalizedSearchTerm)
+                    return getLocationsFromGoogle(normalizedSearchTerm)
                         .then(lg => saveLocationToCache(normalizedSearchTerm, lg, db))
                         .catch(reject);
                 })
