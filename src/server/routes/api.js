@@ -3,14 +3,14 @@ import db from '../db/db';
 import sqlFunctionBinder from '../expressMassiveBinders/sqlFunctionBinder';
 import * as apiHelper from '../helpers/apiHelper';
 import * as searchHelper from '../helpers/searchHelper';
-import * as geocodeApiHelper from '../helpers/geocodeApiHelper';
+import * as locationHelper from '../helpers/locationHelper';
 import { extractUserNameFromEmail } from '../helpers/userHelper';
 
 const router = express.Router();
 
 router.route('/address').get((req, res) => {
     const allowCities = req.query.allowcities;
-    apiHelper.sendPromise(res, geocodeApiHelper.getAddresses(req.query.q, allowCities, db));
+    apiHelper.sendPromise(res, locationHelper.getAddresses(req.query.q, allowCities, db));
 });
 
 router.route('/professions').get(

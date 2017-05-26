@@ -13,7 +13,7 @@ import * as searchHelper from './searchHelper';
 function saveLocationToCache(searchTerm, location, db) {
     if (searchTerm === null || searchTerm === undefined) throw Error('Argument \'search\' should be null or undefined');
     if (location === null || location === undefined) throw Error('Argument \'location\' should be null or undefined');
-    return db.location_cache.saveAsync({ search: searchTerm, cache: location })
+    return db.geo_location_cache.saveAsync({ search: searchTerm, cache: location })
         .then(() => location);
 }
 
@@ -26,7 +26,7 @@ function saveLocationToCache(searchTerm, location, db) {
 export function getAddressesFromCache(searchTerm, db) {
     if (searchTerm === null || searchTerm === undefined) throw Error('Argument \'partialAddress\' should be null or undefined');
     return new Promise((fulfill, reject) => {
-        db.location_cache.findOne({ search: searchTerm }, (error, locationCache) => {
+        db.geo_location_cache.findOne({ search: searchTerm }, (error, locationCache) => {
             if (error) {
                 reject(error);
             } else if (locationCache !== undefined) {

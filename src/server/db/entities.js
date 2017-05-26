@@ -3,8 +3,6 @@
 export default [
     'notification',
     'user',
-    'geo_state',
-    'geo_city',
     'geo_location',
     'geo_location_cache',
     'geo_location_country',
