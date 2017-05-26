@@ -1,14 +1,12 @@
 @import "_variables";
 $hero-text-font-size: 25px;
 
-body {
+.index-page-wrapper {
+
     background:
         linear-gradient(rgba($color-dark, 0.97),rgba($color-dark, 0.9)),
         url('images/bg-5.jpeg');
     background-size: cover;
-}
-
-.index-page-wrapper {
 
     display: flex;
     flex-direction: column;
@@ -24,6 +22,7 @@ body {
         flex-direction: column;
         justify-content: center;
         position: relative;
+        margin: $gutter-md;
 
         .fa {
             margin-right: $gutter-sm;

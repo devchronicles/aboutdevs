@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.6.2
--- Dumped by pg_dump version 9.6.2
+-- Dumped from database version 9.6.3
+-- Dumped by pg_dump version 9.6.3
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -192,44 +192,24 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: geo_city; Type: TABLE; Schema: public; Owner: postgres
+-- Name: geo_location_city; Type: TABLE; Schema: public; Owner: indiejobs
 --
 
-CREATE TABLE geo_city (
+CREATE TABLE geo_location_city (
     id integer NOT NULL,
-    geonameid integer NOT NULL,
-    name character varying(100) NOT NULL,
-    latitude double precision NOT NULL,
-    longitude double precision NOT NULL,
-    stateid integer,
-    population integer NOT NULL
+    short_name character varying(255) NOT NULL,
+    long_name character varying(255) NOT NULL,
+    geo_location_state_id integer NOT NULL
 );
 
 
-ALTER TABLE geo_city OWNER TO postgres;
+ALTER TABLE geo_location_city OWNER TO indiejobs;
 
 --
--- Name: geo_state; Type: TABLE; Schema: public; Owner: postgres
+-- Name: geo_administrative_area_level_2_id_seq; Type: SEQUENCE; Schema: public; Owner: indiejobs
 --
 
-CREATE TABLE geo_state (
-    id integer NOT NULL,
-    geonameid integer NOT NULL,
-    population integer NOT NULL,
-    name character varying(100) NOT NULL,
-    shortname character varying(2) NOT NULL,
-    latitude double precision NOT NULL,
-    longitude double precision NOT NULL
-);
-
-
-ALTER TABLE geo_state OWNER TO postgres;
-
---
--- Name: geo_states_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE geo_states_id_seq
+CREATE SEQUENCE geo_administrative_area_level_2_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -237,20 +217,34 @@ CREATE SEQUENCE geo_states_id_seq
     CACHE 1;
 
 
-ALTER TABLE geo_states_id_seq OWNER TO postgres;
+ALTER TABLE geo_administrative_area_level_2_id_seq OWNER TO indiejobs;
 
 --
--- Name: geo_states_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: geo_administrative_area_level_2_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: indiejobs
 --
 
-ALTER SEQUENCE geo_states_id_seq OWNED BY geo_state.id;
+ALTER SEQUENCE geo_administrative_area_level_2_id_seq OWNED BY geo_location_city.id;
 
 
 --
--- Name: get_city_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: geo_location_state; Type: TABLE; Schema: public; Owner: indiejobs
 --
 
-CREATE SEQUENCE get_city_id_seq
+CREATE TABLE geo_location_state (
+    id integer NOT NULL,
+    long_name character varying(255) NOT NULL,
+    short_name character varying(255) NOT NULL,
+    geo_location_country_id integer NOT NULL
+);
+
+
+ALTER TABLE geo_location_state OWNER TO indiejobs;
+
+--
+-- Name: geo_adminstrative_area_level_1_id_seq; Type: SEQUENCE; Schema: public; Owner: indiejobs
+--
+
+CREATE SEQUENCE geo_adminstrative_area_level_1_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -258,27 +252,97 @@ CREATE SEQUENCE get_city_id_seq
     CACHE 1;
 
 
-ALTER TABLE get_city_id_seq OWNER TO postgres;
+ALTER TABLE geo_adminstrative_area_level_1_id_seq OWNER TO indiejobs;
 
 --
--- Name: get_city_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: geo_adminstrative_area_level_1_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: indiejobs
 --
 
-ALTER SEQUENCE get_city_id_seq OWNED BY geo_city.id;
+ALTER SEQUENCE geo_adminstrative_area_level_1_id_seq OWNED BY geo_location_state.id;
 
 
 --
--- Name: location_cache; Type: TABLE; Schema: public; Owner: indiejobs
+-- Name: geo_location; Type: TABLE; Schema: public; Owner: indiejobs
 --
 
-CREATE TABLE location_cache (
+CREATE TABLE geo_location (
+    id integer NOT NULL,
+    geo_location_city_id integer NOT NULL,
+    formatted_address_google character varying(255) NOT NULL,
+    formatted_address character varying(255) NOT NULL,
+    sub_locality character varying(255) NOT NULL
+);
+
+
+ALTER TABLE geo_location OWNER TO indiejobs;
+
+--
+-- Name: geo_location_cache; Type: TABLE; Schema: public; Owner: indiejobs
+--
+
+CREATE TABLE geo_location_cache (
     id integer NOT NULL,
     search character varying(200) NOT NULL,
     cache json NOT NULL
 );
 
 
-ALTER TABLE location_cache OWNER TO indiejobs;
+ALTER TABLE geo_location_cache OWNER TO indiejobs;
+
+--
+-- Name: geo_location_country; Type: TABLE; Schema: public; Owner: indiejobs
+--
+
+CREATE TABLE geo_location_country (
+    id integer NOT NULL,
+    long_name character varying(255) NOT NULL,
+    name_short integer NOT NULL
+);
+
+
+ALTER TABLE geo_location_country OWNER TO indiejobs;
+
+--
+-- Name: geo_location_country_id_seq; Type: SEQUENCE; Schema: public; Owner: indiejobs
+--
+
+CREATE SEQUENCE geo_location_country_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE geo_location_country_id_seq OWNER TO indiejobs;
+
+--
+-- Name: geo_location_country_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: indiejobs
+--
+
+ALTER SEQUENCE geo_location_country_id_seq OWNED BY geo_location_country.id;
+
+
+--
+-- Name: geo_location_id_seq; Type: SEQUENCE; Schema: public; Owner: indiejobs
+--
+
+CREATE SEQUENCE geo_location_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE geo_location_id_seq OWNER TO indiejobs;
+
+--
+-- Name: geo_location_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: indiejobs
+--
+
+ALTER SEQUENCE geo_location_id_seq OWNED BY geo_location.id;
+
 
 --
 -- Name: location_cache_id_seq; Type: SEQUENCE; Schema: public; Owner: indiejobs
@@ -298,7 +362,7 @@ ALTER TABLE location_cache_id_seq OWNER TO indiejobs;
 -- Name: location_cache_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: indiejobs
 --
 
-ALTER SEQUENCE location_cache_id_seq OWNED BY location_cache.id;
+ALTER SEQUENCE location_cache_id_seq OWNED BY geo_location_cache.id;
 
 
 --
@@ -319,7 +383,7 @@ ALTER TABLE location_cache_search_seq OWNER TO indiejobs;
 -- Name: location_cache_search_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: indiejobs
 --
 
-ALTER SEQUENCE location_cache_search_seq OWNED BY location_cache.search;
+ALTER SEQUENCE location_cache_search_seq OWNED BY geo_location_cache.search;
 
 
 --
@@ -421,7 +485,8 @@ CREATE TABLE "user" (
     type smallint DEFAULT 0 NOT NULL,
     profession character varying(50),
     name character varying(255) NOT NULL,
-    gender smallint NOT NULL
+    gender smallint NOT NULL,
+    geo_location_id integer
 );
 
 
@@ -435,31 +500,45 @@ COMMENT ON COLUMN "user".oauth_profiles IS 'A JSON containing information return
 
 
 --
--- Name: geo_city id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: geo_location id; Type: DEFAULT; Schema: public; Owner: indiejobs
 --
 
-ALTER TABLE ONLY geo_city ALTER COLUMN id SET DEFAULT nextval('get_city_id_seq'::regclass);
-
-
---
--- Name: geo_state id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY geo_state ALTER COLUMN id SET DEFAULT nextval('geo_states_id_seq'::regclass);
+ALTER TABLE ONLY geo_location ALTER COLUMN id SET DEFAULT nextval('geo_location_id_seq'::regclass);
 
 
 --
--- Name: location_cache id; Type: DEFAULT; Schema: public; Owner: indiejobs
+-- Name: geo_location_cache id; Type: DEFAULT; Schema: public; Owner: indiejobs
 --
 
-ALTER TABLE ONLY location_cache ALTER COLUMN id SET DEFAULT nextval('location_cache_id_seq'::regclass);
+ALTER TABLE ONLY geo_location_cache ALTER COLUMN id SET DEFAULT nextval('location_cache_id_seq'::regclass);
 
 
 --
--- Name: location_cache search; Type: DEFAULT; Schema: public; Owner: indiejobs
+-- Name: geo_location_cache search; Type: DEFAULT; Schema: public; Owner: indiejobs
 --
 
-ALTER TABLE ONLY location_cache ALTER COLUMN search SET DEFAULT nextval('location_cache_search_seq'::regclass);
+ALTER TABLE ONLY geo_location_cache ALTER COLUMN search SET DEFAULT nextval('location_cache_search_seq'::regclass);
+
+
+--
+-- Name: geo_location_city id; Type: DEFAULT; Schema: public; Owner: indiejobs
+--
+
+ALTER TABLE ONLY geo_location_city ALTER COLUMN id SET DEFAULT nextval('geo_administrative_area_level_2_id_seq'::regclass);
+
+
+--
+-- Name: geo_location_country id; Type: DEFAULT; Schema: public; Owner: indiejobs
+--
+
+ALTER TABLE ONLY geo_location_country ALTER COLUMN id SET DEFAULT nextval('geo_location_country_id_seq'::regclass);
+
+
+--
+-- Name: geo_location_state id; Type: DEFAULT; Schema: public; Owner: indiejobs
+--
+
+ALTER TABLE ONLY geo_location_state ALTER COLUMN id SET DEFAULT nextval('geo_adminstrative_area_level_1_id_seq'::regclass);
 
 
 --
@@ -470,26 +549,42 @@ ALTER TABLE ONLY notification ALTER COLUMN id SET DEFAULT nextval('notification_
 
 
 --
--- Name: geo_city geo_city_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: geo_location_city geo_location_city_pkey; Type: CONSTRAINT; Schema: public; Owner: indiejobs
 --
 
-ALTER TABLE ONLY geo_city
-    ADD CONSTRAINT geo_city_pkey PRIMARY KEY (id);
-
-
---
--- Name: geo_state geo_states_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY geo_state
-    ADD CONSTRAINT geo_states_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY geo_location_city
+    ADD CONSTRAINT geo_location_city_pkey PRIMARY KEY (id);
 
 
 --
--- Name: location_cache location_cache_pkey; Type: CONSTRAINT; Schema: public; Owner: indiejobs
+-- Name: geo_location_country geo_location_country_pkey; Type: CONSTRAINT; Schema: public; Owner: indiejobs
 --
 
-ALTER TABLE ONLY location_cache
+ALTER TABLE ONLY geo_location_country
+    ADD CONSTRAINT geo_location_country_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: geo_location geo_location_pkey; Type: CONSTRAINT; Schema: public; Owner: indiejobs
+--
+
+ALTER TABLE ONLY geo_location
+    ADD CONSTRAINT geo_location_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: geo_location_state geo_location_state_id_pk; Type: CONSTRAINT; Schema: public; Owner: indiejobs
+--
+
+ALTER TABLE ONLY geo_location_state
+    ADD CONSTRAINT geo_location_state_id_pk PRIMARY KEY (id);
+
+
+--
+-- Name: geo_location_cache location_cache_pkey; Type: CONSTRAINT; Schema: public; Owner: indiejobs
+--
+
+ALTER TABLE ONLY geo_location_cache
     ADD CONSTRAINT location_cache_pkey PRIMARY KEY (id);
 
 
@@ -526,59 +621,87 @@ ALTER TABLE ONLY "user"
 
 
 --
--- Name: geo_city_geonameid_uindex; Type: INDEX; Schema: public; Owner: postgres
+-- Name: geo_location_city_id_uindex; Type: INDEX; Schema: public; Owner: indiejobs
 --
 
-CREATE UNIQUE INDEX geo_city_geonameid_uindex ON geo_city USING btree (geonameid);
-
-
---
--- Name: geo_city_name_tsindex; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE INDEX geo_city_name_tsindex ON geo_city USING gin (to_tsvector('su'::regconfig, (name)::text));
+CREATE UNIQUE INDEX geo_location_city_id_uindex ON geo_location_city USING btree (id);
 
 
 --
--- Name: geo_states_geoNameId_uindex; Type: INDEX; Schema: public; Owner: postgres
+-- Name: geo_location_country_id_uindex; Type: INDEX; Schema: public; Owner: indiejobs
 --
 
-CREATE UNIQUE INDEX "geo_states_geoNameId_uindex" ON geo_state USING btree (geonameid);
-
-
---
--- Name: geo_states_id_uindex; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE UNIQUE INDEX geo_states_id_uindex ON geo_state USING btree (id);
+CREATE UNIQUE INDEX geo_location_country_id_uindex ON geo_location_country USING btree (id);
 
 
 --
--- Name: geo_states_name_uindex; Type: INDEX; Schema: public; Owner: postgres
+-- Name: geo_location_country_name_short_uindex; Type: INDEX; Schema: public; Owner: indiejobs
 --
 
-CREATE UNIQUE INDEX geo_states_name_uindex ON geo_state USING btree (name);
+CREATE UNIQUE INDEX geo_location_country_name_short_uindex ON geo_location_country USING btree (name_short);
 
 
 --
--- Name: get_city_id_uindex; Type: INDEX; Schema: public; Owner: postgres
+-- Name: geo_location_country_name_uindex; Type: INDEX; Schema: public; Owner: indiejobs
 --
 
-CREATE UNIQUE INDEX get_city_id_uindex ON geo_city USING btree (id);
+CREATE UNIQUE INDEX geo_location_country_name_uindex ON geo_location_country USING btree (long_name);
+
+
+--
+-- Name: geo_location_formatted_address_google_uindex; Type: INDEX; Schema: public; Owner: indiejobs
+--
+
+CREATE UNIQUE INDEX geo_location_formatted_address_google_uindex ON geo_location USING btree (formatted_address_google);
+
+
+--
+-- Name: geo_location_formatted_address_uindex; Type: INDEX; Schema: public; Owner: indiejobs
+--
+
+CREATE UNIQUE INDEX geo_location_formatted_address_uindex ON geo_location USING btree (formatted_address);
+
+
+--
+-- Name: geo_location_id_uindex; Type: INDEX; Schema: public; Owner: indiejobs
+--
+
+CREATE UNIQUE INDEX geo_location_id_uindex ON geo_location USING btree (id);
+
+
+--
+-- Name: geo_location_state_id_uindex; Type: INDEX; Schema: public; Owner: indiejobs
+--
+
+CREATE UNIQUE INDEX geo_location_state_id_uindex ON geo_location_state USING btree (id);
+
+
+--
+-- Name: geo_location_state_long_name_uindex; Type: INDEX; Schema: public; Owner: indiejobs
+--
+
+CREATE UNIQUE INDEX geo_location_state_long_name_uindex ON geo_location_state USING btree (long_name);
+
+
+--
+-- Name: geo_location_state_short_name_uindex; Type: INDEX; Schema: public; Owner: indiejobs
+--
+
+CREATE UNIQUE INDEX geo_location_state_short_name_uindex ON geo_location_state USING btree (short_name);
 
 
 --
 -- Name: location_cache_id_uindex; Type: INDEX; Schema: public; Owner: indiejobs
 --
 
-CREATE UNIQUE INDEX location_cache_id_uindex ON location_cache USING btree (id);
+CREATE UNIQUE INDEX location_cache_id_uindex ON geo_location_cache USING btree (id);
 
 
 --
 -- Name: location_cache_search_uindex; Type: INDEX; Schema: public; Owner: indiejobs
 --
 
-CREATE UNIQUE INDEX location_cache_search_uindex ON location_cache USING btree (search);
+CREATE UNIQUE INDEX location_cache_search_uindex ON geo_location_cache USING btree (search);
 
 
 --
@@ -624,11 +747,11 @@ CREATE UNIQUE INDEX user_name_uindex ON "user" USING btree (name);
 
 
 --
--- Name: geo_city geo_city_geo_state_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: geo_location_state geo_location_state_geo_location_country_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: indiejobs
 --
 
-ALTER TABLE ONLY geo_city
-    ADD CONSTRAINT geo_city_geo_state_id_fk FOREIGN KEY (stateid) REFERENCES geo_state(id);
+ALTER TABLE ONLY geo_location_state
+    ADD CONSTRAINT geo_location_state_geo_location_country_id_fk FOREIGN KEY (geo_location_country_id) REFERENCES geo_location_country(id);
 
 
 --
@@ -637,6 +760,14 @@ ALTER TABLE ONLY geo_city
 
 ALTER TABLE ONLY notification
     ADD CONSTRAINT notification_user_id_fk FOREIGN KEY (user_id) REFERENCES "user"(id);
+
+
+--
+-- Name: user user_geo_location_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY "user"
+    ADD CONSTRAINT user_geo_location_id_fk FOREIGN KEY (geo_location_id) REFERENCES geo_location(id);
 
 
 --

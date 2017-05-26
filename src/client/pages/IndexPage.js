@@ -20,10 +20,10 @@ const IndexPage = () => (<div className="page-wrapper">
             <IndexSearchForm />
             <div className="register-wrapper">
                 <span className="text">
-                    Quer participar do IndieJobs?
+                    Você é um(a) profissional?
                 </span>
                 <button className="faded">
-                    Cadastre-se
+                    Crie sua conta, é grátis!
                 </button>
             </div>
         </div>
