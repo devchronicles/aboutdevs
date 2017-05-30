@@ -61,7 +61,7 @@ export function getLocationsFromGoogle(searchTerm) {
     });
 }
 
-export function getFormattedLocations(searchTerm, allowCities, db) {
+export function getLocations(searchTerm, allowCities, db) {
     return new Promise((fulfill, reject) => {
         const normalizedSearchTerm = searchHelper.normalize(searchTerm);
         if (!normalizedSearchTerm) {
@@ -74,13 +74,18 @@ export function getFormattedLocations(searchTerm, allowCities, db) {
                         .then(lg => saveLocationToCache(normalizedSearchTerm, lg, db))
                         .catch(reject);
                 })
-                .then(r => geocodeApiFormattingHelper.getFormattedAddresses(r, allowCities))
                 .then(r => fulfill(r))
                 .catch(reject);
         }
     });
 }
 
+export function getFormattedLocations(searchTerm, allowCities, db) {
+    return getLocations(searchTerm, allowCities, db)
+        .then(r => geocodeApiFormattingHelper.getFormattedLocations(r, allowCities));
+}
+
 export async function saveLocation(formattedText, db) {
-    //const locations = await getLocations(formattedText, false, db);
+    const locations = await getLocations(formattedText, false, db);
+    console.log(locations);
 }

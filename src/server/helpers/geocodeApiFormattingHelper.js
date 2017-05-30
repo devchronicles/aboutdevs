@@ -50,7 +50,7 @@ function getFormattedAddress(result) {
     return addressComponents.join(', ');
 }
 
-export function getFormattedAddresses(data, allowCities = false) {
+export function getFormattedLocations(data, allowCities = false) {
     if (!data || !data.results || !data.results.length) return [];
     return data.results.filter(validateResult(allowCities)).map(getFormattedAddress);
 }
