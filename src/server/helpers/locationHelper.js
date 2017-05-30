@@ -25,6 +25,7 @@ function saveLocationToCache(searchTerm, location, db) {
  */
 export function getLocationsFromCache(searchTerm, db) {
     if (searchTerm === null || searchTerm === undefined) throw Error('Argument \'partialAddress\' should be null or undefined');
+    
     return new Promise((fulfill, reject) => {
         db.geo_location_cache.findOne({ search: searchTerm }, (error, locationCache) => {
             if (error) {
@@ -50,32 +51,21 @@ export function getLocationsFromGoogle(searchTerm) {
         = `https://maps.google.com/maps/api/geocode/json?address=${encodedLocation}&components=country:BR&key=${key}`;
 
     return axios.get(googleGeoCodeApiAdress)
-        .then((res) => {
-            if (res.data.errorMessage) {
-                throw Error(res.data.errorMessage);
-            }
-            return res;
-        })
+        .then((res) => { if (res.data.errorMessage) { throw Error(res.data.errorMessage); } return res; })
         .then(res => res.data);
 }
 
 export function getLocations(searchTerm, allowCities, db) {
-    return new Promise((fulfill, reject) => {
-        const normalizedSearchTerm = searchHelper.normalize(searchTerm);
-        if (!normalizedSearchTerm) {
-            fulfill([]);
-        } else {
-            getLocationsFromCache(normalizedSearchTerm, db)
-                .then((lc) => {
-                    if (lc) return lc;
-                    return getLocationsFromGoogle(normalizedSearchTerm)
-                        .then(lg => saveLocationToCache(normalizedSearchTerm, lg, db))
-                        .catch(reject);
-                })
-                .then(r => fulfill(r))
-                .catch(reject);
-        }
-    });
+    const normalizedSearchTerm = searchHelper.normalize(searchTerm);
+    if (!normalizedSearchTerm) {
+        return Promise.resolve([]);
+    }
+    return getLocationsFromCache(normalizedSearchTerm, db)
+        .then((lc) => {
+            if (lc) return lc;
+            return getLocationsFromGoogle(normalizedSearchTerm)
+                .then(lg => saveLocationToCache(normalizedSearchTerm, lg, db));
+        });
 }
 
 export function getFormattedLocations(searchTerm, allowCities, db) {
