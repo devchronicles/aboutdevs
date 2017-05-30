@@ -44,21 +44,19 @@ export function getLocationsFromCache(searchTerm, db) {
  */
 export function getLocationsFromGoogle(searchTerm) {
     if (searchTerm === null || searchTerm === undefined) throw Error('Argument \'partialAddress\' should be null or undefined');
-    return new Promise((fulfill, reject) => {
-        const encodedLocation = encodeURIComponent(searchTerm);
-        const key = config.google.geocodeApiKey;
-        const googleGeoCodeApiAdress
-            = `https://maps.google.com/maps/api/geocode/json?address=${encodedLocation}&components=country:BR&key=${key}`;
-        axios.get(googleGeoCodeApiAdress)
-            .then((res) => {
-                if (res.data.errorMessage) {
-                    reject(res.data.errorMessage);
-                } else {
-                    fulfill(res.data);
-                }
-            })
-            .catch(reject);
-    });
+    const encodedLocation = encodeURIComponent(searchTerm);
+    const key = config.google.geocodeApiKey;
+    const googleGeoCodeApiAdress
+        = `https://maps.google.com/maps/api/geocode/json?address=${encodedLocation}&components=country:BR&key=${key}`;
+
+    return axios.get(googleGeoCodeApiAdress)
+        .then((res) => {
+            if (res.data.errorMessage) {
+                throw Error(res.data.errorMessage);
+            }
+            return res;
+        })
+        .then(res => res.data);
 }
 
 export function getLocations(searchTerm, allowCities, db) {
