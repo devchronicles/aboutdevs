@@ -2,6 +2,7 @@ import { assert } from 'chai';
 import * as locationHelper from '../../src/server/helpers/locationHelper';
 import * as geocodeApiFormattingHelper from '../../src/server/helpers/geocodeApiFormattingHelper';
 import setupSession from './setupSession';
+import sampleLocation from './resources/googleGeocodeApiResultSample';
 
 describe('locationHelperSpec', () => {
     describe('getLocationsFromGoogle', () => {
@@ -75,6 +76,15 @@ describe('locationHelperSpec', () => {
                 .then((r) => {
                     assert.ok(r);
                 });
+        });
+    });
+    describe('saveLocation', () => {
+        let db = null;
+        setupSession(before, after, beforeEach, afterEach, ($db) => {
+            db = $db;
+        });
+        it('default case', () => {
+            locationHelper.saveLocation('Rua Morais e Castro, 300, Passos, Juiz de Fora, MG', db);
         });
     });
 });

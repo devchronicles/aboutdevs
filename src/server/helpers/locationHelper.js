@@ -3,7 +3,6 @@ import * as geocodeApiFormattingHelper from './geocodeApiFormattingHelper';
 import config from '../../../config/config';
 import * as searchHelper from './searchHelper';
 
-
 /**
  * Saves the given {search, location} to the cache and returns the location if everything goes fine
  * @param {string} searchTerm The search term the user typed
@@ -83,6 +82,6 @@ export function getLocations(searchTerm, allowCities, db) {
 }
 
 export async function saveLocation(formattedText, db) {
-    const locations = await getLocations(formattedText, false, db);
+    //const locations = await getLocations(formattedText, false, db);
     
 }
