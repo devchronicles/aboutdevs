@@ -56,7 +56,7 @@ describe('locationHelperSpec', () => {
                     assert.equal(res.length, 0);
                 }));
     });
-    describe('getLocations', () => {
+    describe('getLgetFormattedLocationsocations', () => {
         let db = null;
         setupSession(before, after, beforeEach, afterEach, ($db) => {
             db = $db;
@@ -68,7 +68,7 @@ describe('locationHelperSpec', () => {
                 .then((r) => {
                     assert.isNotOk(r);
                 })
-                .then(() => locationHelper.getLocations(searchTerm, false, db))
+                .then(() => locationHelper.getFormattedLocations(searchTerm, false, db))
                 .then((l) => {
                     assert.equal(1, l.length);
                 })

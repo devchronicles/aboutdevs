@@ -17,7 +17,7 @@ class SelectLocation extends Component {
             clearTimeout(this.currentFetchTimeout);
         }
         this.currentFetchTimeout = setTimeout(() => {
-            httpClient.getLocations(input, allowCities)
+            httpClient.getFormattedLocations(input, allowCities)
                 .then((res) => {
                     const options = res.data.map(i => ({ value: i, label: i }));
                     callback(null, { options });

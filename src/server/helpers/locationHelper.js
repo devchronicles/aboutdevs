@@ -61,7 +61,7 @@ export function getLocationsFromGoogle(searchTerm) {
     });
 }
 
-export function getLocations(searchTerm, allowCities, db) {
+export function getFormattedLocations(searchTerm, allowCities, db) {
     return new Promise((fulfill, reject) => {
         const normalizedSearchTerm = searchHelper.normalize(searchTerm);
         if (!normalizedSearchTerm) {
@@ -83,5 +83,4 @@ export function getLocations(searchTerm, allowCities, db) {
 
 export async function saveLocation(formattedText, db) {
     //const locations = await getLocations(formattedText, false, db);
-    
 }

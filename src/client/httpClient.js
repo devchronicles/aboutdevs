@@ -4,7 +4,7 @@ export function getProfileData() {
     return axios.get('/api/users/getmyprofiledataforediting');
 }
 
-export function getLocations(searchTerm, allowCities = false) {
+export function getFormattedLocations(searchTerm, allowCities = false) {
     const queryString = allowCities ? `q=${searchTerm}&allowcities=true` : `q=${searchTerm}`;
     return axios.get(`/api/address?${queryString}`);
 }

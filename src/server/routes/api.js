@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.route('/address').get((req, res) => {
     const allowCities = req.query.allowcities;
-    apiHelper.sendPromise(res, locationHelper.getLocations(req.query.q, allowCities, db));
+    apiHelper.sendPromise(res, locationHelper.getFormattedLocations(req.query.q, allowCities, db));
 });
 
 router.route('/professions').get(
