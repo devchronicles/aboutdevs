@@ -25,18 +25,8 @@ function saveLocationToCache(searchTerm, location, db) {
  */
 export function getLocationsFromCache(searchTerm, db) {
     if (searchTerm === null || searchTerm === undefined) throw Error('Argument \'partialAddress\' should be null or undefined');
-    
-    return new Promise((fulfill, reject) => {
-        db.geo_location_cache.findOne({ search: searchTerm }, (error, locationCache) => {
-            if (error) {
-                reject(error);
-            } else if (locationCache !== undefined) {
-                fulfill(locationCache.cache);
-            } else {
-                fulfill(undefined);
-            }
-        });
-    });
+    return db.geo_location_cache.findOneAsync({ search: searchTerm })
+        .then(r => (r ? r.cache : undefined));
 }
 
 /**
