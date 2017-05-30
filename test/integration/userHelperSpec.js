@@ -1,7 +1,7 @@
 import { assert } from 'chai';
 import setupSession from './setupSession';
 import googleProfileSample from './resources/googleProfileSample';
-import * as userHelper from '../../../src/server/helpers/userHelper';
+import * as userHelper from '../../src/server/helpers/userHelper';
 
 
 describe('userHelper', () => {

@@ -39,7 +39,7 @@ function getState(result) {
     return getAddressInformationByType('short_name', 'administrative_area_level_1', result);
 }
 
-function getFriendlyAddress(result) {
+function getFormattedAddress(result) {
     const addressComponents = [
         getStreet(result),
         getStreetNumber(result),
@@ -52,5 +52,5 @@ function getFriendlyAddress(result) {
 
 export function getFormattedAddresses(data, allowCities = false) {
     if (!data || !data.results || !data.results.length) return [];
-    return data.results.filter(validateResult(allowCities)).map(getFriendlyAddress);
+    return data.results.filter(validateResult(allowCities)).map(getFormattedAddress);
 }

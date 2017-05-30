@@ -84,4 +84,5 @@ export function getLocations(searchTerm, allowCities, db) {
 
 export async function saveLocation(formattedText, db) {
     const locations = await getLocations(formattedText, false, db);
+    
 }
