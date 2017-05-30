@@ -51,11 +51,7 @@ export function getLocations(searchTerm, allowCities, db) {
         return Promise.resolve([]);
     }
     return getLocationsFromCache(normalizedSearchTerm, db)
-        .then((lc) => {
-            if (lc) return lc;
-            return getLocationsFromGoogle(normalizedSearchTerm)
-                .then(lg => saveLocationToCache(normalizedSearchTerm, lg, db));
-        });
+        .then(lc => (lc || getLocationsFromGoogle(normalizedSearchTerm).then(lg => saveLocationToCache(normalizedSearchTerm, lg, db))));
 }
 
 export function getFormattedLocations(searchTerm, allowCities, db) {
