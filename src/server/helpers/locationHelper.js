@@ -13,6 +13,7 @@ import * as searchHelper from './searchHelper';
 function saveLocationToCache(searchTerm, location, db) {
     if (searchTerm === null || searchTerm === undefined) throw Error('Argument \'search\' should be null or undefined');
     if (location === null || location === undefined) throw Error('Argument \'location\' should be null or undefined');
+
     return db.geo_location_cache.saveAsync({ search: searchTerm, cache: location })
         .then(() => location);
 }
@@ -81,3 +82,6 @@ export function getLocations(searchTerm, allowCities, db) {
     });
 }
 
+export async function saveLocation(formattedText, db) {
+    const locations = await getLocations(formattedText, false, db);
+}
