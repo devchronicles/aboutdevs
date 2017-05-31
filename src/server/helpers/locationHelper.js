@@ -14,7 +14,7 @@ function saveLocationToCache(searchTerm, location, db) {
     if (searchTerm === null || searchTerm === undefined) throw Error('Argument \'search\' should be null or undefined');
     if (location === null || location === undefined) throw Error('Argument \'location\' should be null or undefined');
 
-    return db.geo_location_cache.saveAsync({ search: searchTerm, cache: location })
+    return db.geo_location_cache.save({ search: searchTerm, cache: location })
         .then(() => location);
 }
 
@@ -26,7 +26,7 @@ function saveLocationToCache(searchTerm, location, db) {
  */
 export function getLocationsFromCache(searchTerm, db) {
     if (searchTerm === null || searchTerm === undefined) throw Error('Argument \'partialAddress\' should be null or undefined');
-    return db.geo_location_cache.findOneAsync({ search: searchTerm })
+    return db.geo_location_cache.findOne({ search: searchTerm })
         .then(r => (r ? r.cache : undefined));
 }
 
@@ -67,5 +67,5 @@ export async function saveLocation(formattedText, db) {
 
     const countryComponent = geocodeApiHelper.getCoutryComponent(locationData);
     
-    const country = await db.geo_location_country.findOneAsync({ short_name: countryComponent.short_name });
+    const country = await db.geo_location_country.findOne({ short_name: countryComponent.short_name });
 }

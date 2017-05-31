@@ -16,6 +16,20 @@ export default {
     },
     db: {
         connectionString: `postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DATABASE}`,
-        testConnectionString: `postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_TEST_DATABASE}`
+        testConnectionString: `postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_TEST_DATABASE}`,
+        massiveConnectionObject: {
+            host: POSTGRES_HOST,
+            port: POSTGRES_PORT,
+            database: POSTGRES_DATABASE,
+            user: POSTGRES_USER,
+            password: POSTGRES_PASSWORD
+        },
+        testMassiveConnectionObject: {
+            host: POSTGRES_HOST,
+            port: POSTGRES_PORT,
+            database: POSTGRES_TEST_DATABASE,
+            user: POSTGRES_USER,
+            password: POSTGRES_PASSWORD
+        }
     }
 };

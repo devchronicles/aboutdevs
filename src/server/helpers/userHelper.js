@@ -17,7 +17,7 @@ export function getValidUserName(db, userName) {
     if (db === null || db === undefined) throw Error('Argument \'db\' should be null or undefined');
     if (userName === null || userName === undefined) throw Error('Argument \'email\' should be null or undefined');
 
-    return db.user.findAsync({ 'name ilike': `${userName}%` })
+    return db.user.find({ 'name ilike': `${userName}%` })
         .then((r) => {
             if (r.length === 0) return userName;
             // this isn't actually necessary. TODO: Remove this.
@@ -58,7 +58,7 @@ export function createFromGoogleProfile(db, profile) {
                 }
             }
         }))
-        .then(user => db.user.saveAsync(user));
+        .then(user => db.user.save(user));
 }
 
 /**
@@ -88,7 +88,7 @@ export function updateFromGoogleProfile(db, existingUser, profile) {
         id: profile.id,
         raw: profile
     };
-    return db.user.saveAsync(existingUser);
+    return db.user.save(existingUser);
 }
 
 /**
@@ -105,7 +105,7 @@ export function findOrCreateFromGoogleProfile(db, profile) {
 
     if (!email) { throw Error('Google profile is not valid'); }
 
-    return db.user.findOneAsync({ email })
+    return db.user.findOne({ email })
         .then((user) => {
             if (!user) { return createFromGoogleProfile(db, profile); }
 

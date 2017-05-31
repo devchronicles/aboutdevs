@@ -28,7 +28,7 @@ router.route('/verifyuserprofile').get((req, res) => {
     if (!user || !user.id) {
         redirectToHome(res);
     } else {
-        db.user.findOneAsync({ id: user.id })
+        db.user.findOne({ id: user.id })
             .then((u) => {
                 if (u) {
                     if (u.status === 0) {

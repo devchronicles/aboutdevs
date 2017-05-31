@@ -9,9 +9,9 @@ import { assert } from 'chai';
  */
 export function assertCanSaveFindAndDelete(db, entityName, originalObject) {
     // saves the object
-    return db[entityName].saveAsync(originalObject)
+    return db[entityName].save(originalObject)
         // tries to find the object we just saved
-        .then(obj => db[entityName].findOneAsync(obj.id))
+        .then(obj => db[entityName].findOne(obj.id))
         // asserts everything is there
         .then((obj) => {
             for (const property in originalObject) {
@@ -22,10 +22,10 @@ export function assertCanSaveFindAndDelete(db, entityName, originalObject) {
             return obj;
         })
         // tries to delete the object
-        .then(obj => db[entityName].destroyAsync({ id: obj.id }))
+        .then(obj => db[entityName].destroy({ id: obj.id }))
         // now tries to find the object again.
         // objs will the the array of objects deleted, in this case, there's only one
-        .then(objs => db[entityName].findOneAsync(objs[0].id))
-        // make sure it's not there
+        .then(objs => db[entityName].findOne({ id: objs[0].id }))
         .then(obj => assert.isUndefined(obj));
 }
+

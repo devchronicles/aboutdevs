@@ -14,7 +14,7 @@ export default function (passport) {
     });
 
     passport.deserializeUser((userId, done) => {
-        db.user.findOneAsync({ id: userId })
+        db.user.findOne({ id: userId })
             .then(u => (u ? userHelper.getReduxDataForLoggedUser(u) : null))
             .then(u => done(null, u))
             .catch(done);

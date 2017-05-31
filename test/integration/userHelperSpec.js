@@ -16,7 +16,7 @@ describe('userHelper', () => {
                 .then((userName) => { assert.equal(userName, 'foo'); })
         );
         it('When it does exist', () =>
-            db.user.insertAsync({
+            db.user.insert({
                 name: 'foo',
                 gender: 0,
                 display_name: 'Foo',
@@ -26,13 +26,13 @@ describe('userHelper', () => {
                 .then((userName) => { assert.equal(userName, 'foo1'); })
         );
         it('When it does exist 2', () =>
-            db.user.insertAsync({
+            db.user.insert({
                 name: 'foo',
                 gender: 0,
                 display_name: 'Foo',
                 email: 'foo@fooland.com'
             })
-                .then(() => db.user.insertAsync({
+                .then(() => db.user.insert({
                     name: 'foo1',
                     gender: 0,
                     display_name: 'Foo',
@@ -48,18 +48,18 @@ describe('userHelper', () => {
             .then((u) => {
                 assert.isOk(u);
                 // let's go to the database to see if the user has actually been added
-                return db.user.findOneAsync(u.id);
+                return db.user.findOne(u.id);
             })
             .then((u) => {
                 assert.isOk(u);
                 assert.isOk(u.oauth_profiles);
                 assert.strictEqual(u.oauth_profiles.google.id, '109199054588840596357');
-                return db.user.destroyAsync({ id: u.id });
+                return db.user.destroy({ id: u.id });
             })
     );
 
     it('updateFromGoogleProfile', () =>
-        db.user.saveAsync({
+        db.user.save({
             name: 'andrerpena',
             gender: 0,
             email: 'andrerpena@gmail.com',
@@ -70,26 +70,27 @@ describe('userHelper', () => {
                 assert.isOk(u);
                 assert.isOk(u.oauth_profiles);
                 assert.strictEqual(u.oauth_profiles.google.id, '109199054588840596357');
-                return db.user.destroyAsync({ id: u.id });
+                return db.user.destroy({ id: u.id });
             })
     );
 
     describe('findOrCreateFromGoogleProfile', () => {
         it('when the user did not exist yet', (done) => {
-            db.user.findOneAsync({ email: 'andrerpena@gmail.com' })
+            db.user.findOne({ email: 'andrerpena@gmail.com' })
                 .then((u) => {
                     assert.isUndefined(u);
                     return userHelper.findOrCreateFromGoogleProfile(db, googleProfileSample);
                 })
+
                 .then((u) => {
                     assert.strictEqual(u.email, 'andrerpena@gmail.com');
-                    return db.user.destroyAsync({ id: u.id });
+                    return db.user.destroy({ id: u.id });
                 })
                 .then(() => done())
                 .catch(done);
         });
         it('when a user with the same e-mail address already existed', () =>
-            db.user.saveAsync({
+            db.user.save({
                 name: 'andrerpena',
                 gender: 0,
                 email: 'andrerpena@gmail.com',
@@ -99,7 +100,7 @@ describe('userHelper', () => {
                 .then((u) => {
                     assert.strictEqual(u.email, 'andrerpena@gmail.com');
                     assert.ok(u.oauth_profiles.google);
-                    return db.user.destroyAsync({ id: u.id });
+                    return db.user.destroy({ id: u.id });
                 })
         );
     });

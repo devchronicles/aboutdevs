@@ -6,3 +6,5 @@ SELECT to_tsvector('ptu','professor de dança') @@ to_tsquery('ptu','Professora 
 select * from profession p where to_tsvector('ptu', p.name_canonical) @@ to_tsquery('ptu', 'marceneiro')
 order by p.name_canonical
 
+npm run test-p -- ./test/integration/basicEntityAccessSpec.js
+

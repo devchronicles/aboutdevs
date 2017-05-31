@@ -46,7 +46,7 @@ router.route('/users/getmyprofiledataforediting').get((req, res) => {
         if (user === null) {
             throw Error('The user is not logged in');
         }
-        db.user.findOneAsync({ id: user.id })
+        db.user.findOne({ id: user.id })
             .then((u) => {
                 if (u) {
                     apiHelper.sendOk(res, {
@@ -72,7 +72,7 @@ router.route('/users/getmyprofiledataforediting').get((req, res) => {
 router.route('/users/:id').get((req, res) => {
     try {
         const entityId = req.params.id;
-        db.user.findOneAsync({ id: entityId })
+        db.user.findOne({ id: entityId })
             .then((u) => {
                 if (u) {
                     apiHelper.sendOk(res, u);

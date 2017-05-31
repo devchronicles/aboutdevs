@@ -5,6 +5,10 @@ import setupSession from './setupSession';
 import sampleLocation from './resources/googleGeocodeApiResultSample';
 
 describe('locationHelperSpec', () => {
+    let db = null;
+    setupSession(before, after, beforeEach, afterEach, ($db) => {
+        db = $db;
+    });
     describe('getLocationsFromGoogle', () => {
         it('Should work with propertly formatted address',
             () => locationHelper.getLocationsFromGoogle('Rua Henrique Surerus, 28, Juiz de Fora, MG')
@@ -57,14 +61,9 @@ describe('locationHelperSpec', () => {
                 }));
     });
     describe('getFormattedLocations', () => {
-        let db = null;
-        setupSession(before, after, beforeEach, afterEach, ($db) => {
-            db = $db;
-        });
-
         it('checks the correct behavior', () => {
             const searchTerm = 'henrique surerus jf';
-            return db.geo_location_cache.findOneAsync({ search: searchTerm })
+            return db.geo_location_cache.findOne({ search: searchTerm })
                 .then((r) => {
                     assert.isNotOk(r);
                 })
@@ -72,17 +71,14 @@ describe('locationHelperSpec', () => {
                 .then((l) => {
                     assert.equal(1, l.length);
                 })
-                .then(() => db.geo_location_cache.findOneAsync({ search: searchTerm }))
+                .then(() => db.geo_location_cache.findOne({ search: searchTerm }))
                 .then((r) => {
                     assert.ok(r);
                 });
         });
     });
     describe('saveLocation', () => {
-        let db = null;
-        setupSession(before, after, beforeEach, afterEach, ($db) => {
-            db = $db;
-        });
+
         it('default case', () => {
             locationHelper.saveLocation('Rua Morais e Castro, 300, Passos, Juiz de Fora, MG', db);
         });
