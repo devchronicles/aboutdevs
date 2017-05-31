@@ -1,4 +1,5 @@
 import axios from 'axios';
+import * as geocodeApiHelper from './geocodeApiHelper';
 import * as geocodeApiFormattingHelper from './geocodeApiFormattingHelper';
 import config from '../../../config/config';
 import * as searchHelper from './searchHelper';
@@ -64,5 +65,7 @@ export async function saveLocation(formattedText, db) {
     if (!locationData || !locationData.results || !locationData.results.length) throw Error('could not get location');
     if (locationData.results.length > 1) throw Error('the given location is not unique');
 
+    const countryComponent = geocodeApiHelper.getCoutryComponent(locationData);
     
+    const country = await db.geo_location_country.findOneAsync({ short_name: countryComponent.short_name });
 }
