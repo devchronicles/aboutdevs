@@ -8,15 +8,13 @@ describe('basicEntityAccess', () => {
         db = $db;
     });
 
-    it('can save, find and delete users', (done) => {
+    it('can save, find and delete users', () => {
         const user = {
             name: 'andrerpena',
             gender: 0,
             email: 'andrerpena@gmail.com',
             display_name: 'André Pena'
         };
-        assertCanSaveFindAndDelete(db, 'user', user)
-            .then(() => done())
-            .catch(done);
+        return assertCanSaveFindAndDelete(db, 'user', user);
     });
 });

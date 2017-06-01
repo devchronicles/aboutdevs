@@ -1,5 +1,5 @@
 import express from 'express';
-import db from '../db/db';
+import buildDb from '../db/buildDb';
 import sqlFunctionBinder from '../expressMassiveBinders/sqlFunctionBinder';
 import * as apiHelper from '../helpers/apiHelper';
 import * as searchHelper from '../helpers/searchHelper';
@@ -10,7 +10,10 @@ const router = express.Router();
 
 router.route('/address').get((req, res) => {
     const allowCities = req.query.allowcities;
-    apiHelper.sendPromise(res, locationHelper.getFormattedLocations(req.query.q, allowCities, db));
+    apiHelper.sendPromise(res,
+        buildDb()
+            .then(db => locationHelper.getFormattedLocations(req.query.q, allowCities, db))
+    );
 });
 
 router.route('/professions').get(
@@ -23,21 +26,21 @@ router.route('/professions').get(
     ));
 
 router.route('/users/checkname').get((req, res) => {
-    try {
-        const user = req.user ? req.user : null;
-        if (user === null) {
-            throw Error('The user is not logged in');
-        }
-        const userName = req.query.q;
-        const id = user.id;
 
-        db.isUserNameAvailable(userName, id, (error, data) => {
-            if (error) apiHelper.sendError(res, error);
-            apiHelper.sendOk(res, data[0]);
-        });
-    } catch (ex) {
-        apiHelper.sendError(res, ex);
-    }
+    apiHelper.sendPromise(res,
+        buildDb
+            .then((db) => {
+                const user = req.user ? req.user : null;
+                if (user === null) {
+                    throw Error('The user is not logged in');
+                }
+                const userName = req.query.q;
+                const id = user.id;
+
+                return db.isUserNameAvailable(userName, id)
+                    .then(data => data[0]);
+            })
+    );
 });
 
 router.route('/users/getmyprofiledataforediting').get((req, res) => {

@@ -1,5 +1,4 @@
-import config from '../../config/config';
-import { buildMassive } from '../../src/server/helpers/massiveHelper';
+import buildDb from './buildDb';
 
 /**
  * Truncates (delete) data from all tables
@@ -39,12 +38,11 @@ export default function setupSession(before, after, beforeEach, afterEach, callb
 
     // runs before all tests in a file
     before((done) => {
-        buildMassive(config.db.testMassiveConnectionObject)
+        buildDb()
             .then((m) => { db = m; callback(m); return m; })
             .then(() => done())
             .catch(done);
-    }
-    );
+    });
 
     // runs before each test in a file
     beforeEach((done) => {

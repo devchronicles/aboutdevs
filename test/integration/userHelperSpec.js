@@ -9,11 +9,8 @@ describe('userHelper', () => {
     setupSession(before, after, beforeEach, afterEach, ($db) => {
         db = $db;
     });
-
     describe('getValidUserName', () => {
-        it('When it doesn\'t exist', () =>
-            userHelper.getValidUserName(db, 'foo')
-                .then((userName) => { assert.equal(userName, 'foo'); })
+        it('When it doesn\'t exist', () => userHelper.getValidUserName(db, 'foo').then((userName) => { assert.equal(userName, 'foo') })
         );
         it('When it does exist', () =>
             db.user.insert({
@@ -25,6 +22,7 @@ describe('userHelper', () => {
                 .then(() => userHelper.getValidUserName(db, 'foo'))
                 .then((userName) => { assert.equal(userName, 'foo1'); })
         );
+
         it('When it does exist 2', () =>
             db.user.insert({
                 name: 'foo',
@@ -75,7 +73,7 @@ describe('userHelper', () => {
     );
 
     describe('findOrCreateFromGoogleProfile', () => {
-        it('when the user did not exist yet', (done) => {
+        it('when the user did not exist yet', () =>
             db.user.findOne({ email: 'andrerpena@gmail.com' })
                 .then((u) => {
                     assert.isUndefined(u);
@@ -86,9 +84,7 @@ describe('userHelper', () => {
                     assert.strictEqual(u.email, 'andrerpena@gmail.com');
                     return db.user.destroy({ id: u.id });
                 })
-                .then(() => done())
-                .catch(done);
-        });
+        );
         it('when a user with the same e-mail address already existed', () =>
             db.user.save({
                 name: 'andrerpena',

@@ -78,7 +78,6 @@ describe('locationHelperSpec', () => {
         });
     });
     describe('saveLocation', () => {
-
         it('default case', () => {
             locationHelper.saveLocation('Rua Morais e Castro, 300, Passos, Juiz de Fora, MG', db);
         });
