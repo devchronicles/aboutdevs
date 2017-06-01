@@ -1,17 +1,19 @@
 import { v4 } from 'uuid';
-import config from '../config/config';
-import { buildMassive } from '../src/server/helpers/massiveHelper';
+import buildDb from '../src/server/db/buildDb';
 import professions from '../data/professions-processed.json';
 
+let promise = Promise.resolve(0);
 
-const db = buildMassive(config.db.connectionString);
-
-professions.data.forEach((profession) => {
-    console.log(`Saving profession: ${profession}`);
-    db.profession.insertSync({
-        id: v4(),
-        name_canonical: profession[0],
-        name_feminine: profession[1]
+buildDb()
+    .then((db) => {
+        professions.data.forEach((profession) => {
+            console.log(`Saving profession: ${profession}`);
+            promise = promise
+                .then(() => db.profession.insert({
+                    id: v4(),
+                    name_canonical: profession[0],
+                    name_feminine: profession[1]
+                }));
+        });
+        promise = promise.then(() => process.exit(0));
     });
-});
-process.exit(0);
