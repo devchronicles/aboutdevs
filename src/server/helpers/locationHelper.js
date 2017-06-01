@@ -65,7 +65,37 @@ export async function saveLocation(formattedText, db) {
     if (!locationData || !locationData.results || !locationData.results.length) throw Error('could not get location');
     if (locationData.results.length > 1) throw Error('the given location is not unique');
 
-    const countryComponent = geocodeApiHelper.getCoutryComponent(locationData);
-    
-    const country = await db.geo_location_country.findOne({ short_name: countryComponent.short_name });
+    let location = await db.geo_location.findOne({ formatted_address: formattedText });
+    if (location) return location;
+
+    const locationDataResult = locationData.results[0];
+    const countryComponent = geocodeApiHelper.getCountryComponent(locationDataResult);
+    const stateComponent = geocodeApiHelper.getStateComponent(locationDataResult);
+    const cityComponent = geocodeApiHelper.getCityComponent(locationDataResult);
+    const neighborhoodComponent = geocodeApiHelper.getNeighborhoodComponent(locationDataResult);
+
+    // saving country
+    let country = await db.geo_location_country.findOne({ short_name: countryComponent.short_name });
+    if (!country) {
+        country = await db.geo_location_country.insert({ short_name: countryComponent.short_name, long_name: countryComponent.long_name });
+    }
+
+    // saving state
+    let state = await db.geo_location_state.findOne({ short_name: stateComponent.short_name });
+    if (!state) {
+        state = await db.geo_location_state.insert({ short_name: countryComponent.short_name, long_name: countryComponent.long_name, geo_location_country_id: country.id });
+    }
+
+    // saving city
+    let city = await db.geo_location_city.findOne({ short_name: cityComponent.short_name });
+    if (!city) {
+        city = await db.geo_location_city.insert({ short_name: cityComponent.short_name, geo_location_state_id: state.id });
+    }
+
+    location = db.geo_location.insert({
+        geo_location_city_id: city.id,
+        formatted_address: formattedText,
+        sub_locality: neighborhoodComponent.short_name
+    });
+    return location;
 }

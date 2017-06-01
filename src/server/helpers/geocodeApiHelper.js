@@ -62,6 +62,6 @@ export function getCountry(result) {
     return getAddressInformationByType('long_name', COUNTRY_COMPONENT_TYPE, result);
 }
 
-export function getCoutryComponent(result) {
+export function getCountryComponent(result) {
     return findLocationComponentByType(result, COUNTRY_COMPONENT_TYPE);
 }

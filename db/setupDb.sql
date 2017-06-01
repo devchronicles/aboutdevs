@@ -197,7 +197,6 @@ SET default_with_oids = false;
 CREATE TABLE geo_location_city (
     id integer NOT NULL,
     short_name character varying(255) NOT NULL,
-    long_name character varying(255) NOT NULL,
     geo_location_state_id integer NOT NULL
 );
 
@@ -267,7 +266,6 @@ ALTER SEQUENCE geo_adminstrative_area_level_1_id_seq OWNED BY geo_location_state
 CREATE TABLE geo_location (
     id integer NOT NULL,
     geo_location_city_id integer NOT NULL,
-    formatted_address_google character varying(255) NOT NULL,
     formatted_address character varying(255) NOT NULL,
     sub_locality character varying(255) NOT NULL
 );
@@ -295,7 +293,7 @@ ALTER TABLE geo_location_cache OWNER TO indiejobs;
 CREATE TABLE geo_location_country (
     id integer NOT NULL,
     long_name character varying(255) NOT NULL,
-    name_short character varying(255) NOT NULL
+    short_name character varying(255) NOT NULL
 );
 
 
@@ -637,7 +635,7 @@ CREATE UNIQUE INDEX geo_location_country_id_uindex ON geo_location_country USING
 -- Name: geo_location_country_name_short_uindex; Type: INDEX; Schema: public; Owner: indiejobs
 --
 
-CREATE UNIQUE INDEX geo_location_country_name_short_uindex ON geo_location_country USING btree (name_short);
+CREATE UNIQUE INDEX geo_location_country_name_short_uindex ON geo_location_country USING btree (short_name);
 
 
 --
@@ -645,13 +643,6 @@ CREATE UNIQUE INDEX geo_location_country_name_short_uindex ON geo_location_count
 --
 
 CREATE UNIQUE INDEX geo_location_country_name_uindex ON geo_location_country USING btree (long_name);
-
-
---
--- Name: geo_location_formatted_address_google_uindex; Type: INDEX; Schema: public; Owner: indiejobs
---
-
-CREATE UNIQUE INDEX geo_location_formatted_address_google_uindex ON geo_location USING btree (formatted_address_google);
 
 
 --

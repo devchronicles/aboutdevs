@@ -78,8 +78,10 @@ describe('locationHelperSpec', () => {
         });
     });
     describe('saveLocation', () => {
-        it('default case', () => {
-            locationHelper.saveLocation('Rua Morais e Castro, 300, Passos, Juiz de Fora, MG', db);
+        it('default case', async () => {
+            const locationFormattedAddress = 'Rua Morais e Castro, 300, Passos, Juiz de Fora, MG';
+            const location = await locationHelper.saveLocation('Rua Morais e Castro, 300, Passos, Juiz de Fora, MG', db);
+            assert.equal(location.formatted_address, locationFormattedAddress);
         });
     });
 });
