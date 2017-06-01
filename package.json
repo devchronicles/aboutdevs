@@ -18,6 +18,7 @@
     "db-generate": "cross-env COMMAND=generate_scripts PGPASSWORD=indiejobs node ./db/installDb.js",
     "db-reinstall": "npm run db-drop && npm run db-install",
     "tools-save-professions": "cross-env NODE_ENV=development babel-node ./tools/save-professions",
+    "tools-validate-professions": "cross-env NODE_ENV=development babel-node ./tools/validate-professions",
     "tools-print-config": "babel-node ./tools/print-config.js",
     "tools-massive-repl": "massive -c postgres://indiejobs:indiejobs@localhost:5432/indiejobs",
     "tools-apply-feminine-to-professions": "babel-node ./tools/apply-feminine-to-professionals.js"
@@ -35,7 +36,6 @@
   "dependencies": {
     "axios": "^0.16.1",
     "babel-preset-es2016": "^6.24.1",
-    "bluebird": "^3.4.6",
     "body-parser": "^1.17.2",
     "colors": "^1.1.2",
     "cookie-parser": "^1.4.3",
@@ -59,8 +59,7 @@
     "react-toggle-button": "^2.1.0",
     "redux": "^3.6.0",
     "redux-form": "^6.6.3",
-    "redux-thunk": "^2.2.0",
-    "uuid": "^3.0.1"
+    "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",

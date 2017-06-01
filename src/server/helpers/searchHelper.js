@@ -1,14 +1,14 @@
 import * as stringHelper from '../../common/helpers/stringHelper';
 
-export function normalize(search) {
+export function normalize(search, ranc = true, rd = true, ns = true, lc = true) {
     if (!search) {
         return '';
     }
     let normalizedSearch = search;
-    normalizedSearch = normalizedSearch.toLowerCase();
-    normalizedSearch = stringHelper.removeDiacritics(normalizedSearch);
-    normalizedSearch = stringHelper.replaceNonAlphaNumericCharactersWithSpaces(normalizedSearch);
-    normalizedSearch = stringHelper.normalizeSpaces(normalizedSearch);
+    normalizedSearch = lc ? normalizedSearch.toLowerCase() : normalizedSearch;
+    normalizedSearch = rd ? stringHelper.removeDiacritics(normalizedSearch) : normalizedSearch;
+    normalizedSearch = ranc ? stringHelper.replaceNonAlphaNumericCharactersWithSpaces(normalizedSearch) : normalizedSearch;
+    normalizedSearch = ns ? stringHelper.normalizeSpaces(normalizedSearch) : normalizedSearch;
     normalizedSearch = normalizedSearch.trim();
     return normalizedSearch;
 }

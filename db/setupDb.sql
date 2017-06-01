@@ -446,9 +446,11 @@ ALTER SEQUENCE notification_id_seq OWNED BY notification.id;
 --
 
 CREATE TABLE profession (
-    name_canonical character varying(200) NOT NULL,
-    name_feminine character varying(200),
-    id integer NOT NULL
+    name_canonical character varying(255) NOT NULL,
+    name_feminine character varying(255),
+    id integer NOT NULL,
+    name_canonical_normalized character varying(255),
+    name_feminine_normalized character varying(255)
 );
 
 
@@ -742,10 +744,24 @@ CREATE UNIQUE INDEX profession_id_uindex ON profession USING btree (id);
 
 
 --
+-- Name: profession_name_canonical_normalized_uindex; Type: INDEX; Schema: public; Owner: indiejobs
+--
+
+CREATE UNIQUE INDEX profession_name_canonical_normalized_uindex ON profession USING btree (name_canonical_normalized);
+
+
+--
 -- Name: profession_name_canonical_uindex; Type: INDEX; Schema: public; Owner: indiejobs
 --
 
 CREATE UNIQUE INDEX profession_name_canonical_uindex ON profession USING btree (name_canonical);
+
+
+--
+-- Name: profession_name_feminine_normalized_uindex; Type: INDEX; Schema: public; Owner: indiejobs
+--
+
+CREATE UNIQUE INDEX profession_name_feminine_normalized_uindex ON profession USING btree (name_feminine_normalized);
 
 
 --
