@@ -1,5 +1,6 @@
 import { safeRead } from '../../common/helpers/objectHelpers';
 import * as stringHelper from '../../common/helpers/stringHelper';
+import * as locationHelper from './locationHelper';
 
 /**
  * Extracts the user name from the user's e-mail
@@ -130,7 +131,7 @@ export function getReduxDataForLoggedUser(user) {
     };
 }
 
-export async function getMyProfile(db, userId) {
+export async function getProfile(db, userId) {
     return db.user.findOne({ id: userId })
         .then((u) => {
             if (u) {
@@ -146,20 +147,34 @@ export async function getMyProfile(db, userId) {
         });
 }
 
-export async function saveMyProfile(db, userId, profile) {
+export async function saveProfile(db, userId, profile) {
     const user = await db.user.findOne({ id: userId });
     if (!user) throw Error('could not find user');
 
     user.display_name = profile.displayName;
     user.type = profile.type;
-    user.status = 1; // in case of error, this should be 0
     user.bio = profile.bio;
     user.activities = profile.activities;
     user.phone_whatsapp = profile.phoneWhatsapp;
     user.phone_alternative = profile.phoneAlternative;
 
     // profession
-
+    const professions = await db.search_professions_for_save(profile.profession);
+    if (professions.length) {
+        user.profession_id = professions[0];
+    } else {
+        user.profession_other = profile.profession;
+    }
 
     // location
+    const location = await locationHelper.saveLocation(profile.address);
+    user.geo_location_id = location.id;
+
+    await db.user.save(user);
+
+    // change status
+    if (user.status === 0) {
+        user.status = 1;
+        await db.user.save(user);
+    }
 }

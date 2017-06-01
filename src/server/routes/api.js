@@ -40,7 +40,7 @@ router.route('/users/myprofile').get((req, res) => {
     apiHelper.sendPromiseDb(res,
         (db) => {
             if (!req.user) throw Error('user is not logged in');
-            return userHelper.getMyProfile(db, req.user.id);
+            return userHelper.getProfile(db, req.user.id);
         });
 });
 
@@ -49,7 +49,7 @@ router.route('/users/myprofile').post((req, res) => {
         (db) => {
             if (!req.user) throw Error('user is not logged in');
             if (!req.body) throw Error('profile was not submitted');
-            return userHelper.saveMyProfile(db, req.user.id, req.body);
+            return userHelper.saveProfile(db, req.user.id, req.body);
         });
 });
 
