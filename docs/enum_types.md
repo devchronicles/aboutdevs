@@ -8,3 +8,4 @@ user.type
  ---
 
  - **0**: Pending profile activation
+ - **1**: Ready

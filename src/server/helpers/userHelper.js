@@ -129,3 +129,37 @@ export function getReduxDataForLoggedUser(user) {
         photoUrl: user.photo_url
     };
 }
+
+export async function getMyProfile(db, userId) {
+    return db.user.findOne({ id: userId })
+        .then((u) => {
+            if (u) {
+                return {
+                    id: u.id,
+                    name: u.name,
+                    displayName: u.display_name,
+                    photoUrl: u.photo_url,
+                    type: u.type
+                };
+            }
+            throw Error('could not find user');
+        });
+}
+
+export async function saveMyProfile(db, userId, profile) {
+    const user = await db.user.findOne({ id: userId });
+    if (!user) throw Error('could not find user');
+
+    user.display_name = profile.displayName;
+    user.type = profile.type;
+    user.status = 1; // in case of error, this should be 0
+    user.bio = profile.bio;
+    user.activities = profile.activities;
+    user.phone_whatsapp = profile.phoneWhatsapp;
+    user.phone_alternative = profile.phoneAlternative;
+
+    // profession
+
+
+    // location
+}

@@ -128,7 +128,7 @@ let ProfileEditForm = (props) => {
                 <DocumentSection className="flex-column flex-align-items-center">
                     <FormRow>
                         <Field
-                            name="whatsapp"
+                            name="phoneWhatsapp"
                             label="Whatsapp"
                             component={FormField}
                             innerComponent={TextBox}
@@ -140,7 +140,7 @@ let ProfileEditForm = (props) => {
                     </FormRow>
                     <FormRow>
                         <Field
-                            name="alternatePhone"
+                            name="phoneAlternative"
                             label="Telefone alternativo"
                             component={FormField}
                             innerComponent={TextBox}

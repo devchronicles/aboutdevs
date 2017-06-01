@@ -2,7 +2,7 @@ import express from 'express';
 import * as apiHelper from '../helpers/apiHelper';
 import * as searchHelper from '../helpers/searchHelper';
 import * as locationHelper from '../helpers/locationHelper';
-import { extractUserNameFromEmail } from '../helpers/userHelper';
+import * as userHelper from '../helpers/userHelper';
 
 const router = express.Router();
 
@@ -39,23 +39,17 @@ router.route('/users/checkname').get((req, res) => {
 router.route('/users/myprofile').get((req, res) => {
     apiHelper.sendPromiseDb(res,
         (db) => {
-            const user = req.user ? req.user : null;
-            if (user === null) {
-                throw Error('the user is not logged in');
-            }
-            return db.user.findOne({ id: user.id })
-                .then((u) => {
-                    if (u) {
-                        return {
-                            id: u.id,
-                            name: extractUserNameFromEmail(u.email),
-                            displayName: u.display_name,
-                            photoUrl: u.photo_url,
-                            type: u.type
-                        };
-                    }
-                    throw Error('could not find user');
-                });
+            if (!req.user) throw Error('user is not logged in');
+            return userHelper.getMyProfile(db, req.user.id);
+        });
+});
+
+router.route('/users/myprofile').post((req, res) => {
+    apiHelper.sendPromiseDb(res,
+        (db) => {
+            if (!req.user) throw Error('user is not logged in');
+            if (!req.body) throw Error('profile was not submitted');
+            return userHelper.saveMyProfile(db, req.user.id, req.body);
         });
 });
 
