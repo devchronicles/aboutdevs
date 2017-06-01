@@ -36,7 +36,7 @@ router.route('/users/checkname').get((req, res) => {
         });
 });
 
-router.route('/users/getmyprofiledataforediting').get((req, res) => {
+router.route('/users/myprofile').get((req, res) => {
     apiHelper.sendPromiseDb(res,
         (db) => {
             const user = req.user ? req.user : null;

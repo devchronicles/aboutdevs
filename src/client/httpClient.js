@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export function getProfileData() {
-    return axios.get('/api/users/getmyprofiledataforediting');
+    return axios.get('/api/users/myprofile');
 }
 
 export function getFormattedLocations(searchTerm, allowCities = false) {
