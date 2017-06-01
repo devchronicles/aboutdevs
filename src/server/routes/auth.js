@@ -1,6 +1,6 @@
 import express from 'express';
 import passport from 'passport';
-import db from '../db/db';
+import buildDb from '../db/buildDb';
 import { redirectToHome, redirectToProfileEdit } from '../helpers/urlHelper';
 
 const router = express.Router();
@@ -28,20 +28,23 @@ router.route('/verifyuserprofile').get((req, res) => {
     if (!user || !user.id) {
         redirectToHome(res);
     } else {
-        db.user.findOne({ id: user.id })
-            .then((u) => {
-                if (u) {
-                    if (u.status === 0) {
-                        // the user needs to update their profile
-                        redirectToProfileEdit(res);
-                    } else {
-                        redirectToHome(res);
-                    }
-                } else {
-                    // todo: Log error here
-                    redirectToHome(res);
-                }
-            });
+        buildDb()
+            .then(db =>
+                db.user.findOne({ id: user.id })
+                    .then((u) => {
+                        if (u) {
+                            if (u.status === 0) {
+                                // the user needs to update their profile
+                                redirectToProfileEdit(res);
+                            } else {
+                                redirectToHome(res);
+                            }
+                        } else {
+                            // todo: Log error here
+                            redirectToHome(res);
+                        }
+                    })
+            );
     }
 });
 

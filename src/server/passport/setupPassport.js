@@ -1,5 +1,5 @@
 import { OAuth2Strategy as GoogleStrategy } from 'passport-google-oauth';
-import db from '../db/db';
+import buildDb from '../db/buildDb';
 import * as userHelper from '../helpers/userHelper';
 
 /**
@@ -14,10 +14,12 @@ export default function (passport) {
     });
 
     passport.deserializeUser((userId, done) => {
-        db.user.findOne({ id: userId })
-            .then(u => (u ? userHelper.getReduxDataForLoggedUser(u) : null))
-            .then(u => done(null, u))
-            .catch(done);
+        buildDb()
+            .then(db => db.user.findOne({ id: userId })
+                .then(u => (u ? userHelper.getReduxDataForLoggedUser(u) : null))
+                .then(u => done(null, u))
+                .catch(done)
+            );
     });
 
     // sets up passport for Google
@@ -28,9 +30,12 @@ export default function (passport) {
             callbackURL: 'http://127.0.0.1:4000/auth/google/callback'
         },
         (accessToken, refreshToken, profile, done) => {
-            userHelper.findOrCreateFromGoogleProfile(db, profile)
-                .then(u => done(null, u.id)) // this will call passport.serializeUser
-                .catch(done);
+            buildDb()
+                .then(db =>
+                    userHelper.findOrCreateFromGoogleProfile(db, profile)
+                        .then(u => done(null, u.id)) // this will call passport.serializeUser
+                        .catch(done)
+                );
         }
     ));
 }
