@@ -1,3 +1,5 @@
+import buildDb from '../db/buildDb';
+
 /**
  * Returns a function that catches an exception in Promises
  * @param {*} res The Express res object
@@ -31,4 +33,14 @@ export function sendPromise(res, promise) {
         .then(result => sendOk(res, result))
         .catch(e => sendError(res, e));
 }
+
+export function sendPromiseDb(res, promiseFunction) {
+    buildDb()
+        .then((db) => {
+            promiseFunction(db)
+                .then(result => sendOk(res, result))
+                .catch(e => sendError(res, e));
+        });
+}
+
 
