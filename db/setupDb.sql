@@ -446,13 +446,34 @@ ALTER SEQUENCE notification_id_seq OWNED BY notification.id;
 --
 
 CREATE TABLE profession (
-    id uuid NOT NULL,
     name_canonical character varying(200) NOT NULL,
-    name_feminine character varying(200)
+    name_feminine character varying(200),
+    id integer NOT NULL
 );
 
 
 ALTER TABLE profession OWNER TO indiejobs;
+
+--
+-- Name: profession_id_seq; Type: SEQUENCE; Schema: public; Owner: indiejobs
+--
+
+CREATE SEQUENCE profession_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE profession_id_seq OWNER TO indiejobs;
+
+--
+-- Name: profession_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: indiejobs
+--
+
+ALTER SEQUENCE profession_id_seq OWNED BY profession.id;
+
 
 --
 -- Name: user_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
@@ -480,10 +501,15 @@ CREATE TABLE "user" (
     oauth_profiles json,
     status smallint DEFAULT 0 NOT NULL,
     type smallint DEFAULT 0 NOT NULL,
-    profession character varying(50),
+    profession_other character varying(255),
     name character varying(255) NOT NULL,
     gender smallint NOT NULL,
-    geo_location_id integer
+    geo_location_id integer,
+    profession_id integer,
+    bio character varying(500),
+    activities character varying(500),
+    phone_whatsapp character varying(20),
+    phone_alternative character varying(20)
 );
 
 
@@ -546,6 +572,13 @@ ALTER TABLE ONLY notification ALTER COLUMN id SET DEFAULT nextval('notification_
 
 
 --
+-- Name: id; Type: DEFAULT; Schema: public; Owner: indiejobs
+--
+
+ALTER TABLE ONLY profession ALTER COLUMN id SET DEFAULT nextval('profession_id_seq'::regclass);
+
+
+--
 -- Name: geo_location_city_pkey; Type: CONSTRAINT; Schema: public; Owner: indiejobs
 --
 
@@ -594,11 +627,11 @@ ALTER TABLE ONLY notification
 
 
 --
--- Name: profession_pkey; Type: CONSTRAINT; Schema: public; Owner: indiejobs
+-- Name: profession_id_pk; Type: CONSTRAINT; Schema: public; Owner: indiejobs
 --
 
 ALTER TABLE ONLY profession
-    ADD CONSTRAINT profession_pkey PRIMARY KEY (id);
+    ADD CONSTRAINT profession_id_pk PRIMARY KEY (id);
 
 
 --
@@ -758,6 +791,14 @@ ALTER TABLE ONLY notification
 
 ALTER TABLE ONLY "user"
     ADD CONSTRAINT user_geo_location_id_fk FOREIGN KEY (geo_location_id) REFERENCES geo_location(id);
+
+
+--
+-- Name: user_profession_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY "user"
+    ADD CONSTRAINT user_profession_id_fk FOREIGN KEY (profession_id) REFERENCES profession(id);
 
 
 --
