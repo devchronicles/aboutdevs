@@ -1,5 +1,5 @@
 import React from 'react';
-import { Field, reduxForm, getFormValues, getFormSyncErrors, getFormSubmitErrors } from 'redux-form';
+import { Field, reduxForm, getFormValues, getFormSyncErrors, getFormSubmitErrors, SubmissionError } from 'redux-form';
 import { connect } from 'react-redux';
 import FaIcon from './FaIcon';
 import { TextBox, TextArea, FormField, FormGroup, FormFieldUserName, FormRow, SelectLocation, SelectProfession } from './form/index';
@@ -14,6 +14,15 @@ import {
 } from '../lib/redux-form/fieldValidation';
 import asyncValidation from '../lib/redux-form/asyncValidation';
 
+function submit(values) {
+    const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+    return sleep(1000)
+        .then(() => {
+            throw new SubmissionError({
+                displayName: 'invalid-phone'
+            });
+        });
+}
 
 let ProfileEditForm = (props) => {
     const {
@@ -28,7 +37,7 @@ let ProfileEditForm = (props) => {
 
     return (
         <div className="document">
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit(submit)}>
                 <DocumentSection className="flex-column flex-align-items-center">
                     <div className="image" style={{ backgroundImage: `url(${loggedUser.photoUrl})` }} />
                     <div className="edit-profile-image-button-wrapper">
