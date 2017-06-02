@@ -80,7 +80,7 @@ describe('locationHelperSpec', () => {
     describe('saveLocation', () => {
         it('default case', async () => {
             const locationFormattedAddress = 'Rua Morais e Castro, 300, Passos, Juiz de Fora, MG';
-            const location = await locationHelper.saveLocation('Rua Morais e Castro, 300, Passos, Juiz de Fora, MG', db);
+            const location = await locationHelper.saveLocation(db, 'Rua Morais e Castro, 300, Passos, Juiz de Fora, MG');
             assert.equal(location.formatted_address, locationFormattedAddress);
         });
     });

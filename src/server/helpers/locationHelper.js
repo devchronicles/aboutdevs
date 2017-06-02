@@ -60,7 +60,7 @@ export function getFormattedLocations(searchTerm, allowCities, db) {
         .then(r => geocodeApiFormattingHelper.getFormattedLocations(r, allowCities));
 }
 
-export async function saveLocation(formattedText, db) {
+export async function saveLocation(db, formattedText) {
     const locationData = await getLocations(formattedText, false, db);
     if (!locationData || !locationData.results || !locationData.results.length) throw Error('could not get location');
     if (locationData.results.length > 1) throw Error('the given location is not unique');

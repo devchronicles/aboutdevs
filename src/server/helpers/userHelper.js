@@ -167,7 +167,7 @@ export async function saveProfile(db, userId, profile) {
     }
 
     // location
-    const location = await locationHelper.saveLocation(profile.address);
+    const location = await locationHelper.saveLocation(db, profile.address);
     user.geo_location_id = location.id;
 
     await db.user.save(user);
@@ -177,4 +177,6 @@ export async function saveProfile(db, userId, profile) {
         user.status = 1;
         await db.user.save(user);
     }
+
+    return user;
 }

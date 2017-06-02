@@ -100,4 +100,27 @@ describe('userHelper', () => {
                 })
         );
     });
+    describe('saveProfile', () => {
+        it('Basic scenario', async () => {
+            const existingUser = await db.user.save({
+                name: 'andrerpena',
+                gender: 0,
+                email: 'andrerpena@gmail.com',
+                display_name: 'André Pena'
+            });
+
+            const profile = {
+                name: 'andrerpena',
+                displayName: 'André Pena',
+                type: 1,
+                bio: 'Great developer',
+                activities: 'Great software',
+                phone_whatsapp: '(32) 999168205',
+                address: 'Rua Henrique Surerus, 28, Juiz de Fora',
+                profession: 'medico'
+            };
+
+            await userHelper.saveProfile(db, existingUser.id, profile);
+        });
+    });
 });
