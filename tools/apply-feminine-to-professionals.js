@@ -29,6 +29,7 @@ rules.push(new RegexRule(/^([^ ]*)(tor)/, 'tora'));
 rules.push(new RegexRule(/^([^ ]*)(rio)/, 'ria')); // Atuário
 rules.push(new RegexRule(/^([^ ]*)(ogo)/, 'oga')); // Psicólogo
 rules.push(new RegexRule(/^([^ ]*)(ssor)/, 'ssora')); // Professor
+rules.push(new RegexRule(/^([^ ]*)(eto)/, 'eta')); // Arquiteto
 
 
 function getFeminine(word) {

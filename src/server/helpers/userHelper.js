@@ -73,7 +73,7 @@ export function updateFromGoogleProfile(db, existingUser, profile) {
     if (!existingUser) throw Error('\'existingUser\' should be truthy');
     if (!profile) throw Error('\'profile\' should be truthy');
 
-    if (!existingUser.gender) {
+    if (existingUser.gender === null || existingUser.gender === undefined) {
         existingUser.gender = profile.gender === 'male' ? 0 : 1;
     }
     if (!existingUser.display_name) {
@@ -152,7 +152,7 @@ export async function saveProfile(db, userId, profile) {
     if (!user) throw Error('could not find user');
 
     user.display_name = profile.displayName;
-    user.type = profile.type;
+    user.type = profile.type; // 0 -> user 1 -> professional
     user.bio = profile.bio;
     user.activities = profile.activities;
     user.phone_whatsapp = profile.phoneWhatsapp;
@@ -179,4 +179,8 @@ export async function saveProfile(db, userId, profile) {
     }
 
     return user;
+}
+
+export async function validateProfile(db, profile) {
+    const errors = [];
 }

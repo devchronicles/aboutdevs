@@ -7,7 +7,7 @@ const TextArea = (field) => {
     if (invalid && touched) {
         classes.push('invalid');
     }
-    return <textarea {...field.input} className={classes.join(' ')} />;
+    return <textarea rows={8} {...field.input} className={classes.join(' ')} />;
 };
 
 TextArea.propTypes = {
