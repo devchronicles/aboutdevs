@@ -6,7 +6,7 @@ import { TextBox, TextArea, FormField, FormGroup, FormFieldUserName, FormRow, Se
 import UserTypeToggle from './UserTypeToggle';
 import DocumentSection from './DocumentSection';
 import normalizePhone from '../lib/redux-form/normalizePhone';
-import * as fieldValidation from '../lib/redux-form/fieldValidation';
+import * as fieldValidation from '../../common/helpers/fieldValidation';
 import asyncValidation from '../lib/redux-form/asyncValidation';
 
 function submit(values) {

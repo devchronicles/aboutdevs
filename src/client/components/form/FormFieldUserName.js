@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import activity from 'react-activity';
 import { FormGroup, InputGroup, TextBox } from './index';
 import FaIcon from '../FaIcon';
-import { getErrorMessage } from '../../lib/redux-form/fieldValidationMessageProvider';
+import { getErrorMessage } from '../../../common/helpers/fieldValidationMessageProvider';
 
 const Spinner = activity.Spinner;
 

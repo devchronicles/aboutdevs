@@ -1,9 +1,5 @@
 import * as fieldValidation from './fieldValidation';
 
-import {
-    USER_NAME_IS_TAKEN
-} from './asyncValidation';
-
 export function getErrorMessage(error) {
     switch (error) {
         case fieldValidation.REQUIRED:
@@ -20,7 +16,7 @@ export function getErrorMessage(error) {
             return 'Telefone inválido.';
         case fieldValidation.AT_LEAST_ONE_PHONE:
             return 'Pelo menos um dos telefones precisa ser preenchido.';
-        case USER_NAME_IS_TAKEN:
+        case fieldValidation.USER_NAME_IS_TAKEN:
             return 'Este nome de usuário já está sendo utilizado.';
         default:
             break;

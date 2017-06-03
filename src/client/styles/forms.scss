@@ -11,6 +11,10 @@ input, textarea, select, button {
     color: #333;
 }
 
+textarea {
+    resize: none;
+}
+
 input[type="text"], textarea {
     padding: $input-padding-vertical $input-padding-horizontal;
     border-radius: $radius-md;

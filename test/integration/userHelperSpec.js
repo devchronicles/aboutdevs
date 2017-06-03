@@ -10,7 +10,7 @@ describe('userHelper', () => {
         db = $db;
     });
     describe('getValidUserName', () => {
-        it('When it doesn\'t exist', () => userHelper.getValidUserName(db, 'foo').then((userName) => { assert.equal(userName, 'foo') })
+        it('When it doesn\'t exist', () => userHelper.getValidUserName(db, 'foo').then((userName) => { assert.equal(userName, 'foo'); })
         );
         it('When it does exist', () =>
             db.user.insert({

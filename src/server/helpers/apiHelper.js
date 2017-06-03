@@ -43,4 +43,3 @@ export function sendPromiseDb(res, promiseFunction) {
         });
 }
 
-

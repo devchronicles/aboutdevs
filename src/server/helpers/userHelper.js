@@ -183,4 +183,14 @@ export async function saveProfile(db, userId, profile) {
 
 export async function validateProfile(db, profile) {
     const errors = [];
+
+    // required fields
+            // name: 'andrerpena',
+            // gender: 0,
+            // email: 'andrerpena@gmail.com',
+            // display_name: 'André Pena'
+
+    // required fields if professional
+
+    // max length
 }

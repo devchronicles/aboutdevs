@@ -5,6 +5,7 @@ export const AT_LEAST_ONE_PHONE = 'at-least-one-phone';
 export const MAX_LENGTH_50 = 'max-length-50';
 export const MAX_LENGTH_80 = 'max-length-80';
 export const MAX_LENGTH_500 = 'max-length-500';
+export const USER_NAME_IS_TAKEN = 'user-name-is-taken';
 
 export function validateRequired(value) {
     return (value === null || value === undefined || value === '') ? REQUIRED : undefined;
