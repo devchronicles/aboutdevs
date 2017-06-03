@@ -8,4 +8,4 @@ export TextBox from './TextBox';
 export TextArea from './TextArea';
 export SelectLocation from './SelectLocation';
 export SelectProfession from './SelectProfession';
-
+export Field from './Field';

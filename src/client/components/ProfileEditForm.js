@@ -1,8 +1,8 @@
 import React from 'react';
-import { Field, reduxForm, getFormValues, getFormSyncErrors, getFormSubmitErrors, SubmissionError } from 'redux-form';
+import { reduxForm, getFormValues, getFormSyncErrors, getFormSubmitErrors, SubmissionError } from 'redux-form';
 import { connect } from 'react-redux';
 import FaIcon from './FaIcon';
-import { TextBox, TextArea, FormField, FormGroup, FormFieldUserName, FormRow, SelectLocation, SelectProfession } from './form/index';
+import { Field, TextBox, TextArea, FormField, FormGroup, FormFieldUserName, FormRow, SelectLocation, SelectProfession } from './form/index';
 import UserTypeToggle from './UserTypeToggle';
 import DocumentSection from './DocumentSection';
 import normalizePhone from '../lib/redux-form/normalizePhone';
@@ -60,7 +60,6 @@ let ProfileEditForm = (props) => {
                         <Field
                             name="name"
                             component={FormFieldUserName}
-                            validate={[fieldValidation.validateRequired, fieldValidation.validateMaxLength50]}
                         />
                     </FormRow>
                     <FormRow>
@@ -71,7 +70,6 @@ let ProfileEditForm = (props) => {
                             innerComponent={TextBox}
                             help="É assim que seu nome será exibido aos outros."
                             addOnBefore={<FaIcon icon="user" />}
-                            validate={[fieldValidation.validateRequired, fieldValidation.validateMaxLength50]}
                         />
                     </FormRow>
                 </DocumentSection>
@@ -84,7 +82,6 @@ let ProfileEditForm = (props) => {
                             innerComponent={SelectProfession}
                             help="Escreva o que melhor descreve a sua profissão."
                             addOnBefore={<FaIcon icon="briefcase" />}
-                            validate={[fieldValidation.validationRequiredIfProfessional, fieldValidation.validateMaxLength80]}
                         />
                     </FormRow>
                     <FormRow>
@@ -94,7 +91,6 @@ let ProfileEditForm = (props) => {
                             component={FormField}
                             innerComponent={TextArea}
                             help="Fale um pouco sobre você, sua formação e sua carreira. Tamanho máximo: 500 caracteres."
-                            validate={[fieldValidation.validationRequiredIfProfessional, fieldValidation.validateMaxLength500]}
                         />
                     </FormRow>
                     <FormRow>
@@ -104,7 +100,6 @@ let ProfileEditForm = (props) => {
                             component={FormField}
                             innerComponent={TextArea}
                             help="Descreva, brevemente, os tipos de serviço que você presta. Tamanho máximo: 500 caracteres."
-                            validate={[fieldValidation.validationRequiredIfProfessional, fieldValidation.validateMaxLength500]}
                         />
                     </FormRow>
                 </DocumentSection>
@@ -117,7 +112,6 @@ let ProfileEditForm = (props) => {
                             innerComponent={SelectLocation}
                             help="Seu endereço não será exibido. Ele será usado somente para geo-localização."
                             addOnBefore={<FaIcon icon="map-marker" />}
-                            validate={[fieldValidation.validateRequired]}
                         />
                     </FormRow>
                 </DocumentSection>
@@ -130,7 +124,6 @@ let ProfileEditForm = (props) => {
                             innerComponent={TextBox}
                             help="Seu Whatsapp será exibido aos usuários com os quais você se conectar."
                             addOnBefore={<FaIcon icon="whatsapp" />}
-                            validate={[fieldValidation.validateAtLeastOnePhone, fieldValidation.validatePhone]}
                             normalize={normalizePhone}
                         />
                     </FormRow>
@@ -142,7 +135,6 @@ let ProfileEditForm = (props) => {
                             innerComponent={TextBox}
                             help="Seu telefone alternativo será exibido aos usuários com os quais você se conectar."
                             addOnBefore={<FaIcon icon="phone" />}
-                            validate={[fieldValidation.validateAtLeastOnePhone, fieldValidation.validatePhone]}
                             normalize={normalizePhone}
                         />
                     </FormRow>

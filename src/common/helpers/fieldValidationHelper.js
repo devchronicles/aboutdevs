@@ -43,3 +43,25 @@ export function validateAtLeastOnePhone(value, values) {
     return invalidWhatsapp && invalidAlternatePhone ? AT_LEAST_ONE_PHONE : undefined;
 }
 
+export function getValidatorsForField(fieldName) {
+    switch (fieldName) {
+        case 'name':
+            return [validateRequired, validateMaxLength50];
+        case 'displayName':
+            return [validateRequired, validateMaxLength50];
+        case 'profession':
+            return [validationRequiredIfProfessional, validateMaxLength80];
+        case 'bio':
+            return [validationRequiredIfProfessional, validateMaxLength500];
+        case 'activities':
+            return [validationRequiredIfProfessional, validateMaxLength500];
+        case 'address':
+            return [validateRequired];
+        case 'phoneWhatsapp':
+            return [validateAtLeastOnePhone, validatePhone];
+        case 'phoneAlternative':
+            return [validateAtLeastOnePhone, validatePhone];
+        default:
+            return undefined;
+    }
+}
