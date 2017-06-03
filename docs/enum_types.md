@@ -1,8 +1,8 @@
 user.type
 ---
 
- - **0**: Regular user
- - **1**: Professional user
+ - **0**: Professional user
+ - **1**: Regular user
 
  user.status
  ---

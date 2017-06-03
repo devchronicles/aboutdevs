@@ -65,3 +65,22 @@ export function getValidatorsForField(fieldName) {
             return undefined;
     }
 }
+
+export function validate(object) {
+    const errors = {};
+    Object.entries(object).forEach(
+        ([key, value]) => {
+            const fieldValidators = getValidatorsForField(key);
+            if (fieldValidators && fieldValidators.length) {
+                let error;
+                for (let i = 0; i < fieldValidators.length; i++) {
+                    const func = fieldValidators[0];
+                    error = func(value, object);
+                    if (error) break;
+                }
+                if (error) errors[key] = error;
+            }
+        }
+    );
+    return errors;
+}
