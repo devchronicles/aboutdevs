@@ -38,8 +38,8 @@ export function validatePhone(value) {
 }
 
 export function validateAtLeastOnePhone(value, values) {
-    const invalidWhatsapp = values.whatsapp === null || values.whatsapp === undefined || values.whatsapp === '';
-    const invalidAlternatePhone = values.alternatePhone === null || values.alternatePhone === undefined || values.alternatePhone === '';
+    const invalidWhatsapp = values.phoneWhatsapp === null || values.phoneWhatsapp === undefined || values.phoneWhatsapp === '';
+    const invalidAlternatePhone = values.phoneAlternative === null || values.phoneAlternative === undefined || values.phoneAlternative === '';
     return invalidWhatsapp && invalidAlternatePhone ? AT_LEAST_ONE_PHONE : undefined;
 }
 

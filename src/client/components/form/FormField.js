@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormGroup, InputGroup } from './index';
-import { getErrorMessage } from '../../../common/helpers/fieldValidationMessageProvider';
+import { getErrorMessage } from '../../../common/helpers/fieldValidationMessageHelper';
 
 const FormField = (field) => {
     const {

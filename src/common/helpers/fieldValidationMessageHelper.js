@@ -1,4 +1,4 @@
-import * as fieldValidation from './fieldValidation';
+import * as fieldValidation from './fieldValidationHelper';
 
 export function getErrorMessage(error) {
     switch (error) {

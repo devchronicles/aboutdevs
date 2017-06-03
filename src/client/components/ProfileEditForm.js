@@ -6,7 +6,7 @@ import { TextBox, TextArea, FormField, FormGroup, FormFieldUserName, FormRow, Se
 import UserTypeToggle from './UserTypeToggle';
 import DocumentSection from './DocumentSection';
 import normalizePhone from '../lib/redux-form/normalizePhone';
-import * as fieldValidation from '../../common/helpers/fieldValidation';
+import * as fieldValidation from '../../common/helpers/fieldValidationHelper';
 import asyncValidation from '../lib/redux-form/asyncValidation';
 
 function submit(values) {
@@ -14,7 +14,8 @@ function submit(values) {
     return sleep(1000)
         .then(() => {
             throw new SubmissionError({
-                displayName: 'invalid-phone'
+                bio: 'required',
+                activities: 'required'
             });
         });
 }

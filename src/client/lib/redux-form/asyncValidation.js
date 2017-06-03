@@ -1,5 +1,5 @@
 import * as httpClient from '../../httpClient';
-import * as fieldValidation from '../../../common/helpers/fieldValidation';
+import * as fieldValidation from '../../../common/helpers/fieldValidationHelper';
 
 
 export default function (values) {
