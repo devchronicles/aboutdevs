@@ -2,11 +2,12 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.5.7
--- Dumped by pg_dump version 9.5.7
+-- Dumped from database version 9.6.3
+-- Dumped by pg_dump version 9.6.3
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
@@ -446,11 +447,11 @@ ALTER SEQUENCE notification_id_seq OWNED BY notification.id;
 --
 
 CREATE TABLE profession (
-    name_canonical character varying(255) NOT NULL,
-    name_feminine character varying(255),
+    name_canonical character varying(80) NOT NULL,
+    name_feminine character varying(80),
     id integer NOT NULL,
-    name_canonical_normalized character varying(255),
-    name_feminine_normalized character varying(255)
+    name_canonical_normalized character varying(80),
+    name_feminine_normalized character varying(80)
 );
 
 
@@ -503,8 +504,8 @@ CREATE TABLE "user" (
     oauth_profiles json,
     status smallint DEFAULT 0 NOT NULL,
     type smallint DEFAULT 0 NOT NULL,
-    profession_other character varying(255),
-    name character varying(255) NOT NULL,
+    profession_other character varying(80),
+    name character varying(50) NOT NULL,
     gender smallint NOT NULL,
     geo_location_id integer,
     profession_id integer,
@@ -525,63 +526,63 @@ COMMENT ON COLUMN "user".oauth_profiles IS 'A JSON containing information return
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: indiejobs
+-- Name: geo_location id; Type: DEFAULT; Schema: public; Owner: indiejobs
 --
 
 ALTER TABLE ONLY geo_location ALTER COLUMN id SET DEFAULT nextval('geo_location_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: indiejobs
+-- Name: geo_location_cache id; Type: DEFAULT; Schema: public; Owner: indiejobs
 --
 
 ALTER TABLE ONLY geo_location_cache ALTER COLUMN id SET DEFAULT nextval('location_cache_id_seq'::regclass);
 
 
 --
--- Name: search; Type: DEFAULT; Schema: public; Owner: indiejobs
+-- Name: geo_location_cache search; Type: DEFAULT; Schema: public; Owner: indiejobs
 --
 
 ALTER TABLE ONLY geo_location_cache ALTER COLUMN search SET DEFAULT nextval('location_cache_search_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: indiejobs
+-- Name: geo_location_city id; Type: DEFAULT; Schema: public; Owner: indiejobs
 --
 
 ALTER TABLE ONLY geo_location_city ALTER COLUMN id SET DEFAULT nextval('geo_administrative_area_level_2_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: indiejobs
+-- Name: geo_location_country id; Type: DEFAULT; Schema: public; Owner: indiejobs
 --
 
 ALTER TABLE ONLY geo_location_country ALTER COLUMN id SET DEFAULT nextval('geo_location_country_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: indiejobs
+-- Name: geo_location_state id; Type: DEFAULT; Schema: public; Owner: indiejobs
 --
 
 ALTER TABLE ONLY geo_location_state ALTER COLUMN id SET DEFAULT nextval('geo_adminstrative_area_level_1_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: notification id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY notification ALTER COLUMN id SET DEFAULT nextval('notification_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: indiejobs
+-- Name: profession id; Type: DEFAULT; Schema: public; Owner: indiejobs
 --
 
 ALTER TABLE ONLY profession ALTER COLUMN id SET DEFAULT nextval('profession_id_seq'::regclass);
 
 
 --
--- Name: geo_location_city_pkey; Type: CONSTRAINT; Schema: public; Owner: indiejobs
+-- Name: geo_location_city geo_location_city_pkey; Type: CONSTRAINT; Schema: public; Owner: indiejobs
 --
 
 ALTER TABLE ONLY geo_location_city
@@ -589,7 +590,7 @@ ALTER TABLE ONLY geo_location_city
 
 
 --
--- Name: geo_location_country_pkey; Type: CONSTRAINT; Schema: public; Owner: indiejobs
+-- Name: geo_location_country geo_location_country_pkey; Type: CONSTRAINT; Schema: public; Owner: indiejobs
 --
 
 ALTER TABLE ONLY geo_location_country
@@ -597,7 +598,7 @@ ALTER TABLE ONLY geo_location_country
 
 
 --
--- Name: geo_location_pkey; Type: CONSTRAINT; Schema: public; Owner: indiejobs
+-- Name: geo_location geo_location_pkey; Type: CONSTRAINT; Schema: public; Owner: indiejobs
 --
 
 ALTER TABLE ONLY geo_location
@@ -605,7 +606,7 @@ ALTER TABLE ONLY geo_location
 
 
 --
--- Name: geo_location_state_id_pk; Type: CONSTRAINT; Schema: public; Owner: indiejobs
+-- Name: geo_location_state geo_location_state_id_pk; Type: CONSTRAINT; Schema: public; Owner: indiejobs
 --
 
 ALTER TABLE ONLY geo_location_state
@@ -613,7 +614,7 @@ ALTER TABLE ONLY geo_location_state
 
 
 --
--- Name: location_cache_pkey; Type: CONSTRAINT; Schema: public; Owner: indiejobs
+-- Name: geo_location_cache location_cache_pkey; Type: CONSTRAINT; Schema: public; Owner: indiejobs
 --
 
 ALTER TABLE ONLY geo_location_cache
@@ -621,7 +622,7 @@ ALTER TABLE ONLY geo_location_cache
 
 
 --
--- Name: notification_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: notification notification_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY notification
@@ -629,7 +630,7 @@ ALTER TABLE ONLY notification
 
 
 --
--- Name: profession_id_pk; Type: CONSTRAINT; Schema: public; Owner: indiejobs
+-- Name: profession profession_id_pk; Type: CONSTRAINT; Schema: public; Owner: indiejobs
 --
 
 ALTER TABLE ONLY profession
@@ -637,7 +638,7 @@ ALTER TABLE ONLY profession
 
 
 --
--- Name: user_email_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: user user_email_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY "user"
@@ -645,7 +646,7 @@ ALTER TABLE ONLY "user"
 
 
 --
--- Name: user_id_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: user user_id_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY "user"
@@ -786,7 +787,7 @@ CREATE UNIQUE INDEX user_name_uindex ON "user" USING btree (name);
 
 
 --
--- Name: geo_location_state_geo_location_country_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: indiejobs
+-- Name: geo_location_state geo_location_state_geo_location_country_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: indiejobs
 --
 
 ALTER TABLE ONLY geo_location_state
@@ -794,7 +795,7 @@ ALTER TABLE ONLY geo_location_state
 
 
 --
--- Name: notification_user_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: notification notification_user_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY notification
@@ -802,7 +803,7 @@ ALTER TABLE ONLY notification
 
 
 --
--- Name: user_geo_location_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: user user_geo_location_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY "user"
@@ -810,21 +811,11 @@ ALTER TABLE ONLY "user"
 
 
 --
--- Name: user_profession_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: user user_profession_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY "user"
     ADD CONSTRAINT user_profession_id_fk FOREIGN KEY (profession_id) REFERENCES profession(id);
-
-
---
--- Name: public; Type: ACL; Schema: -; Owner: postgres
---
-
-REVOKE ALL ON SCHEMA public FROM PUBLIC;
-REVOKE ALL ON SCHEMA public FROM postgres;
-GRANT ALL ON SCHEMA public TO postgres;
-GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
 --
