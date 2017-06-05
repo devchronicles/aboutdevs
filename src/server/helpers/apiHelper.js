@@ -2,7 +2,7 @@ import buildDb from '../db/buildDb';
 
 export function getAndEnsureUserId(req) {
     let userId = req.user ? req.user.id : null;
-    if (userId === null && process.NODE_ENV === 'development') {
+    if (userId === null && process.env.NODE_ENV === 'development') {
         userId = req.header('user-id');
     }
     if (!userId) throw Error('No user is logged in');
@@ -56,10 +56,8 @@ export function sendPromise(res, promise) {
 
 export function sendPromiseDb(res, promiseFunction) {
     buildDb()
-        .then((db) => {
-            promiseFunction(db)
-                .then(result => sendOk(res, result))
-                .catch(e => sendError(res, e));
-        });
+        .then(db => promiseFunction(db))
+        .then(result => sendOk(res, result))
+        .catch(e => sendError(res, e));
 }
 
