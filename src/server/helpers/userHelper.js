@@ -1,6 +1,7 @@
 import { safeRead } from '../../common/helpers/objectHelpers';
 import * as stringHelper from '../../common/helpers/stringHelper';
 import * as locationHelper from './locationHelper';
+import * as fieldValidationHelper from '../../common/helpers/fieldValidationHelper';
 
 /**
  * Extracts the user name from the user's e-mail
@@ -182,15 +183,10 @@ export async function saveProfile(db, userId, profile) {
 }
 
 export async function validateProfile(db, profile) {
-    const errors = [];
-
-    // required fields
-            // name: 'andrerpena',
-            // gender: 0,
-            // email: 'andrerpena@gmail.com',
-            // display_name: 'André Pena'
-
-    // required fields if professional
-
-    // max length
+    const errors = fieldValidationHelper.validate(profile);
+    const userNameAvailable = await db.is_user_name_available(profile.name, profile.id)[0];
+    if (!userNameAvailable) {
+        errors.name = fieldValidationHelper.USER_NAME_IS_TAKEN;
+    }
+    return errors;
 }

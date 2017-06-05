@@ -13,25 +13,23 @@ router.route('/address').get((req, res) => {
 
 router.route('/professions').get((req, res) => {
     apiHelper.sendPromiseDb(res,
-        db => db.search_professions(searchHelper.convertToTsVector(searchHelper.normalize(req.query.q)))
-            .then(r => r.map((ri) => {
-                const gender = req.user.gender;
-                return gender === 0 ? ri.name_canonical : ri.name_feminine;
-            }))
+        (db) => {
+            apiHelper.getAndEnsureUserId();
+            return db.search_professions(searchHelper.convertToTsVector(searchHelper.normalize(req.query.q)))
+                .then(r => r.map((ri) => {
+                    const gender = req.user.gender;
+                    return gender === 0 ? ri.name_canonical : ri.name_feminine;
+                }));
+        }
     );
 });
 
 router.route('/users/checkname').get((req, res) => {
     apiHelper.sendPromiseDb(res,
         (db) => {
-            const user = req.user ? req.user : null;
-            if (user === null) {
-                throw Error('The user is not logged in');
-            }
+            const userId = apiHelper.getAndEnsureUserId(req);
             const userName = req.query.q;
-            const id = user.id;
-
-            return db.isUserNameAvailable(userName, id)
+            return db.is_user_name_available(userName, userId)
                 .then(data => data[0]);
         });
 });
@@ -39,17 +37,21 @@ router.route('/users/checkname').get((req, res) => {
 router.route('/users/myprofile').get((req, res) => {
     apiHelper.sendPromiseDb(res,
         (db) => {
-            if (!req.user) throw Error('user is not logged in');
-            return userHelper.getProfile(db, req.user.id);
+            const userId = apiHelper.getAndEnsureUserId(req);
+            return userHelper.getProfile(db, userId);
         });
 });
 
 router.route('/users/myprofile').post((req, res) => {
     apiHelper.sendPromiseDb(res,
-        (db) => {
-            if (!req.user) throw Error('user is not logged in');
+        async (db) => {
             if (!req.body) throw Error('profile was not submitted');
-            return userHelper.saveProfile(db, req.user.id, req.body);
+            const userId = apiHelper.getAndEnsureUserId(req);
+            const error = await userHelper.validateProfile(db, req.body);
+            if (Object.keys(error).length) {
+                return { error };
+            }
+            return userHelper.saveProfile(db, userId, req.body);
         });
 });
 
@@ -59,6 +61,7 @@ router.route('/users/myprofile').post((req, res) => {
 router.route('/users/:id').get((req, res) => {
     apiHelper.sendPromiseDb(res,
         (db) => {
+            apiHelper.getAndEnsureUserId(req);
             const entityId = req.params.id;
             return db.user.findOne({ id: entityId })
                 .then((u) => {
