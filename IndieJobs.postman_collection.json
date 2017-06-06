@@ -68,6 +68,68 @@
 				"description": ""
 			},
 			"response": []
+		},
+		{
+			"name": "Get User",
+			"request": {
+				"url": "localhost:4000/api/users/myprofile",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					},
+					{
+						"key": "user-id",
+						"value": "1",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id",
+							"value": "1",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "andrerpena",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "type",
+							"value": "1",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "address",
+							"value": "Rua Henrique Surerus 28 Juiz de fora",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "displayName",
+							"value": "André Pena",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "phoneWhatsapp",
+							"value": "(32) 99916-8204",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
 		}
 	]
 }
