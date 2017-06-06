@@ -2,7 +2,7 @@ import buildDb from '../db/buildDb';
 
 export function getAndEnsureUserId(req) {
     let userId = req.user ? req.user.id : null;
-    if (userId === null && process.env.NODE_ENV === 'development') {
+    if (userId === null && process.env.NODE_ENV !== 'production') {
         userId = req.header('user-id');
     }
     if (!userId) throw Error('No user is logged in');
@@ -24,7 +24,7 @@ export function apiExceptionCatcher(res) {
  */
 export function sendError(res, error, status = 500) {
     const resultError = error instanceof Error ? error.message : error;
-    const finalError = process.env.NODE_ENV === 'development' ? resultError : 'Something went wrong in the server';
+    const finalError = process.env.NODE_ENV !== 'production' ? resultError : 'Something went wrong in the server';
     res.status(status).send({ error: finalError });
 }
 
