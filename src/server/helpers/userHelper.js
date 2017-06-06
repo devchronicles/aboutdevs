@@ -183,9 +183,20 @@ export async function saveProfile(db, userId, profile) {
 }
 
 export async function validateProfile(db, profile) {
-    const errors = fieldValidationHelper.validate(profile);
-    const userNameAvailable = await db.is_user_name_available(profile.name, profile.id)[0];
-    if (!userNameAvailable) {
+    const updatedProfile = Object.assign({
+        name: '',
+        type: 0,
+        displayName: '',
+        profession: '',
+        bio: '',
+        activities: '',
+        address: '',
+        phoneWhatsapp: '',
+        phoneAlternative: ''
+    }, profile);
+    const errors = fieldValidationHelper.validate(updatedProfile);
+    const userNameTaken = await db.is_user_name_taken(updatedProfile.name, updatedProfile.id)[0];
+    if (userNameTaken) {
         errors.name = fieldValidationHelper.USER_NAME_IS_TAKEN;
     }
     return errors;

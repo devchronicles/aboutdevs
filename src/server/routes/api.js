@@ -29,8 +29,8 @@ router.route('/users/checkname').get((req, res) => {
         (db) => {
             const userId = apiHelper.getAndEnsureUserId(req);
             const userName = req.query.q;
-            return db.is_user_name_available(userName, userId)
-                .then(data => data[0]);
+            return db.is_user_name_taken(userName, userId)
+                .then(data => !data[0]);
         });
 });
 
@@ -46,12 +46,13 @@ router.route('/users/myprofile').post((req, res) => {
     apiHelper.sendPromiseDb(res,
         async (db) => {
             if (!req.body) throw Error('profile was not submitted');
+            const profile = req.body;
             const userId = apiHelper.getAndEnsureUserId(req);
-            const error = await userHelper.validateProfile(db, req.body);
+            const error = await userHelper.validateProfile(db, profile);
             if (Object.keys(error).length) {
                 return { error };
             }
-            return userHelper.saveProfile(db, userId, req.body);
+            return userHelper.saveProfile(db, userId, profile);
         });
 });
 
