@@ -1,4 +1,4 @@
-import buildDb from './buildDb';
+import buildDb from '../../src/server/db/buildDb';
 
 /**
  * Truncates (delete) data from all tables

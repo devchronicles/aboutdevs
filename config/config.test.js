@@ -4,7 +4,7 @@ if (process.env.NODE_ENV !== 'development') throw Error('Cannot read dev config 
 // Postgres settings
 const POSTGRES_USER = 'indiejobs';
 const POSTGRES_PASSWORD = 'indiejobs';
-const POSTGRES_DATABASE = 'indiejobs';
+const POSTGRES_DATABASE = 'indiejobs_tests';
 const POSTGRES_HOST = 'localhost';
 const POSTGRES_PORT = 5432;
 
@@ -24,3 +24,5 @@ export default {
         }
     }
 };
+
+

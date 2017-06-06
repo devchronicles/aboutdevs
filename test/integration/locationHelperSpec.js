@@ -2,7 +2,6 @@ import { assert } from 'chai';
 import * as locationHelper from '../../src/server/helpers/locationHelper';
 import * as geocodeApiFormattingHelper from '../../src/server/helpers/geocodeApiFormattingHelper';
 import setupSession from './setupSession';
-import sampleLocation from './resources/googleGeocodeApiResultSample';
 
 describe('locationHelperSpec', () => {
     let db = null;
