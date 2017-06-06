@@ -5,8 +5,7 @@
     "react"
   ],
   "plugins": [
-    "add-module-exports",
-    "transform-regenerator"
+    "add-module-exports"
   ],
   "env": {
     "development": {
