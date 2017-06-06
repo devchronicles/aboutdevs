@@ -52,8 +52,7 @@ router.route('/users/myprofile').post((req, res) => {
             if (Object.keys(error).length) {
                 return { error };
             }
-            await userHelper.saveProfile(db, userId, profile);
-            return null;
+            return userHelper.saveProfile(db, userId, profile);
         });
 });
 

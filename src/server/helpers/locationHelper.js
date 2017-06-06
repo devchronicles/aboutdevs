@@ -65,7 +65,7 @@ export async function saveLocation(db, formattedText) {
     if (!locationData || !locationData.results || !locationData.results.length) throw Error('could not get location');
     if (locationData.results.length > 1) throw Error('the given location is not unique');
 
-    let location = await db.geo_location.findOne({ formatted_address: formattedText });
+    const location = await db.geo_location.findOne({ formatted_address: formattedText });
     if (location) return location;
 
     const locationDataResult = locationData.results[0];
@@ -83,7 +83,11 @@ export async function saveLocation(db, formattedText) {
     // saving state
     let state = await db.geo_location_state.findOne({ short_name: stateComponent.short_name });
     if (!state) {
-        state = await db.geo_location_state.insert({ short_name: countryComponent.short_name, long_name: countryComponent.long_name, geo_location_country_id: country.id });
+        state = await db.geo_location_state.insert({
+            short_name: countryComponent.short_name,
+            long_name: countryComponent.long_name,
+            geo_location_country_id: country.id
+        });
     }
 
     // saving city
@@ -92,10 +96,18 @@ export async function saveLocation(db, formattedText) {
         city = await db.geo_location_city.insert({ short_name: cityComponent.short_name, geo_location_state_id: state.id });
     }
 
-    location = db.geo_location.insert({
+    return db.geo_location.insert({
         geo_location_city_id: city.id,
         formatted_address: formattedText,
         sub_locality: neighborhoodComponent.short_name
     });
-    return location;
+}
+
+export async function getFormattedLocationById(db, geoLocationId) {
+    if (!db) throw Error('Argument \'db\' should be truthy');
+    if (!geoLocationId) throw Error('Argument \'geoLocationId\' should be truthy');
+
+    const location = await db.geo_location.findOne({ id: geoLocationId });
+    if (!location) throw Error('could not find location');
+    return location.formatted_address;
 }

@@ -132,24 +132,32 @@ export function getReduxDataForLoggedUser(user) {
     };
 }
 
+async function getProfileDataFromUser(db, user) {
+    if (!db) throw Error('Argument \'db\' should be truthy');
+    if (!user) throw Error('Argument \'user\' should be truthy');
+
+    return {
+        id: user.id,
+        name: user.name,
+        displayName: user.display_name,
+        photoUrl: user.photo_url,
+        type: user.type,
+        status: user.status,
+        address: await (user.geo_location_id ? locationHelper.getFormattedLocationById(db, user.geo_location_id) : null),
+        phoneWhatsapp: user.phoe_whatsapp,
+        phoneAlternative: user.phone_alternative,
+        bio: user.bio,
+        activities: user.activities
+    };
+}
+
 export async function getProfile(db, userId) {
     return db.user.findOne({ id: userId })
-        .then((u) => {
-            if (u) {
-                return {
-                    id: u.id,
-                    name: u.name,
-                    displayName: u.display_name,
-                    photoUrl: u.photo_url,
-                    type: u.type
-                };
-            }
-            throw Error('could not find user');
-        });
+        .then(u => getProfileDataFromUser(db, u));
 }
 
 export async function saveProfile(db, userId, profile) {
-    const user = await db.user.findOne({ id: userId });
+    let user = await db.user.findOne({ id: userId });
     if (!user) throw Error('could not find user');
 
     user.display_name = profile.displayName;
@@ -171,7 +179,7 @@ export async function saveProfile(db, userId, profile) {
     const location = await locationHelper.saveLocation(db, profile.address);
     user.geo_location_id = location.id;
 
-    await db.user.save(user);
+    user = await db.user.save(user);
 
     // change status
     if (user.status === 0) {
@@ -179,7 +187,7 @@ export async function saveProfile(db, userId, profile) {
         await db.user.save(user);
     }
 
-    return user;
+    return getProfileDataFromUser(db, user);
 }
 
 export async function validateProfile(db, profile) {
