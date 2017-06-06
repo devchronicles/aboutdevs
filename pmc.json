@@ -1,0 +1,64 @@
+{
+	"variables": [],
+	"info": {
+		"name": "IndieJobs",
+		"_postman_id": "dac828fc-efce-126e-f0d1-55f00309e6d4",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Update User",
+			"request": {
+				"url": "localhost:4000/api/users/myprofile",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					},
+					{
+						"key": "user-id",
+						"value": "1",
+						"description": ""
+					},
+					{
+						"key": "id",
+						"value": "1",
+						"description": ""
+					},
+					{
+						"key": "name",
+						"value": "andrerpena",
+						"description": ""
+					},
+					{
+						"key": "address",
+						"value": "Rua Henrique Surerus 28 jf",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "a",
+							"value": "b",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "c",
+							"value": "d",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
