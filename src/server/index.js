@@ -39,3 +39,5 @@ app.listen(4000, '0.0.0.0', () => {
     console.log(colors.green(`IndieJobs started at http://localhost:4000/. NODE_ENV: ${process.env.NODE_ENV}`));
     /*eslint-enable*/
 });
+
+export default app; // for testing
