@@ -1,6 +1,8 @@
 import buildDb from '../db/buildDb';
 
 export function getAndEnsureUserId(req) {
+    if (!req) throw Error('Argument \'req\' should be truthy');
+
     let userId = req.user ? req.user.id : null;
     if (userId === null && process.env.NODE_ENV !== 'production') {
         userId = req.header('user-id');
@@ -14,6 +16,8 @@ export function getAndEnsureUserId(req) {
  * @param {*} res The Express res object
  */
 export function apiExceptionCatcher(res) {
+    if (!res) throw Error('Argument \'res\' should be truthy');
+
     return ex => res.status(500).send({ error: ex.message });
 }
 
@@ -23,6 +27,9 @@ export function apiExceptionCatcher(res) {
  * @param {*} error Either an error string or an Error object
  */
 export function sendError(res, error, status = 500) {
+    if (!res) throw Error('Argument \'res\' should be truthy');
+    if (!error) throw Error('Argument \'error\' should be truthy');
+
     const resultError = error instanceof Error ? error.message : error;
     const finalError = process.env.NODE_ENV !== 'production' ? resultError : 'Something went wrong in the server';
     res.status(status).send({ error: finalError });
@@ -33,6 +40,9 @@ export function sendError(res, error, status = 500) {
  * @param {*} error Either an error string or an Error object
  */
 export function sendClientError(res, error) {
+    if (!res) throw Error('Argument \'res\' should be truthy');
+    if (!error) throw Error('Argument \'error\' should be truthy');
+    
     return sendError(res, error, 400);
 }
 
@@ -42,10 +52,14 @@ export function sendClientError(res, error) {
  * @param {*} data The data to be sent to the client
  */
 export function sendOk(res, data) {
+    if (!res) throw Error('Argument \'res\' should be truthy');
+    
     res.status(200).send(data);
 }
 
 export function sendPromise(res, promise) {
+    if (!res) throw Error('Argument \'res\' should be truthy');
+    
     promise
         .then((result) => {
             if (result.error) sendClientError(res, result.error);
@@ -55,6 +69,9 @@ export function sendPromise(res, promise) {
 }
 
 export function sendPromiseDb(res, promiseFunction) {
+    if (!res) throw Error('Argument \'res\' should be truthy');
+    if (!promiseFunction) throw Error('Argument \'promiseFunction\' should be truthy');
+    
     buildDb()
         .then(db => promiseFunction(db))
         .then(result => sendOk(res, result))

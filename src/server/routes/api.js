@@ -14,7 +14,7 @@ router.route('/address').get((req, res) => {
 router.route('/professions').get((req, res) => {
     apiHelper.sendPromiseDb(res,
         (db) => {
-            apiHelper.getAndEnsureUserId();
+            apiHelper.getAndEnsureUserId(req);
             return db.search_professions(searchHelper.convertToTsVector(searchHelper.normalize(req.query.q)))
                 .then(r => r.map((ri) => {
                     const gender = req.user.gender;
