@@ -6,17 +6,14 @@ import { Field, TextBox, TextArea, FormField, FormGroup, FormFieldUserName, Form
 import UserTypeToggle from './UserTypeToggle';
 import DocumentSection from './DocumentSection';
 import normalizePhone from '../lib/redux-form/normalizePhone';
-import * as fieldValidation from '../../common/helpers/fieldValidationHelper';
 import asyncValidation from '../lib/redux-form/asyncValidation';
+import * as httpClient from '../httpClient';
+
 
 function submit(values) {
-    const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-    return sleep(1000)
-        .then(() => {
-            throw new SubmissionError({
-                bio: 'required',
-                activities: 'required'
-            });
+    httpClient.saveProfileData(values)
+        .then((r) => {
+            console.log(r);
         });
 }
 

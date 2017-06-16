@@ -1,9 +1,9 @@
-import express from 'express';
+import * as express from 'express';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import cookieSession from 'cookie-session';
-import colors from 'colors';
-import passport from 'passport';
+import * as colors from 'colors';
+import * as passport from 'passport';
 import setupPassport from './passport/setupPassport';
 import authRoute from './routes/auth';
 import apiRoute from './routes/api';

@@ -1,0 +1,13 @@
+{
+  "extends": ["tslint:latest", "tslint-react"],
+  "rules": {
+      "quotemark": [
+          1,
+          "'"
+      ],
+      "max-line-length": [
+          1,
+          140
+      ]
+  }
+}
