@@ -8,7 +8,7 @@
  * @param defaultValue
  * @returns {*}
  */
-export function safeRead(expression, object, defaultValue) {
+export function safeRead<T>(expression: (o: any) => T, object: any, defaultValue: T) {
     if (!expression) throw Error('\'expression\' should be truthy');
     if (!object) throw Error('\'object\' should be truthy');
 

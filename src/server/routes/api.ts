@@ -1,4 +1,4 @@
-import express from 'express';
+import * as express from 'express';
 import * as apiHelper from '../helpers/apiHelper';
 import * as searchHelper from '../helpers/searchHelper';
 import * as locationHelper from '../helpers/locationHelper';

@@ -1,6 +1,6 @@
 import * as fieldValidation from './fieldValidationHelper';
 
-export function getErrorMessage(error) {
+export function getErrorMessage(error: string) {
     switch (error) {
         case fieldValidation.REQUIRED:
             return 'Campo obrigatório.';
@@ -19,10 +19,6 @@ export function getErrorMessage(error) {
         case fieldValidation.USER_NAME_IS_TAKEN:
             return 'Este nome de usuário já está sendo utilizado.';
         default:
-            break;
+            return error ? 'Algo deu errado' : null;
     }
-    if (error) {
-        return 'Algo deu errado';
-    }
-    return null;
 }

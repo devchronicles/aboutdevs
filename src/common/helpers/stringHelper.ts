@@ -1,16 +1,3 @@
-/*
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
-*/
 const defaultDiacriticsRemovalMap = [
     { base: 'A', letters: '\u0041\u24B6\uFF21\u00C0\u00C1\u00C2\u1EA6\u1EA4\u1EAA\u1EA8\u00C3\u0100\u0102\u1EB0\u1EAE\u1EB4\u1EB2\u0226\u01E0\u00C4\u01DE\u1EA2\u00C5\u01FA\u01CD\u0200\u0202\u1EA0\u1EAC\u1EB6\u1E00\u0104\u023A\u2C6F' },
     { base: 'AA', letters: '\uA732' },
@@ -100,7 +87,8 @@ const defaultDiacriticsRemovalMap = [
     { base: 'z', letters: '\u007A\u24E9\uFF5A\u017A\u1E91\u017C\u017E\u1E93\u1E95\u01B6\u0225\u0240\u2C6C\uA763' }
 ];
 
-const diacriticsMap = {};
+// diacriticsMap maps a letter to it's non-diacritic versio
+const diacriticsMap: { [letter: string]: string } = {};
 for (let i = 0; i < defaultDiacriticsRemovalMap.length; i++) {
     const letters = defaultDiacriticsRemovalMap[i].letters;
     for (let j = 0; j < letters.length; j++) {
@@ -112,7 +100,7 @@ for (let i = 0; i < defaultDiacriticsRemovalMap.length; i++) {
  * Returns a version of the given string without diacritics
  * @param {string} str The input string
  */
-export function removeDiacritics(str) {
+export function removeDiacritics(str: string) {
     if (str === null || str === undefined) throw Error('Argument \'str\' should be null or undefined');
     return str.replace(/[^\u0000-\u007E]/g, a => diacriticsMap[a] || a);
 }
@@ -121,7 +109,7 @@ export function removeDiacritics(str) {
  * Returns a version of the given string in which the non-alphanumeric characters are replaced by spaces
  * @param {string} str The input string
  */
-export function replaceNonAlphaNumericCharactersWithSpaces(str) {
+export function replaceNonAlphaNumericCharactersWithSpaces(str: string) {
     if (str === null || str === undefined) throw Error('Argument \'str\' should be null or undefined');
     return str.replace(/[^a-z0-9]+/gi, ' ');
 }
@@ -130,7 +118,7 @@ export function replaceNonAlphaNumericCharactersWithSpaces(str) {
  * Returns a version fo the given string in which multiple spaces have been replaced by one
  * @param {string} str The input string
  */
-export function normalizeSpaces(str) {
+export function normalizeSpaces(str: string) {
     if (str === null || str === undefined) throw Error('Argument \'str\' should be null or undefined');
     return str.replace(/ +(?= )/g, '');
 }
@@ -140,11 +128,11 @@ export function normalizeSpaces(str) {
  * @param {string} str The string
  * @param {boolean} addIfNoNumber Whether or not it should add a number in case the provided string has no number at the end
  */
-export function incrementLast(str, addIfNoNumber) {
+export function incrementLast(str: string, addIfNoNumber: boolean) {
     if (str === null || str === undefined) throw Error('Argument \'str\' should be null or undefined');
     const regex = /[0-9]+$/;
     if (str.match(regex)) {
-        return str.replace(regex, match => parseInt(match, 10) + 1);
+        return str.replace(regex, match => String(parseInt(match, 10) + 1));
     }
     return addIfNoNumber ? str + 1 : str;
 }
