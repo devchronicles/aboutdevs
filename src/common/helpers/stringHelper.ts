@@ -1,4 +1,4 @@
-const defaultDiacriticsRemovalMap = [
+const diacriticsMapArray = [
     { base: 'A', letters: '\u0041\u24B6\uFF21\u00C0\u00C1\u00C2\u1EA6\u1EA4\u1EAA\u1EA8\u00C3\u0100\u0102\u1EB0\u1EAE\u1EB4\u1EB2\u0226\u01E0\u00C4\u01DE\u1EA2\u00C5\u01FA\u01CD\u0200\u0202\u1EA0\u1EAC\u1EB6\u1E00\u0104\u023A\u2C6F' },
     { base: 'AA', letters: '\uA732' },
     { base: 'AE', letters: '\u00C6\u01FC\u01E2' },
@@ -84,15 +84,15 @@ const defaultDiacriticsRemovalMap = [
     { base: 'w', letters: '\u0077\u24E6\uFF57\u1E81\u1E83\u0175\u1E87\u1E85\u1E98\u1E89\u2C73' },
     { base: 'x', letters: '\u0078\u24E7\uFF58\u1E8B\u1E8D' },
     { base: 'y', letters: '\u0079\u24E8\uFF59\u1EF3\u00FD\u0177\u1EF9\u0233\u1E8F\u00FF\u1EF7\u1E99\u1EF5\u01B4\u024F\u1EFF' },
-    { base: 'z', letters: '\u007A\u24E9\uFF5A\u017A\u1E91\u017C\u017E\u1E93\u1E95\u01B6\u0225\u0240\u2C6C\uA763' }
+    { base: 'z', letters: '\u007A\u24E9\uFF5A\u017A\u1E91\u017C\u017E\u1E93\u1E95\u01B6\u0225\u0240\u2C6C\uA763' },
 ];
 
 // diacriticsMap maps a letter to it's non-diacritic versio
 const diacriticsMap: { [letter: string]: string } = {};
-for (let i = 0; i < defaultDiacriticsRemovalMap.length; i++) {
-    const letters = defaultDiacriticsRemovalMap[i].letters;
-    for (let j = 0; j < letters.length; j++) {
-        diacriticsMap[letters[j]] = defaultDiacriticsRemovalMap[i].base;
+for (const diacriticsMapArrayItem of diacriticsMapArray) {
+    const { letters, base } = diacriticsMapArrayItem;
+    for (const letter of letters) {
+        diacriticsMap[letter] = base;
     }
 }
 
@@ -102,7 +102,7 @@ for (let i = 0; i < defaultDiacriticsRemovalMap.length; i++) {
  */
 export function removeDiacritics(str: string) {
     if (str === null || str === undefined) throw Error('Argument \'str\' should be null or undefined');
-    return str.replace(/[^\u0000-\u007E]/g, a => diacriticsMap[a] || a);
+    return str.replace(/[^\u0000-\u007E]/g, (a) => diacriticsMap[a] || a);
 }
 
 /**
@@ -132,7 +132,7 @@ export function incrementLast(str: string, addIfNoNumber: boolean) {
     if (str === null || str === undefined) throw Error('Argument \'str\' should be null or undefined');
     const regex = /[0-9]+$/;
     if (str.match(regex)) {
-        return str.replace(regex, match => String(parseInt(match, 10) + 1));
+        return str.replace(regex, (match) => String(parseInt(match, 10) + 1));
     }
     return addIfNoNumber ? str + 1 : str;
 }

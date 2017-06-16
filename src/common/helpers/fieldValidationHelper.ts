@@ -1,3 +1,5 @@
+import { User } from './../typings/User';
+
 export const REQUIRED = 'required';
 export const REQUIRED_IF_PROFESSIONAL = 'required-if-professional';
 export const INVALID_PHONE = 'invalid-phone';
@@ -7,43 +9,49 @@ export const MAX_LENGTH_80 = 'max-length-80';
 export const MAX_LENGTH_500 = 'max-length-500';
 export const USER_NAME_IS_TAKEN = 'user-name-is-taken';
 
-export function validateRequired(value) {
+export function validateRequired(value: any) {
     return (value === null || value === undefined || value === '') ? REQUIRED : undefined;
 }
 
-export function validateMaxLength50(value) {
-    if (!value) return undefined;
+export function validateMaxLength50(value: string) {
+    if (!value) {
+        return undefined;
+    }
     return value.length > 50 ? MAX_LENGTH_50 : undefined;
 }
 
-export function validateMaxLength80(value) {
-    if (!value) return undefined;
+export function validateMaxLength80(value: string) {
+    if (!value) {
+        return undefined;
+    }
     return value.length > 80 ? MAX_LENGTH_80 : undefined;
 }
 
-export function validateMaxLength500(value) {
-    if (!value) return undefined;
+export function validateMaxLength500(value: string) {
+    if (!value) {
+        return undefined;
+    }
     return value.length > 500 ? MAX_LENGTH_500 : undefined;
 }
 
-export function validationRequiredIfProfessional(value, values) {
-    return (values.type === 0 && (value === null || value === undefined || value === '')) ? REQUIRED_IF_PROFESSIONAL : undefined;
+export function validationRequiredIfProfessional(value: any, user: User) {
+    return (user.type === 0 && (value === null || value === undefined || value === '')) ? REQUIRED_IF_PROFESSIONAL : undefined;
 }
 
-export function validatePhone(value) {
+export function validatePhone(value: string) {
     if (value === null || value === undefined || value === '') {
         return undefined;
     }
     return /\(\d{2}\)\s\d{3,5}-\d{4}/.test(value) ? undefined : INVALID_PHONE;
 }
 
-export function validateAtLeastOnePhone(value, values) {
-    const invalidWhatsapp = values.phoneWhatsapp === null || values.phoneWhatsapp === undefined || values.phoneWhatsapp === '';
-    const invalidAlternatePhone = values.phoneAlternative === null || values.phoneAlternative === undefined || values.phoneAlternative === '';
+export function validateAtLeastOnePhone(value: string, user: User) {
+    const invalidWhatsapp = user.phoneWhatsapp === null || user.phoneWhatsapp === undefined || user.phoneWhatsapp === '';
+    const invalidAlternatePhone = user.phoneAlternative === null || user.phoneAlternative === undefined || user.phoneAlternative === '';
     return invalidWhatsapp && invalidAlternatePhone ? AT_LEAST_ONE_PHONE : undefined;
 }
 
-export function getValidatorsForField(fieldName) {
+export function getValidatorsForField(fieldName: string) {
     switch (fieldName) {
         case 'name':
             return [validateRequired, validateMaxLength50];
@@ -62,25 +70,26 @@ export function getValidatorsForField(fieldName) {
         case 'phoneAlternative':
             return [validateAtLeastOnePhone, validatePhone];
         default:
-            return undefined;
+            return [];
     }
 }
 
-export function validate(object) {
-    const errors = {};
-    Object.entries(object).forEach(
-        ([key, value]) => {
+export function validate(user: User) {
+    const errors: { [key: string]: string } = {};
+    for (const key in user) {
+        if (user.hasOwnProperty(key)) {
+            const value: any = user[key];
             const fieldValidators = getValidatorsForField(key);
-            if (fieldValidators && fieldValidators.length) {
+            if (fieldValidators.length) {
                 let error;
-                for (let i = 0; i < fieldValidators.length; i++) {
-                    const func = fieldValidators[0];
-                    error = func(value, object);
-                    if (error) break;
+                for (const validate of fieldValidators) {
+                    error = validate(value, user);
                 }
-                if (error) errors[key] = error;
+                if (error) {
+                    errors[key] = error;
+                }
             }
         }
-    );
+    }
     return errors;
 }

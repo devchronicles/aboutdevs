@@ -8,6 +8,7 @@
       "max-line-length": [
           1,
           140
-      ]
+      ],
+      "curly": false
   }
 }
