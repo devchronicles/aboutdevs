@@ -1,7 +1,7 @@
 import * as express from 'express';
-import cookieParser from 'cookie-parser';
-import bodyParser from 'body-parser';
-import cookieSession from 'cookie-session';
+import * as cookieParser from 'cookie-parser';
+import * as bodyParser from 'body-parser';
+import cookieSession = require('cookie-session');
 import * as colors from 'colors';
 import * as passport from 'passport';
 import setupPassport from './passport/setupPassport';
