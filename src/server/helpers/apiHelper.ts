@@ -1,6 +1,8 @@
+import * as express from 'express';
+import * as massive from 'massive';
 import buildDb from '../db/buildDb';
 
-export function getAndEnsureUserId(req) {
+export function getAndEnsureUserId(req: express.Request) {
     if (!req) throw Error('Argument \'req\' should be truthy');
 
     let userId = req.user ? req.user.id : null;
@@ -15,10 +17,10 @@ export function getAndEnsureUserId(req) {
  * Returns a function that catches an exception in Promises
  * @param {*} res The Express res object
  */
-export function apiExceptionCatcher(res) {
+export function apiExceptionCatcher(res: express.Response) {
     if (!res) throw Error('Argument \'res\' should be truthy');
 
-    return ex => res.status(500).send({ error: ex.message });
+    return (ex: Error) => res.status(500).send({ error: ex.message });
 }
 
 /**
@@ -26,7 +28,7 @@ export function apiExceptionCatcher(res) {
  * @param {*} res The express res object
  * @param {*} error Either an error string or an Error object
  */
-export function sendError(res, error, status = 500) {
+export function sendError(res: express.Response, error: Error | string, status = 500) {
     if (!res) throw Error('Argument \'res\' should be truthy');
     if (!error) throw Error('Argument \'error\' should be truthy');
 
@@ -39,10 +41,10 @@ export function sendError(res, error, status = 500) {
  * @param {*} res The express res object
  * @param {*} error Either an error string or an Error object
  */
-export function sendClientError(res, error) {
+export function sendClientError(res: express.Response, error: Error | string) {
     if (!res) throw Error('Argument \'res\' should be truthy');
     if (!error) throw Error('Argument \'error\' should be truthy');
-    
+
     return sendError(res, error, 400);
 }
 
@@ -51,30 +53,29 @@ export function sendClientError(res, error) {
  * @param {*} res The express res Object
  * @param {*} data The data to be sent to the client
  */
-export function sendOk(res, data) {
+export function sendOk(res: express.Response, data: any) {
     if (!res) throw Error('Argument \'res\' should be truthy');
-    
+
     res.status(200).send(data);
 }
 
-export function sendPromise(res, promise) {
+export function sendPromise(res: express.Response, promise: Promise<any>) {
     if (!res) throw Error('Argument \'res\' should be truthy');
-    
+
     promise
         .then((result) => {
             if (result.error) sendClientError(res, result.error);
             sendOk(res, result);
         })
-        .catch(e => sendError(res, e));
+        .catch((e) => sendError(res, e));
 }
 
-export function sendPromiseDb(res, promiseFunction) {
+export function sendPromiseDb(res: express.Response, promiseFunction: (db: massive.Database) => any) {
     if (!res) throw Error('Argument \'res\' should be truthy');
     if (!promiseFunction) throw Error('Argument \'promiseFunction\' should be truthy');
-    
-    buildDb()
-        .then(db => promiseFunction(db))
-        .then(result => sendOk(res, result))
-        .catch(e => sendError(res, e));
-}
 
+    buildDb()
+        .then((db) => promiseFunction(db))
+        .then((result) => sendOk(res, result))
+        .catch((e) => sendError(res, e));
+}
