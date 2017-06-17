@@ -42,6 +42,12 @@
   version "4.5.2"
   resolved "https://registry.yarnpkg.com/@types/history/-/history-4.5.2.tgz#7739c850b7a5de94221accb352f9cabd1bcabe7c"
 
+"@types/massive@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@types/massive/-/massive-3.0.1.tgz#e2923eae408aa6c922d888ea44fbcee0c6e2e924"
+  dependencies:
+    "@types/node" "*"
+
 "@types/mime@*":
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/@types/mime/-/mime-1.3.0.tgz#d24ffac7d1006fe68517202fb2aeba3dbe48284b"
