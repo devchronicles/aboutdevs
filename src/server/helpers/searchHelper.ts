@@ -1,6 +1,6 @@
 import * as stringHelper from '../../common/helpers/stringHelper';
 
-export function normalize(search, ranc = true, rd = true, ns = true, lc = true) {
+export function normalize(search: string, ranc = true, rd = true, ns = true, lc = true) {
     if (!search) {
         return '';
     }
@@ -13,7 +13,7 @@ export function normalize(search, ranc = true, rd = true, ns = true, lc = true) 
     return normalizedSearch;
 }
 
-export function convertToTsVector(search) {
+export function convertToTsVector(search: string) {
     if (!search) {
         return '';
     }

@@ -1,12 +1,15 @@
+import * as fieldValidationHelper from '../../common/helpers/fieldValidationHelper';
 import { safeRead } from '../../common/helpers/objectHelpers';
 import * as stringHelper from '../../common/helpers/stringHelper';
+import * as dbTypes from '../typings/dbTypes';
+import { IIndieJobsDatabase } from '../typings/dbTypes';
+import * as googleOAuthTypes from '../typings/googleOAuthTypes';
 import * as locationHelper from './locationHelper';
-import * as fieldValidationHelper from '../../common/helpers/fieldValidationHelper';
 
 /**
  * Extracts the user name from the user's e-mail
  */
-export function extractUserNameFromEmail(email) {
+export function extractUserNameFromEmail(email: string) {
     if (email === null || email === undefined) throw Error('Argument \'email\' should be null or undefined');
     const atPosition = email.indexOf('@');
     return email.substring(0, atPosition);
@@ -15,7 +18,7 @@ export function extractUserNameFromEmail(email) {
 /**
  * Returns a suggested user name given the user e-mail
  */
-export function getValidUserName(db, userName) {
+export function getValidUserName(db: dbTypes.IIndieJobsDatabase, userName: string) {
     if (db === null || db === undefined) throw Error('Argument \'db\' should be null or undefined');
     if (userName === null || userName === undefined) throw Error('Argument \'email\' should be null or undefined');
 
@@ -23,7 +26,7 @@ export function getValidUserName(db, userName) {
         .then((r) => {
             if (r.length === 0) return userName;
             // this isn't actually necessary. TODO: Remove this.
-            const lowerCaseUserNames = r.map(s => s.name.toLowerCase());
+            const lowerCaseUserNames = r.map((s) => s.name.toLowerCase());
             let finalUserName = userName.toLowerCase();
             while (lowerCaseUserNames.includes(finalUserName)) {
                 finalUserName = stringHelper.incrementLast(finalUserName, true);
@@ -38,29 +41,29 @@ export function getValidUserName(db, userName) {
  * @param profile
  * @returns Promise
  */
-export function createFromGoogleProfile(db, profile) {
+export async function createFromGoogleProfile(db: dbTypes.IIndieJobsDatabase, profile: googleOAuthTypes.IGoogleOAuthProfile) {
     if (!db) throw Error('\'db\' should be truthy');
     if (!profile) throw Error('\'profile\' should be truthy');
 
-    const email = safeRead(p => p.emails[0].value, profile, null);
-    const photoUrl = safeRead(p => p.photos[0].value, profile, null);
+    const email = safeRead((p: googleOAuthTypes.IGoogleOAuthProfile) => p.emails[0].value, profile, null);
+    const photoUrl = safeRead((p: googleOAuthTypes.IGoogleOAuthProfile) => p.photos[0].value, profile, null);
     const gender = profile.gender === 'male' ? 0 : 1;
 
     return getValidUserName(db, extractUserNameFromEmail(email))
-        .then(userName => ({
-            name: userName,
-            gender,
+        .then((userName) => ({
             display_name: profile.displayName,
-            photo_url: photoUrl,
             email,
+            gender,
+            name: userName,
             oauth_profiles: {
                 google: {
                     id: profile.id,
-                    raw: profile
-                }
-            }
+                    raw: profile,
+                },
+            },
+            photo_url: photoUrl,
         }))
-        .then(user => db.user.save(user));
+        .then((user) => db.user.save(user));
 }
 
 /**
@@ -69,27 +72,34 @@ export function createFromGoogleProfile(db, profile) {
  * @param existingUser
  * @param profile
  */
-export function updateFromGoogleProfile(db, existingUser, profile) {
+export async function updateFromGoogleProfile(db: dbTypes.IIndieJobsDatabase, existingUser: dbTypes.IUser, googleProfile: googleOAuthTypes.IGoogleOAuthProfile) {
     if (!db) throw Error('\'db\' should be truthy');
     if (!existingUser) throw Error('\'existingUser\' should be truthy');
-    if (!profile) throw Error('\'profile\' should be truthy');
+    if (!googleProfile) throw Error('\'profile\' should be truthy');
 
     if (existingUser.gender === null || existingUser.gender === undefined) {
-        existingUser.gender = profile.gender === 'male' ? 0 : 1;
+        existingUser.gender = googleProfile.gender === 'male' ? 0 : 1;
     }
     if (!existingUser.display_name) {
-        existingUser.display_name = profile.displayName;
+        existingUser.display_name = googleProfile.displayName;
     }
     if (!existingUser.photo_url) {
-        existingUser.photo_url = safeRead(p => p.photos[0].value, profile, null);
+        existingUser.photo_url = safeRead((p) => p.photos[0].value, googleProfile, null);
     }
     if (!existingUser.oauth_profiles) {
-        existingUser.oauth_profiles = {};
+        existingUser.oauth_profiles = {
+            google: {
+                id: googleProfile.id,
+                raw: googleProfile,
+            },
+        };
     }
-    existingUser.oauth_profiles.google = {
-        id: profile.id,
-        raw: profile
-    };
+    if (!existingUser.oauth_profiles.google) {
+        existingUser.oauth_profiles.google = {
+            id: googleProfile.id,
+            raw: googleProfile,
+        };
+    }
     return db.user.save(existingUser);
 }
 
@@ -99,25 +109,26 @@ export function updateFromGoogleProfile(db, existingUser, profile) {
  * @param profile
  * @returns {Promise}
  */
-export function findOrCreateFromGoogleProfile(db, profile) {
+export function findOrCreateFromGoogleProfile(db: dbTypes.IIndieJobsDatabase, profile: googleOAuthTypes.IGoogleOAuthProfile) {
     if (!db) throw Error('\'db\' should be truthy');
     if (!profile) throw Error('\'profile\' should be truthy');
 
-    const email = safeRead(p => p.emails[0].value, profile, null);
+    const email = safeRead((p) => p.emails[0].value, profile, null);
 
     if (!email) { throw Error('Google profile is not valid'); }
 
     return db.user.findOne({ email })
-        .then((user) => {
+        .then((user: dbTypes.IUser) => {
             if (!user) { return createFromGoogleProfile(db, profile); }
 
             // if the existing user is associated with Google already
             // (u.oauth_profiles.google.id exists), returns it
-            const existingUserGoogleId = safeRead(u => u.oauth_profiles.google.id, user, null);
+            const existingUserGoogleId = safeRead((u) => u.oauth_profiles.google.id, user, null);
             if (existingUserGoogleId) { return user; }
 
             // if not, let's associate the user with the given Google profile
-            return updateFromGoogleProfile(db, user, profile);
+            updateFromGoogleProfile(db, user, profile);
+            return user;
         });
 }
 
@@ -153,7 +164,7 @@ async function getProfileDataFromUser(db, user) {
 
 export async function getProfile(db, userId) {
     return db.user.findOne({ id: userId })
-        .then(u => getProfileDataFromUser(db, u));
+        .then((u) => getProfileDataFromUser(db, u));
 }
 
 export async function saveProfile(db, userId, profile) {
