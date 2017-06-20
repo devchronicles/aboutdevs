@@ -55,6 +55,13 @@ export interface IUser {
     phone_alternative: string;
 }
 
+export interface IProfession
+{
+    id: number;
+    name_canonical: string;
+    name_feminine: string;
+}
+
 export interface IIndieJobsDatabase extends massive.Database {
     // tables
     geo_location_cache: massive.Table<IGeoLocationCache>;
@@ -67,4 +74,5 @@ export interface IIndieJobsDatabase extends massive.Database {
     // functions
     is_user_name_taken: (userName: string, userId: number) => boolean[];
     search_professions_for_save: (profession: string) => number[];
+    search_professions: (profession: string) => IProfession[];
 }

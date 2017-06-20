@@ -11,7 +11,7 @@ function validateResult(allowCities = false) {
         r.address_components.filter((c: geocodeTypes.IAddressComponent) => c.types.includes(minimumAddressComponentType)).length > 0;
 }
 
-function getFormattedAddress(result: geocodeTypes.IResult) {
+function getFormattedAddress(result: geocodeTypes.IResult): string {
     const addressComponents = [
         geocodeApiHelper.getStreet(result),
         geocodeApiHelper.getStreetNumber(result),
@@ -22,7 +22,7 @@ function getFormattedAddress(result: geocodeTypes.IResult) {
     return addressComponents.join(', ');
 }
 
-export function getFormattedLocations(data: geocodeTypes.IGeocodeApiResult, allowCities = false) {
+export function getFormattedLocations(data: geocodeTypes.IGeocodeApiResult, allowCities = false): string[] {
     if (!data || !data.results || !data.results.length) return [];
     return data.results.filter(validateResult(allowCities)).map(getFormattedAddress);
 }
