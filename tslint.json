@@ -1,14 +1,18 @@
 {
-  "extends": ["tslint:latest", "tslint-react"],
-  "rules": {
-      "quotemark": [
-          1,
-          "'"
-      ],
-      "max-line-length": [
-          1,
-          140
-      ],
-      "curly": false
-  }
+    "extends": [
+        "tslint:latest",
+        "tslint-react"
+    ],
+    "rules": {
+        "quotemark": [
+            true,
+            "'"
+        ],
+        "max-line-length": [
+            true,
+            140
+        ],
+        "curly": false,
+        "object-literal-sort-keys": false,
+    },
 }

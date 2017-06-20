@@ -2,9 +2,9 @@ import * as fieldValidationHelper from '../../common/helpers/fieldValidationHelp
 import { safeRead } from '../../common/helpers/objectHelpers';
 import * as stringHelper from '../../common/helpers/stringHelper';
 import * as dbTypes from '../typings/dbTypes';
-import { IIndieJobsDatabase } from '../typings/dbTypes';
 import * as googleOAuthTypes from '../typings/googleOAuthTypes';
 import * as locationHelper from './locationHelper';
+import * as commonTypes from '../../common/typings/commonTypes';
 
 /**
  * Extracts the user name from the user's e-mail
@@ -132,7 +132,7 @@ export function findOrCreateFromGoogleProfile(db: dbTypes.IIndieJobsDatabase, pr
         });
 }
 
-export function getReduxDataForLoggedUser(user) {
+export function getReduxDataForLoggedUser(user: dbTypes.IUser): commonTypes.IReduxCurrentUserProfile {
     if (user === null || user === undefined) throw Error('Argument \'user\' should be null or undefined');
     return {
         id: user.id,
@@ -143,7 +143,7 @@ export function getReduxDataForLoggedUser(user) {
     };
 }
 
-async function getProfileDataFromUser(db, user) {
+async function getProfileDataFromUser(db: dbTypes.IIndieJobsDatabase, user: dbTypes.IUser): Promise<commonTypes.IUserProfile> {
     if (!db) throw Error('Argument \'db\' should be truthy');
     if (!user) throw Error('Argument \'user\' should be truthy');
 
@@ -155,19 +155,19 @@ async function getProfileDataFromUser(db, user) {
         type: user.type,
         status: user.status,
         address: await (user.geo_location_id ? locationHelper.getFormattedLocationById(db, user.geo_location_id) : null),
-        phoneWhatsapp: user.phoe_whatsapp,
+        phoneWhatsapp: user.phone_whatsapp,
         phoneAlternative: user.phone_alternative,
         bio: user.bio,
         activities: user.activities
     };
 }
 
-export async function getProfile(db, userId) {
+export async function getProfile(db: dbTypes.IIndieJobsDatabase, userId: number): Promise<commonTypes.IUserProfile> {
     return db.user.findOne({ id: userId })
         .then((u) => getProfileDataFromUser(db, u));
 }
 
-export async function saveProfile(db, userId, profile) {
+export async function saveProfile(db: dbTypes.IIndieJobsDatabase, userId: number, profile: commonTypes.IUserProfile): Promise<commonTypes.IUserProfile> {
     let user = await db.user.findOne({ id: userId });
     if (!user) throw Error('could not find user');
 
@@ -187,10 +187,10 @@ export async function saveProfile(db, userId, profile) {
     }
 
     // location
-    const location = await locationHelper.saveLocation(db, profile.address);
+    const location = (await locationHelper.saveLocation(db, profile.address))[0];
     user.geo_location_id = location.id;
 
-    user = await db.user.save(user);
+    user = (await db.user.save(user))[0];
 
     // change status
     if (user.status === 0) {
@@ -201,8 +201,8 @@ export async function saveProfile(db, userId, profile) {
     return getProfileDataFromUser(db, user);
 }
 
-export async function validateProfile(db, profile) {
-    const updatedProfile = Object.assign({
+export async function validateProfile(db: dbTypes.IIndieJobsDatabase, profile: commonTypes.IUserProfile) {
+    const updatedProfile = {
         name: '',
         type: 0,
         displayName: '',
@@ -211,8 +211,10 @@ export async function validateProfile(db, profile) {
         activities: '',
         address: '',
         phoneWhatsapp: '',
-        phoneAlternative: ''
-    }, profile);
+        phoneAlternative: '',
+        ...profile
+    };
+
     const errors = fieldValidationHelper.validate(updatedProfile);
     const userNameTaken = await db.is_user_name_taken(updatedProfile.name, updatedProfile.id)[0];
     if (userNameTaken) {

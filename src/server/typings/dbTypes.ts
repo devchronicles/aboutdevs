@@ -56,10 +56,15 @@ export interface IUser {
 }
 
 export interface IIndieJobsDatabase extends massive.Database {
+    // tables
     geo_location_cache: massive.Table<IGeoLocationCache>;
     geo_location: massive.Table<IGeoLocation>;
     geo_location_country: massive.Table<IGeoLocationCountry>;
     geo_location_state: massive.Table<IGeoLocationState>;
     geo_location_city: massive.Table<IGeoLocationCity>;
     user: massive.Table<IUser>;
+
+    // functions
+    is_user_name_taken: (userName: string, userId: number) => boolean[];
+    search_professions_for_save: (profession: string) => number[];
 }

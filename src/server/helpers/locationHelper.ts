@@ -63,13 +63,13 @@ export function getFormattedLocations(searchTerm: string, allowCities: boolean, 
         .then((r) => geocodeApiFormattingHelper.getFormattedLocations(r, allowCities));
 }
 
-export async function saveLocation(db: dbTypes.IIndieJobsDatabase, formattedText: string) {
+export async function saveLocation(db: dbTypes.IIndieJobsDatabase, formattedText: string): Promise<dbTypes.IGeoLocation[]> {
     const locationData = await getLocations(formattedText, false, db);
     if (!locationData || !locationData.results || !locationData.results.length) throw Error('could not get location');
     if (locationData.results.length > 1) throw Error('the given location is not unique');
 
     const location = await db.geo_location.findOne({ formatted_address: formattedText });
-    if (location) return location;
+    if (location) return [location];
 
     const locationDataResult = locationData.results[0];
     const countryComponent = geocodeApiHelper.getCountryComponent(locationDataResult);
