@@ -3,17 +3,18 @@ import * as apiHelper from '../helpers/apiHelper';
 import * as searchHelper from '../helpers/searchHelper';
 import * as locationHelper from '../helpers/locationHelper';
 import * as userHelper from '../helpers/userHelper';
+import * as dbTypes from '../typings/dbTypes';
 
 const router = express.Router();
 
-router.route('/address').get((req, res) => {
-    const allowCities = req.query.allowcities;
-    apiHelper.sendPromiseDb(res, db => locationHelper.getFormattedLocations(req.query.q, allowCities, db));
+router.route('/address').get((req: express.Request, res: express.Response) => {
+    const allowCities: boolean = req.query.allowcities;
+    apiHelper.sendPromiseDb(res, (db: dbTypes.IIndieJobsDatabase) => locationHelper.getFormattedLocations(<string>req.query.q, allowCities, db));
 });
 
 router.route('/professions').get((req, res) => {
     apiHelper.sendPromiseDb(res,
-        (db) => {
+        (db: dbTypes.IIndieJobsDatabase) => {
             apiHelper.getAndEnsureUserId(req);
             return db.search_professions(searchHelper.convertToTsVector(searchHelper.normalize(req.query.q)))
                 .then(r => r.map((ri) => {

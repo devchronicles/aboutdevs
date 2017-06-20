@@ -1,9 +1,6 @@
-import express from 'express';
-import fs from 'fs';
-
-require.extensions['.html'] = function loadHtml(module, filename) {
-    module.exports = fs.readFileSync(filename, 'utf8');
-};
+import * as express from 'express';
+import * as fs from 'fs';
+import * as path from 'path';
 
 const router = express.Router();
 
@@ -11,7 +8,13 @@ const router = express.Router();
  * Function  that actually sends the application to the client
  * @param response
  */
-function sendApp(res, preloadedState) {
+function sendApp(res: express.Response, preloadedState: object) {
+    fs.readFile(path.join(__dirname, './index.html'), 'utf8', (error, data) => {
+        const result = data.replace(/\$\{css\}/g, '').replace(/\$\{js\}/g, 'http://localhost:8080/bundle.js');
+        res.status(200).send(result);
+    });
+
+
     /*eslint-disable*/
     const wrap = require('../../client/index.html')
         .replace(/\$\{css\}/g, '')

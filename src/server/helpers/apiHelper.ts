@@ -1,6 +1,7 @@
 import * as express from 'express';
 import * as massive from 'massive';
 import buildDb from '../db/buildDb';
+import * as dbTypes from '../typings/dbTypes';
 
 export function getAndEnsureUserId(req: express.Request): number {
     if (!req) throw Error('Argument \'req\' should be truthy');
@@ -70,7 +71,7 @@ export function sendPromise(res: express.Response, promise: Promise<any>): Promi
         .catch((e) => sendError(res, e));
 }
 
-export function sendPromiseDb(res: express.Response, promiseFunction: (db: massive.Database) => Promise<express.Response>): Promise<express.Response> {
+export function sendPromiseDb(res: express.Response, promiseFunction: (db: dbTypes.IIndieJobsDatabase) => any): Promise<express.Response> {
     if (!res) throw Error('Argument \'res\' should be truthy');
     if (!promiseFunction) throw Error('Argument \'promiseFunction\' should be truthy');
 

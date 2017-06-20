@@ -72,7 +72,7 @@ export interface IIndieJobsDatabase extends massive.Database {
     user: massive.Table<IUser>;
 
     // functions
-    is_user_name_taken: (userName: string, userId: number) => boolean[];
-    search_professions_for_save: (profession: string) => number[];
-    search_professions: (profession: string) => IProfession[];
+    is_user_name_taken: (userName: string, userId: number) => Promise<boolean[]>;
+    search_professions_for_save: (profession: string) => Promise<number[]>;
+    search_professions: (profession: string) => Promise<IProfession[]>;
 }
