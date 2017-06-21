@@ -63,7 +63,8 @@ export async function createFromGoogleProfile(db: dbTypes.IIndieJobsDatabase, pr
             },
             photo_url: photoUrl,
         }))
-        .then((user) => db.user.save(user));
+        .then((user) => db.user.save(user))
+        .then((users: dbTypes.IUser[]) => users[0]);
 }
 
 /**
@@ -216,7 +217,8 @@ export async function validateProfile(db: dbTypes.IIndieJobsDatabase, profile: c
     };
 
     const errors = fieldValidationHelper.validate(updatedProfile);
-    const userNameTaken = await db.is_user_name_taken(updatedProfile.name, updatedProfile.id)[0];
+    const userNameTaken = await db.is_user_name_taken(updatedProfile.name, updatedProfile.id)
+        .then(result => result[0]);
     if (userNameTaken) {
         errors.name = fieldValidationHelper.USER_NAME_IS_TAKEN;
     }
