@@ -1,5 +1,5 @@
-import express from 'express';
-import passport from 'passport';
+import * as express from 'express';
+import * as passport from 'passport';
 import buildDb from '../db/buildDb';
 import { redirectToHome, redirectToProfileEdit } from '../helpers/urlHelper';
 
