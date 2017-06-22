@@ -55,8 +55,7 @@ export interface IUser {
     phone_alternative: string;
 }
 
-export interface IProfession
-{
+export interface IProfession {
     id: number;
     name_canonical: string;
     name_feminine: string;
