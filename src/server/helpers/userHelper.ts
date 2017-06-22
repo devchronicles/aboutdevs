@@ -1,10 +1,10 @@
 import * as fieldValidationHelper from '../../common/helpers/fieldValidationHelper';
 import { safeRead } from '../../common/helpers/objectHelpers';
 import * as stringHelper from '../../common/helpers/stringHelper';
+import * as commonTypes from '../../common/typings/commonTypes';
 import * as dbTypes from '../typings/dbTypes';
 import * as googleOAuthTypes from '../typings/googleOAuthTypes';
 import * as locationHelper from './locationHelper';
-import * as commonTypes from '../../common/typings/commonTypes';
 
 /**
  * Extracts the user name from the user's e-mail
@@ -141,7 +141,7 @@ export function getReduxDataForLoggedUser(user: dbTypes.IUser): commonTypes.IRed
         name: user.name,
         gender: user.gender,
         displayName: user.display_name,
-        photoUrl: user.photo_url
+        photoUrl: user.photo_url,
     };
 }
 
@@ -160,7 +160,7 @@ async function getProfileDataFromUser(db: dbTypes.IIndieJobsDatabase, user: dbTy
         phoneWhatsapp: user.phone_whatsapp,
         phoneAlternative: user.phone_alternative,
         bio: user.bio,
-        activities: user.activities
+        activities: user.activities,
     };
 }
 
@@ -214,12 +214,12 @@ export async function validateProfile(db: dbTypes.IIndieJobsDatabase, profile: c
         address: '',
         phoneWhatsapp: '',
         phoneAlternative: '',
-        ...profile
+        ...profile,
     };
 
     const errors = fieldValidationHelper.validate(updatedProfile);
     const userNameTaken = await db.is_user_name_taken(updatedProfile.name, updatedProfile.id)
-        .then(result => result[0]);
+        .then((result) => result[0]);
     if (userNameTaken) {
         errors.name = fieldValidationHelper.USER_NAME_IS_TAKEN;
     }

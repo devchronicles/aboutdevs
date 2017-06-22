@@ -7,9 +7,9 @@ export interface IUserProfile {
 }
 
 export interface IReduxCurrentUserProfile {
-    id: number,
-    name: string,
-    gender: number,
-    displayName: string,
-    photoUrl: string
+    id: number;
+    name: string;
+    gender: number;
+    displayName: string;
+    photoUrl: string;
 }

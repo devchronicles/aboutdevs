@@ -59,12 +59,11 @@ export function getLocations(searchTerm: string, allowCities: boolean, db: dbTyp
     }
     return getLocationsFromCache(normalizedSearchTerm, db)
         .then((lc) => (lc || getLocationsFromGoogle(normalizedSearchTerm)
-            .then((lg) => saveLocationToCache(normalizedSearchTerm, lg, db))))
+            .then((lg) => saveLocationToCache(normalizedSearchTerm, lg, db))));
 }
 
 export function getFormattedLocations(searchTerm: string, allowCities: boolean, db: dbTypes.IIndieJobsDatabase): Promise<string[]> {
     return getLocations(searchTerm, allowCities, db)
-
 
         .then((r) => geocodeApiFormattingHelper.getFormattedLocations(r, allowCities));
 }

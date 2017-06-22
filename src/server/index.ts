@@ -1,13 +1,13 @@
-import * as express from 'express';
-import * as cookieParser from 'cookie-parser';
 import * as bodyParser from 'body-parser';
+import * as cookieParser from 'cookie-parser';
+import * as express from 'express';
 import cookieSession = require('cookie-session');
 import * as colors from 'colors';
 import * as passport from 'passport';
 import setupPassport from './passport/setupPassport';
-import authRoute from './routes/auth';
 import apiRoute from './routes/api';
 import appRoute from './routes/app';
+import authRoute from './routes/auth';
 
 const app = express();
 
@@ -16,12 +16,12 @@ setupPassport(passport);
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
-    extended: true
+    extended: true,
 }));
 app.use(cookieSession({
     name: 'session',
     keys: ['key1', 'key2'],
-    maxAge: 365 * 24 * 60 * 60 * 1000 // 1 year
+    maxAge: 365 * 24 * 60 * 60 * 1000, // 1 year
 }));
 app.use(passport.initialize());
 app.use(passport.session());

@@ -4,8 +4,8 @@ import * as dbTypes from '../typings/dbTypes';
 
 let db: dbTypes.IIndieJobsDatabase;
 
-export default function () {
+export default function() {
     if (db) return Promise.resolve(db);
     return massive(config.db.massiveConnectionObject)
-        .then((m) => { db = <dbTypes.IIndieJobsDatabase>m; return <dbTypes.IIndieJobsDatabase>m; });
+        .then((m) => { db = m as dbTypes.IIndieJobsDatabase; return m as dbTypes.IIndieJobsDatabase; });
 }

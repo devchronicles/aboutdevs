@@ -24,7 +24,6 @@ export function getAddressInformationLongNameByType(type: string, result: geocod
     return addressComponent ? addressComponent.long_name : null;
 }
 
-
 export function getStreetNumber(result: geocodeTypes.IResult) {
     return getAddressInformationShortNameByType(STREET_NUMBER_COMPONENT_TYPE, result);
 }

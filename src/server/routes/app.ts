@@ -12,7 +12,7 @@ function sendApp(res: express.Response, preloadedState: object) {
     fs.readFile(path.join(__dirname, './index.html'), 'utf8', (error, data) => {
         let result = data;
         result = result.replace(/\$\{css\}/g, '');
-        result = result.replace(/\$\{js\}/g, 'http://localhost:8080/bundle.js')
+        result = result.replace(/\$\{js\}/g, 'http://localhost:8080/bundle.js');
         result = result.replace(/\$\{preloadedState\}/g, JSON.stringify(preloadedState).replace(/</g, '\\u003c'));
         res.status(200).send(result);
     });
@@ -23,7 +23,7 @@ function sendApp(res: express.Response, preloadedState: object) {
  */
 router.route('*').get((req, res) => {
     sendApp(res, {
-        loggedUser: req.user
+        loggedUser: req.user,
     });
 });
 

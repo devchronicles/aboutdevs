@@ -1,7 +1,7 @@
 import * as express from 'express';
 import * as apiHelper from '../helpers/apiHelper';
-import * as searchHelper from '../helpers/searchHelper';
 import * as locationHelper from '../helpers/locationHelper';
+import * as searchHelper from '../helpers/searchHelper';
 import * as userHelper from '../helpers/userHelper';
 import * as dbTypes from '../typings/dbTypes';
 
@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.route('/address').get((req: express.Request, res: express.Response) => {
     const allowCities: boolean = req.query.allowcities;
-    apiHelper.sendPromiseDb(res, (db: dbTypes.IIndieJobsDatabase) => locationHelper.getFormattedLocations(<string>req.query.q, allowCities, db));
+    apiHelper.sendPromiseDb(res, (db: dbTypes.IIndieJobsDatabase) => locationHelper.getFormattedLocations(req.query.q as string, allowCities, db));
 });
 
 router.route('/professions').get((req, res) => {
@@ -17,11 +17,11 @@ router.route('/professions').get((req, res) => {
         (db: dbTypes.IIndieJobsDatabase) => {
             apiHelper.getAndEnsureUserId(req);
             return db.search_professions(searchHelper.convertToTsVector(searchHelper.normalize(req.query.q)))
-                .then(r => r.map((ri) => {
+                .then((r) => r.map((ri) => {
                     const gender = req.user.gender;
                     return gender === 0 ? ri.name_canonical : ri.name_feminine;
                 }));
-        }
+        },
     );
 });
 
@@ -31,7 +31,7 @@ router.route('/users/checkname').get((req, res) => {
             const userId = apiHelper.getAndEnsureUserId(req);
             const userName = req.query.q;
             return db.is_user_name_taken(userName, userId)
-                .then(data => !data[0]);
+                .then((data) => !data[0]);
         });
 });
 
