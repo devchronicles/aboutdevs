@@ -1,7 +1,8 @@
 import { assert } from 'chai';
 import * as fieldValidationHelper from '../../src/common/helpers/fieldValidationHelper';
+import * as commonTypes from '../../src/common/typings/commonTypes';
 
-function createProfile(object) {
+function createProfile(object: commonTypes.IUserProfile) {
     const emptyProfile = {
         name: '',
         type: 0,
@@ -11,9 +12,9 @@ function createProfile(object) {
         activities: '',
         address: '',
         phoneWhatsapp: '',
-        phoneAlternative: ''
+        phoneAlternative: '',
     };
-    return Object.assign({}, emptyProfile, object);
+    return { emptyProfile, ...object };
 }
 
 describe('fieldValidationHelper', () => {
@@ -26,7 +27,7 @@ describe('fieldValidationHelper', () => {
                 displayName: 'required',
                 address: 'required',
                 phoneWhatsapp: 'at-least-one-phone',
-                phoneAlternative: 'at-least-one-phone'
+                phoneAlternative: 'at-least-one-phone',
             });
         });
         it('Validate empty object - User professional', () => {
@@ -40,7 +41,7 @@ describe('fieldValidationHelper', () => {
                 activities: 'required-if-professional',
                 address: 'required',
                 phoneWhatsapp: 'at-least-one-phone',
-                phoneAlternative: 'at-least-one-phone'
+                phoneAlternative: 'at-least-one-phone',
             });
         });
     });

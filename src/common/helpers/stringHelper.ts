@@ -128,7 +128,7 @@ export function normalizeSpaces(str: string) {
  * @param {string} str The string
  * @param {boolean} addIfNoNumber Whether or not it should add a number in case the provided string has no number at the end
  */
-export function incrementLast(str: string, addIfNoNumber: boolean) {
+export function incrementLast(str: string, addIfNoNumber: boolean = false) {
     if (str === null || str === undefined) throw Error('Argument \'str\' should be null or undefined');
     const regex = /[0-9]+$/;
     if (str.match(regex)) {

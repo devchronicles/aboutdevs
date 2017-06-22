@@ -1,4 +1,4 @@
-import { User } from './../typings/User';
+import * as commonTypes from '../typings/commonTypes';
 
 export const REQUIRED = 'required';
 export const REQUIRED_IF_PROFESSIONAL = 'required-if-professional';
@@ -34,7 +34,7 @@ export function validateMaxLength500(value: string) {
     return value.length > 500 ? MAX_LENGTH_500 : undefined;
 }
 
-export function validationRequiredIfProfessional(value: any, user: User) {
+export function validationRequiredIfProfessional(value: any, user: commonTypes.IUserProfile) {
     return (user.type === 0 && (value === null || value === undefined || value === '')) ? REQUIRED_IF_PROFESSIONAL : undefined;
 }
 
@@ -45,7 +45,7 @@ export function validatePhone(value: string) {
     return /\(\d{2}\)\s\d{3,5}-\d{4}/.test(value) ? undefined : INVALID_PHONE;
 }
 
-export function validateAtLeastOnePhone(value: string, user: User) {
+export function validateAtLeastOnePhone(value: string, user: commonTypes.IUserProfile) {
     const invalidWhatsapp = user.phoneWhatsapp === null || user.phoneWhatsapp === undefined || user.phoneWhatsapp === '';
     const invalidAlternatePhone = user.phoneAlternative === null || user.phoneAlternative === undefined || user.phoneAlternative === '';
     return invalidWhatsapp && invalidAlternatePhone ? AT_LEAST_ONE_PHONE : undefined;
@@ -74,7 +74,7 @@ export function getValidatorsForField(fieldName: string) {
     }
 }
 
-export function validate(user: User) {
+export function validate(user: commonTypes.IUserProfile) {
     const errors: { [key: string]: string } = {};
     for (const key in user) {
         if (user.hasOwnProperty(key)) {

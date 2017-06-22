@@ -8,7 +8,8 @@
         "target": "es2015",
         "allowJs": true,
         "types": [
-            "node"
+            "node",
+            "mocha"
         ],
         "typeRoots": [
             "./node_modules/@types"
@@ -23,6 +24,7 @@
     },
     "include": [
         "./db/**/*",
-        "./src/**/*"
+        "./src/**/*",
+        "./test/**/*"
     ]
 }

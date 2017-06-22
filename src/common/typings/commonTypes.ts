@@ -1,9 +1,9 @@
 export interface IUserProfile {
     [key: string]: any;
+    id?: number;
     type: number;
-    id: number;
-    phoneWhatsapp: string;
-    phoneAlternative: string;
+    phoneWhatsapp?: string;
+    phoneAlternative?: string;
 }
 
 export interface IReduxCurrentUserProfile {
