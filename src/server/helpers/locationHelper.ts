@@ -13,12 +13,13 @@ import * as searchHelper from './searchHelper';
  * @param {object} location The location to be saved in the cache
  * @param {object} db The db object
  */
-function saveLocationToCache(searchTerm: string, location: googleGeocodeTypes.IResult, db: dbTypes.IIndieJobsDatabase): Promise<googleGeocodeTypes.IResult> {
+function saveLocationToCache(searchTerm: string, location: googleGeocodeTypes.IGeocodeApiResult, db: dbTypes.IIndieJobsDatabase)
+    : Promise<googleGeocodeTypes.IGeocodeApiResult> {
     if (searchTerm === null || searchTerm === undefined) throw Error('Argument \'search\' should be null or undefined');
     if (location === null || location === undefined) throw Error('Argument \'location\' should be null or undefined');
 
     return db.geo_location_cache.save({ search: searchTerm, cache: location })
-        .then(() => location);
+        .then((lc) => lc && lc.length ? lc[0].cache : undefined);
 }
 
 /**
@@ -26,7 +27,8 @@ function saveLocationToCache(searchTerm: string, location: googleGeocodeTypes.IR
  * @param {string} searchTerm The search term the user typed
  * @param {object} db The db object
  */
-export function getLocationsFromCache(searchTerm: string, db: dbTypes.IIndieJobsDatabase): Promise<googleGeocodeTypes.IGeocodeApiResult> {
+export function getLocationsFromCache(searchTerm: string, db: dbTypes.IIndieJobsDatabase)
+    : Promise<googleGeocodeTypes.IGeocodeApiResult> {
     if (searchTerm === null || searchTerm === undefined) throw Error('Argument \'partialAddress\' should be null or undefined');
     return db.geo_location_cache.findOne({ search: searchTerm })
         .then((r) => (r ? r.cache : undefined));
@@ -36,7 +38,8 @@ export function getLocationsFromCache(searchTerm: string, db: dbTypes.IIndieJobs
  * Returns the location from Google, if it exists, or an object with an empty "results" array, otherwise
  * @param {string} searchTerm The search term the user typed
  */
-export function getLocationsFromGoogle(searchTerm: string): Promise<googleGeocodeTypes.IGeocodeApiResult> {
+export function getLocationsFromGoogle(searchTerm: string)
+    : Promise<googleGeocodeTypes.IGeocodeApiResult> {
     if (searchTerm === null || searchTerm === undefined) throw Error('Argument \'partialAddress\' should be null or undefined');
     const encodedLocation = encodeURIComponent(searchTerm);
     const key: string = config.google.geocodeApiKey;
@@ -48,18 +51,21 @@ export function getLocationsFromGoogle(searchTerm: string): Promise<googleGeocod
         .then((res) => res.data);
 }
 
-export function getLocations(searchTerm: string, allowCities: boolean, db: dbTypes.IIndieJobsDatabase) {
+export function getLocations(searchTerm: string, allowCities: boolean, db: dbTypes.IIndieJobsDatabase)
+    : Promise<googleGeocodeTypes.IGeocodeApiResult> {
     const normalizedSearchTerm = searchHelper.normalize(searchTerm);
     if (!normalizedSearchTerm) {
-        return Promise.resolve([]);
+        return Promise.resolve<googleGeocodeTypes.IGeocodeApiResult>(undefined);
     }
     return getLocationsFromCache(normalizedSearchTerm, db)
         .then((lc) => (lc || getLocationsFromGoogle(normalizedSearchTerm)
-            .then((lg) => saveLocationToCache(normalizedSearchTerm, lg, db))));
+            .then((lg) => saveLocationToCache(normalizedSearchTerm, lg, db))))
 }
 
-export function getFormattedLocations(searchTerm: string, allowCities: boolean, db: dbTypes.IIndieJobsDatabase) {
+export function getFormattedLocations(searchTerm: string, allowCities: boolean, db: dbTypes.IIndieJobsDatabase): Promise<string[]> {
     return getLocations(searchTerm, allowCities, db)
+
+
         .then((r) => geocodeApiFormattingHelper.getFormattedLocations(r, allowCities));
 }
 

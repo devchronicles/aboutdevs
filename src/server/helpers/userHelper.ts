@@ -28,7 +28,7 @@ export function getValidUserName(db: dbTypes.IIndieJobsDatabase, userName: strin
             // this isn't actually necessary. TODO: Remove this.
             const lowerCaseUserNames = r.map((s) => s.name.toLowerCase());
             let finalUserName = userName.toLowerCase();
-            while (lowerCaseUserNames.includes(finalUserName)) {
+            while (lowerCaseUserNames.indexOf(finalUserName) !== -1) {
                 finalUserName = stringHelper.incrementLast(finalUserName, true);
             }
             return finalUserName;
@@ -110,7 +110,8 @@ export async function updateFromGoogleProfile(db: dbTypes.IIndieJobsDatabase, ex
  * @param profile
  * @returns {Promise}
  */
-export function findOrCreateFromGoogleProfile(db: dbTypes.IIndieJobsDatabase, profile: googleOAuthTypes.IGoogleOAuthProfile) {
+export function findOrCreateFromGoogleProfile(db: dbTypes.IIndieJobsDatabase, profile: googleOAuthTypes.IGoogleOAuthProfile)
+    : Promise<dbTypes.IUser> {
     if (!db) throw Error('\'db\' should be truthy');
     if (!profile) throw Error('\'profile\' should be truthy');
 
