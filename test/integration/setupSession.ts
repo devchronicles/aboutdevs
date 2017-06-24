@@ -15,11 +15,11 @@ function truncateData(db) {
         'geo_location_country',
         'geo_location_state',
         'geo_location_city',
-        'profession'
+        'profession',
     ];
 
     // concatenates all entities from the database
-    const entitiesAsString = entities.map(e => `"${e}"`).join(', ');
+    const entitiesAsString = entities.map((e) => `"${e}"`).join(', ');
 
     // nukes the database (puff.. nothing left)
     return db.run(`truncate ${entitiesAsString} cascade`);

@@ -1,4 +1,5 @@
 import { assert } from 'chai';
+import * as dbTypes from '../../src/server/typings/dbTypes';
 
 /**
  * Asserts it can save, find and delete the given object
@@ -7,13 +8,13 @@ import { assert } from 'chai';
  * @param originalObject The original object being saved
  * @param callback The callback to be called after the whole thing
  */
-export function assertCanSaveFindAndDelete(db, entityName, originalObject) {
+export function assertCanSaveFindAndDelete(db: dbTypes.IIndieJobsDatabase, entityName: string, originalObject: any) {
     // saves the object
     return db[entityName].save(originalObject)
         // tries to find the object we just saved
-        .then(obj => db[entityName].findOne(obj.id))
+        .then((obj: any) => db[entityName].findOne(obj.id))
         // asserts everything is there
-        .then((obj) => {
+        .then((obj: any) => {
             for (const property in originalObject) {
                 if (originalObject.hasOwnProperty(property)) {
                     assert.strictEqual(obj[property], originalObject[property]);
@@ -22,10 +23,9 @@ export function assertCanSaveFindAndDelete(db, entityName, originalObject) {
             return obj;
         })
         // tries to delete the object
-        .then(obj => db[entityName].destroy({ id: obj.id }))
+        .then((obj: any) => db[entityName].destroy({ id: obj.id }))
         // now tries to find the object again.
         // objs will the the array of objects deleted, in this case, there's only one
-        .then(objs => db[entityName].findOne({ id: objs[0].id }))
-        .then(obj => assert.isUndefined(obj));
+        .then((objs: any) => db[entityName].findOne({ id: objs[0].id }))
+        .then((obj: any) => assert.isUndefined(obj));
 }
-

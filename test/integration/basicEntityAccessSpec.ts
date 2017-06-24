@@ -1,6 +1,5 @@
-import setupSession from './setupSession';
 import { assertCanSaveFindAndDelete } from './dbTestHelper';
-
+import setupSession from './setupSession';
 
 describe('basicEntityAccess', () => {
     let db = null;
@@ -13,7 +12,7 @@ describe('basicEntityAccess', () => {
             name: 'andrerpena',
             gender: 0,
             email: 'andrerpena@gmail.com',
-            display_name: 'André Pena'
+            display_name: 'André Pena',
         };
         return assertCanSaveFindAndDelete(db, 'user', user);
     });

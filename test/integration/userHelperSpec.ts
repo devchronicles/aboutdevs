@@ -1,8 +1,7 @@
 import { assert } from 'chai';
-import setupSession from './setupSession';
-import googleProfileSample from './resources/googleProfileSample';
 import * as userHelper from '../../src/server/helpers/userHelper';
-
+import googleProfileSample from './resources/googleProfileSample';
+import setupSession from './setupSession';
 
 describe('userHelper', () => {
     let db = null;
@@ -10,17 +9,17 @@ describe('userHelper', () => {
         db = $db;
     });
     describe('getValidUserName', () => {
-        it('When it doesn\'t exist', () => userHelper.getValidUserName(db, 'foo').then((userName) => { assert.equal(userName, 'foo'); })
+        it('When it doesn\'t exist', () => userHelper.getValidUserName(db, 'foo').then((userName) => { assert.equal(userName, 'foo'); }),
         );
         it('When it does exist', () =>
             db.user.insert({
                 name: 'foo',
                 gender: 0,
                 display_name: 'Foo',
-                email: 'foo@fooland.com'
+                email: 'foo@fooland.com',
             })
                 .then(() => userHelper.getValidUserName(db, 'foo'))
-                .then((userName) => { assert.equal(userName, 'foo1'); })
+                .then((userName) => { assert.equal(userName, 'foo1'); }),
         );
 
         it('When it does exist 2', () =>
@@ -28,16 +27,16 @@ describe('userHelper', () => {
                 name: 'foo',
                 gender: 0,
                 display_name: 'Foo',
-                email: 'foo@fooland.com'
+                email: 'foo@fooland.com',
             })
                 .then(() => db.user.insert({
                     name: 'foo1',
                     gender: 0,
                     display_name: 'Foo',
-                    email: 'foo2@fooland.com'
+                    email: 'foo2@fooland.com',
                 }))
                 .then(() => userHelper.getValidUserName(db, 'foo'))
-                .then((userName) => { assert.equal(userName, 'foo2'); })
+                .then((userName) => { assert.equal(userName, 'foo2'); }),
         );
     });
 
@@ -53,7 +52,7 @@ describe('userHelper', () => {
                 assert.isOk(u.oauth_profiles);
                 assert.strictEqual(u.oauth_profiles.google.id, '109199054588840596357');
                 return db.user.destroy({ id: u.id });
-            })
+            }),
     );
 
     it('updateFromGoogleProfile', () =>
@@ -61,15 +60,15 @@ describe('userHelper', () => {
             name: 'andrerpena',
             gender: 0,
             email: 'andrerpena@gmail.com',
-            display_name: 'André Pena'
+            display_name: 'André Pena',
         })
-            .then(u => userHelper.updateFromGoogleProfile(db, u, googleProfileSample))
+            .then((u) => userHelper.updateFromGoogleProfile(db, u, googleProfileSample))
             .then((u) => {
                 assert.isOk(u);
                 assert.isOk(u.oauth_profiles);
                 assert.strictEqual(u.oauth_profiles.google.id, '109199054588840596357');
                 return db.user.destroy({ id: u.id });
-            })
+            }),
     );
 
     describe('findOrCreateFromGoogleProfile', () => {
@@ -83,21 +82,21 @@ describe('userHelper', () => {
                 .then((u) => {
                     assert.strictEqual(u.email, 'andrerpena@gmail.com');
                     return db.user.destroy({ id: u.id });
-                })
+                }),
         );
         it('when a user with the same e-mail address already existed', () =>
             db.user.save({
                 name: 'andrerpena',
                 gender: 0,
                 email: 'andrerpena@gmail.com',
-                display_name: 'André Pena'
+                display_name: 'André Pena',
             })
                 .then(() => userHelper.findOrCreateFromGoogleProfile(db, googleProfileSample))
                 .then((u) => {
                     assert.strictEqual(u.email, 'andrerpena@gmail.com');
                     assert.ok(u.oauth_profiles.google);
                     return db.user.destroy({ id: u.id });
-                })
+                }),
         );
     });
     describe('saveProfile', () => {
@@ -106,7 +105,7 @@ describe('userHelper', () => {
                 name: 'andrerpena',
                 gender: 0,
                 email: 'andrerpena@gmail.com',
-                display_name: 'André Pena'
+                display_name: 'André Pena',
             });
 
             const profile = {
@@ -117,7 +116,7 @@ describe('userHelper', () => {
                 activities: 'Great software',
                 phone_whatsapp: '(32) 999168205',
                 address: 'Rua Henrique Surerus, 28, Juiz de Fora',
-                profession: 'medico'
+                profession: 'medico',
             };
 
             await userHelper.saveProfile(db, existingUser.id, profile);

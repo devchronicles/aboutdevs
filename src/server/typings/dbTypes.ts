@@ -62,6 +62,7 @@ export interface IProfession {
 }
 
 export interface IIndieJobsDatabase extends massive.Database {
+    [key: string]: any;
     // tables
     geo_location_cache: massive.Table<IGeoLocationCache>;
     geo_location: massive.Table<IGeoLocation>;
