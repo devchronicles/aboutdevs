@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import * as dbTypes from '../../src/server/typings/dbTypes';
+import * as types from '../../src/typings';
 
 /**
  * Asserts it can save, find and delete the given object
@@ -8,7 +8,7 @@ import * as dbTypes from '../../src/server/typings/dbTypes';
  * @param originalObject The original object being saved
  * @param callback The callback to be called after the whole thing
  */
-export function assertCanSaveFindAndDelete(db: dbTypes.IIndieJobsDatabase, entityName: string, originalObject: any) {
+export function assertCanSaveFindAndDelete(db: types.IIndieJobsDatabase, entityName: string, originalObject: any) {
     // saves the object
     return db[entityName].save(originalObject)
         // tries to find the object we just saved

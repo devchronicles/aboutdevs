@@ -1,10 +1,11 @@
 import buildDb from '../../src/server/db/buildDb';
+import * as types from '../../src/typings';
 
 /**
  * Truncates (delete) data from all tables
  * @param db
  */
-function truncateData(db) {
+function truncateData(db: types.IIndieJobsDatabase) {
     if (!db) throw Error('\'db\' should be truthy');
 
     const entities = [
@@ -22,7 +23,7 @@ function truncateData(db) {
     const entitiesAsString = entities.map((e) => `"${e}"`).join(', ');
 
     // nukes the database (puff.. nothing left)
-    return db.run(`truncate ${entitiesAsString} cascade`);
+    return db.run(`truncate ${entitiesAsString} cascade`, {});
 }
 
 /**
@@ -30,11 +31,17 @@ function truncateData(db) {
  * @param before
  * @param after
  */
-export default function setupSession(before, after, beforeEach, afterEach, callback) {
+export default function setupSession(
+    before: (callback: (this: Mocha.IHookCallbackContext, done: MochaDone) => any) => void,
+    after: (callback: (this: Mocha.IHookCallbackContext, done: MochaDone) => any) => void,
+    beforeEach: (callback: (this: Mocha.IBeforeAndAfterContext, done: MochaDone) => any) => void,
+    afterEach: (callback: (this: Mocha.IBeforeAndAfterContext, done: MochaDone) => any) => void,
+    callback: (db: types.IIndieJobsDatabase) => void) {
+
     if (!before) throw Error('\'before\' should be truthy');
     if (!after) throw Error('\'after\' should be truthy');
 
-    let db = null;
+    let db: types.IIndieJobsDatabase = null;
 
     // runs before all tests in a file
     before((done) => {
