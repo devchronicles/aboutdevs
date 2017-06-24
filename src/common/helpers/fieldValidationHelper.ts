@@ -51,7 +51,7 @@ export function validateAtLeastOnePhone(value: string, user: commonTypes.IUserPr
     return invalidWhatsapp && invalidAlternatePhone ? AT_LEAST_ONE_PHONE : undefined;
 }
 
-export function getValidatorsForField(fieldName: string) {
+export function getValidatorsForField(fieldName: string): Array<(value: any, user: commonTypes.IUserProfile) => string> {
     switch (fieldName) {
         case 'name':
             return [validateRequired, validateMaxLength50];
@@ -84,6 +84,7 @@ export function validate(user: commonTypes.IUserProfile) {
                 let error;
                 for (const validate of fieldValidators) {
                     error = validate(value, user);
+                    if (error) break;
                 }
                 if (error) {
                     errors[key] = error;
