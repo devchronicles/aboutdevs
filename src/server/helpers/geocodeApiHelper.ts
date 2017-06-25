@@ -5,7 +5,7 @@ export const STREET_COMPONENT_TYPE = 'route';
 export const NEIGHBORHOOD_COMPONENT_TYPE = 'sublocality_level_1';
 export const CITY_COMPONENT_TYPE = 'administrative_area_level_2';
 export const STATE_COMPONENT_TYPE = 'administrative_area_level_1';
-export const COUNTRY_COMPONENT_TYPE = 'administrative_area_level_1';
+export const COUNTRY_COMPONENT_TYPE = 'country';
 
 export function findLocationComponentByType(result: geocodeTypes.IResult, type: string): geocodeTypes.IAddressComponent {
     if (result === null || result === undefined) throw Error('Argument \'result\' should be null or undefined');
