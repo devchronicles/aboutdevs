@@ -86,6 +86,22 @@
             }
         },
         {
+            "name": "Tools - Drop db",
+            "type": "node",
+            "request": "launch",
+            "protocol": "inspector",
+            "program": "${workspaceRoot}/tools/db-manager.ts",
+            "stopOnEntry": false,
+            "args": [],
+            "cwd": "${workspaceRoot}",
+            "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/ts-node.cmd",
+            "sourceMaps": true,
+            "env": {
+                "NODE_ENV": "development",
+                "COMMAND": "drop_dev_dbs"
+            }
+        },
+        {
             "name": "Populate-Cities",
             "type": "node",
             "request": "launch",
