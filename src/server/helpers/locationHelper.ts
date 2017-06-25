@@ -1,8 +1,7 @@
 import axios from 'axios';
 import * as massive from 'massive';
 import config from '../../../config/config';
-import * as dbTypes from '../typings/dbTypes';
-import * as googleGeocodeTypes from '../typings/googleGeocodeTypes';
+import * as types from '../../typings';
 import * as geocodeApiFormattingHelper from './geocodeApiFormattingHelper';
 import * as geocodeApiHelper from './geocodeApiHelper';
 import * as searchHelper from './searchHelper';
@@ -13,8 +12,8 @@ import * as searchHelper from './searchHelper';
  * @param {object} location The location to be saved in the cache
  * @param {object} db The db object
  */
-function saveLocationToCache(searchTerm: string, location: googleGeocodeTypes.IGeocodeApiResult, db: dbTypes.IIndieJobsDatabase)
-    : Promise<googleGeocodeTypes.IGeocodeApiResult> {
+function saveLocationToCache(searchTerm: string, location: types.IGeocodeApiResult, db: types.IIndieJobsDatabase)
+    : Promise<types.IGeocodeApiResult> {
     if (searchTerm === null || searchTerm === undefined) throw Error('Argument \'search\' should be null or undefined');
     if (location === null || location === undefined) throw Error('Argument \'location\' should be null or undefined');
 
@@ -27,8 +26,8 @@ function saveLocationToCache(searchTerm: string, location: googleGeocodeTypes.IG
  * @param {string} searchTerm The search term the user typed
  * @param {object} db The db object
  */
-export function getLocationsFromCache(searchTerm: string, db: dbTypes.IIndieJobsDatabase)
-    : Promise<googleGeocodeTypes.IGeocodeApiResult> {
+export function getLocationsFromCache(searchTerm: string, db: types.IIndieJobsDatabase)
+    : Promise<types.IGeocodeApiResult> {
     if (searchTerm === null || searchTerm === undefined) throw Error('Argument \'partialAddress\' should be null or undefined');
     return db.geo_location_cache.findOne({ search: searchTerm })
         .then((r) => (r ? r.cache : undefined));
@@ -38,37 +37,43 @@ export function getLocationsFromCache(searchTerm: string, db: dbTypes.IIndieJobs
  * Returns the location from Google, if it exists, or an object with an empty "results" array, otherwise
  * @param {string} searchTerm The search term the user typed
  */
-export function getLocationsFromGoogle(searchTerm: string)
-    : Promise<googleGeocodeTypes.IGeocodeApiResult> {
+export async function getLocationsFromGoogle(searchTerm: string): Promise<types.IGeocodeApiResult> {
     if (searchTerm === null || searchTerm === undefined) throw Error('Argument \'partialAddress\' should be null or undefined');
     const encodedLocation = encodeURIComponent(searchTerm);
     const key: string = config.google.geocodeApiKey;
     const googleGeoCodeApiAdress
         = `https://maps.google.com/maps/api/geocode/json?address=${encodedLocation}&components=country:BR&key=${key}`;
 
-    return axios.get(googleGeoCodeApiAdress)
-        .then((res) => { if (res.data.errorMessage) { throw Error(res.data.errorMessage); } return res; })
-        .then((res) => res.data);
+    const res = await axios.get(googleGeoCodeApiAdress);
+    if (res.data.errorMessage) {
+        throw Error(res.data.errorMessage);
+    }
+    return res.data;
 }
 
-export function getLocations(searchTerm: string, allowCities: boolean, db: dbTypes.IIndieJobsDatabase)
-    : Promise<googleGeocodeTypes.IGeocodeApiResult> {
+export async function getLocations(searchTerm: string, allowCities: boolean, db: types.IIndieJobsDatabase)
+    : Promise<types.IGeocodeApiResult> {
     const normalizedSearchTerm = searchHelper.normalize(searchTerm);
     if (!normalizedSearchTerm) {
-        return Promise.resolve<googleGeocodeTypes.IGeocodeApiResult>(undefined);
+        return Promise.resolve<types.IGeocodeApiResult>(undefined);
     }
-    return getLocationsFromCache(normalizedSearchTerm, db)
-        .then((lc) => (lc || getLocationsFromGoogle(normalizedSearchTerm)
-            .then((lg) => saveLocationToCache(normalizedSearchTerm, lg, db))));
+
+    let locations = await getLocationsFromCache(normalizedSearchTerm, db);
+    if (locations) {
+        return locations;
+    }
+    locations = await getLocationsFromGoogle(normalizedSearchTerm);
+    await saveLocationToCache(normalizedSearchTerm, locations, db);
+    return locations;
 }
 
-export function getFormattedLocations(searchTerm: string, allowCities: boolean, db: dbTypes.IIndieJobsDatabase): Promise<string[]> {
-    return getLocations(searchTerm, allowCities, db)
-
-        .then((r) => geocodeApiFormattingHelper.getFormattedLocations(r, allowCities));
+export async function getFormattedLocations(searchTerm: string, allowCities: boolean, db: types.IIndieJobsDatabase): Promise<string[]> {
+    const locations = await getLocations(searchTerm, allowCities, db);
+    const formattedLocations = await geocodeApiFormattingHelper.getFormattedLocations(locations, allowCities);
+    return formattedLocations;
 }
 
-export async function saveLocation(db: dbTypes.IIndieJobsDatabase, formattedText: string): Promise<dbTypes.IGeoLocation[]> {
+export async function saveLocation(db: types.IIndieJobsDatabase, formattedText: string): Promise<types.IGeoLocation[]> {
     const locationData = await getLocations(formattedText, false, db);
     if (!locationData || !locationData.results || !locationData.results.length) throw Error('could not get location');
     if (locationData.results.length > 1) throw Error('the given location is not unique');
@@ -114,7 +119,7 @@ export async function saveLocation(db: dbTypes.IIndieJobsDatabase, formattedText
     });
 }
 
-export async function getFormattedLocationById(db: dbTypes.IIndieJobsDatabase, geoLocationId: number) {
+export async function getFormattedLocationById(db: types.IIndieJobsDatabase, geoLocationId: number) {
     if (!db) throw Error('Argument \'db\' should be truthy');
     if (!geoLocationId) throw Error('Argument \'geoLocationId\' should be truthy');
 
