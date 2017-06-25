@@ -12,13 +12,13 @@ import * as searchHelper from './searchHelper';
  * @param {object} location The location to be saved in the cache
  * @param {object} db The db object
  */
-function saveLocationToCache(searchTerm: string, location: types.IGeocodeApiResult, db: types.IIndieJobsDatabase)
+async function saveLocationToCache(searchTerm: string, location: types.IGeocodeApiResult, db: types.IIndieJobsDatabase)
     : Promise<types.IGeocodeApiResult> {
     if (searchTerm === null || searchTerm === undefined) throw Error('Argument \'search\' should be null or undefined');
     if (location === null || location === undefined) throw Error('Argument \'location\' should be null or undefined');
 
-    return db.geo_location_cache.save({ search: searchTerm, cache: location })
-        .then((lc) => lc && lc.length ? lc[0].cache : undefined);
+    const insertedLocation = (await db.geo_location_cache.insert({ search: searchTerm, cache: location })) as types.IGeoLocationCache;
+    return insertedLocation ? insertedLocation.cache : undefined;
 }
 
 /**
@@ -73,13 +73,13 @@ export async function getFormattedLocations(searchTerm: string, allowCities: boo
     return formattedLocations;
 }
 
-export async function saveLocation(db: types.IIndieJobsDatabase, formattedText: string): Promise<types.IGeoLocation[]> {
+export async function saveLocation(db: types.IIndieJobsDatabase, formattedText: string): Promise<types.IGeoLocation> {
     const locationData = await getLocations(formattedText, false, db);
     if (!locationData || !locationData.results || !locationData.results.length) throw Error('could not get location');
     if (locationData.results.length > 1) throw Error('the given location is not unique');
 
-    const location = await db.geo_location.findOne({ formatted_address: formattedText });
-    if (location) return [location];
+    let location = await db.geo_location.findOne({ formatted_address: formattedText });
+    if (location) return location;
 
     const locationDataResult = locationData.results[0];
     const countryComponent = geocodeApiHelper.getCountryComponent(locationDataResult);
@@ -90,33 +90,35 @@ export async function saveLocation(db: types.IIndieJobsDatabase, formattedText: 
     // saving country
     let country = await db.geo_location_country.findOne({ short_name: countryComponent.short_name });
     if (!country) {
-        const insertedCountres = await db.geo_location_country.insert({ short_name: countryComponent.short_name, long_name: countryComponent.long_name });
-        country = insertedCountres[0];
+        country = (await db.geo_location_country.insert({ short_name: countryComponent.short_name, long_name: countryComponent.long_name })) as types.IGeoLocationCountry;
     }
 
     // saving state
     let state = await db.geo_location_state.findOne({ short_name: stateComponent.short_name });
     if (!state) {
-        const insertedStates = await db.geo_location_state.insert({
+        state = (await db.geo_location_state.insert({
             geo_location_country_id: country.id,
             long_name: countryComponent.long_name,
             short_name: countryComponent.short_name,
-        });
-        state = insertedStates[0];
+        })) as types.IGeoLocationState;
     }
 
     // saving city
     let city = await db.geo_location_city.findOne({ short_name: cityComponent.short_name });
     if (!city) {
-        const insertedCities = await db.geo_location_city.insert({ short_name: cityComponent.short_name, geo_location_state_id: state.id });
-        city = insertedCities[0];
+        city = (await db.geo_location_city.insert({
+            short_name: cityComponent.short_name,
+            geo_location_state_id: state.id,
+        })) as types.IGeoLocationCity;
     }
 
-    return db.geo_location.insert({
+    location = (await db.geo_location.insert({
         formatted_address: formattedText,
         geo_location_city_id: city.id,
         sub_locality: neighborhoodComponent.short_name,
-    });
+    })) as types.IGeoLocation;
+
+    return location;
 }
 
 export async function getFormattedLocationById(db: types.IIndieJobsDatabase, geoLocationId: number) {

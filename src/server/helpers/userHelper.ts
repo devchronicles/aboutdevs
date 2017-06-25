@@ -49,22 +49,24 @@ export async function createFromGoogleProfile(db: dbTypes.IIndieJobsDatabase, pr
     const photoUrl = safeRead((p: googleOAuthTypes.IGoogleOAuthProfile) => p.photos[0].value, profile, null);
     const gender = profile.gender === 'male' ? 0 : 1;
 
-    return getValidUserName(db, extractUserNameFromEmail(email))
-        .then((userName) => ({
-            display_name: profile.displayName,
-            email,
-            gender,
-            name: userName,
-            oauth_profiles: {
-                google: {
-                    id: profile.id,
-                    raw: profile,
-                },
+    const userName = await getValidUserName(db, extractUserNameFromEmail(email));
+
+    const user = {
+        display_name: profile.displayName,
+        email,
+        gender,
+        name: userName,
+        oauth_profiles: {
+            google: {
+                id: profile.id,
+                raw: profile,
             },
-            photo_url: photoUrl,
-        }))
-        .then((user) => db.user.save(user))
-        .then((users: dbTypes.IUser[]) => users[0]);
+        },
+        photo_url: photoUrl,
+    };
+
+    const insertedUser = (await db.user.insert(user)) as dbTypes.IUser;
+    return insertedUser;
 }
 
 /**
@@ -73,7 +75,8 @@ export async function createFromGoogleProfile(db: dbTypes.IIndieJobsDatabase, pr
  * @param existingUser
  * @param profile
  */
-export async function updateFromGoogleProfile(db: dbTypes.IIndieJobsDatabase, existingUser: dbTypes.IUser, googleProfile: googleOAuthTypes.IGoogleOAuthProfile) {
+export async function updateFromGoogleProfile(db: dbTypes.IIndieJobsDatabase, existingUser: dbTypes.IUser, googleProfile: googleOAuthTypes.IGoogleOAuthProfile)
+    : Promise<dbTypes.IUser> {
     if (!db) throw Error('\'db\' should be truthy');
     if (!existingUser) throw Error('\'existingUser\' should be truthy');
     if (!googleProfile) throw Error('\'profile\' should be truthy');
@@ -101,7 +104,8 @@ export async function updateFromGoogleProfile(db: dbTypes.IIndieJobsDatabase, ex
             raw: googleProfile,
         };
     }
-    return db.user.save(existingUser);
+    const savedUser = (await db.user.save(existingUser)) as dbTypes.IUser;
+    return savedUser;
 }
 
 /**
@@ -189,15 +193,15 @@ export async function saveProfile(db: dbTypes.IIndieJobsDatabase, userId: number
     }
 
     // location
-    const location = (await locationHelper.saveLocation(db, profile.address))[0];
+    const location = await locationHelper.saveLocation(db, profile.address);
     user.geo_location_id = location.id;
 
-    user = (await db.user.save(user))[0];
+    user = (await db.user.update(user)) as dbTypes.IUser;
 
     // change status
     if (user.status === 0) {
         user.status = 1;
-        await db.user.save(user);
+        user = (await db.user.save(user)) as dbTypes.IUser;
     }
 
     return getProfileDataFromUser(db, user);
