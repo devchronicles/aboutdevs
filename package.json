@@ -4,6 +4,7 @@
   "description": "Freelancer job search made ridiculously easy",
   "main": "index.js",
   "scripts": {
+    "build-ts": "tsc",
     "start": "cross-env NODE_ENV=development babel-node ./src/server/index.js",
     "start-watch": "cross-env NODE_ENV=development nodemon --exec \"babel-node ./src/server/index.js\"",
     "hot-server": "webpack-dev-server --hot --config ./webpack.config.dev.js",
@@ -44,7 +45,7 @@
     "express": "^4.15.3",
     "font-awesome": "^4.6.3",
     "immutable": "^3.8.1",
-    "massive": "^3.0.0-rc1",
+    "massive": "^3.0.0",
     "normalize.css": "^7.0.0",
     "passport": "^0.3.2",
     "passport-google-oauth": "^1.0.0",
