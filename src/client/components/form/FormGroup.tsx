@@ -1,0 +1,34 @@
+import * as React from 'react';
+
+interface IFormGroupProps {
+    label: string;
+    labelFor: string;
+    help: string;
+    error: string;
+    children: JSX.Element[];
+}
+
+const FormGroup: React.SFC<IFormGroupProps> = ({ label, labelFor, help, error, children }) => {
+    let labelComponent = null;
+    let helpComponent = null;
+
+    if (label) {
+        labelComponent = <label htmlFor={labelFor}>{label}</label>;
+    }
+
+    if (error) {
+        helpComponent = <small className="form-help error">{error} </small>;
+    } else if (help) {
+        helpComponent = <small className="form-help">{help} </small>;
+    }
+
+    return (
+        <div className="form-group">
+            {labelComponent}
+            {children}
+            {helpComponent}
+        </div>
+    );
+};
+
+export default FormGroup;

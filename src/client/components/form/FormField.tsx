@@ -1,14 +1,12 @@
-import * as PropTypes from 'prop-types';
 import * as React from 'react';
+import * as ReduxForm from 'redux-form';
 import * as fieldValidationMessageHelper from '../../../common/helpers/fieldValidationMessageHelper';
 import FormGroup from './FormGroup';
 import InputGroup from './InputGroup';
 
-interface IFormFieldProps {
+interface IFormFieldProps extends ReduxForm.WrappedFieldProps<{}> {
     name: string;
     label: string;
-    input: any;
-    meta: any;
     innerComponent: any;
     help: any;
     addOnBefore: any;
@@ -17,7 +15,7 @@ interface IFormFieldProps {
     placeHolder: string;
 }
 
-const FormField: React.SFC<IFormFieldProps> = (field) => {
+const FormField: React.SFC<IFormFieldProps> = (props) => {
 
     const {
         name,
@@ -26,14 +24,14 @@ const FormField: React.SFC<IFormFieldProps> = (field) => {
         addOnBefore,
         addOnAfter,
         innerComponent,
-    } = field;
+    } = props;
 
     const innerComponentProps = {
-        input: field.input,
-        meta: field.meta,
+        input: props.input,
+        meta: props.meta,
     };
 
-    const errorMessage = field.meta.touched ? fieldValidationMessageHelper.getErrorMessage(field.meta.error) : null;
+    const errorMessage = props.meta.touched ? fieldValidationMessageHelper.getErrorMessage(props.meta.error) : null;
 
     return (
         <FormGroup

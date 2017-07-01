@@ -2,7 +2,7 @@ import * as PropTypes from 'prop-types';
 import * as React from 'react';
 
 export interface IFormColumn {
-    children: {};
+    children: JSX.Element[];
     style: {};
     eq: boolean;
 }
