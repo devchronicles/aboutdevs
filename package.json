@@ -81,6 +81,7 @@
     "@types/react-redux": "^4.4.45",
     "@types/react-router": "^4.0.12",
     "@types/react-router-dom": "^4.0.5",
+    "@types/react-select": "^1.0.48",
     "@types/redux-form": "^6.6.4",
     "@types/webpack": "^2.2.16",
     "awesome-typescript-loader": "^3.1.3",

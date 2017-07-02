@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as ReduxForm from "redux-form";
 
-const TextBox: React.SFC<ReduxForm.WrappedFieldProps<{}>> = (props: ReduxForm.WrappedFieldProps<{}>) => {
+const TextBox: React.SFC<ReduxForm.WrappedFieldProps<{}>> = (props) => {
     const { meta: { invalid, touched } } = props;
     const classes = ['form-control'];
     if (invalid && touched) {
