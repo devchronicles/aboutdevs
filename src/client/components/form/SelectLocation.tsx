@@ -1,51 +1,53 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Async } from 'react-select';
+import * as React from 'react';
+import * as ReactSelect from 'react-select';
+import * as ReduxForm from 'redux-form';
 import * as httpClient from '../../httpClient';
 
-class SelectLocation extends Component {
+interface ISelectLocationProps extends ReduxForm.WrappedFieldProps<{}> {
+    allowCities: boolean;
+    placeholder: string;
+}
 
-    constructor() {
-        super();
-        this.loadValues = this.loadValues.bind(this);
-        this.handleChange = this.handleChange.bind(this);
-    }
+class SelectLocation extends React.Component<ISelectLocationProps, {}> {
 
-    loadValues(input, callback) {
+    private currentFetchTimeout: any;
+
+    private loadValues = (inputText: string, callback: (err: any, result: ReactSelect.AutocompleteResult) => void) => {
         const { allowCities } = this.props;
         if (this.currentFetchTimeout) {
             clearTimeout(this.currentFetchTimeout);
         }
         this.currentFetchTimeout = setTimeout(() => {
-            httpClient.getFormattedLocations(input, allowCities)
+            httpClient.getFormattedLocations(inputText, allowCities)
                 .then((res) => {
-                    const options = res.data.map(i => ({ value: i, label: i }));
-                    callback(null, { options });
+                    const options = res.data.map((i: any) => ({ value: i, label: i }));
+                    callback(null, { options, complete: true });
                 })
-                .catch(error => callback(error));
+                .catch((error) => callback(error, undefined));
         }, 800);
     }
 
+    private filterOptions = (options: any) => options;
 
-    handleChange(row) {
+    private handleChange = (row: any) => {
         const { onChange } = this.props.input;
         onChange(row ? row.value : null);
     }
 
-    render() {
+    public render() {
         const { input: { value, onBlur }, meta: { error, touched }, placeholder } = this.props;
         const className = error && touched ? 'invalid' : '';
         const adjustedValue = value ? {
             value,
-            label: value
+            label: value,
         } : null;
 
         return (
-            <Async
+            <ReactSelect.Async
                 value={adjustedValue}
                 onChange={this.handleChange}
                 loadOptions={this.loadValues}
-                filterOption={o => o}
+                filterOption={this.filterOptions}
                 labelKey="label"
                 valueKey="value"
                 // localization
@@ -62,17 +64,5 @@ class SelectLocation extends Component {
         );
     }
 }
-
-SelectLocation.propTypes = {
-    input: PropTypes.object.isRequired,
-    meta: PropTypes.object.isRequired,
-    allowCities: PropTypes.bool,
-    placeholder: PropTypes.string
-};
-
-SelectLocation.defaultProps = {
-    allowCities: false,
-    placeholder: ''
-};
 
 export default SelectLocation;

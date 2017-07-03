@@ -12,6 +12,15 @@
             false
         ],
         "curly": false,
-        "object-literal-sort-keys": false
+        "arrow-parens": [
+            false
+        ],
+        "object-literal-sort-keys": false,
+        "member-ordering": [
+            false
+        ],
+        "jsx-no-lambda": [
+            false
+        ]
     }
 }

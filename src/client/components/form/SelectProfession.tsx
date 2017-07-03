@@ -1,48 +1,49 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 import { AsyncCreatable } from 'react-select';
-import { getProfessions } from '../../httpClient';
+import * as ReactSelect from 'react-select';
+import * as ReduxForm from 'redux-form';
 import * as stringHelper from '../../../common/helpers/stringHelper';
+import { getProfessions } from '../../httpClient';
 
-class SelectProfession extends Component {
+interface ISelectProfessionProps extends ReduxForm.WrappedFieldProps<{}> {
+    placeholder: string;
+}
 
-    constructor() {
-        super();
-        this.loadValues = this.loadValues.bind(this);
-        this.handleChange = this.handleChange.bind(this);
-    }
+class SelectProfession extends React.Component<ISelectProfessionProps, {}> {
 
-    loadValues(input, callback) {
+    private currentFetchTimeout: any;
+
+    private loadValues = (inputText: string, callback: (err: any, result: ReactSelect.AutocompleteResult) => void) => {
+
         if (this.currentFetchTimeout) {
             clearTimeout(this.currentFetchTimeout);
         }
         this.currentFetchTimeout = setTimeout(() => {
-            getProfessions(input)
+            getProfessions(inputText)
                 .then((res) => {
-                    const options = res.data.map(i => ({ value: i, label: i }));
-                    callback(null, { options });
+                    const options = res.data.map((i: any) => ({ value: i, label: i }));
+                    callback(null, { options, complete: true });
                 })
-                .catch(error => callback(error));
+                .catch(error => callback(error, undefined));
         }, 800);
     }
 
-
-    handleChange(row) {
+    private handleChange = (row: any) => {
         const { onChange } = this.props.input;
         onChange(row ? row.value : null);
     }
 
-    render() {
+    private isOptionUnique = ({ option: ReactSelect.Option, options: ReactSelect.Option[] }) => {
+        const selectedValue = option.value ? option.value.toLowerCase() : '';
+        return !options.map(o:any => stringHelper.removeDiacritics(o.value).toLowerCase()).includes(selectedValue);
+    };
+
+    public render() {
         const { input: { value, onBlur }, meta: { error, touched } } = this.props;
         const className = error && touched ? 'invalid' : '';
         const adjustedValue = {
             value,
-            label: value
-        };
-
-        const isOptionUnique = ({ option, options }) => {
-            const selectedValue = option.value ? option.value.toLowerCase() : '';
-            return !options.map(o => stringHelper.removeDiacritics(o.value).toLowerCase()).includes(selectedValue);
+            label: value,
         };
 
         return (
@@ -50,7 +51,7 @@ class SelectProfession extends Component {
                 value={adjustedValue}
                 onChange={this.handleChange}
                 loadOptions={this.loadValues}
-                filterOption={o => o}
+                filterOption={(o) => o}
                 labelKey="label"
                 valueKey="value"
                 // localization
@@ -58,25 +59,16 @@ class SelectProfession extends Component {
                 loadingPlaceholder="Carregando..."
                 searchPromptText="Digite para pesquisar"
                 noResultsText="Profissão não encontrada, mas pode deixar assim mesmo"
-                promptTextCreator={label => `Criar opção '${label}'`}
+                promptTextCreator={(label) => `Criar opção '${label}'`}
                 ignoreCase={false}
                 ignoreAccents={false}
                 cache={false}
                 className={className}
-                isOptionUnique={isOptionUnique}
+                isOptionUnique={this.isOptionUnique}
                 onBlur={() => onBlur(value)}
             />
         );
     }
 }
-
-SelectProfession.propTypes = {
-    input: PropTypes.object.isRequired,
-    meta: PropTypes.object.isRequired
-};
-
-SelectProfession.defaultProps = {
-    allowCities: false
-};
 
 export default SelectProfession;
