@@ -47,6 +47,7 @@ button, a.button {
     &:hover {
         border-color: $color-shining-4;
         background-image: linear-gradient(to right,$color-shining-3,$color-shining-4);
+        text-decoration: none !important;
     }
 
     &:disabled {

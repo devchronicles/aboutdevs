@@ -17,6 +17,11 @@ header.header {
             padding-left: $gutter-md;
             display: flex;
             justify-content: center;
+            a {
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
         }
     }
 
