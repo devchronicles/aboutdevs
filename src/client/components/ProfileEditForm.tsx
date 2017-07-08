@@ -121,7 +121,7 @@ let ProfileEditForm: React.SFC<IProfileEditoFormProps> = (props) => {
                             label="Endereço"
                             component={FormField}
                             innerComponent={SelectLocation}
-                            help="Seu endereço não será exibido. Ele será usado somente para geo-localização."
+                            help="Seu endereço não será exibido. Este campo é usado somente para geo-localização."
                             addOnBefore={<FaIcon icon="map-marker" />}
                         />
                     </FormRow>
@@ -133,7 +133,7 @@ let ProfileEditForm: React.SFC<IProfileEditoFormProps> = (props) => {
                             label="Whatsapp"
                             component={FormField}
                             innerComponent={TextBox}
-                            help="Seu Whatsapp será exibido aos usuários com os quais você se conectar."
+                            help="Seu Whatsapp será exibido somente aos usuários com os quais você se conectar."
                             addOnBefore={<FaIcon icon="whatsapp" />}
                             normalize={normalizePhone}
                         />
@@ -144,7 +144,7 @@ let ProfileEditForm: React.SFC<IProfileEditoFormProps> = (props) => {
                             label="Telefone alternativo"
                             component={FormField}
                             innerComponent={TextBox}
-                            help="Seu telefone alternativo será exibido aos usuários com os quais você se conectar."
+                            help="Seu telefone alternativo será exibido somente aos usuários com os quais você se conectar."
                             addOnBefore={<FaIcon icon="phone" />}
                             normalize={normalizePhone}
                         />
