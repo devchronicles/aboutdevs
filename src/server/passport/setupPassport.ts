@@ -15,7 +15,7 @@ export default function(passport: passport.Passport) {
     passport.serializeUser((userId, done) => {
         done(null, userId);
     });
-]
+
     passport.deserializeUser((userId, done) => {
         buildDb()
             .then((db) => db.user.findOne({ id: userId })
