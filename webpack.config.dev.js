@@ -3,8 +3,7 @@ const webpack = require('webpack');
 module.exports = {
 
     entry: [
-        'babel-polyfill',
-        './src/client/index.js'
+        './src/client/index.tsx'
     ],
 
     output: {
@@ -19,7 +18,7 @@ module.exports = {
 
     module: {
         rules: [
-            { test: /\.js|\.jsx/, use: ['react-hot-loader/webpack', 'babel-loader'], exclude: /node_modules/ },
+            { test: /\.ts|\.tsx/, use: ['react-hot-loader/webpack', 'awesome-typescript-loader'], exclude: /node_modules/ },
             { test: /\.css/, use: ['style-loader', 'css-loader'] },
             { test: /\.scss$/, use: ['style-loader', 'css-loader', 'sass-loader'] },
             { test: /\.jpe?g$|\.gif$|\.png$|\.ico$/, use: ['file-loader?name=[name].[ext]'] },

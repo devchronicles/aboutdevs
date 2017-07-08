@@ -9,7 +9,7 @@ const router = express.Router();
  * @param response
  */
 function sendApp(res: express.Response, preloadedState: object) {
-    fs.readFile(path.join(__dirname, './index.html'), 'utf8', (error, data) => {
+    fs.readFile('src/client/index.html', 'utf8', (error, data) => {
         let result = data;
         result = result.replace(/\$\{css\}/g, '');
         result = result.replace(/\$\{js\}/g, 'http://localhost:8080/bundle.js');
