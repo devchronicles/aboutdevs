@@ -1,9 +1,13 @@
-import React from 'react';
+import * as React from 'react';
 
-const SearchWrapper = ({ children }) => (
+interface ISearchWrapper {
+    children: React.ReactNode;
+}
+
+const SearchWrapper: React.SFC<ISearchWrapper> = ({ children }) => (
     <div className="search-wrapper">
         {children}
     </div>
 );
 
-export default SearchWrapper;
+export { SearchWrapper };

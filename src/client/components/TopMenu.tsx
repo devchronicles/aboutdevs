@@ -1,12 +1,17 @@
 import * as React from 'react';
-import LoggedUserDropdown from './LoggedUserDropdown';
+import { LoggedUserDropdown } from './LoggedUserDropdown';
+import * as commonTypes from '../../common/typings';
 
-const TopMenu = () => (
+interface ITopMenuProps {
+    loggedUser: commonTypes.IReduxCurrentUserProfile;
+}
+
+const TopMenu: React.SFC<ITopMenuProps> = (props) => (
     <ul className="top-menu">
         <li>
-            <LoggedUserDropdown />
+            <LoggedUserDropdown loggedUser={props.loggedUser} />
         </li>
     </ul>
 );
 
-export default TopMenu;
+export { TopMenu };

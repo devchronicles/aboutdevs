@@ -1,10 +1,10 @@
-import * as types from '../../src/typings';
+import * as serverTypes from '../../src/server/typings';
 import { assertCanSaveFindAndDelete } from './dbTestHelper';
 import setupSession from './setupSession';
 
 describe('basicEntityAccess', () => {
-    let db: types.IIndieJobsDatabase = null;
-    setupSession(before, after, beforeEach, afterEach, ($db: types.IIndieJobsDatabase) => {
+    let db: serverTypes.IIndieJobsDatabase = null;
+    setupSession(before, after, beforeEach, afterEach, ($db: serverTypes.IIndieJobsDatabase) => {
         db = $db;
     });
 

@@ -1,20 +1,28 @@
-import activity from 'react-activity';
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import * as ReactActivity from 'react-activity';
+import * as React from 'react';
 
-const Dots = activity.Dots;
+const Dots = ReactActivity.Dots;
 
-class SocialButton extends Component {
+interface ISocialButtonProps {
+    text: string,
+    url: string,
+    faClass: string
+};
 
-    constructor(props) {
+interface ISocialButtonState {
+    loading: boolean;
+}
+
+class SocialButton extends React.Component<ISocialButtonProps, ISocialButtonState> {
+
+    constructor(props: ISocialButtonProps) {
         super(props);
-        this.handleLinkClick = this.handleLinkClick.bind(this);
         this.state = {
             loading: false
         };
     }
 
-    handleLinkClick(e) {
+    handleLinkClick = (e: React.SyntheticEvent<any>) => {
         if (this.state.loading) {
             e.preventDefault();
         } else {
@@ -31,16 +39,10 @@ class SocialButton extends Component {
         return (<a className="social-button" href={url} onClick={this.handleLinkClick} >
             <i className={`fa fa-${faClass}`} aria-hidden="true" />
             <span className="text">
-                { finalText }
+                {finalText}
             </span>
         </a>);
     }
 }
 
-SocialButton.propTypes = {
-    text: PropTypes.string.isRequired,
-    url: PropTypes.string.isRequired,
-    faClass: PropTypes.string.isRequired
-};
-
-export default SocialButton;
+export { SocialButton };

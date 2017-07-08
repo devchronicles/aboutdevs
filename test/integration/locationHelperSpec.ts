@@ -1,12 +1,12 @@
 import { assert } from 'chai';
 import * as geocodeApiFormattingHelper from '../../src/server/helpers/geocodeApiFormattingHelper';
 import * as locationHelper from '../../src/server/helpers/locationHelper';
-import * as types from '../../src/typings';
+import * as serverTypes from '../../src/server/typings';
 import setupSession from './setupSession';
 
 describe('locationHelperSpec', () => {
-    let db: types.IIndieJobsDatabase = null;
-    setupSession(before, after, beforeEach, afterEach, ($db: types.IIndieJobsDatabase) => {
+    let db: serverTypes.IIndieJobsDatabase = null;
+    setupSession(before, after, beforeEach, afterEach, ($db: serverTypes.IIndieJobsDatabase) => {
         db = $db;
     });
     describe('getLocationsFromGoogle', () => {

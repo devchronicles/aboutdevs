@@ -1,11 +1,11 @@
 import { assert } from 'chai';
 import * as userHelper from '../../src/server/helpers/userHelper';
-import * as types from '../../src/typings';
+import * as serverTypes from '../../src/server/typings';
 import googleProfileSample from './resources/googleProfileSample';
 import setupSession from './setupSession';
 
 describe('userHelper', () => {
-    let db: types.IIndieJobsDatabase = null;
+    let db: serverTypes.IIndieJobsDatabase = null;
     setupSession(before, after, beforeEach, afterEach, ($db) => {
         db = $db;
     });
@@ -62,7 +62,7 @@ describe('userHelper', () => {
             gender: 0,
             email: 'andrerpena@gmail.com',
             display_name: 'André Pena',
-        })) as types.IUser;
+        })) as serverTypes.IUser;
         userHelper.updateFromGoogleProfile(db, user, googleProfileSample);
         assert.isOk(user);
         assert.isOk(user.oauth_profiles);
@@ -106,7 +106,7 @@ describe('userHelper', () => {
                 gender: 0,
                 email: 'andrerpena@gmail.com',
                 display_name: 'André Pena',
-            })) as types.IUser;
+            })) as serverTypes.IUser;
 
             const profile = {
                 name: 'andrerpena',

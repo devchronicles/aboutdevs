@@ -1,11 +1,11 @@
 import buildDb from '../../src/server/db/buildDb';
-import * as types from '../../src/typings';
+import * as serverTypes from '../../src/server/typings';
 
 /**
  * Truncates (delete) data from all tables
  * @param db
  */
-function truncateData(db: types.IIndieJobsDatabase) {
+function truncateData(db: serverTypes.IIndieJobsDatabase) {
     if (!db) throw Error('\'db\' should be truthy');
 
     const entities = [
@@ -36,12 +36,12 @@ export default function setupSession(
     after: (callback: (this: Mocha.IHookCallbackContext, done: MochaDone) => any) => void,
     beforeEach: (callback: (this: Mocha.IBeforeAndAfterContext, done: MochaDone) => any) => void,
     afterEach: (callback: (this: Mocha.IBeforeAndAfterContext, done: MochaDone) => any) => void,
-    callback: (db: types.IIndieJobsDatabase) => void) {
+    callback: (db: serverTypes.IIndieJobsDatabase) => void) {
 
     if (!before) throw Error('\'before\' should be truthy');
     if (!after) throw Error('\'after\' should be truthy');
 
-    let db: types.IIndieJobsDatabase = null;
+    let db: serverTypes.IIndieJobsDatabase = null;
 
     // runs before all tests in a file
     before((done) => {

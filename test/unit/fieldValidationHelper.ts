@@ -1,8 +1,8 @@
 import { assert } from 'chai';
 import * as fieldValidationHelper from '../../src/common/helpers/fieldValidationHelper';
-import * as types from '../../src/typings';
+import * as commonTypes from '../../src/common/typings';
 
-function createProfile(object: types.IUserProfile) {
+function createProfile(object: commonTypes.IUserProfile) {
     const emptyProfile = {
         name: '',
         type: 0,
