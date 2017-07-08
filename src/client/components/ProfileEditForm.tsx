@@ -17,7 +17,7 @@ interface IProfileEditFormStateProps {
     formValues: any;
     formSyncErrors: any;
     formSubmitErrors: any;
-    loggedUser: commonTypes.IReduxCurrentUserProfile;
+    loggedUser: commonTypes.ReduxCurrentUserProfile;
 }
 
 interface IProfileEditFormDispatchProps {
@@ -170,14 +170,14 @@ ProfileEditForm = reduxForm({
 
 // Decorate with connect to read form values
 
-const mapStateToProps = (state: clientTypes.IReduxState): IProfileEditFormStateProps => ({
+const mapStateToProps = (state: clientTypes.ReduxState): IProfileEditFormStateProps => ({
     formValues: getFormValues(FORM_NAME)(state),
     formSyncErrors: getFormSyncErrors(FORM_NAME)(state),
     formSubmitErrors: getFormSubmitErrors(FORM_NAME)(state),
     loggedUser: state.loggedUser
 })
 
-const mapDispatchToProps = (dispatch: ReactRedux.Dispatch<clientTypes.IReduxState>): IProfileEditFormDispatchProps => ({
+const mapDispatchToProps = (dispatch: ReactRedux.Dispatch<clientTypes.ReduxState>): IProfileEditFormDispatchProps => ({
 
 })
 

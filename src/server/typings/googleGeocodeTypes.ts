@@ -1,45 +1,45 @@
 
-export interface IAddressComponent {
+export interface AddressComponent {
     long_name: string;
     short_name: string;
     types: string[];
 }
 
-export interface ILocation {
+export interface Location {
     lat: number;
     lng: number;
 }
 
-export interface INortheast {
+export interface Northeast {
     lat: number;
     lng: number;
 }
 
-export interface ISouthwest {
+export interface Southwest {
     lat: number;
     lng: number;
 }
 
-export interface IViewport {
-    northeast: INortheast;
-    southwest: ISouthwest;
+export interface Viewport {
+    northeast: Northeast;
+    southwest: Southwest;
 }
 
-export interface IGeometry {
+export interface Geometry {
     location: Location;
     location_type: string;
-    viewport: IViewport;
+    viewport: Viewport;
 }
 
-export interface IResult {
-    address_components: IAddressComponent[];
+export interface Result {
+    address_components: AddressComponent[];
     formatted_address: string;
-    geometry: IGeometry;
+    geometry: Geometry;
     place_id: string;
     types: string[];
 }
 
-export interface IGeocodeApiResult {
-    results: IResult[];
+export interface GeocodeApiResult {
+    results: Result[];
     status: string;
 }

@@ -2,7 +2,7 @@ import * as httpClient from '../../httpClient';
 import * as fieldValidation from '../../../common/helpers/fieldValidationHelper';
 import * as commonTypes from '../../../common/typings';
 
-export default function (values: commonTypes.IReduxUserProfile) {
+export default function (values: commonTypes.ReduxUserProfile) {
     return httpClient.checkUserName(values.name)
         .then((r) => {
             if (r.data.exists) {

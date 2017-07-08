@@ -9,7 +9,7 @@ import * as ReactRedux from 'react-redux';
 import * as httpClient from '../httpClient';
 
 interface IProfileEditPageStateOwnProps extends ReactRouter.RouteComponentProps<any> {
-    loggedUser: commonTypes.IReduxCurrentUserProfile;
+    loggedUser: commonTypes.ReduxCurrentUserProfile;
     formValues: any;
 }
 
@@ -53,12 +53,12 @@ class ProfileEditPage extends React.Component<IProfileEditPageProps> {
     }
 }
 
-const mapStateToProps = (state: clientTypes.IReduxState): IProfileEditPageStateProps => ({
+const mapStateToProps = (state: clientTypes.ReduxState): IProfileEditPageStateProps => ({
     loggedUser: state.loggedUser,
     formValues: state.form.profileEdit
 });
 
-const mapDispatchToProps = (dispatch: ReactRedux.Dispatch<clientTypes.IReduxState>): IProfileEditPageDispatchProps => ({
+const mapDispatchToProps = (dispatch: ReactRedux.Dispatch<clientTypes.ReduxState>): IProfileEditPageDispatchProps => ({
     actions: {
         profileEditLoadData: () => { dispatch(profileEditActions.profileEditLoadData()); }
     }

@@ -5,7 +5,7 @@ import { LoggedUserDropdown } from './LoggedUserDropdown';
 import { Logo } from './Logo';
 
 interface IHeaderProps {
-    loggedUser: commonTypes.IReduxCurrentUserProfile;
+    loggedUser: commonTypes.ReduxCurrentUserProfile;
 }
 
 const Header: React.SFC<IHeaderProps> = ({ loggedUser }) => {

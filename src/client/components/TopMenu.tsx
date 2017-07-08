@@ -3,7 +3,7 @@ import { LoggedUserDropdown } from './LoggedUserDropdown';
 import * as commonTypes from '../../common/typings';
 
 interface ITopMenuProps {
-    loggedUser: commonTypes.IReduxCurrentUserProfile;
+    loggedUser: commonTypes.ReduxCurrentUserProfile;
 }
 
 const TopMenu: React.SFC<ITopMenuProps> = (props) => (

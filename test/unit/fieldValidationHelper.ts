@@ -2,7 +2,7 @@ import { assert } from 'chai';
 import * as fieldValidationHelper from '../../src/common/helpers/fieldValidationHelper';
 import * as commonTypes from '../../src/common/typings';
 
-function createProfile(object: commonTypes.IUserProfile) {
+function createProfile(object: commonTypes.UserProfile) {
     const emptyProfile = {
         name: '',
         type: 0,

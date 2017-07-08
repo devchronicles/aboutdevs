@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import reducers from './reducers';
 import * as clientTypes from '../typings';
 
-export default (initialState: clientTypes.IReduxState = { loggedUser: undefined, form: undefined }) => {
+export default (initialState: clientTypes.ReduxState = { loggedUser: undefined, form: undefined }) => {
     let middleware: any = applyMiddleware(thunk);
 
     if (process.env.NODE_ENV !== 'production') {

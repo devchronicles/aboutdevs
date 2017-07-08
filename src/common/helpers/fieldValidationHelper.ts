@@ -34,7 +34,7 @@ export function validateMaxLength500(value: string) {
     return value.length > 500 ? MAX_LENGTH_500 : undefined;
 }
 
-export function validationRequiredIfProfessional(value: any, user: commonTypes.IUserProfile) {
+export function validationRequiredIfProfessional(value: any, user: commonTypes.UserProfile) {
     return (user.type === 0 && (value === null || value === undefined || value === '')) ? REQUIRED_IF_PROFESSIONAL : undefined;
 }
 
@@ -45,13 +45,13 @@ export function validatePhone(value: string) {
     return /\(\d{2}\)\s\d{3,5}-\d{4}/.test(value) ? undefined : INVALID_PHONE;
 }
 
-export function validateAtLeastOnePhone(value: string, user: commonTypes.IUserProfile) {
+export function validateAtLeastOnePhone(value: string, user: commonTypes.UserProfile) {
     const invalidWhatsapp = user.phoneWhatsapp === null || user.phoneWhatsapp === undefined || user.phoneWhatsapp === '';
     const invalidAlternatePhone = user.phoneAlternative === null || user.phoneAlternative === undefined || user.phoneAlternative === '';
     return invalidWhatsapp && invalidAlternatePhone ? AT_LEAST_ONE_PHONE : undefined;
 }
 
-export function getValidatorsForField(fieldName: string): Array<(value: any, user: commonTypes.IUserProfile) => string> {
+export function getValidatorsForField(fieldName: string): Array<(value: any, user: commonTypes.UserProfile) => string> {
     switch (fieldName) {
         case 'name':
             return [validateRequired, validateMaxLength50];
@@ -74,7 +74,7 @@ export function getValidatorsForField(fieldName: string): Array<(value: any, use
     }
 }
 
-export function validate(user: commonTypes.IUserProfile) {
+export function validate(user: commonTypes.UserProfile) {
     const errors: { [key: string]: string } = {};
     for (const key in user) {
         if (user.hasOwnProperty(key)) {

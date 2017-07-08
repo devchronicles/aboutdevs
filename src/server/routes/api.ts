@@ -9,12 +9,12 @@ const router = express.Router();
 
 router.route('/address').get((req: express.Request, res: express.Response) => {
     const allowCities: boolean = req.query.allowcities;
-    apiHelper.sendPromiseDb(res, (db: dbTypes.IIndieJobsDatabase) => locationHelper.getFormattedLocations(req.query.q as string, allowCities, db));
+    apiHelper.sendPromiseDb(res, (db: dbTypes.IndieJobsDatabase) => locationHelper.getFormattedLocations(req.query.q as string, allowCities, db));
 });
 
 router.route('/professions').get((req, res) => {
     apiHelper.sendPromiseDb(res,
-        (db: dbTypes.IIndieJobsDatabase) => {
+        (db: dbTypes.IndieJobsDatabase) => {
             apiHelper.getAndEnsureUserId(req);
             return db.search_professions(searchHelper.convertToTsVector(searchHelper.normalize(req.query.q)))
                 .then((r) => r.map((ri) => {

@@ -19,7 +19,7 @@ velit nisi iaculis magna, ac dictum purus quam eget urna. Nulla fermentum finibu
  nisi. Ut turpis justo, faucibus vitae orci nec, placerat rhoncus mauris. Duis malesuada vitae 
  nisi eget vestibulum. Donec ex dolor, sodales eget turpis a, congue scelerisque ex.`;
 
-export const profiles: commonTypes.IReduxUserProfile[] = [
+export const profiles: commonTypes.ReduxUserProfile[] = [
     {
         id: 2,
         name: 'joaomoreno',

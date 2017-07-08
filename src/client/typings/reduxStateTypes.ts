@@ -1,6 +1,6 @@
 import * as commonTypes from '../../common/typings'
 
-export interface IReduxState {
-    loggedUser: commonTypes.IReduxCurrentUserProfile,
+export interface ReduxState {
+    loggedUser: commonTypes.ReduxCurrentUserProfile,
     form: any
 }

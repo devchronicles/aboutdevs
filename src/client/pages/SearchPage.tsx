@@ -37,11 +37,11 @@ const SearchPage: React.SFC<ISearchPageProps> = () => (<div className="page-wrap
 
 // CONNECT
 
-const mapStateToProps = (state: clientTypes.IReduxState): ISearchPageStateProps => ({
+const mapStateToProps = (state: clientTypes.ReduxState): ISearchPageStateProps => ({
     loggedUser: state.loggedUser
 });
 
-const mapDispatchToProps = (dispatch: ReactRedux.Dispatch<clientTypes.IReduxState>): ISearchPageDispatchProps => ({
+const mapDispatchToProps = (dispatch: ReactRedux.Dispatch<clientTypes.ReduxState>): ISearchPageDispatchProps => ({
 
 });
 

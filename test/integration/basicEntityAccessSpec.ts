@@ -3,8 +3,8 @@ import { assertCanSaveFindAndDelete } from './dbTestHelper';
 import setupSession from './setupSession';
 
 describe('basicEntityAccess', () => {
-    let db: serverTypes.IIndieJobsDatabase = null;
-    setupSession(before, after, beforeEach, afterEach, ($db: serverTypes.IIndieJobsDatabase) => {
+    let db: serverTypes.IndieJobsDatabase = null;
+    setupSession(before, after, beforeEach, afterEach, ($db: serverTypes.IndieJobsDatabase) => {
         db = $db;
     });
 

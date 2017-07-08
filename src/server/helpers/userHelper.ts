@@ -18,7 +18,7 @@ export function extractUserNameFromEmail(email: string) {
 /**
  * Returns a suggested user name given the user e-mail
  */
-export function getValidUserName(db: dbTypes.IIndieJobsDatabase, userName: string) {
+export function getValidUserName(db: dbTypes.IndieJobsDatabase, userName: string) {
     if (db === null || db === undefined) throw Error('Argument \'db\' should be null or undefined');
     if (userName === null || userName === undefined) throw Error('Argument \'email\' should be null or undefined');
 
@@ -41,12 +41,12 @@ export function getValidUserName(db: dbTypes.IIndieJobsDatabase, userName: strin
  * @param profile
  * @returns Promise
  */
-export async function createFromGoogleProfile(db: dbTypes.IIndieJobsDatabase, profile: googleOAuthTypes.IGoogleOAuthProfile) {
+export async function createFromGoogleProfile(db: dbTypes.IndieJobsDatabase, profile: googleOAuthTypes.GoogleOAuthProfile) {
     if (!db) throw Error('\'db\' should be truthy');
     if (!profile) throw Error('\'profile\' should be truthy');
 
-    const email = safeRead((p: googleOAuthTypes.IGoogleOAuthProfile) => p.emails[0].value, profile, null);
-    const photoUrl = safeRead((p: googleOAuthTypes.IGoogleOAuthProfile) => p.photos[0].value, profile, null);
+    const email = safeRead((p: googleOAuthTypes.GoogleOAuthProfile) => p.emails[0].value, profile, null);
+    const photoUrl = safeRead((p: googleOAuthTypes.GoogleOAuthProfile) => p.photos[0].value, profile, null);
     const gender = profile.gender === 'male' ? 0 : 1;
 
     const userName = await getValidUserName(db, extractUserNameFromEmail(email));
@@ -65,7 +65,7 @@ export async function createFromGoogleProfile(db: dbTypes.IIndieJobsDatabase, pr
         photo_url: photoUrl,
     };
 
-    const insertedUser = (await db.user.insert(user)) as dbTypes.IUser;
+    const insertedUser = (await db.user.insert(user)) as dbTypes.User;
     return insertedUser;
 }
 
@@ -75,8 +75,8 @@ export async function createFromGoogleProfile(db: dbTypes.IIndieJobsDatabase, pr
  * @param existingUser
  * @param profile
  */
-export async function updateFromGoogleProfile(db: dbTypes.IIndieJobsDatabase, existingUser: dbTypes.IUser, googleProfile: googleOAuthTypes.IGoogleOAuthProfile)
-    : Promise<dbTypes.IUser> {
+export async function updateFromGoogleProfile(db: dbTypes.IndieJobsDatabase, existingUser: dbTypes.User, googleProfile: googleOAuthTypes.GoogleOAuthProfile)
+    : Promise<dbTypes.User> {
     if (!db) throw Error('\'db\' should be truthy');
     if (!existingUser) throw Error('\'existingUser\' should be truthy');
     if (!googleProfile) throw Error('\'profile\' should be truthy');
@@ -104,7 +104,7 @@ export async function updateFromGoogleProfile(db: dbTypes.IIndieJobsDatabase, ex
             raw: googleProfile,
         };
     }
-    const savedUser = (await db.user.save(existingUser)) as dbTypes.IUser;
+    const savedUser = (await db.user.save(existingUser)) as dbTypes.User;
     return savedUser;
 }
 
@@ -114,8 +114,8 @@ export async function updateFromGoogleProfile(db: dbTypes.IIndieJobsDatabase, ex
  * @param profile
  * @returns {Promise}
  */
-export function findOrCreateFromGoogleProfile(db: dbTypes.IIndieJobsDatabase, profile: googleOAuthTypes.IGoogleOAuthProfile)
-    : Promise<dbTypes.IUser> {
+export function findOrCreateFromGoogleProfile(db: dbTypes.IndieJobsDatabase, profile: googleOAuthTypes.GoogleOAuthProfile)
+    : Promise<dbTypes.User> {
     if (!db) throw Error('\'db\' should be truthy');
     if (!profile) throw Error('\'profile\' should be truthy');
 
@@ -124,7 +124,7 @@ export function findOrCreateFromGoogleProfile(db: dbTypes.IIndieJobsDatabase, pr
     if (!email) { throw Error('Google profile is not valid'); }
 
     return db.user.findOne({ email })
-        .then((user: dbTypes.IUser) => {
+        .then((user: dbTypes.User) => {
             if (!user) { return createFromGoogleProfile(db, profile); }
 
             // if the existing user is associated with Google already
@@ -138,7 +138,7 @@ export function findOrCreateFromGoogleProfile(db: dbTypes.IIndieJobsDatabase, pr
         });
 }
 
-export function getReduxDataForLoggedUser(user: dbTypes.IUser): commonTypes.IReduxCurrentUserProfile {
+export function getReduxDataForLoggedUser(user: dbTypes.User): commonTypes.ReduxCurrentUserProfile {
     if (user === null || user === undefined) throw Error('Argument \'user\' should be null or undefined');
     return {
         id: user.id,
@@ -149,7 +149,7 @@ export function getReduxDataForLoggedUser(user: dbTypes.IUser): commonTypes.IRed
     };
 }
 
-async function getProfileDataFromUser(db: dbTypes.IIndieJobsDatabase, user: dbTypes.IUser): Promise<commonTypes.IUserProfile> {
+async function getProfileDataFromUser(db: dbTypes.IndieJobsDatabase, user: dbTypes.User): Promise<commonTypes.UserProfile> {
     if (!db) throw Error('Argument \'db\' should be truthy');
     if (!user) throw Error('Argument \'user\' should be truthy');
 
@@ -168,12 +168,12 @@ async function getProfileDataFromUser(db: dbTypes.IIndieJobsDatabase, user: dbTy
     };
 }
 
-export async function getProfile(db: dbTypes.IIndieJobsDatabase, userId: number): Promise<commonTypes.IUserProfile> {
+export async function getProfile(db: dbTypes.IndieJobsDatabase, userId: number): Promise<commonTypes.UserProfile> {
     return db.user.findOne({ id: userId })
         .then((u) => getProfileDataFromUser(db, u));
 }
 
-export async function saveProfile(db: dbTypes.IIndieJobsDatabase, userId: number, profile: commonTypes.IUserProfile): Promise<commonTypes.IUserProfile> {
+export async function saveProfile(db: dbTypes.IndieJobsDatabase, userId: number, profile: commonTypes.UserProfile): Promise<commonTypes.UserProfile> {
     let user = await db.user.findOne({ id: userId });
     if (!user) throw Error('could not find user');
 
@@ -196,18 +196,18 @@ export async function saveProfile(db: dbTypes.IIndieJobsDatabase, userId: number
     const location = await locationHelper.saveLocation(db, profile.address);
     user.geo_location_id = location.id;
 
-    user = (await db.user.update(user)) as dbTypes.IUser;
+    user = (await db.user.update(user)) as dbTypes.User;
 
     // change status
     if (user.status === 0) {
         user.status = 1;
-        user = (await db.user.save(user)) as dbTypes.IUser;
+        user = (await db.user.save(user)) as dbTypes.User;
     }
 
     return getProfileDataFromUser(db, user);
 }
 
-export async function validateProfile(db: dbTypes.IIndieJobsDatabase, profile: commonTypes.IUserProfile) {
+export async function validateProfile(db: dbTypes.IndieJobsDatabase, profile: commonTypes.UserProfile) {
     const updatedProfile = {
         name: '',
         type: 0,

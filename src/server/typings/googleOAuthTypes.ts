@@ -1,48 +1,48 @@
 
-export interface IName {
+export interface GoogleOAuthProfileName {
     familyName: string;
     givenName: string;
 }
 
-export interface IEmail {
+export interface GoogleOAuthProfileEmail {
     value: string;
     type: string;
 }
 
-export interface IPhoto {
+export interface GoogleOAuthProfilePhoto {
     value: string;
 }
 
-export interface IImage {
+export interface GoogleOAuthProfileImage {
     url: string;
     isDefault: boolean;
 }
 
-export interface IJson {
+export interface GoogleOAuthProfileJson {
     kind: string;
     etag: string;
     gender: string;
-    emails: IEmail[];
+    emails: GoogleOAuthProfileEmail[];
     objectType: string;
     id: string;
     displayName: string;
-    name: IName;
+    name: GoogleOAuthProfileName;
     url: string;
-    image: IImage;
+    image: GoogleOAuthProfileImage;
     isPlusUser: boolean;
     language: string;
     circledByCount: number;
     verified: boolean;
 }
 
-export interface IGoogleOAuthProfile {
+export interface GoogleOAuthProfile {
     provider: string;
     id: string;
     displayName: string;
-    name: IName;
-    emails: IEmail[];
-    photos: IPhoto[];
+    name: GoogleOAuthProfileName;
+    emails: GoogleOAuthProfileEmail[];
+    photos: GoogleOAuthProfilePhoto[];
     gender: string;
     _raw: string;
-    _json: IJson;
+    _json: GoogleOAuthProfileJson;
 }

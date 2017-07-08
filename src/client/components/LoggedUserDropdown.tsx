@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import * as commonTypes from '../../common/typings';
 
 interface ILoggedUserDropdownProps {
-    loggedUser: commonTypes.IReduxCurrentUserProfile;
+    loggedUser: commonTypes.ReduxCurrentUserProfile;
 };
 
 interface ILoggedUserDropdownState {

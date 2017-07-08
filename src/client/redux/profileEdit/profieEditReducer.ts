@@ -2,7 +2,7 @@ import * as commonTypes from '../../../common/typings';
 
 import { PROFILE_EDIT_LOAD_STARTED, PROFILE_EDIT_LOAD_SUCCESS, PROFILE_EDIT_LOAD_ERROR } from './profileEditActions';
 
-const defaultProfileEditState: commonTypes.IReduxUserProfile = {
+const defaultProfileEditState: commonTypes.ReduxUserProfile = {
     id: undefined,
     name: undefined,
     displayName: undefined,
@@ -12,7 +12,7 @@ const defaultProfileEditState: commonTypes.IReduxUserProfile = {
     bio: undefined,
 };
 
-function searchReducer(state = defaultProfileEditState, { payload, type }: { payload: commonTypes.IReduxUserProfile, type: string }) {
+function searchReducer(state = defaultProfileEditState, { payload, type }: { payload: commonTypes.ReduxUserProfile, type: string }) {
     let result;
     switch (type) {
         case PROFILE_EDIT_LOAD_STARTED:

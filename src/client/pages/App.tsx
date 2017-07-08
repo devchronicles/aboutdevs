@@ -10,21 +10,21 @@ import * as commonTypes from '../../common/typings';
 import * as ReactRedux from 'react-redux';
 import * as ReactRouter from 'react-router';
 
-interface IAppStateProps {
-    loggedUser: commonTypes.IReduxCurrentUserProfile
+interface AppStateProps {
+    loggedUser: commonTypes.ReduxCurrentUserProfile
 }
 
-interface IAppDispatchProps {
-
-}
-
-interface IAppOwnProps extends ReactRouter.RouteComponentProps<any> {
+interface AppDispatchProps {
 
 }
 
-declare type IAppProps = IAppStateProps & IAppDispatchProps & IAppOwnProps;
+interface AppOwnProps extends ReactRouter.RouteComponentProps<any> {
 
-const App: React.SFC<IAppProps> = ({ loggedUser }) => (
+}
+
+declare type AppProps = AppStateProps & AppDispatchProps & AppOwnProps;
+
+const App: React.SFC<AppProps> = ({ loggedUser }) => (
     <div className="container">
         <Header loggedUser={loggedUser} />
         <Switch>
@@ -37,21 +37,21 @@ const App: React.SFC<IAppProps> = ({ loggedUser }) => (
 
 // CONNECT
 
-const mapStateToProps = (state: clientTypes.IReduxState): IAppStateProps => ({
+const mapStateToProps = (state: clientTypes.ReduxState): AppStateProps => ({
     loggedUser: state.loggedUser
 });
 
-const mapDispatchToProps = (dispatch: ReactRedux.Dispatch<clientTypes.IReduxState>): IAppDispatchProps => ({
+const mapDispatchToProps = (dispatch: ReactRedux.Dispatch<clientTypes.ReduxState>): AppDispatchProps => ({
 
 });
 
-const mergeProps = (stateProps: IAppStateProps, dispatchProps: IAppDispatchProps, ownProps: IAppOwnProps): IAppProps => ({
+const mergeProps = (stateProps: AppStateProps, dispatchProps: AppDispatchProps, ownProps: AppOwnProps): AppProps => ({
     ...stateProps,
     ...dispatchProps,
     ...ownProps
 });
 
-const ConnectedApp = connect<IAppStateProps, IAppDispatchProps, IAppOwnProps, IAppProps>(
+const ConnectedApp = connect<AppStateProps, AppDispatchProps, AppOwnProps, AppProps>(
     mapStateToProps,
     mapDispatchToProps,
     mergeProps

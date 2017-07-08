@@ -5,7 +5,7 @@ import googleProfileSample from './resources/googleProfileSample';
 import setupSession from './setupSession';
 
 describe('userHelper', () => {
-    let db: serverTypes.IIndieJobsDatabase = null;
+    let db: serverTypes.IndieJobsDatabase = null;
     setupSession(before, after, beforeEach, afterEach, ($db) => {
         db = $db;
     });
@@ -62,7 +62,7 @@ describe('userHelper', () => {
             gender: 0,
             email: 'andrerpena@gmail.com',
             display_name: 'André Pena',
-        })) as serverTypes.IUser;
+        })) as serverTypes.User;
 
         user = await userHelper.updateFromGoogleProfile(db, user, googleProfileSample);
 
@@ -75,12 +75,12 @@ describe('userHelper', () => {
     describe('findOrCreateFromGoogleProfile', () => {
         it('when the user did not exist yet', () =>
             db.user.findOne({ email: 'andrerpena@gmail.com' })
-                .then((u: serverTypes.IUser) => {
+                .then((u: serverTypes.User) => {
                     assert.isUndefined(u);
                     return userHelper.findOrCreateFromGoogleProfile(db, googleProfileSample);
                 })
 
-                .then((u: serverTypes.IUser) => {
+                .then((u: serverTypes.User) => {
                     assert.strictEqual(u.email, 'andrerpena@gmail.com');
                     return db.user.destroy({ id: u.id });
                 }),
@@ -107,7 +107,7 @@ describe('userHelper', () => {
                 gender: 0,
                 email: 'andrerpena@gmail.com',
                 display_name: 'André Pena',
-            })) as serverTypes.IUser;
+            })) as serverTypes.User;
 
             const profile = {
                 name: 'andrerpena',

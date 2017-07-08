@@ -5,8 +5,8 @@ import * as serverTypes from '../../src/server/typings';
 import setupSession from './setupSession';
 
 describe('locationHelperSpec', () => {
-    let db: serverTypes.IIndieJobsDatabase = null;
-    setupSession(before, after, beforeEach, afterEach, ($db: serverTypes.IIndieJobsDatabase) => {
+    let db: serverTypes.IndieJobsDatabase = null;
+    setupSession(before, after, beforeEach, afterEach, ($db: serverTypes.IndieJobsDatabase) => {
         db = $db;
     });
     describe('getLocationsFromGoogle', () => {

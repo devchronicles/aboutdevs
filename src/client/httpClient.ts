@@ -5,7 +5,7 @@ export function getProfileData() {
     return axios.get('/api/users/myprofile');
 }
 
-export function saveProfileData(profile: commonTypes.IReduxUserProfile): AxiosPromise {
+export function saveProfileData(profile: commonTypes.ReduxUserProfile): AxiosPromise {
     if (!profile) throw Error('Argument \'profile\' should be truthy');
     return axios.post('/api/users/myprofile', profile);
 }

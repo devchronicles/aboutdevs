@@ -12,7 +12,7 @@ export const PROFILE_EDIT_LOAD_ERROR = 'PROFILE_EDIT_LOAD_ERROR';
  */
 
 export const profileEditLoadData = () => {
-    return async (dispatch: ReactRedux.Dispatch<clientTypes.IReduxState>) => {
+    return async (dispatch: ReactRedux.Dispatch<clientTypes.ReduxState>) => {
         dispatch({ type: PROFILE_EDIT_LOAD_STARTED });
         getProfileData()
             .then((response) => {

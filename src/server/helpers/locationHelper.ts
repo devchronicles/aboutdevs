@@ -12,12 +12,12 @@ import * as searchHelper from './searchHelper';
  * @param {object} location The location to be saved in the cache
  * @param {object} db The db object
  */
-async function saveLocationToCache(searchTerm: string, location: serverTypes.IGeocodeApiResult, db: serverTypes.IIndieJobsDatabase)
-    : Promise<serverTypes.IGeocodeApiResult> {
+async function saveLocationToCache(searchTerm: string, location: serverTypes.GeocodeApiResult, db: serverTypes.IndieJobsDatabase)
+    : Promise<serverTypes.GeocodeApiResult> {
     if (searchTerm === null || searchTerm === undefined) throw Error('Argument \'search\' should be null or undefined');
     if (location === null || location === undefined) throw Error('Argument \'location\' should be null or undefined');
 
-    const insertedLocation = (await db.geo_location_cache.insert({ search: searchTerm, cache: location })) as serverTypes.IGeoLocationCache;
+    const insertedLocation = (await db.geo_location_cache.insert({ search: searchTerm, cache: location })) as serverTypes.GeoLocationCache;
     return insertedLocation ? insertedLocation.cache : undefined;
 }
 
@@ -26,8 +26,8 @@ async function saveLocationToCache(searchTerm: string, location: serverTypes.IGe
  * @param {string} searchTerm The search term the user typed
  * @param {object} db The db object
  */
-export function getLocationsFromCache(searchTerm: string, db: serverTypes.IIndieJobsDatabase)
-    : Promise<serverTypes.IGeocodeApiResult> {
+export function getLocationsFromCache(searchTerm: string, db: serverTypes.IndieJobsDatabase)
+    : Promise<serverTypes.GeocodeApiResult> {
     if (searchTerm === null || searchTerm === undefined) throw Error('Argument \'partialAddress\' should be null or undefined');
     return db.geo_location_cache.findOne({ search: searchTerm })
         .then((r) => (r ? r.cache : undefined));
@@ -37,7 +37,7 @@ export function getLocationsFromCache(searchTerm: string, db: serverTypes.IIndie
  * Returns the location from Google, if it exists, or an object with an empty "results" array, otherwise
  * @param {string} searchTerm The search term the user typed
  */
-export async function getLocationsFromGoogle(searchTerm: string): Promise<serverTypes.IGeocodeApiResult> {
+export async function getLocationsFromGoogle(searchTerm: string): Promise<serverTypes.GeocodeApiResult> {
     if (searchTerm === null || searchTerm === undefined) throw Error('Argument \'partialAddress\' should be null or undefined');
     const encodedLocation = encodeURIComponent(searchTerm);
     const key: string = config.google.geocodeApiKey;
@@ -51,11 +51,11 @@ export async function getLocationsFromGoogle(searchTerm: string): Promise<server
     return res.data;
 }
 
-export async function getLocations(searchTerm: string, allowCities: boolean, db: serverTypes.IIndieJobsDatabase)
-    : Promise<serverTypes.IGeocodeApiResult> {
+export async function getLocations(searchTerm: string, allowCities: boolean, db: serverTypes.IndieJobsDatabase)
+    : Promise<serverTypes.GeocodeApiResult> {
     const normalizedSearchTerm = searchHelper.normalize(searchTerm);
     if (!normalizedSearchTerm) {
-        return Promise.resolve<serverTypes.IGeocodeApiResult>(undefined);
+        return Promise.resolve<serverTypes.GeocodeApiResult>(undefined);
     }
 
     let locations = await getLocationsFromCache(normalizedSearchTerm, db);
@@ -67,13 +67,13 @@ export async function getLocations(searchTerm: string, allowCities: boolean, db:
     return locations;
 }
 
-export async function getFormattedLocations(searchTerm: string, allowCities: boolean, db: serverTypes.IIndieJobsDatabase): Promise<string[]> {
+export async function getFormattedLocations(searchTerm: string, allowCities: boolean, db: serverTypes.IndieJobsDatabase): Promise<string[]> {
     const locations = await getLocations(searchTerm, allowCities, db);
     const formattedLocations = await geocodeApiFormattingHelper.getFormattedLocations(locations, allowCities);
     return formattedLocations;
 }
 
-export async function saveLocation(db: serverTypes.IIndieJobsDatabase, formattedText: string): Promise<serverTypes.IGeoLocation> {
+export async function saveLocation(db: serverTypes.IndieJobsDatabase, formattedText: string): Promise<serverTypes.GeoLocation> {
     const locationData = await getLocations(formattedText, false, db);
     if (!locationData || !locationData.results || !locationData.results.length) throw Error('could not get location');
     if (locationData.results.length > 1) throw Error('the given location is not unique');
@@ -90,7 +90,7 @@ export async function saveLocation(db: serverTypes.IIndieJobsDatabase, formatted
     // saving country
     let country = await db.geo_location_country.findOne({ short_name: countryComponent.short_name });
     if (!country) {
-        country = (await db.geo_location_country.insert({ short_name: countryComponent.short_name, long_name: countryComponent.long_name })) as serverTypes.IGeoLocationCountry;
+        country = (await db.geo_location_country.insert({ short_name: countryComponent.short_name, long_name: countryComponent.long_name })) as serverTypes.GeoLocationCountry;
     }
 
     // saving state
@@ -100,7 +100,7 @@ export async function saveLocation(db: serverTypes.IIndieJobsDatabase, formatted
             geo_location_country_id: country.id,
             long_name: countryComponent.long_name,
             short_name: countryComponent.short_name,
-        })) as serverTypes.IGeoLocationState;
+        })) as serverTypes.GeoLocationState;
     }
 
     // saving city
@@ -109,19 +109,19 @@ export async function saveLocation(db: serverTypes.IIndieJobsDatabase, formatted
         city = (await db.geo_location_city.insert({
             short_name: cityComponent.short_name,
             geo_location_state_id: state.id,
-        })) as serverTypes.IGeoLocationCity;
+        })) as serverTypes.GeoLocationCity;
     }
 
     location = (await db.geo_location.insert({
         formatted_address: formattedText,
         geo_location_city_id: city.id,
         sub_locality: neighborhoodComponent.short_name,
-    })) as serverTypes.IGeoLocation;
+    })) as serverTypes.GeoLocation;
 
     return location;
 }
 
-export async function getFormattedLocationById(db: serverTypes.IIndieJobsDatabase, geoLocationId: number) {
+export async function getFormattedLocationById(db: serverTypes.IndieJobsDatabase, geoLocationId: number) {
     if (!db) throw Error('Argument \'db\' should be truthy');
     if (!geoLocationId) throw Error('Argument \'geoLocationId\' should be truthy');
 

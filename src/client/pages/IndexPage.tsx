@@ -50,11 +50,11 @@ const IndexPage: React.SFC<IIndexPageProps> = () => (<div className="page-wrappe
 
 // CONNECT
 
-const mapStateToProps = (state: clientTypes.IReduxState): IIndexPageStateProps => ({
+const mapStateToProps = (state: clientTypes.ReduxState): IIndexPageStateProps => ({
     loggedUser: state.loggedUser
 });
 
-const mapDispatchToProps = (dispatch: ReactRedux.Dispatch<clientTypes.IReduxState>): IIndexPageDispatchProps => ({
+const mapDispatchToProps = (dispatch: ReactRedux.Dispatch<clientTypes.ReduxState>): IIndexPageDispatchProps => ({
 
 });
 

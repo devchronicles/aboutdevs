@@ -1,4 +1,4 @@
-export interface IUserProfile {
+export interface UserProfile {
     [key: string]: any;
     id?: number;
     type: number;
@@ -6,7 +6,7 @@ export interface IUserProfile {
     phoneAlternative?: string;
 }
 
-export interface IReduxCurrentUserProfile {
+export interface ReduxCurrentUserProfile {
     id: number;
     name: string;
     gender: number;
@@ -14,7 +14,7 @@ export interface IReduxCurrentUserProfile {
     photoUrl: string;
 }
 
-export interface IReduxUserProfile {
+export interface ReduxUserProfile {
     id: number;
     name: string;
     displayName: string;

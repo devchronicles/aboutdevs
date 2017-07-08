@@ -5,7 +5,7 @@ import googleProfileSample from './resources/googleProfileSample';
 import setupSession from './setupSession';
 
 describe('userHelper', () => {
-    let db: serverTypes.IIndieJobsDatabase = null;
+    let db: serverTypes.IndieJobsDatabase = null;
     setupSession(before, after, beforeEach, afterEach, ($db) => {
         db = $db;
     });
@@ -62,7 +62,7 @@ describe('userHelper', () => {
             gender: 0,
             email: 'andrerpena@gmail.com',
             display_name: 'André Pena',
-        })) as serverTypes.IUser;
+        })) as serverTypes.User;
         userHelper.updateFromGoogleProfile(db, user, googleProfileSample);
         assert.isOk(user);
         assert.isOk(user.oauth_profiles);
@@ -106,7 +106,7 @@ describe('userHelper', () => {
                 gender: 0,
                 email: 'andrerpena@gmail.com',
                 display_name: 'André Pena',
-            })) as serverTypes.IUser;
+            })) as serverTypes.User;
 
             const profile = {
                 name: 'andrerpena',

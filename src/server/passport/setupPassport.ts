@@ -32,11 +32,11 @@ export default function(passport: passport.Passport) {
             clientSecret: '0RSivJavPFZIkPlPIWMTSLzO',
             callbackURL: 'http://127.0.0.1:4000/auth/google/callback',
         },
-        (accessToken, refreshToken, profile: googleOAuthTypes.IGoogleOAuthProfile, done) => {
+        (accessToken, refreshToken, profile: googleOAuthTypes.GoogleOAuthProfile, done) => {
             buildDb()
-                .then((db: dbTypes.IIndieJobsDatabase) =>
+                .then((db: dbTypes.IndieJobsDatabase) =>
                     userHelper.findOrCreateFromGoogleProfile(db, profile)
-                        .then((u: dbTypes.IUser) => done(null, u.id)) // this will call passport.serializeUser
+                        .then((u: dbTypes.User) => done(null, u.id)) // this will call passport.serializeUser
                         .catch(done),
                 );
         },
