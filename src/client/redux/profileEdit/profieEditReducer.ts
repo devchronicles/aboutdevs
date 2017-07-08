@@ -1,14 +1,18 @@
+import * as commonTypes from '../../../common/typings';
+
 import { PROFILE_EDIT_LOAD_STARTED, PROFILE_EDIT_LOAD_SUCCESS, PROFILE_EDIT_LOAD_ERROR } from './profileEditActions';
 
-const defaultProfileEditState = {
+const defaultProfileEditState: commonTypes.IReduxUserProfile = {
     id: undefined,
     name: undefined,
     displayName: undefined,
     photoUrl: undefined,
-    loadState: undefined
+    loadState: undefined,
+    profession: undefined,
+    bio: undefined,
 };
 
-function searchReducer(state = defaultProfileEditState, { payload, type }) {
+function searchReducer(state = defaultProfileEditState, { payload, type }: { payload: commonTypes.IReduxUserProfile, type: string }) {
     let result;
     switch (type) {
         case PROFILE_EDIT_LOAD_STARTED:

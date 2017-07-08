@@ -15,12 +15,11 @@ export interface IReduxCurrentUserProfile {
 }
 
 export interface IReduxUserProfile {
+    id: number;
     name: string;
-    profilePicture: string;
     displayName: string;
     profession: string;
     bio: string;
-    category: string;
-    thumbsUp: number;
-    thumbsDown: number;
+    photoUrl: string;
+    loadState: string;
 }
