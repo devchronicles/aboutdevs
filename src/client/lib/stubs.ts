@@ -1,3 +1,5 @@
+import * as commonTypes from '../../common/typings';
+
 const loremIpsum = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vel lacus consectetur 
 leo venenatis lobortis nec eu felis. Sed tempor molestie nibh, maximus lacinia sapien cursus non. Aliquam
  ut lacus sit amet ipsum rutrum venenatis ullamcorper et nisi. Vestibulum in accumsan neque. Duis et 
@@ -17,45 +19,41 @@ velit nisi iaculis magna, ac dictum purus quam eget urna. Nulla fermentum finibu
  nisi. Ut turpis justo, faucibus vitae orci nec, placerat rhoncus mauris. Duis malesuada vitae 
  nisi eget vestibulum. Donec ex dolor, sodales eget turpis a, congue scelerisque ex.`;
 
-export const profiles = [
+export const profiles: commonTypes.IReduxUserProfile[] = [
     {
+        id: 2,
         name: 'joaomoreno',
         displayName: 'João Moreno',
-        profilePicture: 'https://www.gravatar.com/avatar/7deca8ec973c3c0875e9a36e1e3e2c44?s=328&d=identicon&r=PG',
+        photoUrl: 'https://www.gravatar.com/avatar/7deca8ec973c3c0875e9a36e1e3e2c44?s=328&d=identicon&r=PG',
         bio: loremIpsum,
         profession: 'Contador',
-        category: 'Consultoria / Contabilidade',
-        thumbsUp: 43,
-        thumbsDown: 12
+        loadState: 'loaded'
     },
     {
+        id: 3,
         name: 'joaomoreno',
         displayName: 'Helena Braga',
-        profilePicture: 'https://i.stack.imgur.com/BfziW.png?s=328&g=1',
+        photoUrl: 'https://i.stack.imgur.com/BfziW.png?s=328&g=1',
         bio: loremIpsum,
         profession: 'Contadora',
-        category: 'Consultoria / Contabilidade',
-        thumbsUp: 43,
-        thumbsDown: 12
+        loadState: 'loaded'
     },
     {
+        id: 4,
         name: 'joaomoreno',
         displayName: 'Rafael Pereira',
-        profilePicture: 'https://i.stack.imgur.com/zUoEd.jpg?s=328&g=1',
+        photoUrl: 'https://i.stack.imgur.com/zUoEd.jpg?s=328&g=1',
         bio: loremIpsum,
         profession: 'Contador',
-        category: 'Consultoria / Contabilidade',
-        thumbsUp: 43,
-        thumbsDown: 12
+        loadState: 'loaded'
     },
     {
+        id: 5,
         name: 'joaomoreno',
         displayName: 'João Moreno',
-        profilePicture: 'https://www.gravatar.com/avatar/7deca8ec973c3c0875e9a36e1e3e2c44?s=328&d=identicon&r=PG',
+        photoUrl: 'https://www.gravatar.com/avatar/7deca8ec973c3c0875e9a36e1e3e2c44?s=328&d=identicon&r=PG',
         bio: loremIpsum,
         profession: 'Contador',
-        category: 'Consultoria / Contabilidade',
-        thumbsUp: 43,
-        thumbsDown: 12
+        loadState: 'loaded'
     }
 ];

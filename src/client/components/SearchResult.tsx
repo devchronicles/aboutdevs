@@ -13,4 +13,4 @@ const SearchResult: React.SFC<ISearchResultProps> = ({ profiles }) => (
     </ul>
 );
 
-export default { SearchResult };
+export { SearchResult };

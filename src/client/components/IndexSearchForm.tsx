@@ -44,4 +44,4 @@ IndexSearchForm = reduxForm({
     form: 'search' // a unique identifier for this form
 })(IndexSearchForm);
 
-export default IndexSearchForm;
+export { IndexSearchForm }

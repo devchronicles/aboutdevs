@@ -1,8 +1,8 @@
-import React from 'react';
-import SocialButton from '../components/SocialButton';
+import * as React from 'react';
+import { SocialButton } from '../components/SocialButton';
 
 
-const Login = () => (
+const LoginPage = () => (
     <div className="login-page-wrapper">
         <div className="login-card">
             <div className="title">
@@ -17,4 +17,4 @@ const Login = () => (
     </div>
 );
 
-export default Login;
+export { LoginPage };

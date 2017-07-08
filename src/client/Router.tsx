@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import {
     BrowserRouter,
     Route,
@@ -6,8 +6,8 @@ import {
 } from 'react-router-dom';
 
 // pages
-import App from './pages/App';
-import LoginPage from './pages/LoginPage';
+import { App } from './pages/App';
+import { LoginPage } from './pages/LoginPage';
 
 const RouterPage = () => (
     <BrowserRouter>

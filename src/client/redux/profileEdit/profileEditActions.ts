@@ -10,8 +10,9 @@ export const PROFILE_EDIT_LOAD_ERROR = 'PROFILE_EDIT_LOAD_ERROR';
 /**
  * Changes the type of the search
  */
-export function profileEditLoadData() {
-    return (dispatch: ReactRedux.Dispatch<clientTypes.IReduxState>) => {
+
+export const profileEditLoadData = () => {
+    return async (dispatch: ReactRedux.Dispatch<clientTypes.IReduxState>) => {
         dispatch({ type: PROFILE_EDIT_LOAD_STARTED });
         getProfileData()
             .then((response) => {
@@ -29,4 +30,3 @@ export function profileEditLoadData() {
             });
     };
 }
-

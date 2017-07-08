@@ -6,18 +6,12 @@ import { Field, TextBox, TextArea, FormField, FormGroup, FormFieldUserName, Form
 import { DocumentSection } from './DocumentSection';
 import normalizePhone from '../lib/redux-form/normalizePhone';
 import asyncValidation from '../lib/redux-form/asyncValidation';
-import * as httpClient from '../httpClient';
 import * as ReduxForm from 'redux-form';
 import * as commonTypes from '../../common/typings';
 import * as clientTypes from '../typings';
 import * as ReactRedux from 'react-redux';
 
-function submit(values: any) {
-    httpClient.saveProfileData(values)
-        .then((r) => {
-            console.log(r);
-        });
-}
+
 
 interface IProfileEditFormStateProps {
     formValues: any;
@@ -31,7 +25,7 @@ interface IProfileEditFormDispatchProps {
 }
 
 interface IProfileEditFormOwnProps extends ReduxForm.FormProps<any, any, any> {
-
+    onSubmit: (formValues: any) => any;
 }
 
 declare type IProfileEditoFormProps = IProfileEditFormStateProps & IProfileEditFormDispatchProps & IProfileEditFormOwnProps;
@@ -44,12 +38,13 @@ let ProfileEditForm: React.SFC<IProfileEditoFormProps> = (props) => {
         handleSubmit,
         pristine,
         submitting,
-        loggedUser
+        loggedUser,
+        onSubmit
     } = props;
 
     return (
         <div className="document">
-            <form onSubmit={handleSubmit(submit)}>
+            <form onSubmit={handleSubmit(onSubmit)}>
                 <DocumentSection className="flex-column flex-align-items-center">
                     <div className="image" style={{ backgroundImage: `url(${loggedUser.photoUrl})` }} />
                     <div className="edit-profile-image-button-wrapper">
