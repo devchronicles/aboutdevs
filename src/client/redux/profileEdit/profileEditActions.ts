@@ -22,7 +22,7 @@ export const profileEditLoadData = () => {
                         break;
                     case 200:
                         dispatch({ type: PROFILE_EDIT_LOAD_SUCCESS, payload: response.data });
-                        dispatch(initialize('profile-edit', response.data));
+                        dispatch(initialize('profileEdit', response.data));
                         break;
                     default:
                         throw Error(`profileEditLoadData error. Unexpected status code. Status code: ${response.status}`);

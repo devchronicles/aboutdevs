@@ -157,7 +157,7 @@ let ProfileEditForm: React.SFC<ProfileEditoFormProps> = (props) => {
     );
 };
 
-const FORM_NAME = 'profile-edit';
+const FORM_NAME = 'profileEdit';
 
 // Decorate with redux-form
 ProfileEditForm = reduxForm({
