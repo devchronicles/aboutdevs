@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Field, reduxForm } from 'redux-form';
-import PropTypes from 'prop-types';
 import { SelectLocation, FormRow, FormGroup } from './form/index';
 
 interface IIndexSearchFormProps {
@@ -38,10 +37,6 @@ let IndexSearchForm: React.SFC<IIndexSearchFormProps> = (props) => {
             </button>
         </form>
     );
-};
-
-IndexSearchForm.propTypes = {
-    handleSubmit: PropTypes.func.isRequired
 };
 
 // Decorate with redux-form

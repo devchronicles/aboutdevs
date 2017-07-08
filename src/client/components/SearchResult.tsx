@@ -1,15 +1,16 @@
-import React from 'react';
+import * as React from 'react';
+import * as commonTypes from '../../common/typings';
 
-import ProfileCard from './ProfileCard';
+import { ProfileCard } from './ProfileCard';
 
-const SearchResult = ({ profiles }) => (
+interface ISearchResultProps {
+    profiles: commonTypes.IReduxUserProfile[];
+}
+
+const SearchResult: React.SFC<ISearchResultProps> = ({ profiles }) => (
     <ul className="search-result">
         {profiles.map((p, i) => <ProfileCard key={i} profile={p} />)}
     </ul>
 );
 
-SearchResult.propTypes = {
-    profiles: PropTypes.arrayOf(PropTypes.object).isRequired
-};
-
-export default SearchResult;
+export default { SearchResult };

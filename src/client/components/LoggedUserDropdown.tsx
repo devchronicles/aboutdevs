@@ -1,10 +1,9 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import * as types from '../../typings';
+import * as commonTypes from '../../common/typings';
 
 interface ILoggedUserDropdownProps {
-    loggedUser: types.IReduxCurrentUserProfile;
+    loggedUser: commonTypes.IReduxCurrentUserProfile;
 };
 
 interface ILoggedUserDropdownState {
@@ -15,12 +14,8 @@ class LoggedUserDropdown extends React.Component<ILoggedUserDropdownProps, ILogg
 
     private wrapperRef: any;
 
-    constructor(props) {
+    constructor(props: ILoggedUserDropdownProps) {
         super(props);
-        this.handleOpen = this.handleOpen.bind(this);
-        this.handleLinkClick = this.handleLinkClick.bind(this);
-        this.setWrapperRef = this.setWrapperRef.bind(this);
-        this.handleClickOutside = this.handleClickOutside.bind(this);
         this.state = {
             open: false
         };
@@ -37,23 +32,23 @@ class LoggedUserDropdown extends React.Component<ILoggedUserDropdownProps, ILogg
     /**
      * Set the wrapper ref
      */
-    setWrapperRef(node) {
+    setWrapperRef = (node: any) => {
         this.wrapperRef = node;
     }
 
 
-    handleOpen() {
+    handleOpen = () => {
         this.setState({ open: !this.state.open });
     }
 
-    handleLinkClick() {
+    handleLinkClick = () => {
         this.setState({ open: false });
     }
 
     /**
      * Alert if clicked on outside of element
      */
-    handleClickOutside(event) {
+    handleClickOutside = (event: Event) => {
         if (this.state.open && this.wrapperRef && !this.wrapperRef.contains(event.target)) {
             this.setState({ open: false });
         }

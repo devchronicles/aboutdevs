@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Field, reduxForm } from 'redux-form';
-import PropTypes from 'prop-types';
 import { SelectLocation, FormRow, FormColumn, FormGroup } from './form/index';
 
 interface ISearchFormProps {
@@ -44,13 +43,9 @@ let SearchForm: React.SFC<ISearchFormProps> = (props) => {
     </div>);
 };
 
-SearchForm.propTypes = {
-    handleSubmit: PropTypes.func.isRequired
-};
-
 // Decorate with redux-form
 SearchForm = reduxForm({
     form: 'search' // a unique identifier for this form
 })(SearchForm);
 
-export default SearchForm;
+export { SearchForm };

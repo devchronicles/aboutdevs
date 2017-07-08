@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import * as types from '../../typings';
+import * as commonTypes from '../../common/typings';
 import { LoggedUserDropdown } from './LoggedUserDropdown';
 import { Logo } from './Logo';
 
 interface IHeaderProps {
-    loggedUser: types.IReduxCurrentUserProfile;
+    loggedUser: commonTypes.IReduxCurrentUserProfile;
 }
 
 const Header: React.SFC<IHeaderProps> = ({ loggedUser }) => {

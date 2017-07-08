@@ -1,8 +1,8 @@
 import * as React from 'react';
-import * as types from '../../typings';
+import * as commonTypes from '../../common/typings';
 
 interface IProfileCardProps {
-    profile: types.IReduxUserProfile;
+    profile: commonTypes.IReduxUserProfile;
 }
 
 const ProfileCard: React.SFC<IProfileCardProps> = ({ profile }) => (
