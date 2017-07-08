@@ -2,7 +2,7 @@ import * as React from 'react';
 
 interface IDocumentSectionProps {
     className: string;
-    visible: boolean;
+    visible?: boolean;
     children: string | JSX.Element | JSX.Element[];
 }
 

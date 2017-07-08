@@ -16,7 +16,7 @@ const UserTypeToggle: React.SFC<IUserTypeToggle> = (field) => {
     // props for the professional button
     const professionalButtonProps = {
         className: value === PROFESSIONAL_VALUE ? 'pushed' : null,
-        onClick: (event) => {
+        onClick: (event: React.SyntheticEvent<any>) => {
             event.preventDefault();
             onChange(PROFESSIONAL_VALUE, undefined, undefined);
         }
@@ -25,7 +25,7 @@ const UserTypeToggle: React.SFC<IUserTypeToggle> = (field) => {
     // props for the non-professional button
     const nonProfessionalButtonProps = {
         className: value === NON_PROFESSIONAL_VALUE ? 'pushed' : null,
-        onClick: (event) => {
+        onClick: (event: React.SyntheticEvent<any>) => {
             event.preventDefault();
             onChange(NON_PROFESSIONAL_VALUE, undefined, undefined);
         }
@@ -43,4 +43,4 @@ const UserTypeToggle: React.SFC<IUserTypeToggle> = (field) => {
     </div>);
 };
 
-export default UserTypeToggle;
+export { UserTypeToggle };

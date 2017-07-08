@@ -9,3 +9,4 @@ export * from './TextArea';
 export * from './SelectLocation';
 export * from './SelectProfession';
 export * from './Field';
+export * from './UserTypeToggle';

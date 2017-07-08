@@ -2,22 +2,41 @@ import * as React from 'react';
 import { getFormSubmitErrors, getFormSyncErrors, getFormValues, reduxForm, SubmissionError } from 'redux-form';
 import { connect } from 'react-redux';
 import { FaIcon } from './FaIcon';
-import { Field, TextBox, TextArea, FormField, FormGroup, FormFieldUserName, FormRow, SelectLocation, SelectProfession } from './form/index';
-import UserTypeToggle from './UserTypeToggle';
-import DocumentSection from './DocumentSection';
+import { Field, TextBox, TextArea, FormField, FormGroup, FormFieldUserName, FormRow, SelectLocation, SelectProfession, UserTypeToggle } from './form/index';
+import { DocumentSection } from './DocumentSection';
 import normalizePhone from '../lib/redux-form/normalizePhone';
 import asyncValidation from '../lib/redux-form/asyncValidation';
 import * as httpClient from '../httpClient';
+import * as ReduxForm from 'redux-form';
+import * as commonTypes from '../../common/typings';
+import * as clientTypes from '../typings';
+import * as ReactRedux from 'react-redux';
 
-
-function submit(values) {
+function submit(values: any) {
     httpClient.saveProfileData(values)
         .then((r) => {
             console.log(r);
         });
 }
 
-let ProfileEditForm = (props) => {
+interface IProfileEditFormStateProps {
+    formValues: any;
+    formSyncErrors: any;
+    formSubmitErrors: any;
+    loggedUser: commonTypes.IReduxCurrentUserProfile;
+}
+
+interface IProfileEditFormDispatchProps {
+
+}
+
+interface IProfileEditFormOwnProps extends ReduxForm.FormProps<any, any, any> {
+
+}
+
+declare type IProfileEditoFormProps = IProfileEditFormStateProps & IProfileEditFormDispatchProps & IProfileEditFormOwnProps;
+
+let ProfileEditForm: React.SFC<IProfileEditoFormProps> = (props) => {
     const {
         formValues,
         formSyncErrors,
@@ -156,11 +175,27 @@ ProfileEditForm = reduxForm({
 
 // Decorate with connect to read form values
 
-
-ProfileEditForm = connect(state => ({
+const mapStateToProps = (state: clientTypes.IReduxState): IProfileEditFormStateProps => ({
     formValues: getFormValues(FORM_NAME)(state),
     formSyncErrors: getFormSyncErrors(FORM_NAME)(state),
-    formSubmitErrors: getFormSubmitErrors(FORM_NAME)(state)
-}))(ProfileEditForm);
+    formSubmitErrors: getFormSubmitErrors(FORM_NAME)(state),
+    loggedUser: state.loggedUser
+})
 
-export default ProfileEditForm;
+const mapDispatchToProps = (dispatch: ReactRedux.Dispatch<clientTypes.IReduxState>): IProfileEditFormDispatchProps => ({
+
+})
+
+const mergeProps = (stateProps: IProfileEditFormStateProps, dispatchProps: IProfileEditFormDispatchProps, ownProps: IProfileEditFormOwnProps): IProfileEditoFormProps => ({
+    ...stateProps,
+    ...dispatchProps,
+    ...ownProps
+});
+
+const ConnectedProfileEditForm = connect<IProfileEditFormStateProps, IProfileEditFormDispatchProps, IProfileEditFormOwnProps, IProfileEditoFormProps>(
+    mapStateToProps,
+    mapDispatchToProps,
+    mergeProps
+)(ProfileEditForm);
+
+export { ConnectedProfileEditForm as ProfileEditForm }

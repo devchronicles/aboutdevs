@@ -4,10 +4,11 @@ import { Field as RfField } from 'redux-form';
 import * as fieldValidationHelper from '../../../common/helpers/fieldValidationHelper';
 
 interface IFieldProps extends ReduxForm.BaseFieldProps {
-    
 }
 
-const Field: React.SFC<IFieldProps> = (props) => (
+declare type IFinalFieldProps = IFieldProps & any;
+
+const Field: React.SFC<IFinalFieldProps> = (props) => (
     <RfField {...props} validate={fieldValidationHelper.getValidatorsForField(props.name)} />
 );
 

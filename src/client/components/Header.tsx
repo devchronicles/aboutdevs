@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import * as types from '../../typings';
-import LoggedUserDropdown from './LoggedUserDropdown';
-import Logo from './Logo';
+import { LoggedUserDropdown } from './LoggedUserDropdown';
+import { Logo } from './Logo';
 
 interface IHeaderProps {
     loggedUser: types.IReduxCurrentUserProfile;
