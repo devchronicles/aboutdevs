@@ -1,18 +1,17 @@
+const professions = require('../data/professions-processed.json');
 import buildDb from '../src/server/db/buildDb';
-import professions from '../data/professions-processed.json';
 import * as searchHelper from '../src/server/helpers/searchHelper';
 
 let promise = Promise.resolve(0);
 
-function normalize(text) {
+function normalize(text: string) {
     if (!text) throw Error('Inconsistent profession');
     return searchHelper.normalize(text, false);
 }
 
-
 buildDb()
     .then((db) => {
-        professions.data.forEach((profession) => {
+        professions.data.forEach((profession: any) => {
             console.log(`Saving profession: ${profession}`);
             promise = promise
                 .then(() => db.profession.insert({

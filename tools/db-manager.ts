@@ -49,6 +49,7 @@ switch (selectedCommand) {
 }
 
 commands.split('\n').forEach((command: string) => {
-    console.log(command);
-    childProcess.execSync(command);
+    const processedCommand = command.trim();
+    if (processedCommand)
+        childProcess.execSync(processedCommand);
 });
