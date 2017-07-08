@@ -10,4 +10,4 @@ const TextArea: React.SFC<ReduxForm.WrappedFieldProps<{}>> = (props: ReduxForm.W
     return <textarea rows={8} {...props.input} className={classes.join(' ')} />;
 };
 
-export default TextArea;
+export { TextArea }

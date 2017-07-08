@@ -3,8 +3,12 @@ import * as ReduxForm from 'redux-form';
 import { Field as RfField } from 'redux-form';
 import * as fieldValidationHelper from '../../../common/helpers/fieldValidationHelper';
 
-const Field: React.SFC<ReduxForm.BaseFieldProps> = (props) => (
+interface IFieldProps extends ReduxForm.BaseFieldProps {
+    
+}
+
+const Field: React.SFC<IFieldProps> = (props) => (
     <RfField {...props} validate={fieldValidationHelper.getValidatorsForField(props.name)} />
 );
 
-export default Field;
+export { Field };

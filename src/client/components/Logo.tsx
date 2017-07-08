@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 
 const Logo = () => (
     <span className="logo">
@@ -7,4 +7,4 @@ const Logo = () => (
     </span>
 );
 
-export default Logo;
+export { Logo }

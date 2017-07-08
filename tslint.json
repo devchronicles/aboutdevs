@@ -11,6 +11,9 @@
         "max-line-length": [
             false
         ],
+        "ordered-imports": [´
+            false
+        ]
         "curly": false,
         "arrow-parens": [
             false

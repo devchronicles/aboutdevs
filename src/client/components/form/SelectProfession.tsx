@@ -33,10 +33,10 @@ class SelectProfession extends React.Component<ISelectProfessionProps, {}> {
         onChange(row ? row.value : null);
     }
 
-    private isOptionUnique = ({ option: ReactSelect.Option, options: ReactSelect.Option[] }) => {
-        const selectedValue = option.value ? option.value.toLowerCase() : '';
-        return !options.map(o:any => stringHelper.removeDiacritics(o.value).toLowerCase()).includes(selectedValue);
-    };
+    private isOptionUnique = ({ option, options }: ({ option: ReactSelect.Option, options: ReactSelect.Option[] })) => {
+        const selectedValue = option.value ? (option.value as string).toLowerCase() : '';
+        return !options.map((o: ReactSelect.Option) => stringHelper.removeDiacritics(o.value as string).toLowerCase()).includes(selectedValue);
+    }
 
     public render() {
         const { input: { value, onBlur }, meta: { error, touched } } = this.props;
@@ -71,4 +71,4 @@ class SelectProfession extends React.Component<ISelectProfessionProps, {}> {
     }
 }
 
-export default SelectProfession;
+export { SelectProfession }

@@ -27,4 +27,4 @@ InputGroup.defaultProps = {
     addOnAfter: null,
 };
 
-export default InputGroup;
+export { InputGroup };

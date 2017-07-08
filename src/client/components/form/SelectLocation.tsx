@@ -65,4 +65,4 @@ class SelectLocation extends React.Component<ISelectLocationProps, {}> {
     }
 }
 
-export default SelectLocation;
+export { SelectLocation }

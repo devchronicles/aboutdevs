@@ -1,8 +1,8 @@
 import * as React from 'react';
 import * as ReduxForm from 'redux-form';
 import * as fieldValidationMessageHelper from '../../../common/helpers/fieldValidationMessageHelper';
-import FormGroup from './FormGroup';
-import InputGroup from './InputGroup';
+import { FormGroup } from './FormGroup';
+import { InputGroup } from './InputGroup';
 
 interface IFormFieldProps extends ReduxForm.WrappedFieldProps<{}> {
     name: string;
@@ -55,4 +55,4 @@ FormField.defaultProps = {
     placeHolder: '',
 };
 
-export default FormField;
+export { FormField };

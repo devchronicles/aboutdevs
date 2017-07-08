@@ -1,39 +1,51 @@
 import * as React from 'react';
 import * as ReduxForm from 'redux-form';
-import activity from 'react-activity';
+import * as ReactActivity from 'react-activity';
 import { FormGroup, InputGroup, TextBox } from './index';
-import FaIcon from '../FaIcon';
+import { FaIcon } from '../FaIcon';
 import * as fieldValidationMessageHelper from '../../../common/helpers/fieldValidationMessageHelper';
 
-const Spinner = activity.Spinner;
+const Spinner = ReactActivity.Spinner;
 
-const FormFieldUserName: React.SFC<ReduxForm.WrappedFieldProps<{}>> = (props) => {
-    const innerComponentProps = {
-        input: props.input,
-        meta: props.meta,
-    };
+interface IFormFieldUserNameProps extends ReduxForm.WrappedFieldProps<{}> {
+}
 
-    const errorMessage = props.meta.touched ? fieldValidationMessageHelper.getErrorMessage(props.meta.error) : null;
+class FormFieldUserName extends React.Component<IFormFieldUserNameProps>  {
 
-    function getAddOnAfterComponent(f) {
-        if (f.meta.asyncValidating) return <Spinner size={10} />;
-        if (f.meta.error) return <FaIcon icon="exclamation-triangle" className="error" />;
+    getAddOnAfterComponent() {
+        const { meta } = this.props;
+
+        if (meta.asyncValidating) return <Spinner size={10} />;
+        if (meta.error) return <FaIcon icon="exclamation-triangle" className="error" />;
         return <FaIcon icon="check" className="ok" />;
     }
-    const validationComponent = getAddOnAfterComponent(props);
 
-    return (
-        <FormGroup
-            label="Nome do usuário"
-            labelFor="name"
-            help="A URL acima será publicamente visível se você for um profissional"
-            error={errorMessage}
-        >
-            <InputGroup addOnBefore="indiejobs.com.br/" addOnAfter={validationComponent}>
-                <TextBox {...innerComponentProps} />
-            </InputGroup>
-        </FormGroup>
-    );
-};
+    render() {
 
-export default FormFieldUserName;
+        const { input, meta } = this.props;
+
+        const innerComponentProps = {
+            input,
+            meta,
+        };
+
+        const errorMessage = meta.touched ? fieldValidationMessageHelper.getErrorMessage(meta.error) : null;
+
+        const validationComponent = this.getAddOnAfterComponent();
+
+        return (
+            <FormGroup
+                label="Nome do usuário"
+                labelFor="name"
+                help="A URL acima será publicamente visível se você for um profissional"
+                error={errorMessage}
+            >
+                <InputGroup addOnBefore="indiejobs.com.br/" addOnAfter={validationComponent}>
+                    <TextBox {...innerComponentProps} />
+                </InputGroup>
+            </FormGroup>
+        );
+    }
+}
+
+export { FormFieldUserName };

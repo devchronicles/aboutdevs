@@ -1,14 +1,18 @@
-import React from 'react';
+import * as React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import PropTypes from 'prop-types';
 import { SelectLocation, FormRow, FormColumn, FormGroup } from './form/index';
 
-let SearchForm = (props) => {
+interface ISearchFormProps {
+    handleSubmit: (arg: any) => any;
+}
+
+let SearchForm: React.SFC<ISearchFormProps> = (props) => {
     const { handleSubmit } = props;
     return (<div className="search-criteria">
         <form onSubmit={handleSubmit}>
             <FormRow>
-                <FormColumn eq>
+                <FormColumn eq={true}>
                     <FormGroup>
                         <Field
                             name="professional"

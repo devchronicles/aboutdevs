@@ -13,3 +13,13 @@ export interface IReduxCurrentUserProfile {
     displayName: string;
     photoUrl: string;
 }
+
+export interface IReduxUserProfile {
+    profilePicture: string;
+    displayName: string;
+    profession: string;
+    bio: string;
+    category: string;
+    thumbsUp: number;
+    thumbsDown: number;
+}

@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 
 const Hero = () => (
     <div className="hero">
@@ -7,4 +7,4 @@ const Hero = () => (
     </div>
 );
 
-export default Hero;
+export { Hero }

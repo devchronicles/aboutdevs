@@ -1,7 +1,11 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import * as types from '../../typings';
 
-const ProfileCard = ({ profile }) => (
+interface IProfileCardProps {
+    profile: types.IReduxUserProfile;
+}
+
+const ProfileCard: React.SFC<IProfileCardProps> = ({ profile }) => (
     <li className="profile-card">
         <a className="card-body" href="#">
             <div className="image" style={{ backgroundImage: `url(${profile.profilePicture})` }} />
@@ -31,8 +35,4 @@ const ProfileCard = ({ profile }) => (
     </li>
 );
 
-ProfileCard.propTypes = {
-    profile: PropTypes.object.isRequired
-};
-
-export default ProfileCard;
+export { ProfileCard };

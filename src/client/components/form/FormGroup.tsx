@@ -1,11 +1,11 @@
 import * as React from 'react';
 
 interface IFormGroupProps {
-    label: string;
-    labelFor: string;
-    help: string;
-    error: string;
-    children: JSX.Element[];
+    label?: string;
+    labelFor?: string;
+    help?: string;
+    error?: string;
+    children: string | JSX.Element | JSX.Element[];
 }
 
 const FormGroup: React.SFC<IFormGroupProps> = ({ label, labelFor, help, error, children }) => {
@@ -31,4 +31,4 @@ const FormGroup: React.SFC<IFormGroupProps> = ({ label, labelFor, help, error, c
     );
 };
 
-export default FormGroup;
+export { FormGroup };

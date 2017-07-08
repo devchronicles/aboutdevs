@@ -1,9 +1,14 @@
-import React from 'react';
+import * as React from 'react';
+import * as ReduxForm from 'redux-form';
 
 const PROFESSIONAL_VALUE = 0;
 const NON_PROFESSIONAL_VALUE = 1;
 
-const UserTypeToggle = (field) => {
+interface IUserTypeToggle extends ReduxForm.WrappedFieldProps<{}> {
+}
+
+
+const UserTypeToggle: React.SFC<IUserTypeToggle> = (field) => {
     const { value, onChange } = field.input;
 
     const checkComponent = <i className="fa fa-check" aria-hidden="true" />;
@@ -13,7 +18,7 @@ const UserTypeToggle = (field) => {
         className: value === PROFESSIONAL_VALUE ? 'pushed' : null,
         onClick: (event) => {
             event.preventDefault();
-            onChange(PROFESSIONAL_VALUE);
+            onChange(PROFESSIONAL_VALUE, undefined, undefined);
         }
     };
 
@@ -22,7 +27,7 @@ const UserTypeToggle = (field) => {
         className: value === NON_PROFESSIONAL_VALUE ? 'pushed' : null,
         onClick: (event) => {
             event.preventDefault();
-            onChange(NON_PROFESSIONAL_VALUE);
+            onChange(NON_PROFESSIONAL_VALUE, undefined, undefined);
         }
     };
 

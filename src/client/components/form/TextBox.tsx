@@ -10,4 +10,4 @@ const TextBox: React.SFC<ReduxForm.WrappedFieldProps<{}>> = (props) => {
     return <input {...props.input} className={classes.join(' ')} type="text" />;
 };
 
-export default TextBox;
+export { TextBox }

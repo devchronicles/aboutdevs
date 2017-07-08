@@ -1,8 +1,19 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import * as types from '../../typings';
 
-class LoggedUserDropdown extends Component {
+interface ILoggedUserDropdownProps {
+    loggedUser: types.IReduxCurrentUserProfile;
+};
+
+interface ILoggedUserDropdownState {
+    open: boolean;
+}
+
+class LoggedUserDropdown extends React.Component<ILoggedUserDropdownProps, ILoggedUserDropdownState> {
+
+    private wrapperRef: any;
 
     constructor(props) {
         super(props);
@@ -104,8 +115,4 @@ class LoggedUserDropdown extends Component {
     }
 }
 
-LoggedUserDropdown.propTypes = {
-    loggedUser: PropTypes.object.isRequired
-};
-
-export default LoggedUserDropdown;
+export { LoggedUserDropdown };

@@ -1,7 +1,7 @@
-import React from 'react';
-import { reduxForm, getFormValues, getFormSyncErrors, getFormSubmitErrors, SubmissionError } from 'redux-form';
+import * as React from 'react';
+import { getFormSubmitErrors, getFormSyncErrors, getFormValues, reduxForm, SubmissionError } from 'redux-form';
 import { connect } from 'react-redux';
-import FaIcon from './FaIcon';
+import { FaIcon } from './FaIcon';
 import { Field, TextBox, TextArea, FormField, FormGroup, FormFieldUserName, FormRow, SelectLocation, SelectProfession } from './form/index';
 import UserTypeToggle from './UserTypeToggle';
 import DocumentSection from './DocumentSection';

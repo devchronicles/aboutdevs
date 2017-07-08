@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 interface IFormRow {
-    children: string | JSX.Element[];
+    children: string | JSX.Element | JSX.Element[];
 }
 
 const FormRow: React.SFC<IFormRow> = ({ children }: IFormRow) => (
@@ -10,4 +10,4 @@ const FormRow: React.SFC<IFormRow> = ({ children }: IFormRow) => (
     </div>
 );
 
-export default FormRow;
+export { FormRow };

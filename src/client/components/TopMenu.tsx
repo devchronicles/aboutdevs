@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import LoggedUserDropdown from './LoggedUserDropdown';
 
 const TopMenu = () => (
@@ -8,6 +8,5 @@ const TopMenu = () => (
         </li>
     </ul>
 );
-
 
 export default TopMenu;
