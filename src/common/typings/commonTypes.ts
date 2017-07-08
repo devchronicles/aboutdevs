@@ -15,6 +15,7 @@ export interface IReduxCurrentUserProfile {
 }
 
 export interface IReduxUserProfile {
+    name: string;
     profilePicture: string;
     displayName: string;
     profession: string;

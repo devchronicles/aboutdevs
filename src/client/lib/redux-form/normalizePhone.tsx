@@ -1,4 +1,4 @@
-const normalizePhone = (value) => {
+const normalizePhone = (value: string) => {
     if (!value) {
         return value;
     }
