@@ -8,24 +8,24 @@ import * as commonTypes from '../../common/typings';
 import * as ReactRedux from 'react-redux';
 import * as httpClient from '../httpClient';
 
-interface IProfileEditPageStateOwnProps extends ReactRouter.RouteComponentProps<any> {
+interface ProfileEditPageStateOwnProps extends ReactRouter.RouteComponentProps<any> {
     loggedUser: commonTypes.ReduxCurrentUserProfile;
     formValues: any;
 }
 
-interface IProfileEditPageDispatchProps {
+interface ProfileEditPageDispatchProps {
     actions: any;
 }
 
-interface IProfileEditPageStateProps {
+interface ProfileEditPageStateProps {
 
 }
 
-declare type IProfileEditPageProps = IProfileEditPageStateProps & IProfileEditPageDispatchProps & IProfileEditPageStateOwnProps;
+declare type ProfileEditPageProps = ProfileEditPageStateProps & ProfileEditPageDispatchProps & ProfileEditPageStateOwnProps;
 
-class ProfileEditPage extends React.Component<IProfileEditPageProps> {
+class ProfileEditPage extends React.Component<ProfileEditPageProps> {
 
-    constructor(props: IProfileEditPageProps) {
+    constructor(props: ProfileEditPageProps) {
         super(props);
         this.onFormSubmit = this.onFormSubmit.bind(this);
     }
@@ -53,25 +53,25 @@ class ProfileEditPage extends React.Component<IProfileEditPageProps> {
     }
 }
 
-const mapStateToProps = (state: clientTypes.ReduxState): IProfileEditPageStateProps => ({
+const mapStateToProps = (state: clientTypes.ReduxState): ProfileEditPageStateProps => ({
     loggedUser: state.loggedUser,
     formValues: state.form.profileEdit
 });
 
-const mapDispatchToProps = (dispatch: ReactRedux.Dispatch<clientTypes.ReduxState>): IProfileEditPageDispatchProps => ({
+const mapDispatchToProps = (dispatch: ReactRedux.Dispatch<clientTypes.ReduxState>): ProfileEditPageDispatchProps => ({
     actions: {
         profileEditLoadData: () => { dispatch(profileEditActions.profileEditLoadData()); }
     }
 });
 
-const mergeProps = (stateProps: IProfileEditPageStateProps, dispatchProps: IProfileEditPageDispatchProps, ownProps: IProfileEditPageStateOwnProps): IProfileEditPageProps => ({
+const mergeProps = (stateProps: ProfileEditPageStateProps, dispatchProps: ProfileEditPageDispatchProps, ownProps: ProfileEditPageStateOwnProps): ProfileEditPageProps => ({
     ...stateProps,
     ...dispatchProps,
     ...ownProps
 });
 
 // CONNECT
-const ConnectedProfileEditPage = connect<IProfileEditPageStateProps, IProfileEditPageDispatchProps, IProfileEditPageStateOwnProps, IProfileEditPageProps>(
+const ConnectedProfileEditPage = connect<ProfileEditPageStateProps, ProfileEditPageDispatchProps, ProfileEditPageStateOwnProps, ProfileEditPageProps>(
     mapStateToProps,
     mapDispatchToProps,
     mergeProps

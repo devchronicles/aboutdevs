@@ -1,11 +1,11 @@
 import * as React from 'react';
 import * as commonTypes from '../../common/typings';
 
-interface IProfileCardProps {
+interface ProfileCardProps {
     profile: commonTypes.ReduxUserProfile;
 }
 
-const ProfileCard: React.SFC<IProfileCardProps> = ({ profile }) => (
+const ProfileCard: React.SFC<ProfileCardProps> = ({ profile }) => (
     <li className="profile-card">
         <a className="card-body" href="#">
             <div className="image" style={{ backgroundImage: `url(${profile.photoUrl})` }} />

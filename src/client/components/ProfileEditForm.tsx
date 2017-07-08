@@ -11,26 +11,24 @@ import * as commonTypes from '../../common/typings';
 import * as clientTypes from '../typings';
 import * as ReactRedux from 'react-redux';
 
-
-
-interface IProfileEditFormStateProps {
+interface ProfileEditFormStateProps {
     formValues: any;
     formSyncErrors: any;
     formSubmitErrors: any;
     loggedUser: commonTypes.ReduxCurrentUserProfile;
 }
 
-interface IProfileEditFormDispatchProps {
+interface ProfileEditFormDispatchProps {
 
 }
 
-interface IProfileEditFormOwnProps extends ReduxForm.FormProps<any, any, any> {
+interface ProfileEditFormOwnProps extends ReduxForm.FormProps<any, any, any> {
     onSubmit: (formValues: any) => any;
 }
 
-declare type IProfileEditoFormProps = IProfileEditFormStateProps & IProfileEditFormDispatchProps & IProfileEditFormOwnProps;
+declare type ProfileEditoFormProps = ProfileEditFormStateProps & ProfileEditFormDispatchProps & ProfileEditFormOwnProps;
 
-let ProfileEditForm: React.SFC<IProfileEditoFormProps> = (props) => {
+let ProfileEditForm: React.SFC<ProfileEditoFormProps> = (props) => {
     const {
         formValues,
         formSyncErrors,
@@ -170,24 +168,24 @@ ProfileEditForm = reduxForm({
 
 // Decorate with connect to read form values
 
-const mapStateToProps = (state: clientTypes.ReduxState): IProfileEditFormStateProps => ({
+const mapStateToProps = (state: clientTypes.ReduxState): ProfileEditFormStateProps => ({
     formValues: getFormValues(FORM_NAME)(state),
     formSyncErrors: getFormSyncErrors(FORM_NAME)(state),
     formSubmitErrors: getFormSubmitErrors(FORM_NAME)(state),
     loggedUser: state.loggedUser
 })
 
-const mapDispatchToProps = (dispatch: ReactRedux.Dispatch<clientTypes.ReduxState>): IProfileEditFormDispatchProps => ({
+const mapDispatchToProps = (dispatch: ReactRedux.Dispatch<clientTypes.ReduxState>): ProfileEditFormDispatchProps => ({
 
 })
 
-const mergeProps = (stateProps: IProfileEditFormStateProps, dispatchProps: IProfileEditFormDispatchProps, ownProps: IProfileEditFormOwnProps): IProfileEditoFormProps => ({
+const mergeProps = (stateProps: ProfileEditFormStateProps, dispatchProps: ProfileEditFormDispatchProps, ownProps: ProfileEditFormOwnProps): ProfileEditoFormProps => ({
     ...stateProps,
     ...dispatchProps,
     ...ownProps
 });
 
-const ConnectedProfileEditForm = connect<IProfileEditFormStateProps, IProfileEditFormDispatchProps, IProfileEditFormOwnProps, IProfileEditoFormProps>(
+const ConnectedProfileEditForm = connect<ProfileEditFormStateProps, ProfileEditFormDispatchProps, ProfileEditFormOwnProps, ProfileEditoFormProps>(
     mapStateToProps,
     mapDispatchToProps,
     mergeProps

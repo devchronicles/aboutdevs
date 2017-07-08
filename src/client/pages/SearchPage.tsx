@@ -12,21 +12,21 @@ import { SearchResult } from '../components/SearchResult';
 
 import { profiles } from '../lib/stubs';
 
-interface ISearchPageStateProps {
+interface SearchPageStateProps {
 
 }
 
-interface ISearchPageDispatchProps {
+interface SearchPageDispatchProps {
 
 }
 
-interface ISearchPageOwnProps extends ReactRouter.RouteComponentProps<any> {
+interface SearchPageOwnProps extends ReactRouter.RouteComponentProps<any> {
 
 }
 
-declare type ISearchPageProps = ISearchPageStateProps & ISearchPageDispatchProps & ISearchPageOwnProps;
+declare type SearchPageProps = SearchPageStateProps & SearchPageDispatchProps & SearchPageOwnProps;
 
-const SearchPage: React.SFC<ISearchPageProps> = () => (<div className="page-wrapper">
+const SearchPage: React.SFC<SearchPageProps> = () => (<div className="page-wrapper">
     <SearchWrapper>
         <Hero />
         <SearchForm handleSubmit={() => { }} />
@@ -37,21 +37,21 @@ const SearchPage: React.SFC<ISearchPageProps> = () => (<div className="page-wrap
 
 // CONNECT
 
-const mapStateToProps = (state: clientTypes.ReduxState): ISearchPageStateProps => ({
+const mapStateToProps = (state: clientTypes.ReduxState): SearchPageStateProps => ({
     loggedUser: state.loggedUser
 });
 
-const mapDispatchToProps = (dispatch: ReactRedux.Dispatch<clientTypes.ReduxState>): ISearchPageDispatchProps => ({
+const mapDispatchToProps = (dispatch: ReactRedux.Dispatch<clientTypes.ReduxState>): SearchPageDispatchProps => ({
 
 });
 
-const mergeProps = (stateProps: ISearchPageStateProps, dispatchProps: ISearchPageDispatchProps, ownProps: ISearchPageOwnProps): ISearchPageProps => ({
+const mergeProps = (stateProps: SearchPageStateProps, dispatchProps: SearchPageDispatchProps, ownProps: SearchPageOwnProps): SearchPageProps => ({
     ...stateProps,
     ...dispatchProps,
     ...ownProps
 });
 
-const ConnectedSearchPage = connect<ISearchPageStateProps, ISearchPageDispatchProps, ISearchPageOwnProps, ISearchPageProps>(
+const ConnectedSearchPage = connect<SearchPageStateProps, SearchPageDispatchProps, SearchPageOwnProps, SearchPageProps>(
     mapStateToProps,
     mapDispatchToProps,
     mergeProps

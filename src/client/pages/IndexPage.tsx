@@ -7,21 +7,21 @@ import * as ReactRedux from 'react-redux';
 
 import { IndexSearchForm } from '../components/IndexSearchForm';
 
-interface IIndexPageStateProps {
+interface IndexPageStateProps {
 
 }
 
-interface IIndexPageDispatchProps {
+interface IndexPageDispatchProps {
 
 }
 
-interface IIndexPageOwnProps extends ReactRouter.RouteComponentProps<any> {
+interface IndexPageOwnProps extends ReactRouter.RouteComponentProps<any> {
 
 }
 
-declare type IIndexPageProps = IIndexPageStateProps & IIndexPageDispatchProps & IIndexPageOwnProps;
+declare type IndexPageProps = IndexPageStateProps & IndexPageDispatchProps & IndexPageOwnProps;
 
-const IndexPage: React.SFC<IIndexPageProps> = () => (<div className="page-wrapper">
+const IndexPage: React.SFC<IndexPageProps> = () => (<div className="page-wrapper">
     <div className="index-page-wrapper">
         <div className="index-search-form">
             <div className="logo-wrapper">
@@ -50,21 +50,21 @@ const IndexPage: React.SFC<IIndexPageProps> = () => (<div className="page-wrappe
 
 // CONNECT
 
-const mapStateToProps = (state: clientTypes.ReduxState): IIndexPageStateProps => ({
+const mapStateToProps = (state: clientTypes.ReduxState): IndexPageStateProps => ({
     loggedUser: state.loggedUser
 });
 
-const mapDispatchToProps = (dispatch: ReactRedux.Dispatch<clientTypes.ReduxState>): IIndexPageDispatchProps => ({
+const mapDispatchToProps = (dispatch: ReactRedux.Dispatch<clientTypes.ReduxState>): IndexPageDispatchProps => ({
 
 });
 
-const mergeProps = (stateProps: IIndexPageStateProps, dispatchProps: IIndexPageDispatchProps, ownProps: IIndexPageOwnProps): IIndexPageProps => ({
+const mergeProps = (stateProps: IndexPageStateProps, dispatchProps: IndexPageDispatchProps, ownProps: IndexPageOwnProps): IndexPageProps => ({
     ...stateProps,
     ...dispatchProps,
     ...ownProps
 });
 
-const ConnectedIndexPage = connect<IIndexPageStateProps, IIndexPageDispatchProps, IIndexPageOwnProps, IIndexPageProps>(
+const ConnectedIndexPage = connect<IndexPageStateProps, IndexPageDispatchProps, IndexPageOwnProps, IndexPageProps>(
     mapStateToProps,
     mapDispatchToProps,
     mergeProps

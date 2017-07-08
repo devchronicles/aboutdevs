@@ -3,19 +3,19 @@ import * as React from 'react';
 
 const Dots = ReactActivity.Dots;
 
-interface ISocialButtonProps {
+interface SocialButtonProps {
     text: string,
     url: string,
     faClass: string
 };
 
-interface ISocialButtonState {
+interface SocialButtonState {
     loading: boolean;
 }
 
-class SocialButton extends React.Component<ISocialButtonProps, ISocialButtonState> {
+class SocialButton extends React.Component<SocialButtonProps, SocialButtonState> {
 
-    constructor(props: ISocialButtonProps) {
+    constructor(props: SocialButtonProps) {
         super(props);
         this.state = {
             loading: false

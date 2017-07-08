@@ -2,19 +2,19 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import * as commonTypes from '../../common/typings';
 
-interface ILoggedUserDropdownProps {
+interface LoggedUserDropdownProps {
     loggedUser: commonTypes.ReduxCurrentUserProfile;
 };
 
-interface ILoggedUserDropdownState {
+interface LoggedUserDropdownState {
     open: boolean;
 }
 
-class LoggedUserDropdown extends React.Component<ILoggedUserDropdownProps, ILoggedUserDropdownState> {
+class LoggedUserDropdown extends React.Component<LoggedUserDropdownProps, LoggedUserDropdownState> {
 
     private wrapperRef: any;
 
-    constructor(props: ILoggedUserDropdownProps) {
+    constructor(props: LoggedUserDropdownProps) {
         super(props);
         this.state = {
             open: false

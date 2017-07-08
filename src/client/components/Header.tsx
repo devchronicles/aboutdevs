@@ -4,11 +4,11 @@ import * as commonTypes from '../../common/typings';
 import { LoggedUserDropdown } from './LoggedUserDropdown';
 import { Logo } from './Logo';
 
-interface IHeaderProps {
+interface HeaderProps {
     loggedUser: commonTypes.ReduxCurrentUserProfile;
 }
 
-const Header: React.SFC<IHeaderProps> = ({ loggedUser }) => {
+const Header: React.SFC<HeaderProps> = ({ loggedUser }) => {
     const rightComponent = loggedUser.id
         ? <LoggedUserDropdown loggedUser={loggedUser} />
         : <Link to="/login" className="button vibrant" >Entrar</Link>;

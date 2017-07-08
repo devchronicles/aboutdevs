@@ -2,11 +2,11 @@ import * as React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { SelectLocation, FormRow, FormGroup } from './form/index';
 
-interface IIndexSearchFormProps {
+interface IndexSearchFormProps {
     handleSubmit: (arg: any) => any;
 }
 
-let IndexSearchForm: React.SFC<IIndexSearchFormProps> = (props) => {
+let IndexSearchForm: React.SFC<IndexSearchFormProps> = (props) => {
     const { handleSubmit } = props;
     return (
         <form onSubmit={handleSubmit} className="flex-column flex-align-items-center ">
