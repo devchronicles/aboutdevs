@@ -11,9 +11,9 @@
         "max-line-length": [
             false
         ],
-        "ordered-imports": [´
+        "interface-name": [
             false
-        ]
+        ],
         "curly": false,
         "arrow-parens": [
             false
@@ -23,6 +23,9 @@
             false
         ],
         "jsx-no-lambda": [
+            false
+        ],
+        "max-classes-per-file": [
             false
         ]
     }

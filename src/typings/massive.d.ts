@@ -1,4 +1,4 @@
-import * as massive from "massive"
+import * as massive from "massive";
 
 declare module "massive" {
     export interface Table<T> {

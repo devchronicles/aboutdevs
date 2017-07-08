@@ -5,7 +5,7 @@ const defaultLoggedUserState: commonTypes.ReduxCurrentUserProfile = {
     name: undefined,
     displayName: undefined,
     photoUrl: undefined,
-    gender: undefined
+    gender: undefined,
 };
 
 function searchReducer(state = defaultLoggedUserState) {

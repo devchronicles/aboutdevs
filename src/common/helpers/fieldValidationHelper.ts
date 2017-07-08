@@ -82,8 +82,8 @@ export function validate(user: commonTypes.UserProfile) {
             const fieldValidators = getValidatorsForField(key);
             if (fieldValidators.length) {
                 let error;
-                for (const validate of fieldValidators) {
-                    error = validate(value, user);
+                for (const fieldValidator of fieldValidators) {
+                    error = fieldValidator(value, user);
                     if (error) break;
                 }
                 if (error) {

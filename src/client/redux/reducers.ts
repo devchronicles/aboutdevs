@@ -4,5 +4,5 @@ import loggedUserReducer from './loggedUser/loggedUserReducer';
 
 export default combineReducers({
     form: reduxFormReducer,
-    loggedUser: loggedUserReducer
+    loggedUser: loggedUserReducer,
 });

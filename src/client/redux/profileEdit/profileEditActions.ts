@@ -1,6 +1,6 @@
+import * as ReactRedux from 'react-redux';
 import { initialize } from 'redux-form';
 import { getProfileData } from '../../httpClient';
-import * as ReactRedux from 'react-redux';
 import * as clientTypes from '../../typings';
 
 export const PROFILE_EDIT_LOAD_STARTED = 'PROFILE_EDIT_LOAD_STARTED';
@@ -29,4 +29,4 @@ export const profileEditLoadData = () => {
                 }
             });
     };
-}
+};

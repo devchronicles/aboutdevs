@@ -1,9 +1,9 @@
-import * as commonTypes from '../../common/typings'
 import * as ReduxForm from 'redux-form';
+import * as commonTypes from '../../common/typings';
 
 export interface ReduxState {
-    loggedUser: commonTypes.ReduxCurrentUserProfile,
+    loggedUser: commonTypes.ReduxCurrentUserProfile;
     form: {
-        profileEdit?: any
-    }
+        profileEdit?: any,
+    };
 }

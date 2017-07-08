@@ -7,16 +7,16 @@ import * as googleOAuthTypes from '../typings/googleOAuthTypes';
 
 /**
  * Setups up passport
- * @param passport
+ * @param passportInstance
  */
-export default function(passport: passport.Passport) {
-    if (!passport) throw Error('\'passport\' should be truthy');
+export default function(passportInstance: passport.Passport) {
+    if (!passportInstance) throw Error('\'passport\' should be truthy');
 
-    passport.serializeUser((userId, done) => {
+    passportInstance.serializeUser((userId, done) => {
         done(null, userId);
     });
 
-    passport.deserializeUser((userId, done) => {
+    passportInstance.deserializeUser((userId, done) => {
         buildDb()
             .then((db) => db.user.findOne({ id: userId })
                 .then((u) => (u ? userHelper.getReduxDataForLoggedUser(u) : null))
@@ -26,7 +26,7 @@ export default function(passport: passport.Passport) {
     });
 
     // sets up passport for Google
-    passport.use(new GoogleStrategy(
+    passportInstance.use(new GoogleStrategy(
         {
             clientID: '856145944225-c4eivelu0ktapnnt2d1qlms737kv9v0k.apps.googleusercontent.com',
             clientSecret: '0RSivJavPFZIkPlPIWMTSLzO',
