@@ -60,7 +60,7 @@ const mapStateToProps = (state: clientTypes.ReduxState): ProfileEditPageStatePro
 
 const mapDispatchToProps = (dispatch: ReactRedux.Dispatch<clientTypes.ReduxState>): ProfileEditPageDispatchProps => ({
     actions: {
-        profileEditLoadData: () => { dispatch(profileEditActions.profileEditLoadData()); }
+        profileEditLoadData: () => dispatch(profileEditActions.profileEditLoadData())
     }
 });
 
