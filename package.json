@@ -10,7 +10,7 @@
     "hot-server": "webpack-dev-server --hot --config ./webpack.config.dev.js",
     "test": "cross-env NODE_ENV=test mocha ./test/unit/**/*.ts ",
     "test-integration": "cross-env NODE_ENV=test mocha ./test/integration/*Spec.ts",
-    "test-all": "cross-env NODE_ENV=test mocha ./test/unit ./test/integration/*Spec.js",
+    "test-all": "cross-env NODE_ENV=test mocha ./test/unit/*Spec.ts ./test/integration/*Spec.ts",
     "test-p": "cross-env NODE_ENV=test mocha",
     "tslint": "tslint ./src/**/*.ts ./test/**/*.ts",
     "tslint-fix": "tslint ./src/**/*.ts ./test/**/*.ts --fix",
