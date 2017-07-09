@@ -27,6 +27,7 @@
         ],
         "max-classes-per-file": [
             false
-        ]
+        ],
+        "no-var-requires": false
     }
 }

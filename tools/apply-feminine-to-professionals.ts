@@ -1,15 +1,17 @@
-import fs from 'fs';
-import professions from '../data/professions.json';
-
+import * as fs from 'fs';
+const professions = require('../data/professions.json');
 
 class RegexRule {
-    constructor(regex, replacement, exceptionList) {
+    private regex: RegExp;
+    private replacement: string;
+    private exceptionList: string[];
+    constructor(regex: RegExp, replacement: string, exceptionList: string[] = []) {
         this.regex = regex;
         this.replacement = replacement;
         this.exceptionList = exceptionList;
     }
-    apply(word) {
-        if (this.exceptionList && this.exceptionList.includes(word)) return word;
+    public apply(word: string) {
+        if (this.exceptionList && this.exceptionList.indexOf(word) !== -1) return word;
         if (word.match(this.regex)) {
             const newWord = word.replace(this.regex, (m, c1) => c1 + this.replacement);
             return newWord;
@@ -18,7 +20,7 @@ class RegexRule {
     }
 }
 
-const rules = [];
+const rules: RegexRule[] = [];
 rules.push(new RegexRule(/^([^ ]*)(eiro)/, 'eira', ['Bombeiro']));
 rules.push(new RegexRule(/^([^ ]*)(grafo)/, 'grafa'));
 rules.push(new RegexRule(/^([^ ]*)(dor)/, 'dora'));
@@ -31,26 +33,28 @@ rules.push(new RegexRule(/^([^ ]*)(ogo)/, 'oga')); // Psicólogo
 rules.push(new RegexRule(/^([^ ]*)(ssor)/, 'ssora')); // Professor
 rules.push(new RegexRule(/^([^ ]*)(eto)/, 'eta')); // Arquiteto
 
-
-function getFeminine(word) {
-    for (let i = 0; i < rules.length; i++) {
-        const feminineWord = rules[i].apply(word);
+function getFeminine(word: string) {
+    for (const rule of rules) {
+        const feminineWord = rule.apply(word);
         if (feminineWord !== word) return feminineWord;
     }
     return word;
 }
 
+interface NewProfessions {
+    data: string[][];
+}
 
-const newProfessions = {
-    data: []
+const newProfessions: NewProfessions = {
+    data: [],
 };
 
-for (let i = 0; i < professions.data.length; i++) {
-    const masculineVersion = professions.data[i][0];
+for (const profession of professions.data) {
+    const masculineVersion = profession[0];
     newProfessions.data.push([masculineVersion, getFeminine(masculineVersion)]);
 }
 
-newProfessions.data = newProfessions.data.sort((a, b) => a[0].localeCompare(b[0].name));
+newProfessions.data = newProfessions.data.sort((a, b) => a[0].localeCompare(b[0]));
 
 const newProfessionsString = JSON.stringify(newProfessions, null, 4);
 

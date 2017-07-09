@@ -1,17 +1,17 @@
-import professions from '../data/professions-processed.json';
 import * as searchHelper from '../src/server/helpers/searchHelper';
+const professions = require('../data/professions-processed.json');
 
-const nameCanonicalMap = {};
-const nameCanonicalNormalizedMap = {};
-const nameFeminineMap = {};
-const nameFeminineNormalizedMap = {};
+const nameCanonicalMap: { [key: string]: boolean } = {};
+const nameCanonicalNormalizedMap: { [key: string]: boolean } = {};
+const nameFeminineMap: { [key: string]: boolean } = {};
+const nameFeminineNormalizedMap: { [key: string]: boolean } = {};
 
-function normalize(text) {
+function normalize(text: string) {
     if (!text) throw Error('Inconsistent profession');
     return searchHelper.normalize(text, false);
 }
 
-professions.data.forEach((profession) => {
+professions.data.forEach((profession: string[]) => {
     console.log(`Validating profession: ${profession[0]}`);
     // validating name_canonical
     if (profession[0] in nameCanonicalMap) {

@@ -1,6 +1,6 @@
-const professions = require('../data/professions-processed.json');
 import buildDb from '../src/server/db/buildDb';
 import * as searchHelper from '../src/server/helpers/searchHelper';
+const professions = require('../data/professions-processed.json');
 
 let promise = Promise.resolve(0);
 

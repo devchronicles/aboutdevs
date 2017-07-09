@@ -5,10 +5,8 @@ const dbName = 'indiejobs';
 const dbTestsName = 'indiejobs_tests';
 const userName = 'indiejobs';
 
-/* tslint:disable */
 console.log('===Starting DB Command===');
 console.log(`Executing ${selectedCommand}`);
-/* tslint:enable */
 
 let commands;
 switch (selectedCommand) {

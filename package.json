@@ -20,10 +20,10 @@
     "db:generate": "cross-env COMMAND=generate_scripts PGPASSWORD=indiejobs ts-node ./tools/db-manager.ts",
     "db:reinstall": "npm run db:drop && npm run db:install",
     "tools:save-professions": "cross-env NODE_ENV=development ts-node ./tools/save-professions.ts",
-    "tools-validate-professions": "cross-env NODE_ENV=development babel-node ./tools/validate-professions",
-    "tools-print-config": "babel-node ./tools/print-config.js",
-    "tools-massive-repl": "massive -c postgres://indiejobs:indiejobs@localhost:5432/indiejobs",
-    "tools-apply-feminine-to-professions": "babel-node ./tools/apply-feminine-to-professionals.js"
+    "tools:validate-professions": "cross-env NODE_ENV=development ts-node ./tools/validate-professions.ts",
+    "tools:print-config": "ts-node ./tools/print-config.ts",
+    "tools:massive-repl": "massive -c postgres://indiejobs:indiejobs@localhost:5432/indiejobs",
+    "tools:apply-feminine-to-professions": "ts-node ./tools/apply-feminine-to-professionals.ts"
   },
   "repository": {
     "type": "git",
