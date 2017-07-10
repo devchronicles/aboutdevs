@@ -6,7 +6,7 @@
   "scripts": {
     "build-ts": "tsc",
     "start": "cross-env NODE_ENV=development ts-node ./src/server/index.ts",
-    "start:watch": "cross-env NODE_ENV=development nodemon --watch src --exec \"ts-node ./src/server/index.ts\"",
+    "start:watch": "cross-env NODE_ENV=development nodemon",
     "hot-server": "webpack-dev-server --hot --config ./webpack.config.dev.js",
     "test": "cross-env NODE_ENV=test mocha ./test/unit/**/*.ts ",
     "test:integration": "cross-env NODE_ENV=test mocha ./test/integration/*Spec.ts",
@@ -23,7 +23,8 @@
     "tools:validate-professions": "cross-env NODE_ENV=development ts-node ./tools/validate-professions.ts",
     "tools:print-config": "ts-node ./tools/print-config.ts",
     "tools:massive-repl": "massive -c postgres://indiejobs:indiejobs@localhost:5432/indiejobs",
-    "tools:apply-feminine-to-professions": "ts-node ./tools/apply-feminine-to-professionals.ts"
+    "tools:apply-feminine-to-professions": "ts-node ./tools/apply-feminine-to-professionals.ts",
+    "nodemon:dump": "nodemon --dump"
   },
   "repository": {
     "type": "git",
