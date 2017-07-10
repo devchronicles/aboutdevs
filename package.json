@@ -1,41 +1,11 @@
 {
   "name": "indiejobs",
-  "version": "0.0.1",
   "description": "Freelancer job search made ridiculously easy",
-  "main": "index.js",
-  "scripts": {
-    "build-ts": "tsc",
-    "start": "cross-env NODE_ENV=development ts-node ./src/server/index.ts",
-    "start:watch": "cross-env NODE_ENV=development nodemon",
-    "hot-server": "webpack-dev-server --hot --config ./webpack.config.dev.js",
-    "test": "cross-env NODE_ENV=test mocha ./test/unit/**/*.ts ",
-    "test:integration": "cross-env NODE_ENV=test mocha ./test/integration/*Spec.ts",
-    "test:all": "cross-env NODE_ENV=test mocha ./test/unit/*Spec.ts ./test/integration/*Spec.ts",
-    "test:p": "cross-env NODE_ENV=test mocha",
-    "tslint": "tslint ./src/**/*.ts ./test/**/*.ts",
-    "tslint:fix": "tslint ./src/**/*.ts ./test/**/*.ts --fix",
-    "db:install": "cross-env COMMAND=create_dev_dbs PGPASSWORD=indiejobs ts-node ./tools/db-manager.ts",
-    "db:drop": "cross-env COMMAND=drop_dev_dbs PGPASSWORD=indiejobs ts-node ./tools/db-manager.ts",
-    "db:clean": "cross-env COMMAND=clean_up_dev_dbs PGPASSWORD=indiejobs ts-node ./tools/db-manager.ts",
-    "db:generate": "cross-env COMMAND=generate_scripts PGPASSWORD=indiejobs ts-node ./tools/db-manager.ts",
-    "db:reinstall": "npm run db:drop && npm run db:install",
-    "tools:save-professions": "cross-env NODE_ENV=development ts-node ./tools/save-professions.ts",
-    "tools:validate-professions": "cross-env NODE_ENV=development ts-node ./tools/validate-professions.ts",
-    "tools:print-config": "ts-node ./tools/print-config.ts",
-    "tools:massive-repl": "massive -c postgres://indiejobs:indiejobs@localhost:5432/indiejobs",
-    "tools:apply-feminine-to-professions": "ts-node ./tools/apply-feminine-to-professionals.ts",
-    "nodemon:dump": "nodemon --dump"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/andrerpena/radiscope.git"
-  },
+  "version": "0.0.1",
   "author": "Andre Pena",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/andrerpena/radiscope/issues"
   },
-  "homepage": "https://github.com/andrerpena/radiscope#readme",
   "dependencies": {
     "axios": "^0.16.2",
     "babel-preset-es2016": "^6.24.1",
@@ -110,5 +80,35 @@
     "underscore": "^1.8.3",
     "webpack": "^3.1.0",
     "webpack-dev-server": "^2.5.1"
+  },
+  "homepage": "https://github.com/andrerpena/radiscope#readme",
+  "license": "MIT",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andrerpena/radiscope.git"
+  },
+  "scripts": {
+    "build-ts": "tsc",
+    "db:clean": "cross-env COMMAND=clean_up_dev_dbs PGPASSWORD=indiejobs ts-node ./tools/db-manager.ts",
+    "db:drop": "cross-env COMMAND=drop_dev_dbs PGPASSWORD=indiejobs ts-node ./tools/db-manager.ts",
+    "db:generate": "cross-env COMMAND=generate_scripts PGPASSWORD=indiejobs ts-node ./tools/db-manager.ts",
+    "db:install": "cross-env COMMAND=create_dev_dbs PGPASSWORD=indiejobs ts-node ./tools/db-manager.ts",
+    "db:reinstall": "npm run db:drop && npm run db:install",
+    "hot-server": "webpack-dev-server --hot --config ./webpack.config.dev.js",
+    "nodemon:dump": "nodemon --dump",
+    "start": "cross-env NODE_ENV=development ts-node ./src/server/index.ts",
+    "start:watch": "cross-env NODE_ENV=development nodemon",
+    "test": "cross-env NODE_ENV=test mocha ./test/unit/**/*.ts ",
+    "test:all": "cross-env NODE_ENV=test mocha ./test/unit/*Spec.ts ./test/integration/*Spec.ts",
+    "test:integration": "cross-env NODE_ENV=test mocha ./test/integration/*Spec.ts",
+    "test:p": "cross-env NODE_ENV=test mocha",
+    "tools:apply-feminine-to-professions": "ts-node ./tools/apply-feminine-to-professionals.ts",
+    "tools:massive-repl": "massive -c postgres://indiejobs:indiejobs@localhost:5432/indiejobs",
+    "tools:print-config": "ts-node ./tools/print-config.ts",
+    "tools:save-professions": "cross-env NODE_ENV=development ts-node ./tools/save-professions.ts",
+    "tools:validate-professions": "cross-env NODE_ENV=development ts-node ./tools/validate-professions.ts",
+    "tslint": "tslint ./src/**/*.ts ./test/**/*.ts",
+    "tslint:fix": "tslint ./src/**/*.ts ./test/**/*.ts --fix"
   }
 }
