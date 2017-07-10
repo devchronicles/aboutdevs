@@ -12,7 +12,7 @@ const defaultProfileEditState: commonTypes.ReduxUserProfile = {
     bio: undefined,
 };
 
-function searchReducer(state = defaultProfileEditState, { payload, type }: { payload: commonTypes.ReduxUserProfile, type: string }) {
+export function profileEditReducer(state = defaultProfileEditState, { payload, type }: { payload: commonTypes.ReduxUserProfile, type: string }) {
     let result;
     switch (type) {
         case PROFILE_EDIT_LOAD_STARTED:
@@ -31,5 +31,3 @@ function searchReducer(state = defaultProfileEditState, { payload, type }: { pay
             return state;
     }
 }
-
-export default searchReducer;

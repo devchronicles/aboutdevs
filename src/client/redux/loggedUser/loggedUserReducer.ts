@@ -8,8 +8,6 @@ const defaultLoggedUserState: commonTypes.ReduxCurrentUserProfile = {
     gender: undefined,
 };
 
-function searchReducer(state = defaultLoggedUserState) {
+export function loggedUserReducer(state = defaultLoggedUserState) {
     return state;
 }
-
-export default searchReducer;

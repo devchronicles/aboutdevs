@@ -8,6 +8,8 @@ import * as commonTypes from '../../common/typings';
 import * as ReactRedux from 'react-redux';
 import * as ReduxForm from 'redux-form';
 import * as httpClient from '../httpClient';
+import * as ReactNotificationSystem from 'react-notification-system';
+import * as notificationActions from '../redux/notifications/notificationsActions';
 
 interface ProfileEditPageStateOwnProps extends ReactRouter.RouteComponentProps<any> {
     loggedUser: commonTypes.ReduxCurrentUserProfile;
@@ -15,7 +17,8 @@ interface ProfileEditPageStateOwnProps extends ReactRouter.RouteComponentProps<a
 }
 
 interface ProfileEditPageDispatchProps {
-    actions: any;
+    profileEditLoadData: () => void;
+    enqueueNotification: (notification: ReactNotificationSystem.Notification) => void;
 }
 
 interface ProfileEditPageStateProps {
@@ -27,15 +30,20 @@ declare type ProfileEditPageProps = ProfileEditPageStateProps & ProfileEditPageD
 class ProfileEditPage extends React.Component<ProfileEditPageProps> {
 
     public componentDidMount() {
-        const { actions } = this.props;
-        actions.profileEditLoadData();
+        const { profileEditLoadData } = this.props;
+        profileEditLoadData();
     }
 
     private onFormSubmit = async (values: any) => {
+        const { enqueueNotification } = this.props;
         const axiosResult = await httpClient.saveProfileData(values);
         if (axiosResult.data.errors) {
             throw new ReduxForm.SubmissionError(axiosResult.data.errors);
         } else {
+            enqueueNotification({
+                message: 'Seu perfil foi salvo com sucesso',
+                level: 'success',
+            });
             this.props.history.push('/');
         }
     }
@@ -59,9 +67,8 @@ const mapStateToProps = (state: clientTypes.ReduxState): ProfileEditPageStatePro
 });
 
 const mapDispatchToProps = (dispatch: ReactRedux.Dispatch<clientTypes.ReduxState>): ProfileEditPageDispatchProps => ({
-    actions: {
-        profileEditLoadData: () => dispatch(profileEditActions.profileEditLoadData())
-    }
+    profileEditLoadData: () => dispatch(profileEditActions.profileEditLoadData()),
+    enqueueNotification: (notification: ReactNotificationSystem.Notification) => dispatch(notificationActions.enqueueNotification(notification)),
 });
 
 const mergeProps = (stateProps: ProfileEditPageStateProps, dispatchProps: ProfileEditPageDispatchProps, ownProps: ProfileEditPageStateOwnProps): ProfileEditPageProps => ({
@@ -77,4 +84,4 @@ const ConnectedProfileEditPage = connect<ProfileEditPageStateProps, ProfileEditP
     mergeProps,
 )(ProfileEditPage);
 
-export { ConnectedProfileEditPage as ProfileEditPage }
+export { ConnectedProfileEditPage as ProfileEditPage };
