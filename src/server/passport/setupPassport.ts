@@ -1,7 +1,7 @@
 import * as passport from 'passport';
 import { OAuth2Strategy as GoogleStrategy } from 'passport-google-oauth';
 import buildDb from '../db/buildDb';
-import * as userHelper from '../helpers/userHelper';
+import * as userHelper from '../services/userService';
 import * as dbTypes from '../typings/dbTypes';
 import * as googleOAuthTypes from '../typings/googleOAuthTypes';
 

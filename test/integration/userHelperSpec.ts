@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import * as userHelper from '../../src/server/helpers/userHelper';
+import * as userHelper from '../../src/server/services/userService';
 import * as serverTypes from '../../src/server/typings';
 import googleProfileSample from './resources/googleProfileSample';
 import setupSession from './setupSession';

@@ -1,8 +1,8 @@
 import * as express from 'express';
 import * as apiHelper from '../helpers/apiHelper';
-import * as locationHelper from '../helpers/locationHelper';
+import * as locationHelper from '../services/locationService';
 import * as searchHelper from '../helpers/searchHelper';
-import * as userHelper from '../helpers/userHelper';
+import * as userHelper from '../services/userService';
 import * as dbTypes from '../typings/dbTypes';
 
 const router = express.Router();

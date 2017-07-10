@@ -4,7 +4,7 @@ import * as stringHelper from '../../common/helpers/stringHelper';
 import * as commonTypes from '../../common/typings/commonTypes';
 import * as dbTypes from '../typings/dbTypes';
 import * as googleOAuthTypes from '../typings/googleOAuthTypes';
-import * as locationHelper from './locationHelper';
+import * as locationHelper from '../services/locationService';
 
 /**
  * Extracts the user name from the user's e-mail

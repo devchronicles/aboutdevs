@@ -2,9 +2,9 @@ import axios from 'axios';
 import * as massive from 'massive';
 import config from '../../../config/config';
 import * as serverTypes from '../../server/typings';
-import * as geocodeApiFormattingHelper from './geocodeApiFormattingHelper';
-import * as geocodeApiHelper from './geocodeApiHelper';
-import * as searchHelper from './searchHelper';
+import * as geocodeApiFormattingHelper from '../helpers/geocodeApiFormattingHelper';
+import * as geocodeApiHelper from '../helpers/geocodeApiHelper';
+import * as searchHelper from '../helpers/searchHelper';
 
 /**
  * Saves the given {search, location} to the cache and returns the location if everything goes fine
