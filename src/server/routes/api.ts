@@ -49,9 +49,9 @@ router.route('/users/myprofile').post((req, res) => {
             if (!req.body) throw Error('profile was not submitted');
             const profile = req.body;
             const userId = apiHelper.getAndEnsureUserId(req);
-            const error = await userHelper.validateProfile(db, profile);
-            if (Object.keys(error).length) {
-                return { error };
+            const errors = await userHelper.validateProfile(db, profile);
+            if (Object.keys(errors).length) {
+                return { errors };
             }
             return userHelper.saveProfile(db, userId, profile);
         });

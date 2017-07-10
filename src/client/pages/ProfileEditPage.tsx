@@ -6,6 +6,7 @@ import * as profileEditActions from '../redux/profileEdit/profileEditActions';
 import * as clientTypes from '../typings';
 import * as commonTypes from '../../common/typings';
 import * as ReactRedux from 'react-redux';
+import * as ReduxForm from 'redux-form';
 import * as httpClient from '../httpClient';
 
 interface ProfileEditPageStateOwnProps extends ReactRouter.RouteComponentProps<any> {
@@ -25,37 +26,36 @@ declare type ProfileEditPageProps = ProfileEditPageStateProps & ProfileEditPageD
 
 class ProfileEditPage extends React.Component<ProfileEditPageProps> {
 
-    constructor(props: ProfileEditPageProps) {
-        super(props);
-        this.onFormSubmit = this.onFormSubmit.bind(this);
-    }
-
-    componentDidMount() {
+    public componentDidMount() {
         const { actions } = this.props;
         actions.profileEditLoadData();
     }
 
-    onFormSubmit(values: any) {
-        httpClient.saveProfileData(values)
-            .then((r) => {
-                console.log(r);
-            });
+    private onFormSubmit = async (values: any) => {
+        const axiosResult = await httpClient.saveProfileData(values);
+        if (axiosResult.data.errors) {
+            throw new ReduxForm.SubmissionError(axiosResult.data.errors);
+        } else {
+            this.props.history.push('/');
+        }
     }
 
-    render() {
+    public render() {
         const { loggedUser, formValues } = this.props;
 
-        return (<div className="page-wrapper">
-            <div className="document-wrapper">
-                <ProfileEditForm onSubmit={this.onFormSubmit} initialValues={formValues} />
+        return (
+            <div className="page-wrapper">
+                <div className="document-wrapper">
+                    <ProfileEditForm onSubmit={this.onFormSubmit} initialValues={formValues} />
+                </div>
             </div>
-        </div>);
+        );
     }
 }
 
 const mapStateToProps = (state: clientTypes.ReduxState): ProfileEditPageStateProps => ({
     loggedUser: state.loggedUser,
-    formValues: state.form.profileEdit
+    formValues: state.form.profileEdit,
 });
 
 const mapDispatchToProps = (dispatch: ReactRedux.Dispatch<clientTypes.ReduxState>): ProfileEditPageDispatchProps => ({
@@ -67,14 +67,14 @@ const mapDispatchToProps = (dispatch: ReactRedux.Dispatch<clientTypes.ReduxState
 const mergeProps = (stateProps: ProfileEditPageStateProps, dispatchProps: ProfileEditPageDispatchProps, ownProps: ProfileEditPageStateOwnProps): ProfileEditPageProps => ({
     ...stateProps,
     ...dispatchProps,
-    ...ownProps
+    ...ownProps,
 });
 
 // CONNECT
 const ConnectedProfileEditPage = connect<ProfileEditPageStateProps, ProfileEditPageDispatchProps, ProfileEditPageStateOwnProps, ProfileEditPageProps>(
     mapStateToProps,
     mapDispatchToProps,
-    mergeProps
+    mergeProps,
 )(ProfileEditPage);
 
 export { ConnectedProfileEditPage as ProfileEditPage }
