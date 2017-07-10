@@ -4,7 +4,7 @@ import * as commonTypes from '../../common/typings';
 
 interface LoggedUserDropdownProps {
     loggedUser: commonTypes.ReduxCurrentUserProfile;
-};
+}
 
 interface LoggedUserDropdownState {
     open: boolean;
@@ -17,44 +17,43 @@ class LoggedUserDropdown extends React.Component<LoggedUserDropdownProps, Logged
     constructor(props: LoggedUserDropdownProps) {
         super(props);
         this.state = {
-            open: false
+            open: false,
         };
     }
 
-    componentDidMount() {
+    public componentDidMount() {
         document.addEventListener('mousedown', this.handleClickOutside);
     }
 
-    componentWillUnmount() {
+    public componentWillUnmount() {
         document.removeEventListener('mousedown', this.handleClickOutside);
     }
 
     /**
      * Set the wrapper ref
      */
-    setWrapperRef = (node: any) => {
+    private setWrapperRef = (node: any) => {
         this.wrapperRef = node;
     }
 
-
-    handleOpen = () => {
+    private handleOpen = () => {
         this.setState({ open: !this.state.open });
     }
 
-    handleLinkClick = () => {
+    private handleLinkClick = () => {
         this.setState({ open: false });
     }
 
     /**
      * Alert if clicked on outside of element
      */
-    handleClickOutside = (event: Event) => {
+    private handleClickOutside = (event: Event) => {
         if (this.state.open && this.wrapperRef && !this.wrapperRef.contains(event.target)) {
             this.setState({ open: false });
         }
     }
 
-    render() {
+    public render() {
         const { loggedUser: { id, displayName, photoUrl } } = this.props;
         const dropdownClass = this.state.open ? 'visible' : '';
 
@@ -65,7 +64,8 @@ class LoggedUserDropdown extends React.Component<LoggedUserDropdownProps, Logged
                         alt="@andrerpena"
                         className="avatar"
                         src={photoUrl}
-                        height="20" width="20"
+                        height="20"
+                        width="20"
                     />
                     <i className="fa fa-caret-down" aria-hidden="true" />
                 </button>

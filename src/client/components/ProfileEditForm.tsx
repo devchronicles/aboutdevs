@@ -37,7 +37,7 @@ let ProfileEditForm: React.SFC<ProfileEditoFormProps> = (props) => {
         pristine,
         submitting,
         loggedUser,
-        onSubmit
+        onSubmit,
     } = props;
 
     return (
@@ -55,9 +55,7 @@ let ProfileEditForm: React.SFC<ProfileEditoFormProps> = (props) => {
                         <FormGroup
                             label="Tipo de usuário"
                             labelFor="displayName"
-                            help={"Selecione 'Sou um profissional' se você tem interesse em criar um perfil público " +
-                                "para divulgar seus serviços. Caso contrário, selecione 'Estou em busca de profissionais'."
-                            }
+                            help="Selecione 'Sou um profissional' se você tem interesse em criar um perfil público para divulgar seus serviços. Caso contrário, selecione 'Estou em busca de profissionais."
                         >
                             <Field
                                 name="type"
@@ -172,23 +170,23 @@ const mapStateToProps = (state: clientTypes.ReduxState): ProfileEditFormStatePro
     formValues: getFormValues(FORM_NAME)(state),
     formSyncErrors: getFormSyncErrors(FORM_NAME)(state),
     formSubmitErrors: getFormSubmitErrors(FORM_NAME)(state),
-    loggedUser: state.loggedUser
-})
+    loggedUser: state.loggedUser,
+});
 
 const mapDispatchToProps = (dispatch: ReactRedux.Dispatch<clientTypes.ReduxState>): ProfileEditFormDispatchProps => ({
 
-})
+});
 
 const mergeProps = (stateProps: ProfileEditFormStateProps, dispatchProps: ProfileEditFormDispatchProps, ownProps: ProfileEditFormOwnProps): ProfileEditoFormProps => ({
     ...stateProps,
     ...dispatchProps,
-    ...ownProps
+    ...ownProps,
 });
 
 const ConnectedProfileEditForm = connect<ProfileEditFormStateProps, ProfileEditFormDispatchProps, ProfileEditFormOwnProps, ProfileEditoFormProps>(
     mapStateToProps,
     mapDispatchToProps,
-    mergeProps
+    mergeProps,
 )(ProfileEditForm);
 
 export { ConnectedProfileEditForm as ProfileEditForm }
