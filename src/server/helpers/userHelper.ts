@@ -207,6 +207,11 @@ export async function saveProfile(db: dbTypes.IndieJobsDatabase, userId: number,
     return getProfileDataFromUser(db, user);
 }
 
+/**
+ * Returns an object with a key for each property that has an error on it. The value is the error key
+ * @param db The database
+ * @param profile The profile being validated
+ */
 export async function validateProfile(db: dbTypes.IndieJobsDatabase, profile: commonTypes.UserProfile) {
     const updatedProfile = {
         name: '',
@@ -222,9 +227,8 @@ export async function validateProfile(db: dbTypes.IndieJobsDatabase, profile: co
     };
 
     const errors = fieldValidationHelper.validate(updatedProfile);
-    const userNameTaken = await db.is_user_name_taken(updatedProfile.name, updatedProfile.id)
-        .then((result) => result[0]);
-    if (userNameTaken) {
+    const userNameTaken = (await db.is_user_name_taken(updatedProfile.name, updatedProfile.id))[0];
+    if (userNameTaken.exists) {
         errors.name = fieldValidationHelper.USER_NAME_IS_TAKEN;
     }
     return errors;
