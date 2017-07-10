@@ -14,30 +14,30 @@ router.route('/address').get((req: express.Request, res: express.Response) => {
 
 router.route('/professions').get((req, res) => {
     apiHelper.sendPromiseDb(res,
-        (db: dbTypes.IndieJobsDatabase) => {
+        async (db: dbTypes.IndieJobsDatabase) => {
             apiHelper.getAndEnsureUserId(req);
-            return db.search_professions(searchHelper.convertToTsVector(searchHelper.normalize(req.query.q)))
-                .then((r) => r.map((ri) => {
-                    const gender = req.user.gender;
-                    return gender === 0 ? ri.name_canonical : ri.name_feminine;
-                }));
+            const professions = await db.search_professions(searchHelper.convertToTsVector(searchHelper.normalize(req.query.q)))
+            return professions.map((p) => {
+                const gender = req.user.gender;
+                return gender === 0 ? p.name_canonical : p.name_feminine;
+            });
         },
     );
 });
 
 router.route('/users/checkname').get((req, res) => {
     apiHelper.sendPromiseDb(res,
-        (db) => {
+        async (db) => {
             const userId = apiHelper.getAndEnsureUserId(req);
             const userName = req.query.q;
-            return db.is_user_name_taken(userName, userId)
-                .then((data) => !data[0]);
+            const nameExistsResult = (await db.is_user_name_taken(userName, userId))[0];
+            return nameExistsResult.exists;
         });
 });
 
 router.route('/users/myprofile').get((req, res) => {
     apiHelper.sendPromiseDb(res,
-        (db) => {
+        async (db) => {
             const userId = apiHelper.getAndEnsureUserId(req);
             return userHelper.getProfile(db, userId);
         });
@@ -62,14 +62,14 @@ router.route('/users/myprofile').post((req, res) => {
  */
 router.route('/users/:id').get((req, res) => {
     apiHelper.sendPromiseDb(res,
-        (db) => {
+        async (db) => {
             apiHelper.getAndEnsureUserId(req);
             const entityId = req.params.id;
-            return db.user.findOne({ id: entityId })
-                .then((u) => {
-                    if (u) return u;
-                    throw Error('could not find user');
-                });
+            const user = await db.user.findOne({ id: entityId });
+            if (user) {
+                return user;
+            }
+            throw Error('could not find user');
         });
 });
 
