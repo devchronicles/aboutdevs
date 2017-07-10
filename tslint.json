@@ -28,6 +28,12 @@
         "max-classes-per-file": [
             false
         ],
-        "no-var-requires": false
+        "no-var-requires": false,
+        "ordered-imports": [
+            false
+        ],
+        "space-before-function-paren": [
+            false
+        ]
     }
 }
