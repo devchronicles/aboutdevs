@@ -71,3 +71,7 @@ export function getCountry(result: geocodeTypes.Result) {
 export function getCountryComponent(result: geocodeTypes.Result) {
     return findLocationComponentByType(result, COUNTRY_COMPONENT_TYPE);
 }
+
+export function getLongitudeLatitude(result: geocodeTypes.Result): { longitude: number, latitude: number } {
+    return { longitude: result.geometry.location.lng, latitude: result.geometry.location.lat };
+}

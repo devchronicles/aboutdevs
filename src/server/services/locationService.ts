@@ -86,6 +86,7 @@ export async function saveLocation(db: serverTypes.IndieJobsDatabase, formattedT
     const stateComponent = geocodeApiHelper.getStateComponent(locationDataResult);
     const cityComponent = geocodeApiHelper.getCityComponent(locationDataResult);
     const neighborhoodComponent = geocodeApiHelper.getNeighborhoodComponent(locationDataResult);
+    const { longitude, latitude } = geocodeApiHelper.getLongitudeLatitude(locationDataResult);
 
     // saving country
     let country = await db.geo_location_country.findOne({ short_name: countryComponent.short_name });
@@ -116,7 +117,11 @@ export async function saveLocation(db: serverTypes.IndieJobsDatabase, formattedT
         formatted_address: formattedText,
         geo_location_city_id: city.id,
         sub_locality: neighborhoodComponent.short_name,
+        longitude,
+        latitude,
     })) as serverTypes.GeoLocation;
+
+    await db.update_geometry(location.id, longitude, latitude);
 
     return location;
 }

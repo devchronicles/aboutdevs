@@ -5,6 +5,8 @@ export interface GeoLocation {
     id: number;
     geo_location_city_id: number;
     formatted_address: string;
+    longitude: number;
+    latitude: number;
 }
 
 export interface GeoLocationCountry {
@@ -83,4 +85,5 @@ export interface IndieJobsDatabase extends massive.Database {
     is_user_name_taken: (userName: string, userId: number) => Promise<Array<{ exists: boolean }>>;
     search_professions_for_save: (profession: string) => Promise<Array<{ id: number }>>;
     search_professions: (profession: string) => Promise<Profession[]>;
+    update_geometry: (geoLocationId: number, longitude: number, latitude: number) => void;
 }
