@@ -4,6 +4,7 @@ import * as ReactRouter from 'react-router';
 import * as clientTypes from '../typings';
 import * as commonTypes from '../../common/typings';
 import * as ReactRedux from 'react-redux';
+import * as urlHelper from '../../common/helpers/urlHelper';
 
 import { IndexSearchForm } from '../components/IndexSearchForm';
 
@@ -23,7 +24,14 @@ declare type IndexPageProps = IndexPageStateProps & IndexPageDispatchProps & Ind
 
 class IndexPage extends React.Component<IndexPageProps> {
 
-    public handleSearchSubmit = (values: any) => {
+    public handleSearchSubmit = (formValues: any) => {
+        const { history } = this.props;
+        const { location, professional } = formValues;
+        const normalizedLocation = urlHelper.normalizeUrlParameter(location);
+        const normalizedProfessional = urlHelper.normalizeUrlParameter(professional);
+        if (location && professional) {
+            this.props.history.push(`/s/${normalizedLocation}/${normalizedProfessional}`);
+        }
     }
 
     public render() {

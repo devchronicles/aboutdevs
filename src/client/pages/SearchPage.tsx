@@ -26,15 +26,27 @@ interface SearchPageOwnProps extends ReactRouter.RouteComponentProps<any> {
 
 declare type SearchPageProps = SearchPageStateProps & SearchPageDispatchProps & SearchPageOwnProps;
 
-const SearchPage: React.SFC<SearchPageProps> = () => (
-    <div className="page-wrapper">
-        <SearchWrapper>
-            <Hero />
-            <SearchForm handleSubmit={() => { }} />
-        </SearchWrapper>
-        <SearchResult profiles={profiles} />
-    </div>
-);
+class SearchPage extends React.Component<SearchPageProps> {
+    private handleFormSubmit = (formValues: any) => {
+        const { history } = this.props;
+        const { location, professional } = formValues;
+        if (location && professional) {
+            this.props.history.push(`/s/${location}/${professional}`);
+        }
+    }
+
+    public render() {
+        return (
+            <div className="page-wrapper">
+                <SearchWrapper>
+                    <Hero />
+                    <SearchForm handleSubmit={this.handleFormSubmit} />
+                </SearchWrapper>
+                <SearchResult profiles={profiles} />
+            </div>
+        );
+    }
+}
 
 // CONNECT
 
