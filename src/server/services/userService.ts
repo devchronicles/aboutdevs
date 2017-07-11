@@ -2,9 +2,10 @@ import * as fieldValidationHelper from '../../common/helpers/fieldValidationHelp
 import { safeRead } from '../../common/helpers/objectHelpers';
 import * as stringHelper from '../../common/helpers/stringHelper';
 import * as commonTypes from '../../common/typings/commonTypes';
-import * as dbTypes from '../typings/dbTypes';
+import * as serverTypes from '../typings';
 import * as googleOAuthTypes from '../typings/googleOAuthTypes';
 import * as locationHelper from '../services/locationService';
+import * as searchHelper from '../helpers/searchHelper';
 
 /**
  * Extracts the user name from the user's e-mail
@@ -18,7 +19,7 @@ export function extractUserNameFromEmail(email: string) {
 /**
  * Returns a suggested user name given the user e-mail
  */
-export function getValidUserName(db: dbTypes.IndieJobsDatabase, userName: string) {
+export function getValidUserName(db: serverTypes.IndieJobsDatabase, userName: string) {
     if (db === null || db === undefined) throw Error('Argument \'db\' should be null or undefined');
     if (userName === null || userName === undefined) throw Error('Argument \'email\' should be null or undefined');
 
@@ -41,13 +42,13 @@ export function getValidUserName(db: dbTypes.IndieJobsDatabase, userName: string
  * @param profile
  * @returns Promise
  */
-export async function createFromGoogleProfile(db: dbTypes.IndieJobsDatabase, profile: googleOAuthTypes.GoogleOAuthProfile) {
+export async function createFromGoogleProfile(db: serverTypes.IndieJobsDatabase, profile: googleOAuthTypes.GoogleOAuthProfile) {
     if (!db) throw Error('\'db\' should be truthy');
     if (!profile) throw Error('\'profile\' should be truthy');
 
     const email = safeRead((p: googleOAuthTypes.GoogleOAuthProfile) => p.emails[0].value, profile, null);
     const photoUrl = safeRead((p: googleOAuthTypes.GoogleOAuthProfile) => p.photos[0].value, profile, null);
-    const gender = profile.gender === 'male' ? 0 : 1;
+    const gender = profile.gender === 'male' ? serverTypes.UserGender.MALE : serverTypes.UserGender.FEMALE;
 
     const userName = await getValidUserName(db, extractUserNameFromEmail(email));
 
@@ -65,7 +66,7 @@ export async function createFromGoogleProfile(db: dbTypes.IndieJobsDatabase, pro
         photo_url: photoUrl,
     };
 
-    const insertedUser = (await db.user.insert(user)) as dbTypes.User;
+    const insertedUser = (await db.user.insert(user)) as serverTypes.User;
     return insertedUser;
 }
 
@@ -75,8 +76,8 @@ export async function createFromGoogleProfile(db: dbTypes.IndieJobsDatabase, pro
  * @param existingUser
  * @param profile
  */
-export async function updateFromGoogleProfile(db: dbTypes.IndieJobsDatabase, existingUser: dbTypes.User, googleProfile: googleOAuthTypes.GoogleOAuthProfile)
-    : Promise<dbTypes.User> {
+export async function updateFromGoogleProfile(db: serverTypes.IndieJobsDatabase, existingUser: serverTypes.User, googleProfile: googleOAuthTypes.GoogleOAuthProfile)
+    : Promise<serverTypes.User> {
     if (!db) throw Error('\'db\' should be truthy');
     if (!existingUser) throw Error('\'existingUser\' should be truthy');
     if (!googleProfile) throw Error('\'profile\' should be truthy');
@@ -104,7 +105,7 @@ export async function updateFromGoogleProfile(db: dbTypes.IndieJobsDatabase, exi
             raw: googleProfile,
         };
     }
-    const savedUser = (await db.user.save(existingUser)) as dbTypes.User;
+    const savedUser = (await db.user.save(existingUser)) as serverTypes.User;
     return savedUser;
 }
 
@@ -114,8 +115,8 @@ export async function updateFromGoogleProfile(db: dbTypes.IndieJobsDatabase, exi
  * @param profile
  * @returns {Promise}
  */
-export function findOrCreateFromGoogleProfile(db: dbTypes.IndieJobsDatabase, profile: googleOAuthTypes.GoogleOAuthProfile)
-    : Promise<dbTypes.User> {
+export function findOrCreateFromGoogleProfile(db: serverTypes.IndieJobsDatabase, profile: googleOAuthTypes.GoogleOAuthProfile)
+    : Promise<serverTypes.User> {
     if (!db) throw Error('\'db\' should be truthy');
     if (!profile) throw Error('\'profile\' should be truthy');
 
@@ -124,7 +125,7 @@ export function findOrCreateFromGoogleProfile(db: dbTypes.IndieJobsDatabase, pro
     if (!email) { throw Error('Google profile is not valid'); }
 
     return db.user.findOne({ email })
-        .then((user: dbTypes.User) => {
+        .then((user: serverTypes.User) => {
             if (!user) { return createFromGoogleProfile(db, profile); }
 
             // if the existing user is associated with Google already
@@ -138,7 +139,7 @@ export function findOrCreateFromGoogleProfile(db: dbTypes.IndieJobsDatabase, pro
         });
 }
 
-export function getReduxDataForLoggedUser(user: dbTypes.User): commonTypes.ReduxCurrentUserProfile {
+export function getReduxDataForLoggedUser(user: serverTypes.User): commonTypes.ReduxCurrentUserProfile {
     if (user === null || user === undefined) throw Error('Argument \'user\' should be null or undefined');
     return {
         id: user.id,
@@ -149,7 +150,29 @@ export function getReduxDataForLoggedUser(user: dbTypes.User): commonTypes.Redux
     };
 }
 
-async function getProfileDataFromUser(db: dbTypes.IndieJobsDatabase, user: dbTypes.User): Promise<commonTypes.UserProfile> {
+/**
+ * Gets the profession in a way that it can be presented in the client
+ * @param db The database object
+ * @param professionId The id of the profession of the id
+ * @param otherProfession The profession_other field of the user
+ * @param userGender The user gender
+ */
+async function getFormattedProfession(db: serverTypes.IndieJobsDatabase, professionId: number, otherProfession: string, userGender: serverTypes.UserGender) {
+    if (professionId) {
+        const profession = await db.profession.findOne({ id: professionId });
+        if (profession) {
+            switch (userGender) {
+                case serverTypes.UserGender.MALE:
+                    return profession.name_canonical;
+                case serverTypes.UserGender.FEMALE:
+                    return profession.name_feminine;
+            }
+        }
+    }
+    return otherProfession;
+}
+
+async function getProfileDataFromUser(db: serverTypes.IndieJobsDatabase, user: serverTypes.User): Promise<commonTypes.UserProfile> {
     if (!db) throw Error('Argument \'db\' should be truthy');
     if (!user) throw Error('Argument \'user\' should be truthy');
 
@@ -161,6 +184,7 @@ async function getProfileDataFromUser(db: dbTypes.IndieJobsDatabase, user: dbTyp
         type: user.type,
         status: user.status,
         address: await (user.geo_location_id ? locationHelper.getFormattedLocationById(db, user.geo_location_id) : null),
+        profession: await getFormattedProfession(db, user.profession_id, user.profession_other, user.gender),
         phoneWhatsapp: user.phone_whatsapp,
         phoneAlternative: user.phone_alternative,
         bio: user.bio,
@@ -168,12 +192,12 @@ async function getProfileDataFromUser(db: dbTypes.IndieJobsDatabase, user: dbTyp
     };
 }
 
-export async function getProfile(db: dbTypes.IndieJobsDatabase, userId: number): Promise<commonTypes.UserProfile> {
+export async function getProfile(db: serverTypes.IndieJobsDatabase, userId: number): Promise<commonTypes.UserProfile> {
     return db.user.findOne({ id: userId })
         .then((u) => getProfileDataFromUser(db, u));
 }
 
-export async function saveProfile(db: dbTypes.IndieJobsDatabase, userId: number, profile: commonTypes.UserProfile): Promise<commonTypes.UserProfile> {
+export async function saveProfile(db: serverTypes.IndieJobsDatabase, userId: number, profile: commonTypes.UserProfile): Promise<commonTypes.UserProfile> {
     let user = await db.user.findOne({ id: userId });
     if (!user) throw Error('could not find user');
 
@@ -185,7 +209,8 @@ export async function saveProfile(db: dbTypes.IndieJobsDatabase, userId: number,
     user.phone_alternative = profile.phoneAlternative;
 
     // profession
-    const professions = await db.search_professions_for_save(profile.profession);
+    const professionNormalized = searchHelper.normalize(profile.profession);
+    const professions = await db.search_professions_for_save(professionNormalized);
     if (professions.length) {
         user.profession_id = professions[0];
     } else {
@@ -196,12 +221,12 @@ export async function saveProfile(db: dbTypes.IndieJobsDatabase, userId: number,
     const location = await locationHelper.saveLocation(db, profile.address);
     user.geo_location_id = location.id;
 
-    user = (await db.user.update(user)) as dbTypes.User;
+    user = (await db.user.update(user)) as serverTypes.User;
 
     // change status
     if (user.status === 0) {
         user.status = 1;
-        user = (await db.user.save(user)) as dbTypes.User;
+        user = (await db.user.save(user)) as serverTypes.User;
     }
 
     return getProfileDataFromUser(db, user);
@@ -212,7 +237,7 @@ export async function saveProfile(db: dbTypes.IndieJobsDatabase, userId: number,
  * @param db The database
  * @param profile The profile being validated
  */
-export async function validateProfile(db: dbTypes.IndieJobsDatabase, profile: commonTypes.UserProfile) {
+export async function validateProfile(db: serverTypes.IndieJobsDatabase, profile: commonTypes.UserProfile) {
     const updatedProfile = {
         name: '',
         type: 0,

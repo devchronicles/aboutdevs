@@ -2,7 +2,7 @@ import { assert } from 'chai';
 import * as fieldValidationHelper from '../../src/common/helpers/fieldValidationHelper';
 import * as commonTypes from '../../src/common/typings';
 
-function createProfile(object: commonTypes.UserProfile) {
+function createProfile(object: any): commonTypes.UserProfile {
     const emptyProfile = {
         name: '',
         type: 0,
@@ -20,7 +20,7 @@ function createProfile(object: commonTypes.UserProfile) {
 describe('fieldValidationHelper', () => {
     describe('validate', () => {
         it('Validate empty object - User normal', () => {
-            const profile = createProfile({ type: 1 });
+            const profile = createProfile({ type: commonTypes.UserProfileType.USER });
             const errors = fieldValidationHelper.validate(profile);
             assert.deepEqual(errors, {
                 name: 'required',
@@ -30,19 +30,5 @@ describe('fieldValidationHelper', () => {
                 phoneAlternative: 'at-least-one-phone',
             });
         });
-        // it('Validate empty object - User professional', () => {
-        //     const profile = createProfile({ type: 0 });
-        //     const errors = fieldValidationHelper.validate(profile);
-        //     assert.deepEqual(errors, {
-        //         name: 'required',
-        //         displayName: 'required',
-        //         profession: 'required-if-professional',
-        //         bio: 'required-if-professional',
-        //         activities: 'required-if-professional',
-        //         address: 'required',
-        //         phoneWhatsapp: 'at-least-one-phone',
-        //         phoneAlternative: 'at-least-one-phone',
-        //     });
-        // });
     });
 });

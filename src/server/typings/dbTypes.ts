@@ -31,6 +31,11 @@ export interface GeoLocationCache {
     cache: googleGeocodeTypes.GeocodeApiResult;
 }
 
+export enum UserGender {
+    MALE = 0,
+    FEMALE = 1,
+}
+
 export interface User {
     id: number;
     display_name: string;
@@ -46,7 +51,7 @@ export interface User {
     type: number;
     profession_other: string;
     name: string;
-    gender: number;
+    gender: UserGender;
     geo_location_id: number;
     profession_id: number;
     bio: string;
@@ -59,6 +64,8 @@ export interface Profession {
     id: number;
     name_canonical: string;
     name_feminine: string;
+    name_canonical_normalized: string;
+    name_feminine_normalized: string;
 }
 
 export interface IndieJobsDatabase extends massive.Database {
@@ -70,6 +77,7 @@ export interface IndieJobsDatabase extends massive.Database {
     geo_location_state: massive.Table<GeoLocationState>;
     geo_location_city: massive.Table<GeoLocationCity>;
     user: massive.Table<User>;
+    profession: massive.Table<Profession>;
 
     // functions
     is_user_name_taken: (userName: string, userId: number) => Promise<Array<{ exists: boolean }>>;

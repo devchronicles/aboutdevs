@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as commonTypes from '../../common/typings';
 
 interface ProfileCardProps {
-    profile: commonTypes.ReduxUserProfile;
+    profile: commonTypes.UserProfile;
 }
 
 const ProfileCard: React.SFC<ProfileCardProps> = ({ profile }) => (

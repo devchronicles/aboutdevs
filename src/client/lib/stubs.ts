@@ -19,41 +19,49 @@ velit nisi iaculis magna, ac dictum purus quam eget urna. Nulla fermentum finibu
  nisi. Ut turpis justo, faucibus vitae orci nec, placerat rhoncus mauris. Duis malesuada vitae
  nisi eget vestibulum. Donec ex dolor, sodales eget turpis a, congue scelerisque ex.`;
 
-export const profiles: commonTypes.ReduxUserProfile[] = [
+export const profiles: commonTypes.UserProfile[] = [
     {
         id: 2,
+        status: commonTypes.UserProfileStatus.READY,
+        type: commonTypes.UserProfileType.PROFESSIONAL,
         name: 'joaomoreno',
         displayName: 'João Moreno',
         photoUrl: 'https://www.gravatar.com/avatar/7deca8ec973c3c0875e9a36e1e3e2c44?s=328&d=identicon&r=PG',
         bio: loremIpsum,
         profession: 'Contador',
-        loadState: 'loaded',
+        address: 'Rua Henrique Surerus 28 Apto 904',
     },
     {
         id: 3,
+        status: commonTypes.UserProfileStatus.READY,
+        type: commonTypes.UserProfileType.PROFESSIONAL,
         name: 'joaomoreno',
         displayName: 'Helena Braga',
         photoUrl: 'https://i.stack.imgur.com/BfziW.png?s=328&g=1',
         bio: loremIpsum,
         profession: 'Contadora',
-        loadState: 'loaded',
+        address: 'Rua Henrique Surerus 28 Apto 904',
     },
     {
         id: 4,
+        status: commonTypes.UserProfileStatus.READY,
+        type: commonTypes.UserProfileType.PROFESSIONAL,
         name: 'joaomoreno',
         displayName: 'Rafael Pereira',
         photoUrl: 'https://i.stack.imgur.com/zUoEd.jpg?s=328&g=1',
         bio: loremIpsum,
         profession: 'Contador',
-        loadState: 'loaded',
+        address: 'Rua Henrique Surerus 28 Apto 904',
     },
     {
         id: 5,
+        status: commonTypes.UserProfileStatus.READY,
+        type: commonTypes.UserProfileType.PROFESSIONAL,
         name: 'joaomoreno',
         displayName: 'João Moreno',
         photoUrl: 'https://www.gravatar.com/avatar/7deca8ec973c3c0875e9a36e1e3e2c44?s=328&d=identicon&r=PG',
         bio: loremIpsum,
         profession: 'Contador',
-        loadState: 'loaded',
+        address: 'Rua Henrique Surerus 28 Apto 904',
     },
 ];

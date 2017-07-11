@@ -4,7 +4,7 @@ import * as commonTypes from '../../common/typings';
 import { ProfileCard } from './ProfileCard';
 
 interface SearchResultProps {
-    profiles: commonTypes.ReduxUserProfile[];
+    profiles: commonTypes.UserProfile[];
 }
 
 const SearchResult: React.SFC<SearchResultProps> = ({ profiles }) => (
