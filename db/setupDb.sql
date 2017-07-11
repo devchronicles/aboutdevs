@@ -38,6 +38,20 @@ COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 
 --
+-- Name: postgis; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS postgis WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION postgis; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION postgis IS 'PostGIS geometry, geography, and raster spatial types and functions';
+
+
+--
 -- Name: unaccent; Type: EXTENSION; Schema: -; Owner: 
 --
 
@@ -500,7 +514,7 @@ CREATE TABLE "user" (
     id integer DEFAULT nextval('user_id_seq'::regclass) NOT NULL,
     display_name character varying(50) NOT NULL,
     email character varying(255) NOT NULL,
-    photo_url character varying(255),
+    photo_url character varying(255) NOT NULL,
     oauth_profiles json,
     status smallint DEFAULT 0 NOT NULL,
     type smallint DEFAULT 0 NOT NULL,
