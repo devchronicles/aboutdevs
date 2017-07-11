@@ -34,7 +34,7 @@ class ProfileEditPage extends React.Component<ProfileEditPageProps> {
         profileEditLoadData();
     }
 
-    private onFormSubmit = async (values: any) => {
+    private handleFormSubmit = async (values: any) => {
         const { enqueueNotification } = this.props;
         const axiosResult = await httpClient.saveProfileData(values);
         if (axiosResult.data.errors) {
@@ -58,7 +58,7 @@ class ProfileEditPage extends React.Component<ProfileEditPageProps> {
         return (
             <div className="page-wrapper">
                 <div className="document-wrapper">
-                    <ProfileEditForm onSubmit={this.onFormSubmit} onCancel={this.onFormCancel} initialValues={formValues} />
+                    <ProfileEditForm onSubmit={this.handleFormSubmit} onCancel={this.onFormCancel} initialValues={formValues} />
                 </div>
             </div>
         );

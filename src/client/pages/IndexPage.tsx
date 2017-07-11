@@ -21,37 +21,45 @@ interface IndexPageOwnProps extends ReactRouter.RouteComponentProps<any> {
 
 declare type IndexPageProps = IndexPageStateProps & IndexPageDispatchProps & IndexPageOwnProps;
 
-const IndexPage: React.SFC<IndexPageProps> = () => (<div className="page-wrapper">
-    <div className="index-page-wrapper">
-        <div className="index-search-form">
-            <div className="logo-wrapper">
-                <span className="index-hero">
-                    <div className="icon-box">
-                        <i className="fa fa-briefcase" aria-hidden="true" />
-                    </div>
-                    <div className="hero-text">
-                        <div className="hero-logo">IndieJobs</div>
-                        <div className="hero-motto">do que você precisa hoje?</div>
-                    </div>
-                </span>
-            </div>
-            <IndexSearchForm handleSubmit={() => { }} />
-            <div className="register-wrapper">
-                <span className="text">
-                    Você é um(a) profissional?
-                </span>
-                <button className="faded">
-                    Crie sua conta, é grátis!
-                </button>
-            </div>
-        </div>
-    </div>
-</div>);
+class IndexPage extends React.Component<IndexPageProps> {
 
+    public handleSearchSubmit = (values: any) => {
+    }
+
+    public render() {
+        return (
+            <div className="page-wrapper">
+                <div className="index-page-wrapper">
+                    <div className="index-search-form">
+                        <div className="logo-wrapper">
+                            <span className="index-hero">
+                                <div className="icon-box">
+                                    <i className="fa fa-briefcase" aria-hidden="true" />
+                                </div>
+                                <div className="hero-text">
+                                    <div className="hero-logo">IndieJobs</div>
+                                    <div className="hero-motto">do que você precisa hoje?</div>
+                                </div>
+                            </span>
+                        </div>
+                        <IndexSearchForm onSubmit={this.handleSearchSubmit} />
+                        <div className="register-wrapper">
+                            <span className="text">
+                                Você é um(a) profissional?
+                </span>
+                            <button className="faded">
+                                Crie sua conta, é grátis!
+                </button>
+                        </div>
+                    </div>
+                </div>
+            </div>);
+    }
+}
 // CONNECT
 
 const mapStateToProps = (state: clientTypes.ReduxState): IndexPageStateProps => ({
-    loggedUser: state.loggedUser
+    loggedUser: state.loggedUser,
 });
 
 const mapDispatchToProps = (dispatch: ReactRedux.Dispatch<clientTypes.ReduxState>): IndexPageDispatchProps => ({
@@ -61,13 +69,13 @@ const mapDispatchToProps = (dispatch: ReactRedux.Dispatch<clientTypes.ReduxState
 const mergeProps = (stateProps: IndexPageStateProps, dispatchProps: IndexPageDispatchProps, ownProps: IndexPageOwnProps): IndexPageProps => ({
     ...stateProps,
     ...dispatchProps,
-    ...ownProps
+    ...ownProps,
 });
 
 const ConnectedIndexPage = connect<IndexPageStateProps, IndexPageDispatchProps, IndexPageOwnProps, IndexPageProps>(
     mapStateToProps,
     mapDispatchToProps,
-    mergeProps
+    mergeProps,
 )(IndexPage);
 
-export { ConnectedIndexPage as IndexPage }
+export { ConnectedIndexPage as IndexPage };

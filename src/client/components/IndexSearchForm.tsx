@@ -1,15 +1,19 @@
 import * as React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { SelectLocation, FormRow, FormGroup } from './form/index';
+import * as ReduxForm from 'redux-form';
 
-interface IndexSearchFormProps {
-    handleSubmit: (arg: any) => any;
+interface IndexSearchFormProps extends ReduxForm.FormProps<any, any, any> {
+    onSubmit: (formValues: any) => void;
 }
 
 let IndexSearchForm: React.SFC<IndexSearchFormProps> = (props) => {
-    const { handleSubmit } = props;
+    const {
+        handleSubmit,
+        onSubmit,
+    } = props;
     return (
-        <form onSubmit={handleSubmit} className="flex-column flex-align-items-center ">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex-column flex-align-items-center ">
             <FormRow>
                 <FormGroup>
                     <Field
@@ -26,7 +30,7 @@ let IndexSearchForm: React.SFC<IndexSearchFormProps> = (props) => {
                     <Field
                         name="location"
                         component={SelectLocation}
-                        allowCities
+                        allowCities={true}
                         placeholder="Localizado próximo a..."
                     />
                 </FormGroup>
@@ -41,7 +45,7 @@ let IndexSearchForm: React.SFC<IndexSearchFormProps> = (props) => {
 
 // Decorate with redux-form
 IndexSearchForm = reduxForm({
-    form: 'search' // a unique identifier for this form
+    form: 'search', // a unique identifier for this form
 })(IndexSearchForm);
 
-export { IndexSearchForm }
+export { IndexSearchForm };

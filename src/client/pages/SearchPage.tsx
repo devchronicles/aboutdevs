@@ -26,19 +26,20 @@ interface SearchPageOwnProps extends ReactRouter.RouteComponentProps<any> {
 
 declare type SearchPageProps = SearchPageStateProps & SearchPageDispatchProps & SearchPageOwnProps;
 
-const SearchPage: React.SFC<SearchPageProps> = () => (<div className="page-wrapper">
-    <SearchWrapper>
-        <Hero />
-        <SearchForm handleSubmit={() => { }} />
-    </SearchWrapper>
-    <SearchResult profiles={profiles} />
-</div>);
-
+const SearchPage: React.SFC<SearchPageProps> = () => (
+    <div className="page-wrapper">
+        <SearchWrapper>
+            <Hero />
+            <SearchForm handleSubmit={() => { }} />
+        </SearchWrapper>
+        <SearchResult profiles={profiles} />
+    </div>
+);
 
 // CONNECT
 
 const mapStateToProps = (state: clientTypes.ReduxState): SearchPageStateProps => ({
-    loggedUser: state.loggedUser
+    loggedUser: state.loggedUser,
 });
 
 const mapDispatchToProps = (dispatch: ReactRedux.Dispatch<clientTypes.ReduxState>): SearchPageDispatchProps => ({
@@ -48,14 +49,13 @@ const mapDispatchToProps = (dispatch: ReactRedux.Dispatch<clientTypes.ReduxState
 const mergeProps = (stateProps: SearchPageStateProps, dispatchProps: SearchPageDispatchProps, ownProps: SearchPageOwnProps): SearchPageProps => ({
     ...stateProps,
     ...dispatchProps,
-    ...ownProps
+    ...ownProps,
 });
 
 const ConnectedSearchPage = connect<SearchPageStateProps, SearchPageDispatchProps, SearchPageOwnProps, SearchPageProps>(
     mapStateToProps,
     mapDispatchToProps,
-    mergeProps
+    mergeProps,
 )(SearchPage);
 
-export { ConnectedSearchPage as SearchPage }
-
+export { ConnectedSearchPage as SearchPage };
