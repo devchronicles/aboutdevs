@@ -212,8 +212,10 @@ export async function saveProfile(db: serverTypes.IndieJobsDatabase, userId: num
     const professionNormalized = searchHelper.normalize(profile.profession);
     const professions = await db.search_professions_for_save(professionNormalized);
     if (professions.length) {
-        user.profession_id = professions[0];
+        user.profession_id = professions[0].id;
+        user.profession_other = undefined;
     } else {
+        user.profession_id = undefined;
         user.profession_other = profile.profession;
     }
 
@@ -224,8 +226,8 @@ export async function saveProfile(db: serverTypes.IndieJobsDatabase, userId: num
     user = (await db.user.update(user)) as serverTypes.User;
 
     // change status
-    if (user.status === 0) {
-        user.status = 1;
+    if (user.status === commonTypes.UserProfileStatus.PENDING_PROFILE_ACTIVATION) {
+        user.status = commonTypes.UserProfileStatus.READY;
         user = (await db.user.save(user)) as serverTypes.User;
     }
 

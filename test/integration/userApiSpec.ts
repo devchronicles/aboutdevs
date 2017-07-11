@@ -106,6 +106,7 @@ describe('userHelper', () => {
                 gender: 0,
                 email: 'andrerpena@gmail.com',
                 display_name: 'André Pena',
+                photo_url: undefined,
             })) as serverTypes.User;
 
             const profile = {

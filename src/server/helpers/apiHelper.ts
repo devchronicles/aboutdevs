@@ -71,12 +71,16 @@ export function sendPromise(res: express.Response, promise: Promise<any>): Promi
         .catch((e) => sendError(res, e));
 }
 
-export function sendPromiseDb(res: express.Response, promiseFunction: (db: dbTypes.IndieJobsDatabase) => any): Promise<express.Response> {
+export async function sendPromiseDb(res: express.Response, promiseFunction: (db: dbTypes.IndieJobsDatabase) => any): Promise<express.Response> {
     if (!res) throw Error('Argument \'res\' should be truthy');
     if (!promiseFunction) throw Error('Argument \'promiseFunction\' should be truthy');
 
     return buildDb()
         .then((db) => promiseFunction(db))
         .then((result) => sendOk(res, result))
-        .catch((e) => sendError(res, e));
+        .catch((e) => {
+            if (process.env.NODE_ENV !== 'production')
+                console.log(e);
+            return sendError(res, e);
+        });
 }

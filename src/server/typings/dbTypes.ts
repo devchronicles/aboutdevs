@@ -81,6 +81,6 @@ export interface IndieJobsDatabase extends massive.Database {
 
     // functions
     is_user_name_taken: (userName: string, userId: number) => Promise<Array<{ exists: boolean }>>;
-    search_professions_for_save: (profession: string) => Promise<number[]>;
+    search_professions_for_save: (profession: string) => Promise<Array<{ id: number }>>;
     search_professions: (profession: string) => Promise<Profession[]>;
 }
