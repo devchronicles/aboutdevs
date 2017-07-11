@@ -48,13 +48,17 @@ class ProfileEditPage extends React.Component<ProfileEditPageProps> {
         }
     }
 
+    private onFormCancel = () => {
+        this.props.history.push('/');
+    }
+
     public render() {
         const { loggedUser, formValues } = this.props;
 
         return (
             <div className="page-wrapper">
                 <div className="document-wrapper">
-                    <ProfileEditForm onSubmit={this.onFormSubmit} initialValues={formValues} />
+                    <ProfileEditForm onSubmit={this.onFormSubmit} onCancel={this.onFormCancel} initialValues={formValues} />
                 </div>
             </div>
         );

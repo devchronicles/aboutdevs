@@ -24,6 +24,7 @@ interface ProfileEditFormDispatchProps {
 
 interface ProfileEditFormOwnProps extends ReduxForm.FormProps<any, any, any> {
     onSubmit: (formValues: any) => any;
+    onCancel: () => void;
 }
 
 declare type ProfileEditoFormProps = ProfileEditFormStateProps & ProfileEditFormDispatchProps & ProfileEditFormOwnProps;
@@ -38,6 +39,7 @@ let ProfileEditForm: React.SFC<ProfileEditoFormProps> = (props) => {
         submitting,
         loggedUser,
         onSubmit,
+        onCancel,
     } = props;
 
     return (
@@ -147,7 +149,7 @@ let ProfileEditForm: React.SFC<ProfileEditoFormProps> = (props) => {
                     </FormRow>
                 </DocumentSection>
                 <DocumentSection className="flex-row-reverse button-bar">
-                    <a className="button" href="/">Cancelar</a>
+                    <button onClick={() => onCancel()}>Cancelar</button>
                     <button type="submit" className="vibrant" disabled={pristine || submitting}>Salvar</button>
                 </DocumentSection>
             </form >
@@ -161,7 +163,7 @@ const FORM_NAME = 'profileEdit';
 ProfileEditForm = reduxForm({
     form: FORM_NAME, // a unique identifier for this form,
     asyncValidate: asyncValidation,
-    asyncBlurFields: ['name']
+    asyncBlurFields: ['name'],
 })(ProfileEditForm);
 
 // Decorate with connect to read form values
