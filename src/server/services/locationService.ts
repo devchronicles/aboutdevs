@@ -91,7 +91,10 @@ export async function saveLocation(db: serverTypes.IndieJobsDatabase, formattedT
     // saving country
     let country = await db.geo_location_country.findOne({ short_name: countryComponent.short_name });
     if (!country) {
-        country = (await db.geo_location_country.insert({ short_name: countryComponent.short_name, long_name: countryComponent.long_name })) as serverTypes.GeoLocationCountry;
+        country = (await db.geo_location_country.insert({
+            short_name: countryComponent.short_name,
+            long_name: countryComponent.long_name,
+        })) as serverTypes.GeoLocationCountry;
     }
 
     // saving state
@@ -99,8 +102,8 @@ export async function saveLocation(db: serverTypes.IndieJobsDatabase, formattedT
     if (!state) {
         state = (await db.geo_location_state.insert({
             geo_location_country_id: country.id,
-            long_name: countryComponent.long_name,
-            short_name: countryComponent.short_name,
+            long_name: stateComponent.long_name,
+            short_name: stateComponent.short_name,
         })) as serverTypes.GeoLocationState;
     }
 

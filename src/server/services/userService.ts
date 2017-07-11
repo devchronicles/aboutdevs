@@ -4,7 +4,7 @@ import * as stringHelper from '../../common/helpers/stringHelper';
 import * as commonTypes from '../../common/typings/commonTypes';
 import * as serverTypes from '../typings';
 import * as googleOAuthTypes from '../typings/googleOAuthTypes';
-import * as locationHelper from '../services/locationService';
+import * as locationService from '../services/locationService';
 import * as searchHelper from '../helpers/searchHelper';
 
 /**
@@ -183,7 +183,7 @@ async function getProfileDataFromUser(db: serverTypes.IndieJobsDatabase, user: s
         photoUrl: user.photo_url,
         type: user.type,
         status: user.status,
-        address: await (user.geo_location_id ? locationHelper.getFormattedLocationById(db, user.geo_location_id) : null),
+        address: await (user.geo_location_id ? locationService.getFormattedLocationById(db, user.geo_location_id) : null),
         profession: await getFormattedProfession(db, user.profession_id, user.profession_other, user.gender),
         phoneWhatsapp: user.phone_whatsapp,
         phoneAlternative: user.phone_alternative,
@@ -221,7 +221,7 @@ export async function saveProfile(db: serverTypes.IndieJobsDatabase, userId: num
     }
 
     // location
-    const location = await locationHelper.saveLocation(db, profile.address);
+    const location = await locationService.saveLocation(db, profile.address);
     user.geo_location_id = location.id;
 
     user = (await db.user.update(user)) as serverTypes.User;

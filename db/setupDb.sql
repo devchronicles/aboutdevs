@@ -282,7 +282,11 @@ CREATE TABLE geo_location (
     id integer NOT NULL,
     geo_location_city_id integer NOT NULL,
     formatted_address character varying(255) NOT NULL,
-    sub_locality character varying(255) NOT NULL
+    sub_locality character varying(255) NOT NULL,
+    geometry geometry,
+    longitude double precision,
+    latitude double precision,
+    CONSTRAINT enforce_srid CHECK ((st_srid(geometry) = 4326))
 );
 
 
@@ -703,10 +707,24 @@ CREATE UNIQUE INDEX geo_location_formatted_address_uindex ON geo_location USING 
 
 
 --
+-- Name: geo_location_gpx; Type: INDEX; Schema: public; Owner: indiejobs
+--
+
+CREATE INDEX geo_location_gpx ON geo_location USING gist (geography(geometry));
+
+
+--
 -- Name: geo_location_id_uindex; Type: INDEX; Schema: public; Owner: indiejobs
 --
 
 CREATE UNIQUE INDEX geo_location_id_uindex ON geo_location USING btree (id);
+
+
+--
+-- Name: geo_location_spx; Type: INDEX; Schema: public; Owner: indiejobs
+--
+
+CREATE INDEX geo_location_spx ON geo_location USING gist (geometry);
 
 
 --
