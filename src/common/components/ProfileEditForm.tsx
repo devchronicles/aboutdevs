@@ -8,7 +8,6 @@ import normalizePhone from '../lib/redux-form/normalizePhone';
 import asyncValidation from '../lib/redux-form/asyncValidation';
 import * as ReduxForm from 'redux-form';
 import * as commonTypes from '../../common/typings';
-import * as clientTypes from '../typings';
 import * as ReactRedux from 'react-redux';
 
 interface ProfileEditFormStateProps {
@@ -168,14 +167,14 @@ ProfileEditForm = reduxForm({
 
 // Decorate with connect to read form values
 
-const mapStateToProps = (state: clientTypes.ReduxState): ProfileEditFormStateProps => ({
+const mapStateToProps = (state: commonTypes.ReduxState): ProfileEditFormStateProps => ({
     formValues: getFormValues(FORM_NAME)(state),
     formSyncErrors: getFormSyncErrors(FORM_NAME)(state),
     formSubmitErrors: getFormSubmitErrors(FORM_NAME)(state),
     loggedUser: state.loggedUser,
 });
 
-const mapDispatchToProps = (dispatch: ReactRedux.Dispatch<clientTypes.ReduxState>): ProfileEditFormDispatchProps => ({
+const mapDispatchToProps = (dispatch: ReactRedux.Dispatch<commonTypes.ReduxState>): ProfileEditFormDispatchProps => ({
 
 });
 

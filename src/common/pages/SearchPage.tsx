@@ -36,6 +36,9 @@ class SearchPage extends React.Component<SearchPageProps> {
     }
 
     public render() {
+
+        console.log(profiles);
+
         return (
             <div className="page-wrapper">
                 <SearchWrapper>

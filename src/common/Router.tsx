@@ -14,7 +14,6 @@ const RouterPage = () => (
         <Switch>
             <Route exact={true} path="/login" component={LoginPage} />
             <Route path="/" component={App} />
-            <Route path="/s/:location/:professional" component={App} />
         </Switch>
     </BrowserRouter>);
 

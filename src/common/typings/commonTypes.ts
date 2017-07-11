@@ -1,3 +1,5 @@
+import * as ReactNotificationSystem from 'react-notification-system';
+
 export interface ReduxCurrentUserProfile {
     id: number;
     name: string;
@@ -37,4 +39,12 @@ export interface UserProfile {
     phoneWhatsapp?: string;
     phoneAlternative?: string;
     address: string;
+}
+
+export interface ReduxState {
+    loggedUser: ReduxCurrentUserProfile;
+    form: {
+        profileEdit?: any,
+    };
+    notifications: ReactNotificationSystem.Notification[];
 }

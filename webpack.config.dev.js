@@ -3,7 +3,7 @@ const webpack = require('webpack');
 module.exports = {
 
     entry: [
-        './src/client/index.tsx'
+        './src/common/index.tsx'
     ],
 
     output: {

@@ -5,12 +5,11 @@ import { Header } from '../components/Header';
 import { IndexPage } from './IndexPage';
 import { ProfileEditPage } from './ProfileEditPage';
 import { SearchPage } from './SearchPage';
-import * as clientTypes from '../typings';
 import * as commonTypes from '../../common/typings';
 import * as ReactRedux from 'react-redux';
 import * as ReactRouter from 'react-router';
 import * as ReactNotificationSystem from 'react-notification-system';
-import * as notificationActions from '../redux/notifications/notificationsActions';
+import * as notificationActions from '../../common/redux/notifications/notificationsActions';
 
 interface AppStateProps {
     loggedUser: commonTypes.ReduxCurrentUserProfile;
@@ -50,6 +49,7 @@ class App extends React.Component<AppProps> {
                 <Switch>
                     <Route exact={true} path="/search" component={SearchPage} />
                     <Route exact={true} path="/config/edituserprofile" component={ProfileEditPage} />
+                    <Route path="/s/:location/:professional" component={SearchPage} />
                     <Route exact={true} path="/" component={IndexPage} />
                 </Switch>
                 <ReactNotificationSystem ref={this.setNotificationSystemRef} />
@@ -60,12 +60,12 @@ class App extends React.Component<AppProps> {
 
 // CONNECT
 
-const mapStateToProps = (state: clientTypes.ReduxState): AppStateProps => ({
+const mapStateToProps = (state: commonTypes.ReduxState): AppStateProps => ({
     loggedUser: state.loggedUser,
     notifications: state.notifications,
 });
 
-const mapDispatchToProps = (dispatch: ReactRedux.Dispatch<clientTypes.ReduxState>): AppDispatchProps => ({
+const mapDispatchToProps = (dispatch: ReactRedux.Dispatch<commonTypes.ReduxState>): AppDispatchProps => ({
     dequeueNotification: () => dispatch(notificationActions.dequeueNotification()),
 });
 

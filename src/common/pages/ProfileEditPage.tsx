@@ -2,14 +2,13 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import * as ReactRouter from 'react-router';
 import { ProfileEditForm } from '../components/ProfileEditForm';
-import * as profileEditActions from '../redux/profileEdit/profileEditActions';
-import * as clientTypes from '../typings';
+import * as profileEditActions from '../../common/redux/profileEdit/profileEditActions';
 import * as commonTypes from '../../common/typings';
 import * as ReactRedux from 'react-redux';
 import * as ReduxForm from 'redux-form';
 import * as httpClient from '../httpClient';
 import * as ReactNotificationSystem from 'react-notification-system';
-import * as notificationActions from '../redux/notifications/notificationsActions';
+import * as notificationActions from '../../common/redux/notifications/notificationsActions';
 
 interface ProfileEditPageStateOwnProps extends ReactRouter.RouteComponentProps<any> {
     loggedUser: commonTypes.ReduxCurrentUserProfile;
@@ -65,12 +64,12 @@ class ProfileEditPage extends React.Component<ProfileEditPageProps> {
     }
 }
 
-const mapStateToProps = (state: clientTypes.ReduxState): ProfileEditPageStateProps => ({
+const mapStateToProps = (state: commonTypes.ReduxState): ProfileEditPageStateProps => ({
     loggedUser: state.loggedUser,
     formValues: state.form.profileEdit,
 });
 
-const mapDispatchToProps = (dispatch: ReactRedux.Dispatch<clientTypes.ReduxState>): ProfileEditPageDispatchProps => ({
+const mapDispatchToProps = (dispatch: ReactRedux.Dispatch<commonTypes.ReduxState>): ProfileEditPageDispatchProps => ({
     profileEditLoadData: () => dispatch(profileEditActions.profileEditLoadData()),
     enqueueNotification: (notification: ReactNotificationSystem.Notification) => dispatch(notificationActions.enqueueNotification(notification)),
 });

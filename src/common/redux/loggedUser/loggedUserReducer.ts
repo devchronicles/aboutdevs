@@ -1,4 +1,4 @@
-import * as commonTypes from '../../../common/typings';
+import * as commonTypes from '../../typings';
 
 const defaultLoggedUserState: commonTypes.ReduxCurrentUserProfile = {
     id: undefined,
