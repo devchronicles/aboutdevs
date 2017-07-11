@@ -201,6 +201,7 @@ export async function saveProfile(db: serverTypes.IndieJobsDatabase, userId: num
     let user = await db.user.findOne({ id: userId });
     if (!user) throw Error('could not find user');
 
+    user.name = profile.name;
     user.display_name = profile.displayName;
     user.type = profile.type; // 0 -> user 1 -> professional
     user.bio = profile.bio;
