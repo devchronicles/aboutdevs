@@ -20,7 +20,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(cookieSession({
     name: 'session',
-    keys: ['key1', 'key2'],
+    keys: ['this is a very long key'],
     maxAge: 365 * 24 * 60 * 60 * 1000, // 1 year
 }));
 app.use(passport.initialize());

@@ -46,24 +46,6 @@ let ProfileEditForm: React.SFC<ProfileEditoFormProps> = (props) => {
             <form onSubmit={handleSubmit(onSubmit)}>
                 <DocumentSection className="flex-column flex-align-items-center">
                     <div className="image" style={{ backgroundImage: `url(${loggedUser.photoUrl})` }} />
-                    <div className="edit-profile-image-button-wrapper">
-                        <button className="edit-profile-image-button">
-                            <FaIcon icon="camera" />
-                            Alterar imagem de perfil
-                        </button>
-                    </div>
-                    <FormRow>
-                        <FormGroup
-                            label="Tipo de usuário"
-                            labelFor="displayName"
-                            help="Selecione 'Sou um profissional' se você tem interesse em criar um perfil público para divulgar seus serviços. Caso contrário, selecione 'Estou em busca de profissionais."
-                        >
-                            <Field
-                                name="type"
-                                component={UserTypeToggle}
-                            />
-                        </FormGroup>
-                    </FormRow>
                     <FormRow>
                         <Field
                             name="name"
@@ -79,6 +61,18 @@ let ProfileEditForm: React.SFC<ProfileEditoFormProps> = (props) => {
                             help="É assim que seu nome será exibido aos outros."
                             addOnBefore={<FaIcon icon="user" />}
                         />
+                    </FormRow>
+                    <FormRow>
+                        <FormGroup
+                            label="Tipo de usuário"
+                            labelFor="displayName"
+                            help="Selecione 'Sou um profissional' se você tem interesse em criar um perfil público para divulgar seus serviços. Caso contrário, selecione 'Estou em busca de profissionais."
+                        >
+                            <Field
+                                name="type"
+                                component={UserTypeToggle}
+                            />
+                        </FormGroup>
                     </FormRow>
                 </DocumentSection>
                 <DocumentSection visible={formValues ? formValues.type === 0 : true} className="flex-column flex-align-items-center">

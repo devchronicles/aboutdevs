@@ -4,7 +4,7 @@
 // contains styles for the "document" pages (view and edit)
 
 .document-wrapper {
-    @include elastic-width(500px);
+    @include elastic-width(550px);
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -20,7 +20,7 @@
         box-shadow: 0 0 8px $color-shadow;
 
         .document-section {
-            padding: $gutter-md;
+            padding: $gutter-lg;
             &:not(:last-child) {
                 border-bottom: 1px solid $color-dark;
             }
@@ -30,11 +30,12 @@
             box-sizing: border-box;
             border: 12px solid $color-dark;
             padding: $gutter-md;
-            height: 134px;
-            width: 134px;
+            height: 170px;
+            width: 170px;
             border-radius: 9999px;
             background-repeat: no-repeat;
             background-size: 100% 100%;
+            margin-bottom: $gutter-md;
         }
 
         .button-bar {
