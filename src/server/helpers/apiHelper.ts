@@ -79,8 +79,11 @@ export async function sendPromiseDb(res: express.Response, promiseFunction: (db:
         .then((db) => promiseFunction(db))
         .then((result) => sendOk(res, result))
         .catch((e) => {
-            if (process.env.NODE_ENV !== 'production')
+            if (process.env.NODE_ENV !== 'production') {
+                /* tslint:disable */
                 console.log(e);
+                /* tslint:enable */
+            }
             return sendError(res, e);
         });
 }
