@@ -13,7 +13,7 @@ $select-input-placeholder:          $color-placeholder;
 // hack
 
 .Select-placeholder, .Select--single > .Select-control .Select-value {
-    top: 1px !important;
+    border: 1px solid $color-gray-light;
 }
 
 .Select.invalid {

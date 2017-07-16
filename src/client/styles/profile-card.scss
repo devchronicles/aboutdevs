@@ -1,20 +1,30 @@
 @import '_variables';
 
+$cardsPerRow: 4;
+
 .profile-card {
     box-sizing: border-box;
-    width: calc((100% - (6 * #{$gutter-md}))/ 3);
-    margin: $gutter-md;
-    background-color: $color-dark-light;
+    width: calc((100% - (#{$cardsPerRow * 2} * #{$gutter-md / 2}))/ #{$cardsPerRow});
+    margin: $gutter-md / 2;
+    background-color: $color-white;
     border-radius: $radius-md;
-    box-shadow: 0 0 8px $color-shadow;
+    box-shadow: $box-shadow;
+    position: relative;
     
     display: flex;
     flex-direction: column;
 
     transition: all .1s ease-in-out;
 
+    .star-wrapper {
+        position: absolute;
+        right: $gutter-md;
+        top: $gutter-md;
+        font-size: 22px;
+        cursor: pointer;
+    }
+
     a.card-body {
-        color: $color-white;
         text-decoration: none;
         display: flex;
         flex-direction: column;
@@ -25,10 +35,9 @@
         .image {
             margin-top: $gutter-sm;
             box-sizing: border-box;
-            border: 12px solid $color-dark;
             padding: $gutter-md;
-            height: 134px;
-            width: 134px;
+            height: 120px;
+            width: 120px;
             border-radius: 9999px;
             background-repeat: no-repeat;
             background-size: 100% 100%;
@@ -40,25 +49,40 @@
         }
 
         .profession {
-            //border: 1px solid $color-white;
-            background-color: $color-dark;
+            background-color: $color-gray-medium;
             border-radius: $radius-md;
             padding: $input-padding-vertical $input-padding-horizontal;
             font-size: 0.9rem;
             margin: $gutter-md 0 0 0;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            max-width: 100%;
+            box-sizing: border-box;
         }
 
         .bio {
             text-overflow: ellipsis;
             overflow: hidden;
             margin: $gutter-md 0 0 0;
-            /* Required for text-overflow to do anything */
-            height: 10em;
+            height: 5 * 1.4em;
+            position: relative;
+
+            &:after {
+                content: "";
+                text-align: right;
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                width: 50%;
+                height: 1.4em;
+                background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 50%);
+            }
         }
 
-        .professional-area {
-            color: lighten($color-dark-light, 50%);
-            border-radius: $radius-md;
+        
+
+        .location {
             padding: $input-padding-vertical/2 $input-padding-horizontal/2;
             font-size: 0.9rem;
             margin: $gutter-md 0 0 0;
@@ -79,8 +103,7 @@
         justify-content: space-between;
         align-items: center;
         font-size: 0.9em;
-        border-top: 1px solid $color-dark;
-        //background-color: darken($color-dark-light, 5%);
+        border-top: 1px solid $background-color;
         padding: $gutter-md;
         border-radius: 0 0 $radius-md $radius-md;
 
@@ -94,11 +117,11 @@
 
                 .number {
                     margin-right: $gutter-xs;
-                    color: lighten($color-dark-light, 50%)
+                    color: $color-secondary;
                 }
 
                 .fa {
-                    color: lighten($color-dark-light, 20%)
+                    color: $color-secondary;
                 }
             }
         }
@@ -106,7 +129,6 @@
     }
 
     &:hover {
-        transform: scale(1.02);
-        background-color: $color-dark-lighter;
+        transform: scale(1.01);
     }
 }

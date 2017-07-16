@@ -7,6 +7,7 @@ $gutter-md:                 16px;
 $gutter-lg:                 24px;
 
 $radius-md:                 2px;
+$box-shadow:                0 1px 3px 0 rgba(0,0,0,0.2), 0 1px 1px 0 rgba(0,0,0,0.14), 0 2px 1px -1px rgba(0,0,0,0.12);
 
 $font-size:                 14px;
 
@@ -25,6 +26,18 @@ $color-shining-4:           #526bf4;
 $color-shining-5:           #66f566;
 $color-shadow:              #0e1c29;
 $color-placeholder:         #666666;
+
+
+$color-gray-even-ligther:    #FAFAFA;
+$color-gray-lightest:        #ECEFF1;
+$color-gray-light:           #E0E0E0;
+$color-gray-medium:          #CFD8DC;
+$color-gray-dark:            #c4c4c4;
+
+$color-font-normal:         rgba(0,0,0,0.54);
+$background-color:          #e2e3e4;
+$color-primary:             #E052A0;
+$color-secondary:           #039BE5;
 
 // forms
 $input-padding-vertical:    8px;

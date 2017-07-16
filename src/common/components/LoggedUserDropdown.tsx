@@ -64,8 +64,6 @@ class LoggedUserDropdown extends React.Component<LoggedUserDropdownProps, Logged
                         alt="@andrerpena"
                         className="avatar"
                         src={photoUrl}
-                        height="20"
-                        width="20"
                     />
                     <i className="fa fa-caret-down" aria-hidden="true" />
                 </button>

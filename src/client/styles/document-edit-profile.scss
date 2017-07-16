@@ -10,18 +10,19 @@
 
 .user-type-toggle {
     box-sizing: border-box;
+    border: 1px solid $color-gray-light;
     width: 100%;
     button {
         flex: 1 1 auto;
+
         &:not(:hover) {
-            color: $color-dark-lightest;
         }
         
         &.pushed {
-            color: $color-white;
+            background-color: #DCDCDC;
             .fa {
-                display: "inline-block";
                 color: $color-shining-1;
+                display: "inline-block";
                 margin-right: $gutter-sm;
             }
         }

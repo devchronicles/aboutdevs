@@ -9,29 +9,29 @@
     flex-direction: column;
     flex-wrap: wrap;
     padding:0;
-    margin-top: $gutter-md;
-    margin-bottom: $gutter-md;
+    margin-top: 2* $gutter-md;
+    margin-bottom: 2* $gutter-md;
 
     .document {
         min-height: 200px;
         box-sizing: border-box;
-        background-color: $color-dark-light;
         border-radius: $radius-md;
-        box-shadow: 0 0 8px $color-shadow;
+        box-shadow: $box-shadow;
+        background: $color-gray-even-ligther;
 
         .document-section {
             padding: $gutter-lg;
             &:not(:last-child) {
-                border-bottom: 1px solid $color-dark;
+                border-bottom: 1px solid $color-gray-light;
             }
         }
 
         .image {
             box-sizing: border-box;
-            border: 12px solid $color-dark;
+            border: 2px solid $color-white;
             padding: $gutter-md;
-            height: 170px;
-            width: 170px;
+            height: 120px;
+            width: 120px;
             border-radius: 9999px;
             background-repeat: no-repeat;
             background-size: 100% 100%;

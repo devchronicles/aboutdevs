@@ -4,16 +4,17 @@ $hero-text-font-size: 25px;
 .index-page-wrapper {
 
     background:
-        linear-gradient(rgba($color-dark, 0.97),rgba($color-dark, 0.9)),
-        url('images/bg-5.jpeg');
+        linear-gradient(rgba(16, 102, 150, 0.97), rgba(35, 60, 64, 0.9)),
+        url('images/bg-6.jpeg');
     background-size: cover;
 
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: calc(100% - #{$header-height});
+    height: 100%;
     width: 100%;
+    margin-top: -$header-height;
 
     .index-search-form {
         width: 100%;
@@ -59,11 +60,12 @@ $hero-text-font-size: 25px;
                 display: flex;
                 flex-direction: column;
                 .hero-logo {
-                    font-family: 'Telex', sans-serif;
+                    font-family: 'Ubuntu', sans-serif;
                     margin-bottom: $gutter-sm;
+                    color: $color-white;
                 }
                 .hero-motto {
-                    color: lighten($color-dark-light, 50%);
+                    color: $color-gray-medium;
                 }
             }
         }
@@ -71,13 +73,13 @@ $hero-text-font-size: 25px;
         .register-wrapper {
             margin-top: 2 * $gutter-md;
             padding: $gutter-sm;
-            border: 1px solid $color-dark-light;
+            border: 1px solid $color-gray-medium;
             display: flex;
             flex-direction: row;
             align-items: center;
             justify-content: space-between;
             .text {
-                color: $color-dark-lightest;
+                color: $color-gray-medium;
             }
         }
     }

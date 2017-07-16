@@ -7,21 +7,24 @@ interface ProfileCardProps {
 
 const ProfileCard: React.SFC<ProfileCardProps> = ({ profile }) => (
     <li className="profile-card">
+        <div className="star-wrapper">
+            <i className="fa fa-star-o" />
+        </div>
         <a className="card-body" href="#">
             <div className="image" style={{ backgroundImage: `url(${profile.photoUrl})` }} />
             <p className="display-name"> {profile.displayName} </p>
             <p className="profession"> {profile.profession} </p>
             <p className="bio"> {profile.bio} </p>
-            <p className="professional-area">
-                <i className="fa fa-briefcase" aria-hidden="true" />
-                <span>{profile.profession}</span>
-            </p>
         </a>
         <div className="card-footer">
             <span className="recomendations">
                 <span className="recomendation-count">
-                    <span className="number">97</span>
-                    <i className="fa fa-thumbs-up" aria-hidden="true" />
+                    <span className="number">4</span>
+                    <i className="fa fa-star" aria-hidden="true" />
+                </span>
+                <span className="recomendation-count">
+                    <span className="number">3</span>
+                    <i className="fa fa-comment" aria-hidden="true" />
                 </span>
             </span>
             <button>

@@ -42,10 +42,10 @@ class IndexPage extends React.Component<IndexPageProps> {
                         <div className="logo-wrapper">
                             <span className="index-hero">
                                 <div className="icon-box">
-                                    <i className="fa fa-briefcase" aria-hidden="true" />
+                                    <i className="fa fa-map-marker" aria-hidden="true" />
                                 </div>
                                 <div className="hero-text">
-                                    <div className="hero-logo">IndieJobs</div>
+                                    <div className="hero-logo">tazzo</div>
                                     <div className="hero-motto">do que você precisa hoje?</div>
                                 </div>
                             </span>
@@ -56,7 +56,7 @@ class IndexPage extends React.Component<IndexPageProps> {
                                 Você é um(a) profissional?
                 </span>
                             <button className="faded">
-                                Crie sua conta, é grátis!
+                                junte-se a nós, é grátis!
                 </button>
                         </div>
                     </div>

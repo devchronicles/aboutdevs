@@ -16,15 +16,18 @@ textarea {
 }
 
 input[type="text"], textarea {
+     outline: none;
     padding: $input-padding-vertical $input-padding-horizontal;
     border-radius: $radius-md;
-    border: 0;
+    border: 1px solid $color-gray-light;
     box-sizing: border-box;
     &.invalid {
         border: 2px solid $color-shining-2;
-        &:focus {
-            outline: none;
-        }
+    }
+    &:focus
+    {
+        padding-top: $input-padding-vertical + 2px;
+        border-bottom: 2px solid $color-secondary;
     }
 }
 
@@ -33,18 +36,20 @@ input[type="text"] {
 }
 
 button, a.button {
+    text-transform: uppercase;
     text-decoration: none;
-    color: $color-white;
+    color: $color-font-normal;
     padding: $input-padding-vertical $input-padding-horizontal;
 
-    border: 1px solid $color-white;
+    border: 0 solid $color-gray-light;
     background: transparent;
     
     border-radius: $radius-md;
     cursor: pointer;
-    font-weight: 600;
+    font-weight: 500;
 
     &:hover {
+        color: $color-white;
         border-color: $color-shining-4;
         background-image: linear-gradient(to right,$color-shining-3,$color-shining-4);
         text-decoration: none !important;
@@ -56,6 +61,7 @@ button, a.button {
     }
 
     &.vibrant {
+        color: $color-white;
         border: 0;
         background-image: linear-gradient(to right,$color-shining-1,$color-shining-2);
         &:hover {
@@ -64,8 +70,8 @@ button, a.button {
     }
 
     &.faded {
-        border: 1px solid  $color-dark-lightest;
-        color:   $color-dark-lightest;
+        border: 0;
+        color: $color-gray-medium;
         &:hover {
             color: $color-white;
             background-image: linear-gradient(to right,$color-shining-3,$color-shining-4);
@@ -146,13 +152,25 @@ form, *.form {
 
     .input-group-addon {
         box-sizing: border-box;
-        background-color: $color-dark;
-        padding: $input-padding-vertical $input-padding-horizontal;
+        border-style: solid;
+        border-color: $color-gray-light;
+        background-color: $color-gray-even-ligther;
+        padding: ($input-padding-vertical - 2px) $input-padding-horizontal;
         border-radius: $radius-md;
         min-width: 40px;
         display:flex;
         align-items: center;
         flex-direction: column;
+    }
+
+    .input-group-addon-before {
+        @extend .input-group-addon;
+        border-width: 1px 0 1px 1px;
+    }
+
+    .input-group-addon-after {
+        @extend .input-group-addon;
+        border-width: 1px 1px 1px 0px;
     }
 }
 
@@ -192,7 +210,6 @@ form, *.form {
 
 .form-help {
     display: block;
-    color: $color-dark-lightest;
     padding-top: $gutter-sm;
     line-height: 1.2em;
     &.error {

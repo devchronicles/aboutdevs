@@ -31,16 +31,18 @@ const UserTypeToggle: React.SFC<IUserTypeToggle> = (field) => {
         }
     };
 
-    return (<div className="button-group user-type-toggle">
-        <button {...professionalButtonProps}>
-            {checkComponent}
-            <span>Sou um profissional</span>
+    return (
+        <div className="button-group user-type-toggle">
+            <button {...professionalButtonProps}>
+                {checkComponent}
+                <span>Sou um profissional</span>
+            </button>
+            <button {...nonProfessionalButtonProps}>
+                {checkComponent}
+                Estou em busca de profissionais
         </button>
-        <button {...nonProfessionalButtonProps}>
-            {checkComponent}
-            Estou em busca de profissionais
-        </button>
-    </div>);
+        </div>
+    );
 };
 
 export { UserTypeToggle };

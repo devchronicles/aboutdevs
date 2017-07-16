@@ -6,7 +6,6 @@ import * as commonTypes from '../../common/typings';
 import * as ReactRedux from 'react-redux';
 
 import { SearchWrapper } from '../components/SearchWrapper';
-import { Hero } from '../components/Hero';
 import { SearchForm } from '../components/SearchForm';
 import { SearchResult } from '../components/SearchResult';
 
@@ -36,13 +35,9 @@ class SearchPage extends React.Component<SearchPageProps> {
     }
 
     public render() {
-
-        console.log(profiles);
-
         return (
             <div className="page-wrapper">
                 <SearchWrapper>
-                    <Hero />
                     <SearchForm handleSubmit={this.handleFormSubmit} />
                 </SearchWrapper>
                 <SearchResult profiles={profiles} />
