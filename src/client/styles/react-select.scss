@@ -2,7 +2,10 @@
 @import '_variables';
 
 $select-input-border-radius:        $radius-md;
-$select-input-border-width:         0;
+$select-input-border-width:         1px;
+$select-input-border-color:         $color-gray-light;
+$select-input-border-focus:         $color-gray-light;
+$select-input-box-shadow-focus:     none;
 $select-padding-vertical:           $input-padding-vertical;
 $select-padding-horizontal:         $input-padding-horizontal;
 $select-input-height:               34px;
@@ -12,15 +15,22 @@ $select-input-placeholder:          $color-placeholder;
 
 // hack
 
-.Select-placeholder, .Select--single > .Select-control .Select-value {
-    border: 1px solid $color-gray-light;
-}
-
 .Select.invalid {
     .Select-control {
-        border: 2px solid $color-shining-2;
+        border-bottom: 2px solid $color-shining-2;
         .Select-input {
             height: 30px;
         }
     }
 }
+
+
+.Select.is-focused {
+    .Select-control {
+        border-bottom: 2px solid $color-secondary;
+        .Select-input {
+            height: 30px;
+        }
+    }
+}
+

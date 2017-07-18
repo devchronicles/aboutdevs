@@ -11,7 +11,7 @@ interface IUserTypeToggle extends ReduxForm.WrappedFieldProps<{}> {
 const UserTypeToggle: React.SFC<IUserTypeToggle> = (field) => {
     const { value, onChange } = field.input;
 
-    const checkComponent = <i className="fa fa-check" aria-hidden="true" />;
+    const checkComponent = <i className="fa fa-check" />;
 
     // props for the professional button
     const professionalButtonProps = {

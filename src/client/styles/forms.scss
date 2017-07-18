@@ -59,7 +59,7 @@ button, a.button {
     &.vibrant {
         color: $color-white;
         border: 0;
-        background-image: linear-gradient(to right,$color-shining-1,$color-shining-2);
+        background-color: $color-secondary;
         &:hover {
             background-image: linear-gradient(to right,$color-shining-3,$color-shining-4);
         }

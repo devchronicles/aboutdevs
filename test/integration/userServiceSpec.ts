@@ -15,17 +15,19 @@ describe('userHelper', () => {
                 assert.equal(userName, 'foo');
             }),
         );
-        it('When it does exist', async () => {
-            await db.user.insert({
+        it('When it does exist', () =>
+            db.user.insert({
                 name: 'foo',
                 gender: 0,
                 display_name: 'Foo',
                 email: 'foo@fooland.com',
                 photo_url: 'foo.com/image.jpeg',
-            });
-            const validUserName = await userHelper.getValidUserName(db, 'foo')
-            assert.equal(validUserName, 'foo1');
-        });
+            })
+                .then(() => userHelper.getValidUserName(db, 'foo'))
+                .then((userName) => {
+                    assert.equal(userName, 'foo1');
+                }),
+        );
 
         it('When it does exist 2', () =>
             db.user.insert({
@@ -48,47 +50,49 @@ describe('userHelper', () => {
                 }),
         );
     });
-
-    it('createFromGoogleProfile', async () => {
-
-        const user = await userHelper.createFromGoogleProfile(db, googleProfileSample);
-        assert.isOk(user);
-
-        // let's go to the database to see if the user has actually been added
-        const databaseUser = await db.user.findOne(user.id);
-
-        assert.isOk(databaseUser);
-        assert.isOk(databaseUser.oauth_profiles);
-        assert.strictEqual(databaseUser.oauth_profiles.google.id, '109199054588840596357');
-
-        await db.user.destroy({id: databaseUser.id});
+    describe('createFromGoogleProfile', () => {
+        it('Basic scenario', () =>
+            userHelper.createFromGoogleProfile(db, googleProfileSample)
+                .then((u) => {
+                    assert.isOk(u);
+                    // let's go to the database to see if the user has actually been added
+                    return db.user.findOne(u.id);
+                })
+                .then((u) => {
+                    assert.isOk(u);
+                    assert.isOk(u.oauth_profiles);
+                    assert.strictEqual(u.oauth_profiles.google.id, '109199054588840596357');
+                    return db.user.destroy({id: u.id});
+                }),
+        );
     });
+    describe('updateFromGoogleProfile', () => {
+        it('Basic scenario', async () => {
+            let user = (await db.user.save({
+                name: 'andrerpena',
+                gender: 0,
+                email: 'andrerpena@gmail.com',
+                display_name: 'André Pena',
+                photo_url: 'foo.com/image.jpeg',
+            })) as serverTypes.User;
 
-    it('updateFromGoogleProfile', async () => {
-        const user = (await db.user.insert({
-            name: 'andrerpena',
-            gender: 0,
-            email: 'andrerpena@gmail.com',
-            display_name: 'André Pena',
-            photo_url: 'foo.com/image.jpeg',
-        })) as serverTypes.User;
-        userHelper.updateFromGoogleProfile(db, user, googleProfileSample);
-        assert.isOk(user);
-        assert.isOk(user.oauth_profiles);
-        assert.strictEqual(user.oauth_profiles.google.id, '109199054588840596357');
+            user = await userHelper.updateFromGoogleProfile(db, user, googleProfileSample);
 
-        await db.user.destroy({id: user.id});
+            assert.isOk(user);
+            assert.isOk(user.oauth_profiles);
+            assert.strictEqual(user.oauth_profiles.google.id, '109199054588840596357');
+            await db.user.destroy({id: user.id});
+        });
     });
-
     describe('findOrCreateFromGoogleProfile', () => {
         it('when the user did not exist yet', () =>
             db.user.findOne({email: 'andrerpena@gmail.com'})
-                .then((u) => {
+                .then((u: serverTypes.User) => {
                     assert.isUndefined(u);
                     return userHelper.findOrCreateFromGoogleProfile(db, googleProfileSample);
                 })
 
-                .then((u) => {
+                .then((u: serverTypes.User) => {
                     assert.strictEqual(u.email, 'andrerpena@gmail.com');
                     return db.user.destroy({id: u.id});
                 }),
@@ -109,7 +113,6 @@ describe('userHelper', () => {
                 }),
         );
     });
-
     describe('saveProfile', () => {
         it('Basic scenario', async () => {
             const user = (await db.user.insert({
@@ -143,7 +146,7 @@ describe('userHelper', () => {
                 photo_url: 'foo.com/image.jpeg',
             })) as serverTypes.User;
 
-            let profile: commonTypes.UserProfile = {
+            const profile: commonTypes.UserProfile = {
                 name: 'andrerpena',
                 displayName: 'André Pena',
                 type: 1,
