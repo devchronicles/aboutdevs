@@ -234,10 +234,10 @@ export async function saveProfile(db: serverTypes.IndieJobsDatabase, userId: num
 
     user.name = profile.name;
     user.display_name = profile.displayName;
-    user.type = profile.type; // 0 -> user 1 -> professional
+    user.type = profile.type;
     user.phone_whatsapp = profile.phoneWhatsapp;
     user.phone_alternative = profile.phoneAlternative;
-    if (user.type === commonTypes.UserProfileType.PROFESSIONAL) {
+    if (profile.type === commonTypes.UserProfileType.PROFESSIONAL) {
         user.bio = profile.bio;
     }
 
@@ -272,18 +272,18 @@ export async function saveProfile(db: serverTypes.IndieJobsDatabase, userId: num
     }
 
     // services
-    if (user.type === commonTypes.UserProfileType.PROFESSIONAL) {
+    if (profile.type === commonTypes.UserProfileType.PROFESSIONAL) {
 
         type UserServiceCanonical = commonTypes.UserService & { service_canonical: string };
 
         const profileServices: UserServiceCanonical[] = profile.services
             ? profile
-                .services.map(s => {
+                .services.map((s, index) => {
                     return {
                         id: s.id,
                         service: s.service,
                         service_canonical: stringHelper.normalize(s.service),
-                        index: s.index,
+                        index,
                     };
                 })
                 .filter(s => !!s.service_canonical)
@@ -299,7 +299,7 @@ export async function saveProfile(db: serverTypes.IndieJobsDatabase, userId: num
                 const existingService = await db.user_service.findOne({id: profileService.id});
                 existingService.service = profileService.service;
                 existingService.service_canonical = stringHelper.normalize(profileService.service);
-                existingService.index = i;
+                existingService.index = profileService.index;
                 await db.user_service.update(existingService);
             } else {
                 // the service hasn't been persisted yet
@@ -307,7 +307,7 @@ export async function saveProfile(db: serverTypes.IndieJobsDatabase, userId: num
                     service: profileService.service,
                     service_canonical: stringHelper.normalize(profileService.service),
                     user_id: userId,
-                    index: i,
+                    index: profileService.index,
                 });
             }
         }
@@ -344,7 +344,6 @@ export async function validateProfile(db: serverTypes.IndieJobsDatabase, profile
         displayName: '',
         profession: '',
         bio: '',
-        activities: '',
         address: '',
         phoneWhatsapp: '',
         phoneAlternative: '',

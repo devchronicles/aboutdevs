@@ -7,8 +7,8 @@ import { DocumentSection } from './DocumentSection';
 import normalizePhone from '../lib/redux-form/normalizePhone';
 import asyncValidation from '../lib/redux-form/asyncValidation';
 import * as ReduxForm from 'redux-form';
-import * as commonTypes from '../../common/typings';
 import * as ReactRedux from 'react-redux';
+import * as commonTypes from '../typings/commonTypes';
 
 interface ProfileEditFormStateProps {
     formValues: any;
@@ -75,7 +75,7 @@ let ProfileEditForm: React.SFC<ProfileEditorFormProps> = (props) => {
                         </FormGroup>
                     </FormRow>
                 </DocumentSection>
-                <DocumentSection visible={formValues ? formValues.type === 0 : true} className="flex-column flex-align-items-center">
+                <DocumentSection visible={formValues ? formValues.type === commonTypes.UserProfileType.PROFESSIONAL : true} className="flex-column flex-align-items-center">
                     <FormRow>
                         <Field
                             name="profession"
