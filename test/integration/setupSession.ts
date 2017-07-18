@@ -17,6 +17,7 @@ function truncateData(db: serverTypes.IndieJobsDatabase) {
         'geo_location_state',
         'geo_location_city',
         'profession',
+        'user_service',
     ];
 
     // concatenates all entities from the database

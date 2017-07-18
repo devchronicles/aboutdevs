@@ -1,5 +1,5 @@
 import * as fieldValidationHelper from '../../common/helpers/fieldValidationHelper';
-import { safeRead } from '../../common/helpers/objectHelpers';
+import {safeRead} from '../../common/helpers/objectHelpers';
 import * as commonTypes from '../../common/typings/commonTypes';
 import * as serverTypes from '../typings';
 import * as googleOAuthTypes from '../typings/googleOAuthTypes';
@@ -19,21 +19,19 @@ export function extractUserNameFromEmail(email: string) {
 /**
  * Returns a suggested user name given the user e-mail
  */
-export function getValidUserName(db: serverTypes.IndieJobsDatabase, userName: string) {
+export async function getValidUserName(db: serverTypes.IndieJobsDatabase, userName: string) {
     if (db === null || db === undefined) throw Error('Argument \'db\' should be null or undefined');
     if (userName === null || userName === undefined) throw Error('Argument \'email\' should be null or undefined');
 
-    return db.user.find({ 'name ilike': `${userName}%` })
-        .then((r) => {
-            if (r.length === 0) return userName;
-            // this isn't actually necessary. TODO: Remove this.
-            const lowerCaseUserNames = r.map((s) => s.name.toLowerCase());
-            let finalUserName = userName.toLowerCase();
-            while (lowerCaseUserNames.indexOf(finalUserName) !== -1) {
-                finalUserName = stringHelper.incrementLast(finalUserName, true);
-            }
-            return finalUserName;
-        });
+    const existingUsers = await db.user.find({'name ilike': `${userName}%`});
+    if (existingUsers.length === 0) return userName;
+
+    const lowerCaseUserNames = existingUsers.map((s) => s.name.toLowerCase());
+    let finalUserName = userName.toLowerCase();
+    while (lowerCaseUserNames.indexOf(finalUserName) !== -1) {
+        finalUserName = stringHelper.incrementLast(finalUserName, true);
+    }
+    return finalUserName;
 }
 
 /**
@@ -76,8 +74,7 @@ export async function createFromGoogleProfile(db: serverTypes.IndieJobsDatabase,
  * @param existingUser
  * @param profile
  */
-export async function updateFromGoogleProfile(db: serverTypes.IndieJobsDatabase, existingUser: serverTypes.User, googleProfile: googleOAuthTypes.GoogleOAuthProfile)
-    : Promise<serverTypes.User> {
+export async function updateFromGoogleProfile(db: serverTypes.IndieJobsDatabase, existingUser: serverTypes.User, googleProfile: googleOAuthTypes.GoogleOAuthProfile): Promise<serverTypes.User> {
     if (!db) throw Error('\'db\' should be truthy');
     if (!existingUser) throw Error('\'existingUser\' should be truthy');
     if (!googleProfile) throw Error('\'profile\' should be truthy');
@@ -115,23 +112,28 @@ export async function updateFromGoogleProfile(db: serverTypes.IndieJobsDatabase,
  * @param profile
  * @returns {Promise}
  */
-export function findOrCreateFromGoogleProfile(db: serverTypes.IndieJobsDatabase, profile: googleOAuthTypes.GoogleOAuthProfile)
-    : Promise<serverTypes.User> {
+export function findOrCreateFromGoogleProfile(db: serverTypes.IndieJobsDatabase, profile: googleOAuthTypes.GoogleOAuthProfile): Promise<serverTypes.User> {
     if (!db) throw Error('\'db\' should be truthy');
     if (!profile) throw Error('\'profile\' should be truthy');
 
     const email = safeRead((p) => p.emails[0].value, profile, null);
 
-    if (!email) { throw Error('Google profile is not valid'); }
+    if (!email) {
+        throw Error('Google profile is not valid');
+    }
 
-    return db.user.findOne({ email })
+    return db.user.findOne({email})
         .then((user: serverTypes.User) => {
-            if (!user) { return createFromGoogleProfile(db, profile); }
+            if (!user) {
+                return createFromGoogleProfile(db, profile);
+            }
 
             // if the existing user is associated with Google already
             // (u.oauth_profiles.google.id exists), returns it
             const existingUserGoogleId = safeRead((u) => u.oauth_profiles.google.id, user, null);
-            if (existingUserGoogleId) { return user; }
+            if (existingUserGoogleId) {
+                return user;
+            }
 
             // if not, let's associate the user with the given Google profile
             updateFromGoogleProfile(db, user, profile);
@@ -159,7 +161,7 @@ export function getReduxDataForLoggedUser(user: serverTypes.User): commonTypes.R
  */
 async function getFormattedProfession(db: serverTypes.IndieJobsDatabase, professionId: number, otherProfession: string, userGender: serverTypes.UserGender): Promise<string> {
     if (professionId) {
-        const profession = await db.profession.findOne({ id: professionId });
+        const profession = await db.profession.findOne({id: professionId});
         if (profession) {
             switch (userGender) {
                 case serverTypes.UserGender.MALE:
@@ -173,16 +175,18 @@ async function getFormattedProfession(db: serverTypes.IndieJobsDatabase, profess
 }
 
 async function getServicesForUser(db: serverTypes.IndieJobsDatabase, userId: number): Promise<commonTypes.UserService[]> {
-    const services = await db.user_service.find({ user_id: userId });
+    const services = await db.user_service.find({user_id: userId});
     if (!services.length) {
         return [{
             id: undefined,
             service: '',
+            index: 0,
         }];
     }
     return services.map(s => ({
         id: s.id,
         service: s.service,
+        index: s.index,
     }));
 }
 
@@ -212,7 +216,7 @@ async function getProfileDataFromUser(db: serverTypes.IndieJobsDatabase, user: s
  * @param userId The id of the user
  */
 export async function getProfile(db: serverTypes.IndieJobsDatabase, userId: number): Promise<commonTypes.UserProfile> {
-    const user = await db.user.findOne({ id: userId });
+    const user = await db.user.findOne({id: userId});
     return getProfileDataFromUser(db, user);
 }
 
@@ -225,7 +229,7 @@ export async function getProfile(db: serverTypes.IndieJobsDatabase, userId: numb
  * @param locationId The location id. This is for testing only. In production, this variable cannot contain value
  */
 export async function saveProfile(db: serverTypes.IndieJobsDatabase, userId: number, profile: commonTypes.UserProfile, professionId?: number, locationId?: number): Promise<commonTypes.UserProfile> {
-    let user = await db.user.findOne({ id: userId });
+    let user = await db.user.findOne({id: userId});
     if (!user) throw Error('could not find user');
 
     user.name = profile.name;
@@ -269,23 +273,30 @@ export async function saveProfile(db: serverTypes.IndieJobsDatabase, userId: num
 
     // services
     if (user.type === commonTypes.UserProfileType.PROFESSIONAL) {
-        const profileServices = profile.services
+
+        type UserServiceCanonical = commonTypes.UserService & { service_canonical: string };
+
+        const profileServices: UserServiceCanonical[] = profile.services
             ? profile
                 .services.map(s => {
-                    s.service = stringHelper.normalize(s.service);
-                    return s;
+                    return {
+                        id: s.id,
+                        service: s.service,
+                        service_canonical: stringHelper.normalize(s.service),
+                        index: s.index,
+                    };
                 })
-                .filter(s => !!s.service)
+                .filter(s => !!s.service_canonical)
             : [];
 
-        const persistedUserServices = await db.user_service.find({ user_id: userId });
+        const persistedUserServices = await db.user_service.find({user_id: userId});
 
         // add or update services that are persistent already
         for (let i = 0; i < profileServices.length; i++) {
             const profileService = profileServices[i];
             if (profileService.id) {
                 // the service is persistent already
-                const existingService = await db.user_service.findOne({ id: profileService.id });
+                const existingService = await db.user_service.findOne({id: profileService.id});
                 existingService.service = profileService.service;
                 existingService.service_canonical = stringHelper.normalize(profileService.service);
                 existingService.index = i;
@@ -295,6 +306,7 @@ export async function saveProfile(db: serverTypes.IndieJobsDatabase, userId: num
                 await db.user_service.insert({
                     service: profileService.service,
                     service_canonical: stringHelper.normalize(profileService.service),
+                    user_id: userId,
                     index: i,
                 });
             }
@@ -305,7 +317,7 @@ export async function saveProfile(db: serverTypes.IndieJobsDatabase, userId: num
             .filter(dbService => profileServices.findIndex(profileService => profileService.id === dbService.id) === -1);
 
         for (const removedService of removedServices) {
-            await db.user_service.destroy({ id: removedService.id });
+            await db.user_service.destroy({id: removedService.id});
         }
     }
 

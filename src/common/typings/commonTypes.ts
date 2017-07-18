@@ -27,6 +27,7 @@ export enum UserProfileStatus {
 export interface UserService {
     id?: number;
     service: string;
+    index: number;
 }
 
 export interface UserProfile {
