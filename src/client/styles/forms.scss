@@ -11,13 +11,14 @@ textarea {
 }
 
 input[type="text"], textarea {
-     outline: none;
+    outline: none;
     padding: $input-padding-vertical $input-padding-horizontal;
     border-radius: $radius-md;
     border: 1px solid $color-gray-light;
     box-sizing: border-box;
     &.invalid {
-        border: 2px solid $color-shining-2;
+        padding-top: $input-padding-vertical + 2px;
+        border-bottom: 2px solid $color-shining-2;
     }
     &:focus
     {
@@ -240,6 +241,7 @@ form, *.form {
             }
 
             button.delete {
+                height: 34px;
             }
         }
     }

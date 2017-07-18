@@ -26,9 +26,9 @@ interface ProfileEditFormOwnProps extends ReduxForm.FormProps<any, any, any> {
     onCancel: () => void;
 }
 
-declare type ProfileEditoFormProps = ProfileEditFormStateProps & ProfileEditFormDispatchProps & ProfileEditFormOwnProps;
+declare type ProfileEditorFormProps = ProfileEditFormStateProps & ProfileEditFormDispatchProps & ProfileEditFormOwnProps;
 
-let ProfileEditForm: React.SFC<ProfileEditoFormProps> = (props) => {
+let ProfileEditForm: React.SFC<ProfileEditorFormProps> = (props) => {
     const {
         formValues,
         formSyncErrors,
@@ -169,13 +169,13 @@ const mapDispatchToProps = (dispatch: ReactRedux.Dispatch<commonTypes.ReduxState
 
 });
 
-const mergeProps = (stateProps: ProfileEditFormStateProps, dispatchProps: ProfileEditFormDispatchProps, ownProps: ProfileEditFormOwnProps): ProfileEditoFormProps => ({
+const mergeProps = (stateProps: ProfileEditFormStateProps, dispatchProps: ProfileEditFormDispatchProps, ownProps: ProfileEditFormOwnProps): ProfileEditorFormProps => ({
     ...stateProps,
     ...dispatchProps,
     ...ownProps,
 });
 
-const ConnectedProfileEditForm = connect<ProfileEditFormStateProps, ProfileEditFormDispatchProps, ProfileEditFormOwnProps, ProfileEditoFormProps>(
+const ConnectedProfileEditForm = connect<ProfileEditFormStateProps, ProfileEditFormDispatchProps, ProfileEditFormOwnProps, ProfileEditorFormProps>(
     mapStateToProps,
     mapDispatchToProps,
     mergeProps,

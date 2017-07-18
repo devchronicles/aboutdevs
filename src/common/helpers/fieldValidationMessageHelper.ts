@@ -6,6 +6,8 @@ export function getErrorMessage(error: string) {
             return 'Campo obrigatório.';
         case fieldValidation.MAX_LENGTH_50:
             return 'Tamanho máximo: 50 caracteres';
+        case fieldValidation.MAX_LENGTH_60:
+            return 'Tamanho máximo: 60 caracteres';
         case fieldValidation.MAX_LENGTH_80:
             return 'Tamanho máximo: 80 caracteres';
         case fieldValidation.MAX_LENGTH_500:

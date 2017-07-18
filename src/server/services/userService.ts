@@ -1,11 +1,11 @@
 import * as fieldValidationHelper from '../../common/helpers/fieldValidationHelper';
 import { safeRead } from '../../common/helpers/objectHelpers';
-import * as stringHelper from '../../common/helpers/stringHelper';
 import * as commonTypes from '../../common/typings/commonTypes';
 import * as serverTypes from '../typings';
 import * as googleOAuthTypes from '../typings/googleOAuthTypes';
 import * as locationService from '../services/locationService';
 import * as searchHelper from '../helpers/searchHelper';
+import * as stringHelper from '../../common/helpers/stringHelper';
 
 /**
  * Extracts the user name from the user's e-mail
@@ -239,7 +239,7 @@ export async function saveProfile(db: serverTypes.IndieJobsDatabase, userId: num
 
     // profession
     if (!professionId) {
-        const professionNormalized = searchHelper.normalize(profile.profession);
+        const professionNormalized = stringHelper.normalize(profile.profession);
         const professions = await db.search_professions_for_save(professionNormalized);
         if (professions.length) {
             user.profession_id = professions[0].id;
@@ -272,7 +272,7 @@ export async function saveProfile(db: serverTypes.IndieJobsDatabase, userId: num
         const profileServices = profile.services
             ? profile
                 .services.map(s => {
-                    s.service = searchHelper.normalize(s.service);
+                    s.service = stringHelper.normalize(s.service);
                     return s;
                 })
                 .filter(s => !!s.service)
@@ -287,14 +287,14 @@ export async function saveProfile(db: serverTypes.IndieJobsDatabase, userId: num
                 // the service is persistent already
                 const existingService = await db.user_service.findOne({ id: profileService.id });
                 existingService.service = profileService.service;
-                existingService.service_canonical = searchHelper.normalize(profileService.service);
+                existingService.service_canonical = stringHelper.normalize(profileService.service);
                 existingService.index = i;
                 await db.user_service.update(existingService);
             } else {
                 // the service hasn't been persisted yet
                 await db.user_service.insert({
                     service: profileService.service,
-                    service_canonical: searchHelper.normalize(profileService.service),
+                    service_canonical: stringHelper.normalize(profileService.service),
                     index: i,
                 });
             }

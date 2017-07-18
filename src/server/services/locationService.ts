@@ -1,10 +1,10 @@
 import axios from 'axios';
-import * as massive from 'massive';
 import config from '../../../config/config';
 import * as serverTypes from '../../server/typings';
 import * as geocodeApiFormattingHelper from '../helpers/geocodeApiFormattingHelper';
 import * as geocodeApiHelper from '../helpers/geocodeApiHelper';
 import * as searchHelper from '../helpers/searchHelper';
+import * as stringHelper from '../../common/helpers/stringHelper';
 
 /**
  * Saves the given {search, location} to the cache and returns the location if everything goes fine
@@ -53,7 +53,7 @@ export async function getLocationsFromGoogle(searchTerm: string): Promise<server
 
 export async function getLocations(searchTerm: string, allowCities: boolean, db: serverTypes.IndieJobsDatabase)
     : Promise<serverTypes.GeocodeApiResult> {
-    const normalizedSearchTerm = searchHelper.normalize(searchTerm);
+    const normalizedSearchTerm = stringHelper.normalize(searchTerm);
     if (!normalizedSearchTerm) {
         return Promise.resolve<serverTypes.GeocodeApiResult>(undefined);
     }

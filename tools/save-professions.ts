@@ -1,5 +1,5 @@
 import buildDb from '../src/server/db/buildDb';
-import * as searchHelper from '../src/server/helpers/searchHelper';
+import * as searchHelper from '../src/common/helpers/stringHelper';
 const professions = require('../data/professions-processed.json');
 
 let promise = Promise.resolve(0);

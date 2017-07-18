@@ -5,6 +5,7 @@ export const REQUIRED_IF_PROFESSIONAL = 'required-if-professional';
 export const INVALID_PHONE = 'invalid-phone';
 export const AT_LEAST_ONE_PHONE = 'at-least-one-phone';
 export const MAX_LENGTH_50 = 'max-length-50';
+export const MAX_LENGTH_60 = 'max-length-80';
 export const MAX_LENGTH_80 = 'max-length-80';
 export const MAX_LENGTH_500 = 'max-length-500';
 export const USER_NAME_IS_TAKEN = 'user-name-is-taken';
@@ -18,6 +19,13 @@ export function validateMaxLength50(value: string) {
         return undefined;
     }
     return value.length > 50 ? MAX_LENGTH_50 : undefined;
+}
+
+export function validateMaxLength60(value: string) {
+    if (!value) {
+        return undefined;
+    }
+    return value.length > 60 ? MAX_LENGTH_60 : undefined;
 }
 
 export function validateMaxLength80(value: string) {

@@ -136,3 +136,25 @@ export function incrementLast(str: string, addIfNoNumber: boolean = false) {
     }
     return addIfNoNumber ? str + 1 : str;
 }
+
+/**
+ * Returns a completely normalized version of the given string
+ * @param {string} search
+ * @param {boolean} ranc
+ * @param {boolean} rd
+ * @param {boolean} ns
+ * @param {boolean} lc
+ * @returns {any}
+ */
+export function normalize(search: string, ranc = true, rd = true, ns = true, lc = true) {
+    if (!search) {
+        return '';
+    }
+    let normalizedSearch = search;
+    normalizedSearch = lc ? normalizedSearch.toLowerCase() : normalizedSearch;
+    normalizedSearch = rd ? removeDiacritics(normalizedSearch) : normalizedSearch;
+    normalizedSearch = ranc ? replaceNonAlphaNumericCharactersWithSpaces(normalizedSearch) : normalizedSearch;
+    normalizedSearch = ns ? normalizeSpaces(normalizedSearch) : normalizedSearch;
+    normalizedSearch = normalizedSearch.trim();
+    return normalizedSearch;
+}

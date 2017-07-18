@@ -4,6 +4,7 @@ import * as locationHelper from '../services/locationService';
 import * as searchHelper from '../helpers/searchHelper';
 import * as userHelper from '../services/userService';
 import * as dbTypes from '../typings/dbTypes';
+import * as stringHelper from '../../common/helpers/stringHelper';
 
 const router = express.Router();
 
@@ -16,7 +17,7 @@ router.route('/professions').get((req, res) => {
     apiHelper.sendPromiseDb(res,
         async (db: dbTypes.IndieJobsDatabase) => {
             apiHelper.getAndEnsureUserId(req);
-            const professions = await db.search_professions(searchHelper.convertToTsVector(searchHelper.normalize(req.query.q)));
+            const professions = await db.search_professions(searchHelper.convertToTsVector(stringHelper.normalize(req.query.q)));
             return professions.map((p) => {
                 const gender = req.user.gender;
                 return gender === 0 ? p.name_canonical : p.name_feminine;
