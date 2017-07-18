@@ -1,0 +1,1 @@
+select * from profession order by random() limit 1

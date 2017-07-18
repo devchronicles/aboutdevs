@@ -157,7 +157,7 @@ export function getReduxDataForLoggedUser(user: serverTypes.User): commonTypes.R
  * @param otherProfession The profession_other field of the user
  * @param userGender The user gender
  */
-async function getFormattedProfession(db: serverTypes.IndieJobsDatabase, professionId: number, otherProfession: string, userGender: serverTypes.UserGender) {
+async function getFormattedProfession(db: serverTypes.IndieJobsDatabase, professionId: number, otherProfession: string, userGender: serverTypes.UserGender): Promise<string> {
     if (professionId) {
         const profession = await db.profession.findOne({ id: professionId });
         if (profession) {
@@ -170,6 +170,20 @@ async function getFormattedProfession(db: serverTypes.IndieJobsDatabase, profess
         }
     }
     return otherProfession;
+}
+
+async function getServicesForUser(db: serverTypes.IndieJobsDatabase, userId: number): Promise<commonTypes.UserService[]> {
+    const services = await db.user_service.find({ user_id: userId });
+    if (!services.length) {
+        return [{
+            id: undefined,
+            service: '',
+        }];
+    }
+    return services.map(s => ({
+        id: s.id,
+        service: s.service,
+    }));
 }
 
 async function getProfileDataFromUser(db: serverTypes.IndieJobsDatabase, user: serverTypes.User): Promise<commonTypes.UserProfile> {
@@ -188,41 +202,112 @@ async function getProfileDataFromUser(db: serverTypes.IndieJobsDatabase, user: s
         phoneWhatsapp: user.phone_whatsapp,
         phoneAlternative: user.phone_alternative,
         bio: user.bio,
-        activities: user.activities,
+        services: await getServicesForUser(db, user.id),
     };
 }
 
+/**
+ * Gets the profile of the given user
+ * @param db The massive object
+ * @param userId The id of the user
+ */
 export async function getProfile(db: serverTypes.IndieJobsDatabase, userId: number): Promise<commonTypes.UserProfile> {
-    return db.user.findOne({ id: userId })
-        .then((u) => getProfileDataFromUser(db, u));
+    const user = await db.user.findOne({ id: userId });
+    return getProfileDataFromUser(db, user);
 }
 
-export async function saveProfile(db: serverTypes.IndieJobsDatabase, userId: number, profile: commonTypes.UserProfile): Promise<commonTypes.UserProfile> {
+/**
+ * Saves the profile of the given user
+ * @param db The massive object
+ * @param userId The user id. This id must really exist
+ * @param profile The user profile
+ * @param professionId The profession id. This is for testing only. In production, this variable cannot contain value
+ * @param locationId The location id. This is for testing only. In production, this variable cannot contain value
+ */
+export async function saveProfile(db: serverTypes.IndieJobsDatabase, userId: number, profile: commonTypes.UserProfile, professionId?: number, locationId?: number): Promise<commonTypes.UserProfile> {
     let user = await db.user.findOne({ id: userId });
     if (!user) throw Error('could not find user');
 
     user.name = profile.name;
     user.display_name = profile.displayName;
     user.type = profile.type; // 0 -> user 1 -> professional
-    user.bio = profile.bio;
-    user.activities = profile.activities;
     user.phone_whatsapp = profile.phoneWhatsapp;
     user.phone_alternative = profile.phoneAlternative;
+    if (user.type === commonTypes.UserProfileType.PROFESSIONAL) {
+        user.bio = profile.bio;
+    }
 
     // profession
-    const professionNormalized = searchHelper.normalize(profile.profession);
-    const professions = await db.search_professions_for_save(professionNormalized);
-    if (professions.length) {
-        user.profession_id = professions[0].id;
-        user.profession_other = undefined;
+    if (!professionId) {
+        const professionNormalized = searchHelper.normalize(profile.profession);
+        const professions = await db.search_professions_for_save(professionNormalized);
+        if (professions.length) {
+            user.profession_id = professions[0].id;
+            user.profession_other = undefined;
+        } else {
+            user.profession_id = undefined;
+            user.profession_other = profile.profession;
+        }
     } else {
-        user.profession_id = undefined;
-        user.profession_other = profile.profession;
+        if (process.env.NODE_ENV === 'production') {
+            throw Error('Passing location id is a not enabled in production');
+        }
+        user.profession_id = professionId;
+        user.profession_other = undefined;
     }
 
     // location
-    const location = await locationService.saveLocation(db, profile.address);
-    user.geo_location_id = location.id;
+    if (!locationId) {
+        const location = await locationService.saveLocation(db, profile.address);
+        user.geo_location_id = location.id;
+    } else {
+        if (process.env.NODE_ENV === 'production') {
+            throw Error('Passing location id is a not enabled in production');
+        }
+        user.geo_location_id = locationId;
+    }
+
+    // services
+    if (user.type === commonTypes.UserProfileType.PROFESSIONAL) {
+        const profileServices = profile.services
+            ? profile
+                .services.map(s => {
+                    s.service = searchHelper.normalize(s.service);
+                    return s;
+                })
+                .filter(s => !!s.service)
+            : [];
+
+        const persistedUserServices = await db.user_service.find({ user_id: userId });
+
+        // add or update services that are persistent already
+        for (let i = 0; i < profileServices.length; i++) {
+            const profileService = profileServices[i];
+            if (profileService.id) {
+                // the service is persistent already
+                const existingService = await db.user_service.findOne({ id: profileService.id });
+                existingService.service = profileService.service;
+                existingService.service_canonical = searchHelper.normalize(profileService.service);
+                existingService.index = i;
+                await db.user_service.update(existingService);
+            } else {
+                // the service hasn't been persisted yet
+                await db.user_service.insert({
+                    service: profileService.service,
+                    service_canonical: searchHelper.normalize(profileService.service),
+                    index: i,
+                });
+            }
+        }
+
+        // remove services that were removed
+        const removedServices = persistedUserServices
+            .filter(dbService => profileServices.findIndex(profileService => profileService.id === dbService.id) === -1);
+
+        for (const removedService of removedServices) {
+            await db.user_service.destroy({ id: removedService.id });
+        }
+    }
 
     user = (await db.user.update(user)) as serverTypes.User;
 

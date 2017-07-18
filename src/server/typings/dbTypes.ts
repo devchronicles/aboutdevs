@@ -38,6 +38,13 @@ export enum UserGender {
     FEMALE = 1,
 }
 
+export interface UserService {
+    id: number;
+    service: string;
+    service_canonical: string;
+    index: number;
+}
+
 export interface User {
     id: number;
     display_name: string;
@@ -57,7 +64,6 @@ export interface User {
     geo_location_id: number;
     profession_id: number;
     bio: string;
-    activities: string;
     phone_whatsapp: string;
     phone_alternative: string;
 }
@@ -79,6 +85,7 @@ export interface IndieJobsDatabase extends massive.Database {
     geo_location_state: massive.Table<GeoLocationState>;
     geo_location_city: massive.Table<GeoLocationCity>;
     user: massive.Table<User>;
+    user_service: massive.Table<UserService>;
     profession: massive.Table<Profession>;
 
     // functions
@@ -86,4 +93,5 @@ export interface IndieJobsDatabase extends massive.Database {
     search_professions_for_save: (profession: string) => Promise<Array<{ id: number }>>;
     search_professions: (profession: string) => Promise<Profession[]>;
     update_geometry: (geoLocationId: number, longitude: number, latitude: number) => void;
+    get_random_profession: () => Promise<Profession[]>;
 }

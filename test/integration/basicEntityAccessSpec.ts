@@ -14,6 +14,7 @@ describe('basicEntityAccess', () => {
             gender: 0,
             email: 'andrerpena@gmail.com',
             display_name: 'André Pena',
+            photo_url: 'foo.com/image.jpeg',
         };
         return assertCanSaveFindAndDelete(db, 'user', user);
     });

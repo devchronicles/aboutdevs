@@ -26,6 +26,10 @@ const FormField: React.SFC<IFormFieldProps> = (props) => {
         innerComponent,
     } = props;
 
+    if (!innerComponent) {
+        throw Error('Inner component is required');
+    }
+
     const innerComponentProps = {
         input: props.input,
         meta: props.meta,

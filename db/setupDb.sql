@@ -544,6 +544,42 @@ COMMENT ON COLUMN "user".oauth_profiles IS 'A JSON containing information return
 
 
 --
+-- Name: user_service; Type: TABLE; Schema: public; Owner: indiejobs
+--
+
+CREATE TABLE user_service (
+    id integer NOT NULL,
+    user_id integer NOT NULL,
+    service character varying(64) NOT NULL,
+    index smallint NOT NULL,
+    service_canonical character varying(64) NOT NULL
+);
+
+
+ALTER TABLE user_service OWNER TO indiejobs;
+
+--
+-- Name: user_service_id_seq; Type: SEQUENCE; Schema: public; Owner: indiejobs
+--
+
+CREATE SEQUENCE user_service_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE user_service_id_seq OWNER TO indiejobs;
+
+--
+-- Name: user_service_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: indiejobs
+--
+
+ALTER SEQUENCE user_service_id_seq OWNED BY user_service.id;
+
+
+--
 -- Name: geo_location id; Type: DEFAULT; Schema: public; Owner: indiejobs
 --
 
@@ -597,6 +633,13 @@ ALTER TABLE ONLY notification ALTER COLUMN id SET DEFAULT nextval('notification_
 --
 
 ALTER TABLE ONLY profession ALTER COLUMN id SET DEFAULT nextval('profession_id_seq'::regclass);
+
+
+--
+-- Name: user_service id; Type: DEFAULT; Schema: public; Owner: indiejobs
+--
+
+ALTER TABLE ONLY user_service ALTER COLUMN id SET DEFAULT nextval('user_service_id_seq'::regclass);
 
 
 --
@@ -669,6 +712,14 @@ ALTER TABLE ONLY "user"
 
 ALTER TABLE ONLY "user"
     ADD CONSTRAINT user_id_pk PRIMARY KEY (id);
+
+
+--
+-- Name: user_service user_service_pkey; Type: CONSTRAINT; Schema: public; Owner: indiejobs
+--
+
+ALTER TABLE ONLY user_service
+    ADD CONSTRAINT user_service_pkey PRIMARY KEY (id);
 
 
 --
@@ -819,6 +870,13 @@ CREATE UNIQUE INDEX user_name_uindex ON "user" USING btree (name);
 
 
 --
+-- Name: user_service_id_uindex; Type: INDEX; Schema: public; Owner: indiejobs
+--
+
+CREATE UNIQUE INDEX user_service_id_uindex ON user_service USING btree (id);
+
+
+--
 -- Name: geo_location_state geo_location_state_geo_location_country_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: indiejobs
 --
 
@@ -848,6 +906,14 @@ ALTER TABLE ONLY "user"
 
 ALTER TABLE ONLY "user"
     ADD CONSTRAINT user_profession_id_fk FOREIGN KEY (profession_id) REFERENCES profession(id);
+
+
+--
+-- Name: user_service user_service_user_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: indiejobs
+--
+
+ALTER TABLE ONLY user_service
+    ADD CONSTRAINT user_service_user_id_fk FOREIGN KEY (user_id) REFERENCES "user"(id);
 
 
 --

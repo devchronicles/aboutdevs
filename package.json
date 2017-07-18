@@ -112,6 +112,7 @@
     "tools:print-config": "ts-node ./tools/print-config.ts",
     "tools:save-professions": "cross-env NODE_ENV=development ts-node ./tools/save-professions.ts",
     "tools:validate-professions": "cross-env NODE_ENV=development ts-node ./tools/validate-professions.ts",
+    "tools:fake": "cross-env NODE_ENV=development ts-node ./tools/fake.ts",
     "tslint": "tslint ./src/**/*.ts ./test/**/*.ts",
     "tslint:fix": "tslint ./src/**/*.ts ./test/**/*.ts --fix"
   }

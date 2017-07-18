@@ -2,7 +2,7 @@ import * as React from 'react';
 import { getFormSubmitErrors, getFormSyncErrors, getFormValues, reduxForm, SubmissionError } from 'redux-form';
 import { connect } from 'react-redux';
 import { FaIcon } from './FaIcon';
-import { Field, TextBox, TextArea, FormField, FormGroup, FormFieldUserName, FormRow, SelectLocation, SelectProfession, UserTypeToggle } from './form/index';
+import { Field, FieldArray, Services, TextBox, TextArea, FormField, FormGroup, FormFieldUserName, FormRow, SelectLocation, SelectProfession, UserTypeToggle } from './form/index';
 import { DocumentSection } from './DocumentSection';
 import normalizePhone from '../lib/redux-form/normalizePhone';
 import asyncValidation from '../lib/redux-form/asyncValidation';
@@ -96,12 +96,9 @@ let ProfileEditForm: React.SFC<ProfileEditoFormProps> = (props) => {
                         />
                     </FormRow>
                     <FormRow>
-                        <Field
-                            name="activities"
-                            label="Serviços que você presta"
-                            component={FormField}
-                            innerComponent={TextArea}
-                            help="Descreva, brevemente, os tipos de serviço que você presta. Tamanho máximo: 500 caracteres."
+                        <FieldArray
+                            name="services"
+                            component={Services}
                         />
                     </FormRow>
                 </DocumentSection>

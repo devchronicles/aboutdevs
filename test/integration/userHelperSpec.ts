@@ -18,6 +18,7 @@ describe('userHelper', () => {
                 gender: 0,
                 display_name: 'Foo',
                 email: 'foo@fooland.com',
+                photo_url: 'foo.com/image.jpeg',
             })
                 .then(() => userHelper.getValidUserName(db, 'foo'))
                 .then((userName) => { assert.equal(userName, 'foo1'); }),
@@ -29,12 +30,14 @@ describe('userHelper', () => {
                 gender: 0,
                 display_name: 'Foo',
                 email: 'foo@fooland.com',
+                photo_url: 'foo.com/image.jpeg',
             })
                 .then(() => db.user.insert({
                     name: 'foo1',
                     gender: 0,
                     display_name: 'Foo',
                     email: 'foo2@fooland.com',
+                    photo_url: 'foo.com/image.jpeg',
                 }))
                 .then(() => userHelper.getValidUserName(db, 'foo'))
                 .then((userName) => { assert.equal(userName, 'foo2'); }),
@@ -62,6 +65,7 @@ describe('userHelper', () => {
             gender: 0,
             email: 'andrerpena@gmail.com',
             display_name: 'André Pena',
+            photo_url: 'foo.com/image.jpeg',
         })) as serverTypes.User;
 
         user = await userHelper.updateFromGoogleProfile(db, user, googleProfileSample);
@@ -91,6 +95,7 @@ describe('userHelper', () => {
                 gender: 0,
                 email: 'andrerpena@gmail.com',
                 display_name: 'André Pena',
+                photo_url: 'foo.com/image.jpeg',
             })
                 .then(() => userHelper.findOrCreateFromGoogleProfile(db, googleProfileSample))
                 .then((u) => {
@@ -107,6 +112,7 @@ describe('userHelper', () => {
                 gender: 0,
                 email: 'andrerpena@gmail.com',
                 display_name: 'André Pena',
+                photo_url: 'foo.com/image.jpeg',
             })) as serverTypes.User;
 
             const profile = {
@@ -114,7 +120,6 @@ describe('userHelper', () => {
                 displayName: 'André Pena',
                 type: 1,
                 bio: 'Great developer',
-                activities: 'Great software',
                 phone_whatsapp: '(32) 999168205',
                 address: 'Rua Henrique Surerus, 28, Juiz de Fora',
                 profession: 'medico',

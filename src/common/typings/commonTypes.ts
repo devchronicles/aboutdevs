@@ -24,6 +24,11 @@ export enum UserProfileStatus {
     READY = 1,
 }
 
+export interface UserService {
+    id?: number;
+    service: string;
+}
+
 export interface UserProfile {
     [key: string]: any;
     id?: number; // id is not required because when you are saving a user
@@ -35,10 +40,15 @@ export interface UserProfile {
     profession: string;
     bio?: string;
     photoUrl?: string;
-    activities?: string;
+    services?: UserService[];
     phoneWhatsapp?: string;
     phoneAlternative?: string;
     address: string;
+}
+
+export interface UserService {
+    id?: number;
+    service: string;
 }
 
 export interface ReduxState {

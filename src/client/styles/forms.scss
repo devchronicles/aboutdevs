@@ -1,10 +1,5 @@
 @import '_variables';
 
-
-
-
-// input
-
 input, textarea, select, button {
     font-family: 'Roboto', sans-serif;
     font-size: $font-size;
@@ -99,7 +94,6 @@ form, *.form {
         margin-bottom: $gutter-md;
         box-sizing: border-box;
         width: 100%;
-
         .form-column {
             box-sizing: border-box;
             padding: 0 $gutter-sm;
@@ -108,6 +102,9 @@ form, *.form {
                 flex-basis: 0;
                 flex-grow: 1;
             }
+        }
+        &:last-child {
+            margin-bottom: 0;
         }
     }
 }
@@ -214,6 +211,41 @@ form, *.form {
     line-height: 1.2em;
     &.error {
         color: $color-shining-2;
+    }
+}
+
+.field-array {
+    ul {
+        li {
+            display: flex;
+            flex-direction: row;
+            align-items: stretch;
+            margin-bottom: $gutter-sm;
+            .counter {
+                font-weight: 500;
+                background-color: $color-gray-light;
+                border-radius: 17px;
+                height: 34px;
+                width: 34px;
+                flex: 0 0 auto;
+                box-sizing: border-box;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .form-group {
+                flex: 1 1 auto;
+                margin: 0 $gutter-sm;
+            }
+
+            button.delete {
+            }
+        }
+    }
+    .field-array-button-bar {
+        display: flex;
+        flex-direction: row-reverse;
     }
 }
 
