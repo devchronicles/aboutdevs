@@ -5,13 +5,13 @@ export function getErrorMessage(error: string) {
         case fieldValidation.REQUIRED:
             return 'Campo obrigatório.';
         case fieldValidation.MAX_LENGTH_50:
-            return 'Tamanho máximo: 50 caracteres';
+            return 'Tamanho máximo: 50 caracteres.';
         case fieldValidation.MAX_LENGTH_60:
-            return 'Tamanho máximo: 60 caracteres';
+            return 'Tamanho máximo: 60 caracteres.';
         case fieldValidation.MAX_LENGTH_80:
-            return 'Tamanho máximo: 80 caracteres';
+            return 'Tamanho máximo: 80 caracteres.';
         case fieldValidation.MAX_LENGTH_500:
-            return 'Tamanho máximo: 500 caracteres';
+            return 'Tamanho máximo: 500 caracteres.';
         case fieldValidation.REQUIRED_IF_PROFESSIONAL:
             return 'Campo obrigatório quando o usuário é um profissional.';
         case fieldValidation.INVALID_PHONE:
