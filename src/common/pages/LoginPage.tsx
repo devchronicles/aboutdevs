@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { SocialButton } from '../components/SocialButton';
+import { Logo } from '../components/Logo';
 
 
 const LoginPage = () => (
     <div className="login-page-wrapper">
         <div className="login-card">
             <div className="title">
-                Entrar no IndieJobs
+                <Logo />
             </div>
             <div className="body">
                 <SocialButton text="Entrar com o Google" url="/auth/google" faClass="google" />

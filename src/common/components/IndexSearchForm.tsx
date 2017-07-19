@@ -35,9 +35,9 @@ let IndexSearchForm: React.SFC<IndexSearchFormProps> = (props) => {
                     />
                 </FormGroup>
             </FormRow>
-            <button type="submit" className="vibrant">
+            <button type="submit" className="search vibrant">
                 <i className="fa fa-search" aria-hidden="true" />
-                <span>Pesquisar</span>
+                <span>Encontrar profissionais</span>
             </button>
         </form>
     );

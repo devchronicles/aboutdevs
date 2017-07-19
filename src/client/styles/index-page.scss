@@ -1,86 +1,77 @@
 @import "_variables";
+
 $hero-text-font-size: 25px;
 
 .index-page-wrapper {
 
-    background:
-        linear-gradient(rgba(16, 102, 150, 0.97), rgba(35, 60, 64, 0.9)),
-        url('images/bg-6.jpeg');
-    background-size: cover;
+  background: linear-gradient(rgba(16, 102, 150, 0.97), rgba(35, 60, 64, 0.9)),
+  url('images/bg-4.jpeg');
+  background-size: cover;
 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  margin-top: -$header-height;
+
+  .index-search-form {
+    width: 100%;
+    max-width: 500px;
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
-    height: 100%;
-    width: 100%;
-    margin-top: -$header-height;
+    position: relative;
+    margin: $gutter-md;
 
-    .index-search-form {
-        width: 100%;
-        max-width: 500px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        position: relative;
-        margin: $gutter-md;
-
-        .fa {
-            margin-right: $gutter-sm;
-        }
-
-        .logo-wrapper {
-            margin-bottom: $gutter-md;
-        }
-
-        .index-hero {
-            display: flex;
-            flex-direction: row;
-            font-size: $hero-text-font-size;
-            align-items: center;
-
-            .icon-box {
-                border: 1px solid $color-white;
-                border-radius: $radius-md;
-                color: $color-white;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                margin-right: $gutter-md;
-                width: 52px;
-                height: 52px;
-                .fa {
-                    font-size: $hero-text-font-size * 1;
-                    margin-right: 0 !important;
-                }
-            }
-
-            .hero-text {
-                display: flex;
-                flex-direction: column;
-                .hero-logo {
-                    font-family: 'Ubuntu', sans-serif;
-                    margin-bottom: $gutter-sm;
-                    color: $color-white;
-                }
-                .hero-motto {
-                    color: $color-gray-medium;
-                }
-            }
-        }
-
-        .register-wrapper {
-            margin-top: 2 * $gutter-md;
-            padding: $gutter-sm;
-            border: 1px solid $color-gray-medium;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: space-between;
-            .text {
-                color: $color-gray-medium;
-            }
-        }
+    .fa {
+      margin-right: $gutter-sm;
     }
+
+    .logo-wrapper {
+      margin-bottom: $gutter-md;
+    }
+
+    .index-hero {
+      display: flex;
+      flex-direction: column;
+      font-size: $hero-text-font-size;
+
+      .hero-text {
+        display: flex;
+        flex-direction: row;
+        align-items: baseline;
+        width: 100%;
+        justify-content: space-between;
+        .logo {
+          color: $color-white;
+          font-size: 40px;
+        }
+        .hero-motto {
+          color: $color-gray-medium;
+          opacity: 0.4;
+        }
+      }
+    }
+
+    button.search {
+      font-size: 1.2em;
+    }
+
+    .register-wrapper {
+      margin-top: 2 * $gutter-md;
+      padding: $gutter-sm;
+      border-radius: $radius-md;
+      border: 1px solid $color-gray-dark;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      .text {
+        margin-left: $gutter-sm;
+        color: $color-gray-dark;
+      }
+    }
+  }
 }
