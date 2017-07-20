@@ -1,3 +1,4 @@
+
 CREATE INDEX name_canonical_idx ON profession USING GIN (to_tsvector('ptu', name_canonical));
 
 

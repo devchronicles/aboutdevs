@@ -530,7 +530,8 @@ CREATE TABLE "user" (
     bio character varying(500),
     activities character varying(500),
     phone_whatsapp character varying(20),
-    phone_alternative character varying(20)
+    phone_alternative character varying(20),
+    search_canonical text
 );
 
 
@@ -853,6 +854,13 @@ CREATE UNIQUE INDEX profession_name_feminine_normalized_uindex ON profession USI
 --
 
 CREATE UNIQUE INDEX profession_name_feminine_uindex ON profession USING btree (name_feminine);
+
+
+--
+-- Name: search_canonical_idx; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX search_canonical_idx ON "user" USING gin (to_tsvector('ptu'::regconfig, search_canonical));
 
 
 --

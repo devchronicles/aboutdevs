@@ -66,6 +66,7 @@ export interface User {
     bio: string;
     phone_whatsapp: string;
     phone_alternative: string;
+    search_canonical: string;
 }
 
 export interface Profession {
@@ -76,7 +77,7 @@ export interface Profession {
     name_feminine_normalized: string;
 }
 
-export interface IndieJobsDatabase extends massive.Database {
+export interface TazzoDatabase extends massive.Database {
     [key: string]: any;
     // tables
     geo_location_cache: massive.Table<GeoLocationCache>;

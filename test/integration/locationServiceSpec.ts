@@ -5,8 +5,8 @@ import * as serverTypes from '../../src/server/typings';
 import setupSession from './setupSession';
 
 describe('locationHelperSpec', () => {
-    let db: serverTypes.IndieJobsDatabase = null;
-    setupSession(before, after, beforeEach, afterEach, ($db: serverTypes.IndieJobsDatabase) => {
+    let db: serverTypes.TazzoDatabase = null;
+    setupSession(before, after, beforeEach, afterEach, ($db: serverTypes.TazzoDatabase) => {
         db = $db;
     });
     describe('getLocationsFromGoogle', () => {
@@ -71,10 +71,10 @@ describe('locationHelperSpec', () => {
             assert.ok(locationCache);
         });
     });
-    describe('saveLocation', () => {
+    describe('saveAddress', () => {
         it('default case', async () => {
             const locationFormattedAddress = 'Rua Morais e Castro, 300, Passos, Juiz de Fora, MG';
-            const savedLocation = await locationService.saveLocation(db, 'Rua Morais e Castro, 300, Passos, Juiz de Fora, MG');
+            const savedLocation = await locationService.saveAddress(db, 'Rua Morais e Castro, 300, Passos, Juiz de Fora, MG');
             assert.equal(savedLocation.formatted_address, locationFormattedAddress);
         });
     });

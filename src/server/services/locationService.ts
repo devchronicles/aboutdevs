@@ -12,12 +12,14 @@ import * as stringHelper from '../../common/helpers/stringHelper';
  * @param {object} location The location to be saved in the cache
  * @param {object} db The db object
  */
-async function saveLocationToCache(searchTerm: string, location: serverTypes.GeocodeApiResult, db: serverTypes.IndieJobsDatabase)
-    : Promise<serverTypes.GeocodeApiResult> {
+async function saveLocationToCache(searchTerm: string, location: serverTypes.GeocodeApiResult, db: serverTypes.TazzoDatabase): Promise<serverTypes.GeocodeApiResult> {
     if (searchTerm === null || searchTerm === undefined) throw Error('Argument \'search\' should be null or undefined');
     if (location === null || location === undefined) throw Error('Argument \'location\' should be null or undefined');
 
-    const insertedLocation = (await db.geo_location_cache.insert({ search: searchTerm, cache: location })) as serverTypes.GeoLocationCache;
+    const insertedLocation = (await db.geo_location_cache.insert({
+        search: searchTerm,
+        cache: location
+    })) as serverTypes.GeoLocationCache;
     return insertedLocation ? insertedLocation.cache : undefined;
 }
 
@@ -26,10 +28,9 @@ async function saveLocationToCache(searchTerm: string, location: serverTypes.Geo
  * @param {string} searchTerm The search term the user typed
  * @param {object} db The db object
  */
-export function getLocationsFromCache(searchTerm: string, db: serverTypes.IndieJobsDatabase)
-    : Promise<serverTypes.GeocodeApiResult> {
+export function getLocationsFromCache(searchTerm: string, db: serverTypes.TazzoDatabase): Promise<serverTypes.GeocodeApiResult> {
     if (searchTerm === null || searchTerm === undefined) throw Error('Argument \'partialAddress\' should be null or undefined');
-    return db.geo_location_cache.findOne({ search: searchTerm })
+    return db.geo_location_cache.findOne({search: searchTerm})
         .then((r) => (r ? r.cache : undefined));
 }
 
@@ -51,8 +52,7 @@ export async function getLocationsFromGoogle(searchTerm: string): Promise<server
     return res.data;
 }
 
-export async function getLocations(searchTerm: string, allowCities: boolean, db: serverTypes.IndieJobsDatabase)
-    : Promise<serverTypes.GeocodeApiResult> {
+export async function getLocations(searchTerm: string, allowCities: boolean, db: serverTypes.TazzoDatabase): Promise<serverTypes.GeocodeApiResult> {
     const normalizedSearchTerm = stringHelper.normalize(searchTerm);
     if (!normalizedSearchTerm) {
         return Promise.resolve<serverTypes.GeocodeApiResult>(undefined);
@@ -67,18 +67,64 @@ export async function getLocations(searchTerm: string, allowCities: boolean, db:
     return locations;
 }
 
-export async function getFormattedLocations(searchTerm: string, allowCities: boolean, db: serverTypes.IndieJobsDatabase): Promise<string[]> {
+export async function getFormattedLocations(searchTerm: string, allowCities: boolean, db: serverTypes.TazzoDatabase): Promise<string[]> {
     const locations = await getLocations(searchTerm, allowCities, db);
     const formattedLocations = await geocodeApiFormattingHelper.getFormattedLocations(locations, allowCities);
     return formattedLocations;
 }
 
-export async function saveLocation(db: serverTypes.IndieJobsDatabase, formattedText: string): Promise<serverTypes.GeoLocation> {
+export async function saveCountry(db: serverTypes.TazzoDatabase, shortName: string, longName: string): Promise<serverTypes.GeoLocationCountry> {
+    let country = await db.geo_location_country.findOne({short_name: shortName});
+    if (!country) {
+        country = (await db.geo_location_country.insert({
+            short_name: shortName,
+            long_name: longName,
+        })) as serverTypes.GeoLocationCountry;
+    }
+    return country;
+}
+
+export async function saveState(db: serverTypes.TazzoDatabase, shortName: string, longName: string, countryId: number): Promise<serverTypes.GeoLocationState> {
+    let state = await db.geo_location_state.findOne({short_name: shortName});
+    if (!state) {
+        state = (await db.geo_location_state.insert({
+            geo_location_country_id: countryId,
+            short_name: shortName,
+            long_name: longName,
+        })) as serverTypes.GeoLocationState;
+    }
+    return state;
+}
+
+export async function saveCity(db: serverTypes.TazzoDatabase, shortName: string, stateId: number): Promise<serverTypes.GeoLocationCity> {
+    let city = await db.geo_location_city.findOne({short_name: shortName});
+    if (!city) {
+        city = (await db.geo_location_city.insert({
+            short_name: shortName,
+            geo_location_state_id: stateId,
+        })) as serverTypes.GeoLocationCity;
+    }
+    return city;
+}
+
+export async function saveLocation(db: serverTypes.TazzoDatabase, formattedAddress: string, neighborhood: string, cityId: number, latitude: number, longitude: number): Promise<serverTypes.GeoLocation> {
+    const location = (await db.geo_location.insert({
+        formatted_address: formattedAddress,
+        geo_location_city_id: cityId,
+        sub_locality: neighborhood,
+        longitude,
+        latitude,
+    })) as serverTypes.GeoLocation;
+    await db.update_geometry(location.id, longitude, latitude);
+    return location;
+}
+
+export async function saveAddress(db: serverTypes.TazzoDatabase, formattedText: string): Promise<serverTypes.GeoLocation> {
     const locationData = await getLocations(formattedText, false, db);
     if (!locationData || !locationData.results || !locationData.results.length) throw Error('could not get location');
     if (locationData.results.length > 1) throw Error('the given location is not unique');
 
-    let location = await db.geo_location.findOne({ formatted_address: formattedText });
+    let location = await db.geo_location.findOne({formatted_address: formattedText});
     if (location) return location;
 
     const locationDataResult = locationData.results[0];
@@ -86,54 +132,22 @@ export async function saveLocation(db: serverTypes.IndieJobsDatabase, formattedT
     const stateComponent = geocodeApiHelper.getStateComponent(locationDataResult);
     const cityComponent = geocodeApiHelper.getCityComponent(locationDataResult);
     const neighborhoodComponent = geocodeApiHelper.getNeighborhoodComponent(locationDataResult);
-    const { longitude, latitude } = geocodeApiHelper.getLongitudeLatitude(locationDataResult);
+    const {longitude, latitude} = geocodeApiHelper.getLongitudeLatitude(locationDataResult);
 
-    // saving country
-    let country = await db.geo_location_country.findOne({ short_name: countryComponent.short_name });
-    if (!country) {
-        country = (await db.geo_location_country.insert({
-            short_name: countryComponent.short_name,
-            long_name: countryComponent.long_name,
-        })) as serverTypes.GeoLocationCountry;
-    }
+    const country = await saveCountry(db, countryComponent.short_name, countryComponent.long_name);
+    const state = await saveState(db, stateComponent.short_name, stateComponent.long_name, country.id);
+    const city = await saveCity(db, cityComponent.short_name, state.id);
 
-    // saving state
-    let state = await db.geo_location_state.findOne({ short_name: stateComponent.short_name });
-    if (!state) {
-        state = (await db.geo_location_state.insert({
-            geo_location_country_id: country.id,
-            long_name: stateComponent.long_name,
-            short_name: stateComponent.short_name,
-        })) as serverTypes.GeoLocationState;
-    }
-
-    // saving city
-    let city = await db.geo_location_city.findOne({ short_name: cityComponent.short_name });
-    if (!city) {
-        city = (await db.geo_location_city.insert({
-            short_name: cityComponent.short_name,
-            geo_location_state_id: state.id,
-        })) as serverTypes.GeoLocationCity;
-    }
-
-    location = (await db.geo_location.insert({
-        formatted_address: formattedText,
-        geo_location_city_id: city.id,
-        sub_locality: neighborhoodComponent.short_name,
-        longitude,
-        latitude,
-    })) as serverTypes.GeoLocation;
-
-    await db.update_geometry(location.id, longitude, latitude);
+    location = await saveLocation(db, formattedText, neighborhoodComponent.short_name, city.id, latitude, longitude);
 
     return location;
 }
 
-export async function getFormattedLocationById(db: serverTypes.IndieJobsDatabase, geoLocationId: number) {
+export async function getFormattedLocationById(db: serverTypes.TazzoDatabase, geoLocationId: number) {
     if (!db) throw Error('Argument \'db\' should be truthy');
     if (!geoLocationId) throw Error('Argument \'geoLocationId\' should be truthy');
 
-    const location = await db.geo_location.findOne({ id: geoLocationId });
+    const location = await db.geo_location.findOne({id: geoLocationId});
     if (!location) throw Error('could not find location');
     return location.formatted_address;
 }

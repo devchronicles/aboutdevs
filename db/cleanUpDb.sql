@@ -6,4 +6,5 @@ TRUNCATE
     "geo_location_state",
     "notification",
     "profession",
+    "user_service",
     "user"

@@ -2,20 +2,24 @@ import * as faker from 'faker/locale/pt_BR';
 
 import buildDb from '../src/server/db/buildDb';
 import * as userService from '../src/server/services/userService';
+import * as locationService from '../src/server/services/locationService';
 import * as commonTypes from '../src/common/typings';
 import * as serverTypes from '../src/server/typings';
 
 buildDb()
     .then(async db => {
 
-        for (let i = 0; i < 1000; i++) {
+        // Make sure the default
+
+        for (let i = 0; i < 50000; i++) {
             try {
                 const displayName = faker.name.findName();
-                const name = faker.internet.userName();
+                const name = await userService.getValidUserName(db, faker.internet.userName());
+                const email = `${name}@gmail.com`;
 
                 const preUserProfile = {
                     display_name: displayName,
-                    email: faker.internet.email(),
+                    email: email,
                     gender: faker.random.number({ min: 0, max: 1 }),
                     name: name,
                     oauth_profiles: {},
@@ -37,20 +41,61 @@ buildDb()
                     // These are just so it will compile
                     profession: '',
                     address: 'Rua Henrique Surerus 28, Juiz de Fora MG',
+                    services: [
+                        {
+                            index: 0,
+                            service: faker.lorem.sentence(4).substring(0, 60)
+                        },
+                        {
+                            index: 2,
+                            service: faker.lorem.sentence(4).substring(0, 60)
+                        },
+                        {
+                            index: 3,
+                            service: faker.lorem.sentence(4).substring(0, 60)
+                        }
+                    ]
                 };
 
-                const randomProfessionId = (await db.get_random_profession())[0].id;
+                let randomProfessionId;
+                let randomProfessionText;
+                try {
+                    const randomProfession = (await db.get_random_profession())[0];
+                    randomProfessionId = randomProfession.id;
+                    randomProfessionText = randomProfession.name_canonical;
+                } catch(ex) {
+                    console.error('Error getting random profession id. Are you sure you have populated the database?');
+                    process.exit();
+                }
 
-                await userService.saveProfile(db, insertedUser.id, fakeProfile, randomProfessionId);
+                // location
+                const country = await locationService.saveCountry(db, 'BR', 'Brazil' );
+                const state = await locationService.saveState(db, 'MG', 'Minas Gerais', country.id);
+                const city = await locationService.saveCity(db, 'Juiz de Fora', state.id);
+
+                const neighborhood = 'Pavuna';
+                const formattedAddress = `${faker.address.streetName()}, ${neighborhood}, ${faker.address.city()}`;
+                var maxLat = -21.3743555;
+                var minLat = -22.3248544;
+
+                var minLong = -51.5182245;
+                var maxLong = -50.2197401;
+
+                var randomLat = Math.random() * (maxLat - minLat) + minLat;
+                var randomLong = Math.random() * (maxLong - minLong) + minLong;
+
+                const location = await locationService.saveLocation(db, formattedAddress, neighborhood, city.id, randomLat, randomLong);
+
+                fakeProfile.profession = randomProfessionText;
+
+                await userService.saveProfile(db, insertedUser.id, fakeProfile, randomProfessionId, location.id);
             }
             catch (ex) {
                 console.log('error');
+                console.error(ex);
             }
             console.log('Person saved ' + i);
         }
-
-
-
 
         process.exit();
     });

@@ -71,7 +71,7 @@ export function sendPromise(res: express.Response, promise: Promise<any>): Promi
         .catch((e) => sendError(res, e));
 }
 
-export async function sendPromiseDb(res: express.Response, promiseFunction: (db: dbTypes.IndieJobsDatabase) => any): Promise<express.Response> {
+export async function sendPromiseDb(res: express.Response, promiseFunction: (db: dbTypes.TazzoDatabase) => any): Promise<express.Response> {
     if (!res) throw Error('Argument \'res\' should be truthy');
     if (!promiseFunction) throw Error('Argument \'promiseFunction\' should be truthy');
 

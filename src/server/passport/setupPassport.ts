@@ -34,7 +34,7 @@ export default function(passportInstance: passport.Passport) {
         },
         (accessToken, refreshToken, profile: googleOAuthTypes.GoogleOAuthProfile, done) => {
             buildDb()
-                .then((db: dbTypes.IndieJobsDatabase) =>
+                .then((db: dbTypes.TazzoDatabase) =>
                     userHelper.findOrCreateFromGoogleProfile(db, profile)
                         .then((u: dbTypes.User) => done(null, u.id)) // this will call passport.serializeUser
                         .catch(done),
