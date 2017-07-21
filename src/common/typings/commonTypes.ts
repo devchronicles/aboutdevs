@@ -47,6 +47,17 @@ export interface UserProfile {
     address: string;
 }
 
+export interface UserProfileSearch {
+    id: number;
+    displayName: string;
+    photoUrl: string;
+    name: string;
+    bio: string;
+    distance: number;
+    profession: string;
+    services: UserService[];
+}
+
 export interface UserService {
     id?: number;
     service: string;

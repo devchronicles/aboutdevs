@@ -52,7 +52,7 @@ export async function getLocationsFromGoogle(searchTerm: string): Promise<server
     return res.data;
 }
 
-export async function getLocations(searchTerm: string, allowCities: boolean, db: serverTypes.TazzoDatabase): Promise<serverTypes.GeocodeApiResult> {
+export async function searchLocations(db: serverTypes.TazzoDatabase, searchTerm: string, allowCities: boolean): Promise<serverTypes.GeocodeApiResult> {
     const normalizedSearchTerm = stringHelper.normalize(searchTerm);
     if (!normalizedSearchTerm) {
         return Promise.resolve<serverTypes.GeocodeApiResult>(undefined);
@@ -67,8 +67,8 @@ export async function getLocations(searchTerm: string, allowCities: boolean, db:
     return locations;
 }
 
-export async function getFormattedLocations(searchTerm: string, allowCities: boolean, db: serverTypes.TazzoDatabase): Promise<string[]> {
-    const locations = await getLocations(searchTerm, allowCities, db);
+export async function getFormattedLocations(db: serverTypes.TazzoDatabase, searchTerm: string, allowCities: boolean): Promise<string[]> {
+    const locations = await searchLocations(db, searchTerm, allowCities);
     const formattedLocations = await geocodeApiFormattingHelper.getFormattedLocations(locations, allowCities);
     return formattedLocations;
 }
@@ -120,7 +120,7 @@ export async function saveLocation(db: serverTypes.TazzoDatabase, formattedAddre
 }
 
 export async function saveAddress(db: serverTypes.TazzoDatabase, formattedText: string): Promise<serverTypes.GeoLocation> {
-    const locationData = await getLocations(formattedText, false, db);
+    const locationData = await searchLocations(db, formattedText, false);
     if (!locationData || !locationData.results || !locationData.results.length) throw Error('could not get location');
     if (locationData.results.length > 1) throw Error('the given location is not unique');
 

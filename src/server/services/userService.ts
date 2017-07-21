@@ -339,6 +339,52 @@ export async function saveProfile(db: serverTypes.TazzoDatabase, userId: number,
 }
 
 /**
+ * Searches professionals
+ * @param {TazzoDatabase} db
+ * @param {string} search
+ * @param {string} location
+ * @returns {Promise<UserProfileSearch[]>}
+ */
+export async function searchProfessionais(db: serverTypes.TazzoDatabase, search: string, location: string): Promise<commonTypes.UserProfileSearch[]> {
+    // we need to convert the location to latitude and longitude
+    const locations = await locationService.searchLocations(db, search, true);
+    if (!locations.results.length) {
+        return [];
+    }
+    const googleApiResult = locations.results[0];
+    const {lat, lng} = googleApiResult.geometry.location;
+    const searchNormalized = stringHelper.normalize(search);
+
+    const result: commonTypes.UserProfileSearch[] = [];
+    const searchIntermediateResult = await db.search_users(searchNormalized, lng, lat);
+
+    for (const intermediateResult of searchIntermediateResult) {
+        const userServices = await db.user_service.find({user_id: intermediateResult.id}, {order: ['index']});
+        const userProfession = intermediateResult.profession_id
+            ? (await db.profession.findOne({id: intermediateResult.profession_id}))
+            : null;
+        const user: commonTypes.UserProfileSearch = {
+            id: intermediateResult.id,
+            name: intermediateResult.name,
+            displayName: intermediateResult.display_name,
+            bio: intermediateResult.bio,
+            photoUrl: intermediateResult.photo_url,
+            distance: intermediateResult.distance,
+            profession: userProfession
+                ? (intermediateResult.gender === serverTypes.UserGender.MALE ? userProfession.name_canonical : userProfession.name_feminine)
+                : intermediateResult.profession_other,
+            services: userServices.map(us => ({
+                id: us.id,
+                service: us.service,
+                index: us.index,
+            })),
+        };
+        result.push(user);
+    }
+    return result;
+}
+
+/**
  * Returns an object with a key for each property that has an error on it. The value is the error key
  * @param db The database
  * @param profile The profile being validated

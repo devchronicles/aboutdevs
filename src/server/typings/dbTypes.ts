@@ -43,6 +43,7 @@ export interface UserService {
     service: string;
     service_canonical: string;
     index: number;
+    user_id: number;
 }
 
 export interface User {
@@ -67,6 +68,19 @@ export interface User {
     phone_whatsapp: string;
     phone_alternative: string;
     search_canonical: string;
+}
+
+export interface UserSearchResult {
+    id: number;
+    gender: number;
+    display_name: string;
+    email: string;
+    photo_url: string;
+    name: string;
+    bio: string;
+    profession_other: string;
+    profession_id: number;
+    distance: number;
 }
 
 export interface Profession {
@@ -94,5 +108,6 @@ export interface TazzoDatabase extends massive.Database {
     search_professions_for_save: (profession: string) => Promise<Array<{ id: number }>>;
     search_professions: (profession: string) => Promise<Profession[]>;
     update_geometry: (geoLocationId: number, longitude: number, latitude: number) => void;
+    search_users: (textNormalized: string, longitude: number, latitude: number) => Promise<UserSearchResult[]>;
     get_random_profession: () => Promise<Profession[]>;
 }

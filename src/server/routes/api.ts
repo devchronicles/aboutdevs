@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.route('/address').get((req: express.Request, res: express.Response) => {
     const allowCities: boolean = req.query.allowcities;
-    apiHelper.sendPromiseDb(res, (db: dbTypes.TazzoDatabase) => locationHelper.getFormattedLocations(req.query.q as string, allowCities, db));
+    apiHelper.sendPromiseDb(res, (db: dbTypes.TazzoDatabase) => locationHelper.getFormattedLocations(db, req.query.q as string, allowCities));
 });
 
 router.route('/professions').get((req, res) => {

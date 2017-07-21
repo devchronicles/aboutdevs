@@ -65,7 +65,7 @@ describe('locationHelperSpec', () => {
             const searchTerm = 'henrique surerus jf';
             let locationCache = await db.geo_location_cache.findOne({ search: searchTerm });
             assert.isNotOk(locationCache);
-            const formattedLocations = await locationService.getFormattedLocations(searchTerm, false, db);
+            const formattedLocations = await locationService.getFormattedLocations(db, searchTerm, false);
             assert.equal(1, formattedLocations.length);
             locationCache = await db.geo_location_cache.findOne({ search: searchTerm });
             assert.ok(locationCache);
