@@ -54,7 +54,6 @@ class SelectProfession extends React.Component<ISelectProfessionProps, {}> {
                 filterOption={(o) => o}
                 labelKey="label"
                 valueKey="value"
-                // localization
                 placeholder=""
                 loadingPlaceholder="Carregando..."
                 searchPromptText="Digite para pesquisar"

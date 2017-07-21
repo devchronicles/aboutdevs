@@ -4,6 +4,7 @@ import * as ReactRouter from 'react-router';
 import * as clientTypes from '../typings';
 import * as ReactRedux from 'react-redux';
 import * as urlHelper from '../../common/helpers/urlHelper';
+import * as gisHelper from '../helpers/gisHelper';
 import {Logo} from '../components/Logo';
 
 import {IndexSearchForm} from '../components/IndexSearchForm';
@@ -26,8 +27,15 @@ class IndexPage extends React.Component<IndexPageProps> {
 
     public handleSearchSubmit = (formValues: any) => {
         const {location, professional} = formValues;
-        const normalizedLocation = urlHelper.normalizeUrlParameter(location);
+
+        // let's try to see if the entered location is a latitude longitude pair
+        const geoLocation = gisHelper.extractLocationFromText(location);
+
+        const normalizedLocation = geoLocation
+            ? gisHelper.buildUrlParameterFromLocation(geoLocation)
+            : urlHelper.normalizeUrlParameter(location);
         const normalizedProfessional = urlHelper.normalizeUrlParameter(professional);
+
         if (location && professional) {
             this.props.history.push(`/s/${normalizedLocation}/${normalizedProfessional}`);
         }
