@@ -1,4 +1,5 @@
 import axios, { AxiosPromise } from 'axios';
+
 import * as commonTypes from '../common/typings';
 
 export function getProfileData() {

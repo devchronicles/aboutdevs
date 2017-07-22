@@ -17,7 +17,7 @@ let IndexSearchForm: React.SFC<IndexSearchFormProps> = (props) => {
             <FormRow>
                 <FormGroup>
                     <Field
-                        name="professional"
+                        name="search"
                         component="input"
                         type="text"
                         className="form-control"
@@ -45,7 +45,8 @@ let IndexSearchForm: React.SFC<IndexSearchFormProps> = (props) => {
 
 // Decorate with redux-form
 IndexSearchForm = reduxForm({
-    form: 'search', // a unique identifier for this form
+    form: 'search', // a unique identifier for this form,
+
 })(IndexSearchForm);
 
 export { IndexSearchForm };

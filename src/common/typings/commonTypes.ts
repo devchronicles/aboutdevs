@@ -32,6 +32,7 @@ export interface UserService {
 
 export interface UserProfile {
     [key: string]: any;
+
     id?: number; // id is not required because when you are saving a user
     name: string;
     type: UserProfileType;
@@ -63,10 +64,26 @@ export interface UserService {
     service: string;
 }
 
+export interface SearchCriteria {
+    search: string;
+    location: string;
+    loading: boolean;
+}
+
+export interface SearchResult {
+
+}
+
+export interface SearchState {
+    criteria: SearchCriteria;
+    result: SearchResult;
+}
+
 export interface ReduxState {
     loggedUser: ReduxCurrentUserProfile;
     form: {
         profileEdit?: any,
     };
+    search: SearchState;
     notifications: ReactNotificationSystem.Notification[];
 }

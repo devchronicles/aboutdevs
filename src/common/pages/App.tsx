@@ -49,7 +49,7 @@ class App extends React.Component<AppProps> {
                 <Switch>
                     <Route exact={true} path="/search" component={SearchPage} />
                     <Route exact={true} path="/config/edituserprofile" component={ProfileEditPage} />
-                    <Route path="/s/:location/:professional" component={SearchPage} />
+                    <Route path="/s/:location/:search" component={SearchPage} />
                     <Route exact={true} path="/" component={IndexPage} />
                 </Switch>
                 <ReactNotificationSystem ref={this.setNotificationSystemRef} />

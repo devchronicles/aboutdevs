@@ -55,7 +55,7 @@ class SelectLocation extends React.Component<SelectLocationProps, {}> {
             labelKey: "label",
             valueKey: "value",
             placeholder,
-            loadingPlaceholder: "Carregando...",
+            loadingPlaceholder: "Localizando endereço...",
             searchPromptText: "Digite para pesquisar",
             noResultsText: "Não foi possível encontrar o endereço",
             ignoreCase: false,

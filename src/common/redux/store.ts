@@ -1,9 +1,9 @@
 import { applyMiddleware, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
-import * as clientTypes from '../typings';
+import * as commonTypes from '../typings';
 import reducers from './reducers';
 
-export default (initialState: clientTypes.ReduxState = { loggedUser: undefined, form: undefined, notifications: [] }) => {
+export default (initialState: commonTypes.ReduxState) => {
     let middleware: any = applyMiddleware(thunk);
 
     if (process.env.NODE_ENV !== 'production' && window) {
@@ -17,9 +17,7 @@ export default (initialState: clientTypes.ReduxState = { loggedUser: undefined, 
 
     if (module && (module as any).hot) {
         (module as any).hot.accept('./reducers', () => {
-            /*eslint-disable*/
             store.replaceReducer(require('./reducers').default);
-            /*eslint-enable*/
         });
     }
 

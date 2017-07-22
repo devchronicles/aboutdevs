@@ -1,6 +1,6 @@
 import * as express from 'express';
 import * as apiHelper from '../helpers/apiHelper';
-import * as locationHelper from '../services/locationService';
+import * as locationService from '../services/locationService';
 import * as searchHelper from '../helpers/searchHelper';
 import * as userHelper from '../services/userService';
 import * as dbTypes from '../typings/dbTypes';
@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.route('/address').get((req: express.Request, res: express.Response) => {
     const allowCities: boolean = req.query.allowcities;
-    apiHelper.sendPromiseDb(res, (db: dbTypes.TazzoDatabase) => locationHelper.getFormattedLocations(db, req.query.q as string, allowCities));
+    apiHelper.sendPromiseDb(res, (db: dbTypes.TazzoDatabase) => locationService.getFormattedLocations(db, req.query.q as string, allowCities));
 });
 
 router.route('/professions').get((req, res) => {
