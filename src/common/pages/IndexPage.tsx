@@ -26,7 +26,7 @@ declare type IndexPageProps = IndexPageStateProps & IndexPageDispatchProps & Ind
 class IndexPage extends React.Component<IndexPageProps> {
 
     public handleSearchSubmit = (formValues: any) => {
-        const {location, professional} = formValues;
+        const {search, location} = formValues;
 
         // let's try to see if the entered location is a latitude longitude pair
         const geoLocation = gisHelper.extractLocationFromText(location);
@@ -34,10 +34,10 @@ class IndexPage extends React.Component<IndexPageProps> {
         const normalizedLocation = geoLocation
             ? gisHelper.buildUrlParameterFromLocation(geoLocation)
             : urlHelper.normalizeUrlParameter(location);
-        const normalizedProfessional = urlHelper.normalizeUrlParameter(professional);
+        const normalizedSearch = urlHelper.normalizeUrlParameter(search);
 
-        if (location && professional) {
-            this.props.history.push(`/s/${normalizedLocation}/${normalizedProfessional}`);
+        if (search && location) {
+            this.props.history.push(`/s/${normalizedLocation}/${normalizedSearch}`);
         }
     }
 

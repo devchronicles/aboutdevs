@@ -1,8 +1,9 @@
 import * as React from 'react';
+import * as ReduxForm from 'redux-form';
 import {Field, reduxForm} from 'redux-form';
 import {SelectLocation, FormRow, FormColumn, FormGroup} from './form/index';
 
-interface SearchFormProps {
+interface SearchFormProps extends ReduxForm.FormProps<any, any, any> {
     handleSubmit: (arg: any) => any;
 }
 

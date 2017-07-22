@@ -343,9 +343,9 @@ export async function saveProfile(db: serverTypes.TazzoDatabase, userId: number,
  * @param {TazzoDatabase} db
  * @param {string} search
  * @param {string} location
- * @returns {Promise<UserProfileSearch[]>}
+ * @returns {Promise<UserSearchProfile[]>}
  */
-export async function searchProfessionais(db: serverTypes.TazzoDatabase, search: string, location: string): Promise<commonTypes.UserProfileSearch[]> {
+export async function searchProfessionais(db: serverTypes.TazzoDatabase, search: string, location: string): Promise<commonTypes.UserSearchProfile[]> {
     // we need to convert the location to latitude and longitude
     const locations = await locationService.searchLocations(db, search, true);
     if (!locations.results.length) {
@@ -355,7 +355,7 @@ export async function searchProfessionais(db: serverTypes.TazzoDatabase, search:
     const {lat, lng} = googleApiResult.geometry.location;
     const searchNormalized = stringHelper.normalize(search);
 
-    const result: commonTypes.UserProfileSearch[] = [];
+    const result: commonTypes.UserSearchProfile[] = [];
     const searchIntermediateResult = await db.search_users(searchNormalized, lng, lat);
 
     for (const intermediateResult of searchIntermediateResult) {
@@ -363,7 +363,7 @@ export async function searchProfessionais(db: serverTypes.TazzoDatabase, search:
         const userProfession = intermediateResult.profession_id
             ? (await db.profession.findOne({id: intermediateResult.profession_id}))
             : null;
-        const user: commonTypes.UserProfileSearch = {
+        const user: commonTypes.UserSearchProfile = {
             id: intermediateResult.id,
             name: intermediateResult.name,
             displayName: intermediateResult.display_name,

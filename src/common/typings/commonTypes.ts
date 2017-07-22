@@ -48,7 +48,7 @@ export interface UserProfile {
     address: string;
 }
 
-export interface UserProfileSearch {
+export interface UserSearchProfile {
     id: number;
     displayName: string;
     photoUrl: string;
@@ -64,6 +64,15 @@ export interface UserService {
     service: string;
 }
 
+// SEARCH
+
+export enum SearchDisplay {
+    ORDER_BY_DISTANCE = 0,
+    BEST_PROFESSIONAIS_IN_2_KM = 1,
+    BEST_PROFESSIONAIS_IN_5_KM = 2,
+    BEST_PROFESSIONAIS_IN_10_KM = 3,
+}
+
 export interface SearchCriteria {
     search: string;
     location: string;
@@ -71,12 +80,13 @@ export interface SearchCriteria {
 }
 
 export interface SearchResult {
-
+    display: SearchDisplay;
+    profiles: UserSearchProfile[];
 }
 
 export interface SearchState {
-    criteria: SearchCriteria;
     result: SearchResult;
+    criteria: SearchCriteria;
 }
 
 export interface ReduxState {

@@ -23,7 +23,7 @@ class SelectLocation extends React.Component<SelectLocationProps, {}> {
             clearTimeout(this.currentFetchTimeout);
         }
         this.currentFetchTimeout = setTimeout(() => {
-            httpClient.getFormattedLocations(inputText, allowCities)
+            httpClient.searchLocations(inputText, allowCities)
                 .then((res) => {
                     const options = res.data.map((i: any) => ({value: i, label: i}));
                     callback(null, {options, complete: true});

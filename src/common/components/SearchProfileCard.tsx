@@ -1,11 +1,11 @@
 import * as React from 'react';
 import * as commonTypes from '../../common/typings';
 
-interface ProfileCardProps {
-    profile: commonTypes.UserProfile;
+interface SearchProfileCardProps {
+    profile: commonTypes.UserSearchProfile;
 }
 
-const ProfileCard: React.SFC<ProfileCardProps> = ({ profile }) => (
+const ProfileCard: React.SFC<SearchProfileCardProps> = ({ profile }) => (
     <li className="profile-card">
         <div className="star-wrapper">
             <i className="fa fa-star-o" />

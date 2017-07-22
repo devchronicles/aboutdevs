@@ -8,7 +8,10 @@ const defaultSearchState: commonTypes.SearchState = {
         location: null,
         loading: false,
     },
-    result: null,
+    result: {
+        display: commonTypes.SearchDisplay.ORDER_BY_DISTANCE,
+        profiles: [],
+    },
 };
 
 export function searchReducer(state = defaultSearchState, { payload, type }: { payload: any, type: string }) {

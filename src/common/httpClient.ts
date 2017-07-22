@@ -11,18 +11,20 @@ export function saveProfileData(profile: commonTypes.UserProfile): AxiosPromise 
     return axios.post('/api/users/myprofile', profile);
 }
 
-export function getFormattedLocations(searchTerm: string, allowCities = false): AxiosPromise {
-    const queryString = allowCities ? `q=${searchTerm}&allowcities=true` : `q=${searchTerm}`;
-    return axios.get(`/api/address?${queryString}`);
-}
-
-export function getProfessions(searchTerm: string): AxiosPromise {
-    const queryString = `q=${searchTerm}`;
-    return axios.get(`/api/professions?${queryString}`);
-}
-
 export function checkUserName(userName: string): AxiosPromise {
     if (!userName) throw Error('Argument \'userName\' should be truthy');
     const queryString = `q=${userName}`;
     return axios.get(`/api/users/checkname?${queryString}`);
+}
+
+// SEARCH
+
+export function searchLocations(searchTerm: string, allowCities = false): AxiosPromise {
+    const queryString = allowCities ? `q=${searchTerm}&allowcities=true` : `q=${searchTerm}`;
+    return axios.get(`/api/address?${queryString}`);
+}
+
+export function searchProfessions(searchTerm: string): AxiosPromise {
+    const queryString = `q=${searchTerm}`;
+    return axios.get(`/api/professions?${queryString}`);
 }

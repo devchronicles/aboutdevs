@@ -60,7 +60,7 @@ describe('locationHelperSpec', () => {
                     assert.equal(res.length, 0);
                 }));
     });
-    describe('getFormattedLocations', () => {
+    describe('searchLocations', () => {
         it('checks the correct behavior', async () => {
             const searchTerm = 'henrique surerus jf';
             let locationCache = await db.geo_location_cache.findOne({ search: searchTerm });

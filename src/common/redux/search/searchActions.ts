@@ -19,7 +19,7 @@ export const searchCriteriaLoad = (search: string, location: string) => {
 
     return async (dispatch: ReactRedux.Dispatch<clientTypes.ReduxState>) => {
         dispatch({type: SEARCH_CRITERIA_LOAD_STARTED});
-        const locations = await httpClient.getFormattedLocations(location, true);
+        const locations = await httpClient.searchLocations(location, true);
         const locationsData = locations.data
             ? locations.data as string[]
             : null;

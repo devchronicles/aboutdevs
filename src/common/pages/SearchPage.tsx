@@ -10,8 +10,6 @@ import {SearchWrapper} from '../components/SearchWrapper';
 import {SearchForm} from '../components/SearchForm';
 import {SearchResult} from '../components/SearchResult';
 
-import {profiles} from '../lib/stubs';
-
 interface SearchPageStateProps {
     searchCriteria: commonTypes.SearchCriteria,
 }
@@ -49,7 +47,7 @@ class SearchPage extends React.Component<SearchPageProps> {
                 <SearchWrapper>
                     <SearchForm handleSubmit={this.handleFormSubmit} initialValues={searchCriteria} />
                 </SearchWrapper>
-                <SearchResult profiles={profiles}/>
+                <SearchResult/>
             </div>
         );
     }

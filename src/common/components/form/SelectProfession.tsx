@@ -3,7 +3,7 @@ import { AsyncCreatable } from 'react-select';
 import * as ReactSelect from 'react-select';
 import * as ReduxForm from 'redux-form';
 import * as stringHelper from '../../../common/helpers/stringHelper';
-import { getProfessions } from '../../httpClient';
+import { searchProfessions } from '../../httpClient';
 
 interface ISelectProfessionProps extends ReduxForm.WrappedFieldProps<{}> {
     placeholder: string;
@@ -19,7 +19,7 @@ class SelectProfession extends React.Component<ISelectProfessionProps, {}> {
             clearTimeout(this.currentFetchTimeout);
         }
         this.currentFetchTimeout = setTimeout(() => {
-            getProfessions(inputText)
+            searchProfessions(inputText)
                 .then((res) => {
                     const options = res.data.map((i: any) => ({ value: i, label: i }));
                     callback(null, { options, complete: true });
