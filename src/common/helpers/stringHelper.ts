@@ -109,18 +109,27 @@ export function removeDiacritics(str: string) {
  * Returns a version of the given string in which the non-alphanumeric characters are replaced by spaces
  * @param {string} str The input string
  */
-export function replaceNonAlphaNumericCharactersWithSpaces(str: string) {
+export function replaceNonAlphaNumericCharactersWith(str: string, replacement = ' ') {
     if (str === null || str === undefined) throw Error('Argument \'str\' should be null or undefined');
-    return str.replace(/[^a-z0-9]+/gi, ' ');
+    return str.replace(/[^a-z0-9]+/gi, replacement);
 }
 
 /**
  * Returns a version fo the given string in which multiple spaces have been replaced by one
  * @param {string} str The input string
  */
-export function normalizeSpaces(str: string) {
+export function removeDuplicateSpaces(str: string) {
     if (str === null || str === undefined) throw Error('Argument \'str\' should be null or undefined');
-    return str.replace(/ +(?= )/g, '');
+    return str.replace(/\s+/g, ' ');
+}
+
+/**
+ * Returns a version fo the given string in which multiple dashes have been replaced by one
+ * @param {string} str The input string
+ */
+export function removeDuplicateDashes(str: string) {
+    if (str === null || str === undefined) throw Error('Argument \'str\' should be null or undefined');
+    return str.replace(/-+/g, '-');
 }
 
 /**
@@ -139,22 +148,35 @@ export function incrementLast(str: string, addIfNoNumber: boolean = false) {
 
 /**
  * Returns a completely normalized version of the given string
- * @param {string} search
+ * @param {string} text
  * @param {boolean} ranc
  * @param {boolean} rd
  * @param {boolean} ns
  * @param {boolean} lc
  * @returns {any}
  */
-export function normalize(search: string, ranc = true, rd = true, ns = true, lc = true) {
-    if (!search) {
+export function normalizeForSearch(text: string, ranc = true, rd = true, ns = true, lc = true) {
+    if (!text) {
         return '';
     }
-    let normalizedSearch = search;
+    let normalizedSearch = text;
     normalizedSearch = lc ? normalizedSearch.toLowerCase() : normalizedSearch;
     normalizedSearch = rd ? removeDiacritics(normalizedSearch) : normalizedSearch;
-    normalizedSearch = ranc ? replaceNonAlphaNumericCharactersWithSpaces(normalizedSearch) : normalizedSearch;
-    normalizedSearch = ns ? normalizeSpaces(normalizedSearch) : normalizedSearch;
+    normalizedSearch = ranc ? replaceNonAlphaNumericCharactersWith(normalizedSearch, ' ') : normalizedSearch;
+    normalizedSearch = ns ? removeDuplicateSpaces(normalizedSearch) : normalizedSearch;
+    normalizedSearch = normalizedSearch.trim();
+    return normalizedSearch;
+}
+
+export function normalizeForUrl(text: string) {
+    if (!text) {
+        return '';
+    }
+    let normalizedSearch = text;
+    normalizedSearch = normalizedSearch.toLowerCase();
+    normalizedSearch = removeDiacritics(normalizedSearch);
+    normalizedSearch = replaceNonAlphaNumericCharactersWith(normalizedSearch, '-');
+    normalizedSearch = removeDuplicateDashes(normalizedSearch);
     normalizedSearch = normalizedSearch.trim();
     return normalizedSearch;
 }

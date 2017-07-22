@@ -8,7 +8,7 @@ const nameFeminineNormalizedMap: { [key: string]: boolean } = {};
 
 function normalize(text: string) {
     if (!text) throw Error('Inconsistent profession');
-    return stringHelper.normalize(text, false);
+    return stringHelper.normalizeForSearch(text, false);
 }
 
 professions.data.forEach((profession: string[]) => {

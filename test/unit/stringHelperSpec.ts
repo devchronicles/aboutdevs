@@ -10,17 +10,17 @@ describe('stringHelper', () => {
             assert.equal(stringHelper.removeDiacritics('ç'), 'c');
         });
     });
-    describe('replaceNonAlphaNumericCharactersWithSpaces', () => {
+    describe('replaceNonAlphaNumericCharactersWith', () => {
         it('Basic scenario', () => {
-            assert.equal(stringHelper.replaceNonAlphaNumericCharactersWithSpaces('///André///'), ' Andr ');
-            assert.equal(stringHelper.replaceNonAlphaNumericCharactersWithSpaces('=\\çç/='), ' ');
+            assert.equal(stringHelper.replaceNonAlphaNumericCharactersWith('///André///'), ' Andr ');
+            assert.equal(stringHelper.replaceNonAlphaNumericCharactersWith('=\\çç/='), ' ');
         });
     });
-    describe('normalizeSpaces', () => {
+    describe('removeDuplicateSpaces', () => {
         it('Basic scenario', () => {
-            assert.equal(stringHelper.normalizeSpaces('   Eu   sei   '), ' Eu sei ');
-            assert.equal(stringHelper.normalizeSpaces('Eusei'), 'Eusei');
-            assert.equal(stringHelper.normalizeSpaces('Eu   sei'), 'Eu sei');
+            assert.equal(stringHelper.removeDuplicateSpaces('   Eu   sei   '), ' Eu sei ');
+            assert.equal(stringHelper.removeDuplicateSpaces('Eusei'), 'Eusei');
+            assert.equal(stringHelper.removeDuplicateSpaces('Eu   sei'), 'Eu sei');
         });
     });
     describe('incrementLast', () => {

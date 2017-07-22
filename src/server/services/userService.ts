@@ -243,7 +243,7 @@ export async function saveProfile(db: serverTypes.TazzoDatabase, userId: number,
 
     // profession
     if (!professionId) {
-        const professionNormalized = stringHelper.normalize(profile.profession);
+        const professionNormalized = stringHelper.normalizeForSearch(profile.profession);
         const professions = await db.search_professions_for_save(professionNormalized);
         if (professions.length) {
             user.profession_id = professions[0].id;
@@ -282,7 +282,7 @@ export async function saveProfile(db: serverTypes.TazzoDatabase, userId: number,
                     return {
                         id: s.id,
                         service: s.service,
-                        service_canonical: stringHelper.normalize(s.service),
+                        service_canonical: stringHelper.normalizeForSearch(s.service),
                         index,
                     };
                 })
@@ -298,14 +298,14 @@ export async function saveProfile(db: serverTypes.TazzoDatabase, userId: number,
                 // the service is persistent already
                 const existingService = await db.user_service.findOne({id: profileService.id});
                 existingService.service = profileService.service;
-                existingService.service_canonical = stringHelper.normalize(profileService.service);
+                existingService.service_canonical = stringHelper.normalizeForSearch(profileService.service);
                 existingService.index = profileService.index;
                 await db.user_service.update(existingService);
             } else {
                 // the service hasn't been persisted yet
                 await db.user_service.insert({
                     service: profileService.service,
-                    service_canonical: stringHelper.normalize(profileService.service),
+                    service_canonical: stringHelper.normalizeForSearch(profileService.service),
                     user_id: userId,
                     index: profileService.index,
                 });
@@ -322,7 +322,7 @@ export async function saveProfile(db: serverTypes.TazzoDatabase, userId: number,
 
         // search
         const concatenatedServices = profileServices.map(p => p.service_canonical).reduce((accumulated, current) => `${accumulated} ${current}`, '');
-        const professionForSearch = stringHelper.normalize(profile.profession);
+        const professionForSearch = stringHelper.normalizeForSearch(profile.profession);
 
         user.search_canonical = `${professionForSearch} ${concatenatedServices}`;
     }
@@ -353,14 +353,13 @@ export async function searchProfessionais(db: serverTypes.TazzoDatabase, search:
     }
     const googleApiResult = locations.results[0];
     const {lat, lng} = googleApiResult.geometry.location;
-    const searchNormalized = stringHelper.normalize(search);
+    const searchNormalized = stringHelper.normalizeForSearch(search);
 
     const result: commonTypes.UserSearchProfile[] = [];
     const searchIntermediateResult = await db.search_users(searchNormalized, lng, lat);
-    console.log(searchIntermediateResult);
 
     for (const intermediateResult of searchIntermediateResult) {
-        const userServices = await db.user_service.find({user_id: intermediateResult.id}, {order: ['index']});
+        const userServices = await db.user_service.find({user_id: intermediateResult.id});
         const userProfession = intermediateResult.profession_id
             ? (await db.profession.findOne({id: intermediateResult.profession_id}))
             : null;
@@ -378,7 +377,7 @@ export async function searchProfessionais(db: serverTypes.TazzoDatabase, search:
                 id: us.id,
                 service: us.service,
                 index: us.index,
-            })),
+            })).sort((us1, us2) => us1.index - us2.index),
         };
         result.push(user);
     }

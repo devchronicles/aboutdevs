@@ -17,13 +17,19 @@ buildDb()
             try {
                 const displayName = faker.name.findName();
 
-                const name = await userService.getValidUserName(db, stringHelper.normalize(faker.internet.userName()));
+                let name = await userService.getValidUserName(db, stringHelper.normalizeForUrl(faker.internet.userName()));
+                name += i;
                 const email = `${name}@gmail.com`;
+
+                const emailAlreadyExists = await db.user.findOne({email: email});
+                if (emailAlreadyExists) {
+                    throw Error(`User name: ${name}. Email: ${email}`);
+                }
 
                 const preUserProfile = {
                     display_name: displayName,
                     email: email,
-                    gender: faker.random.number({ min: 0, max: 1 }),
+                    gender: faker.random.number({min: 0, max: 1}),
                     name: name,
                     oauth_profiles: {},
                     photo_url: faker.internet.avatar(),
@@ -66,13 +72,13 @@ buildDb()
                     const randomProfession = (await db.get_random_profession())[0];
                     randomProfessionId = randomProfession.id;
                     randomProfessionText = randomProfession.name_canonical;
-                } catch(ex) {
+                } catch (ex) {
                     console.error('Error getting random profession id. Are you sure you have populated the database?');
                     process.exit();
                 }
 
                 // location
-                const country = await locationService.saveCountry(db, 'BR', 'Brazil' );
+                const country = await locationService.saveCountry(db, 'BR', 'Brazil');
                 const state = await locationService.saveState(db, 'MG', 'Minas Gerais', country.id);
                 const city = await locationService.saveCity(db, 'Juiz de Fora', state.id);
 
@@ -99,7 +105,7 @@ buildDb()
             }
             catch (ex) {
                 console.log('error');
-                console.error(ex);
+                throw ex;
             }
             console.log('Person saved ' + i);
         }

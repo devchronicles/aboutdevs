@@ -4,7 +4,7 @@ const professions = require('../data/professions-processed.json');
 
 function normalize(text: string) {
     if (!text) throw Error('Inconsistent profession');
-    return searchHelper.normalize(text, false);
+    return searchHelper.normalizeForSearch(text, false);
 }
 
 buildDb()

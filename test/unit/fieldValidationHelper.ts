@@ -5,11 +5,10 @@ import * as commonTypes from '../../src/common/typings';
 function createProfile(object: any): commonTypes.UserProfile {
     const emptyProfile = {
         name: '',
-        type: 0,
+        type: commonTypes.UserProfileType.PROFESSIONAL,
         displayName: '',
         profession: '',
         bio: '',
-        activities: '',
         address: '',
         phoneWhatsapp: '',
         phoneAlternative: '',

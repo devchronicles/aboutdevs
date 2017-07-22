@@ -53,7 +53,7 @@ export async function getLocationsFromGoogle(searchTerm: string): Promise<server
 }
 
 export async function searchLocations(db: serverTypes.TazzoDatabase, searchTerm: string, allowCities: boolean): Promise<serverTypes.GeocodeApiResult> {
-    const normalizedSearchTerm = stringHelper.normalize(searchTerm);
+    const normalizedSearchTerm = stringHelper.normalizeForSearch(searchTerm);
     if (!normalizedSearchTerm) {
         return Promise.resolve<serverTypes.GeocodeApiResult>(undefined);
     }

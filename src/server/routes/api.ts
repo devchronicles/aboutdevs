@@ -17,7 +17,7 @@ router.route('/professions').get((req, res) => {
     apiHelper.sendPromiseDb(res,
         async (db: dbTypes.TazzoDatabase) => {
             apiHelper.getAndEnsureUserId(req);
-            const professions = await db.search_professions(searchHelper.convertToTsVector(stringHelper.normalize(req.query.q)));
+            const professions = await db.search_professions(searchHelper.convertToTsVector(stringHelper.normalizeForSearch(req.query.q)));
             return professions.map((p) => {
                 const gender = req.user.gender;
                 return gender === 0 ? p.name_canonical : p.name_feminine;

@@ -43,7 +43,7 @@ export function validateMaxLength500(value: string) {
 }
 
 export function validationRequiredIfProfessional(value: any, user: commonTypes.UserProfile) {
-    return (user.type === 0 && (value === null || value === undefined || value === '')) ? REQUIRED_IF_PROFESSIONAL : undefined;
+    return (user.type === commonTypes.UserProfileType.PROFESSIONAL && (value === null || value === undefined || value === '')) ? REQUIRED_IF_PROFESSIONAL : undefined;
 }
 
 export function validatePhone(value: string) {
