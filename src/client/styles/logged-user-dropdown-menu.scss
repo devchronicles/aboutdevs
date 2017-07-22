@@ -29,13 +29,13 @@
         padding: $gutter-xs 0;
 
         div.dropdown-header {
-            padding: $gutter-sm;
+            padding: $gutter-sm $gutter-md;
         }
 
         a.dropdown-item {
             text-decoration: none;
             display: block;
-            padding: $gutter-sm;
+            padding: $gutter-sm $gutter-md;
             &:hover {
                 text-decoration: none;
                 background-color: $color-gray-light;
