@@ -517,13 +517,11 @@ ALTER TABLE user_id_seq OWNER TO postgres;
 CREATE TABLE "user" (
     id integer DEFAULT nextval('user_id_seq'::regclass) NOT NULL,
     display_name character varying(50) NOT NULL,
-    email character varying(255) NOT NULL,
     photo_url character varying(255) NOT NULL,
     oauth_profiles json,
     status smallint DEFAULT 0 NOT NULL,
     type smallint DEFAULT 0 NOT NULL,
     profession_other character varying(80),
-    name character varying(50) NOT NULL,
     gender smallint NOT NULL,
     geo_location_id integer,
     profession_id integer,
@@ -531,7 +529,9 @@ CREATE TABLE "user" (
     activities character varying(500),
     phone_whatsapp character varying(20),
     phone_alternative character varying(20),
-    search_canonical text
+    search_canonical text,
+    name character varying(255) NOT NULL,
+    email character varying(255) NOT NULL
 );
 
 
@@ -697,14 +697,6 @@ ALTER TABLE ONLY notification
 
 ALTER TABLE ONLY profession
     ADD CONSTRAINT profession_id_pk PRIMARY KEY (id);
-
-
---
--- Name: user user_email_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY "user"
-    ADD CONSTRAINT user_email_unique UNIQUE (email);
 
 
 --

@@ -2,7 +2,7 @@ import * as express from 'express';
 import * as apiHelper from '../helpers/apiHelper';
 import * as locationService from '../services/locationService';
 import * as searchHelper from '../helpers/searchHelper';
-import * as userHelper from '../services/userService';
+import * as userService from '../services/userService';
 import * as dbTypes from '../typings/dbTypes';
 import * as stringHelper from '../../common/helpers/stringHelper';
 
@@ -40,7 +40,7 @@ router.route('/users/myprofile').get((req, res) => {
     apiHelper.sendPromiseDb(res,
         async (db) => {
             const userId = apiHelper.getAndEnsureUserId(req);
-            return userHelper.getProfile(db, userId);
+            return userService.getProfile(db, userId);
         });
 });
 
@@ -50,11 +50,24 @@ router.route('/users/myprofile').post((req, res) => {
             if (!req.body) throw Error('profile was not submitted');
             const profile = req.body;
             const userId = apiHelper.getAndEnsureUserId(req);
-            const errors = await userHelper.validateProfile(db, profile);
+            const errors = await userService.validateProfile(db, profile);
             if (Object.keys(errors).length) {
-                return { errors };
+                return {errors};
             }
-            return userHelper.saveProfile(db, userId, profile);
+            return userService.saveProfile(db, userId, profile);
+        });
+});
+
+router.route('/users').get((req, res) => {
+    if (!req.body) throw Error('profile was not submitted');
+    apiHelper.sendPromiseDb(res,
+        async (db) => {
+            const search = req.query.q;
+            const location = req.query.l;
+            if (!search || !location) {
+                throw Error('Parameters q and l are expected')
+            }
+            return userService.searchProfessionais(db, search, location);
         });
 });
 
@@ -66,7 +79,7 @@ router.route('/users/:id').get((req, res) => {
         async (db) => {
             apiHelper.getAndEnsureUserId(req);
             const entityId = req.params.id;
-            const user = await db.user.findOne({ id: entityId });
+            const user = await db.user.findOne({id: entityId});
             if (user) {
                 return user;
             }

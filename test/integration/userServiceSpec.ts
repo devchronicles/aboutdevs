@@ -5,7 +5,7 @@ import googleProfileSample from './resources/googleProfileSample';
 import setupSession from './setupSession';
 import * as commonTypes from '../../src/common/typings/commonTypes';
 
-describe('userHelper', () => {
+describe('userService', () => {
     let db: serverTypes.TazzoDatabase = null;
     setupSession(before, after, beforeEach, afterEach, ($db) => {
         db = $db;

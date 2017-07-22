@@ -1,10 +1,12 @@
 import * as faker from 'faker/locale/pt_BR';
 
 import buildDb from '../src/server/db/buildDb';
+
 import * as userService from '../src/server/services/userService';
 import * as locationService from '../src/server/services/locationService';
 import * as commonTypes from '../src/common/typings';
 import * as serverTypes from '../src/server/typings';
+import * as stringHelper from '../src/common/helpers/stringHelper';
 
 buildDb()
     .then(async db => {
@@ -14,7 +16,8 @@ buildDb()
         for (let i = 0; i < 50000; i++) {
             try {
                 const displayName = faker.name.findName();
-                const name = await userService.getValidUserName(db, faker.internet.userName());
+
+                const name = await userService.getValidUserName(db, stringHelper.normalize(faker.internet.userName()));
                 const email = `${name}@gmail.com`;
 
                 const preUserProfile = {
@@ -84,7 +87,11 @@ buildDb()
                 var randomLat = Math.random() * (maxLat - minLat) + minLat;
                 var randomLong = Math.random() * (maxLong - minLong) + minLong;
 
-                const location = await locationService.saveLocation(db, formattedAddress, neighborhood, city.id, randomLat, randomLong);
+                let location = await db.geo_location.findOne({formatted_address: formattedAddress});
+
+                location = location
+                    ? location
+                    : await locationService.saveLocation(db, formattedAddress, neighborhood, city.id, randomLat, randomLong);
 
                 fakeProfile.profession = randomProfessionText;
 

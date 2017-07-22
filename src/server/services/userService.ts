@@ -347,7 +347,7 @@ export async function saveProfile(db: serverTypes.TazzoDatabase, userId: number,
  */
 export async function searchProfessionais(db: serverTypes.TazzoDatabase, search: string, location: string): Promise<commonTypes.UserSearchProfile[]> {
     // we need to convert the location to latitude and longitude
-    const locations = await locationService.searchLocations(db, search, true);
+    const locations = await locationService.searchLocations(db, location, true);
     if (!locations.results.length) {
         return [];
     }
@@ -357,6 +357,7 @@ export async function searchProfessionais(db: serverTypes.TazzoDatabase, search:
 
     const result: commonTypes.UserSearchProfile[] = [];
     const searchIntermediateResult = await db.search_users(searchNormalized, lng, lat);
+    console.log(searchIntermediateResult);
 
     for (const intermediateResult of searchIntermediateResult) {
         const userServices = await db.user_service.find({user_id: intermediateResult.id}, {order: ['index']});

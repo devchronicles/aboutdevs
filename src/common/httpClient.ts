@@ -19,12 +19,18 @@ export function checkUserName(userName: string): AxiosPromise {
 
 // SEARCH
 
-export function searchLocations(searchTerm: string, allowCities = false): AxiosPromise {
-    const queryString = allowCities ? `q=${searchTerm}&allowcities=true` : `q=${searchTerm}`;
+export function searchUsers(search: string, location: string): AxiosPromise {
+    if (!search) throw Error('search should be truthy');
+    if (!location) throw Error('location should be truthy');
+    return axios.get(`/api/users?q=${search}&l=${location}`);
+}
+
+export function searchLocations(search: string, allowCities = false): AxiosPromise {
+    const queryString = allowCities ? `q=${search}&allowcities=true` : `q=${search}`;
     return axios.get(`/api/address?${queryString}`);
 }
 
-export function searchProfessions(searchTerm: string): AxiosPromise {
-    const queryString = `q=${searchTerm}`;
+export function searchProfessions(search: string): AxiosPromise {
+    const queryString = `q=${search}`;
     return axios.get(`/api/professions?${queryString}`);
 }
