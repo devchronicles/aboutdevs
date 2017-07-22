@@ -15,7 +15,8 @@ interface SearchPageStateProps {
 }
 
 interface SearchPageDispatchProps {
-    searchCriteriaLoad: (search: string, location: string) => void;
+    loadSearchCriteria: (search: string, location: string) => void;
+    loadSearchResults: (search: string, location: string, display: commonTypes.SearchDisplay) => void;
 }
 
 interface SearchPageOwnProps extends ReactRouter.RouteComponentProps<{ search: string, location: string }> {
@@ -27,9 +28,10 @@ declare type SearchPageProps = SearchPageStateProps & SearchPageDispatchProps & 
 class SearchPage extends React.Component<SearchPageProps> {
 
     public componentDidMount() {
-        const {searchCriteriaLoad} = this.props;
+        const { loadSearchCriteria, loadSearchResults } = this.props;
         const {search, location} = this.props.match.params;
-        searchCriteriaLoad(search, location);
+        loadSearchCriteria(search, location);
+        loadSearchResults(search, location, commonTypes.SearchDisplay.ORDER_BY_DISTANCE );
     }
 
     private handleFormSubmit = (formValues: any) => {
@@ -60,7 +62,8 @@ const mapStateToProps = (state: clientTypes.ReduxState): SearchPageStateProps =>
 });
 
 const mapDispatchToProps = (dispatch: ReactRedux.Dispatch<clientTypes.ReduxState>): SearchPageDispatchProps => ({
-    searchCriteriaLoad: (search: string, location: string) => dispatch(searchActions.searchCriteriaLoad(search, location)),
+    loadSearchCriteria: (search: string, location: string) => dispatch(searchActions.searchCriteriaLoad(search, location)),
+    loadSearchResults: (search: string, location: string, display: commonTypes.SearchDisplay) => dispatch(searchActions.searchLoad(search, location, display)),
 });
 
 const mergeProps = (stateProps: SearchPageStateProps, dispatchProps: SearchPageDispatchProps, ownProps: SearchPageOwnProps): SearchPageProps => ({

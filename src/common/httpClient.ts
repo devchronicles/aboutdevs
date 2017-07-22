@@ -19,7 +19,7 @@ export function checkUserName(userName: string): AxiosPromise {
 
 // SEARCH
 
-export function searchUsers(search: string, location: string): AxiosPromise {
+export function searchProfessionals(search: string, location: string): AxiosPromise {
     if (!search) throw Error('search should be truthy');
     if (!location) throw Error('location should be truthy');
     return axios.get(`/api/users?q=${search}&l=${location}`);

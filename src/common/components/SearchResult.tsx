@@ -5,7 +5,7 @@ import * as ReactRedux from 'react-redux';
 import {ProfileCard} from './SearchProfileCard';
 
 interface SearchResultStateProps {
-    searchResult: commonTypes.SearchResult;
+    searchResultProfiles: commonTypes.UserSearchProfile[];
 }
 
 interface SearchResultDispatchProps {
@@ -20,7 +20,7 @@ declare type SearchResultProps = SearchResultStateProps & SearchResultDispatchPr
 
 class SearchResult extends React.Component <SearchResultProps> {
     public render() {
-        const {searchResult} = this.props;
+        const {searchResultProfiles} = this.props;
         return (
             <ul className="search-result">
                 <div className="header">
@@ -34,7 +34,7 @@ class SearchResult extends React.Component <SearchResultProps> {
                     </span>
                 </div>
                 <div className="profiles">
-                    {searchResult.profiles.map((p, i) => <ProfileCard key={i} profile={p}/>)}
+                    {searchResultProfiles.map((p, i) => <ProfileCard key={i} profile={p} />)}
                 </div>
             </ul>
         );
@@ -42,7 +42,7 @@ class SearchResult extends React.Component <SearchResultProps> {
 }
 
 const mapStateToProps = (state: commonTypes.ReduxState): SearchResultStateProps => ({
-    searchResult: state.search.result,
+    searchResultProfiles: state.search.result.profiles,
 });
 
 const mapDispatchToProps = (dispatch: ReactRedux.Dispatch<commonTypes.ReduxState>): SearchResultDispatchProps => ({});

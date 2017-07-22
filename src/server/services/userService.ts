@@ -23,6 +23,11 @@ export async function getValidUserName(db: serverTypes.TazzoDatabase, userName: 
     if (db === null || db === undefined) throw Error('Argument \'db\' should be null or undefined');
     if (userName === null || userName === undefined) throw Error('Argument \'email\' should be null or undefined');
 
+    const user = await db.user.findOne({name: userName});
+    if (!user) {
+        return userName;
+    }
+
     const existingUsers = await db.user.find({'name ilike': `${userName}%`});
     if (existingUsers.length === 0) return userName;
 

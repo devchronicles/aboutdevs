@@ -11,23 +11,30 @@ const defaultSearchState: commonTypes.SearchState = {
     result: {
         display: commonTypes.SearchDisplay.ORDER_BY_DISTANCE,
         profiles: [],
+        loading: false,
     },
 };
 
 export function searchReducer(state = defaultSearchState, { payload, type }: { payload: any, type: string }) {
-    let result;
+    let searchState;
     switch (type) {
         case searchActions.SEARCH_CRITERIA_LOAD_STARTED:
-            result = { ...state };
-            result.criteria.loading = true;
-            return result;
+            searchState = { ...state };
+            searchState.criteria.loading = true;
+            return searchState;
         case searchActions.SEARCH_CRITERIA_LOAD_ERROR:
         case searchActions.SEARCH_CRITERIA_LOAD_SUCCESS:
-            result = { ...state };
-            result.criteria.search = payload.search;
-            result.criteria.location = payload.location;
-            result.criteria.loading = false;
-            return result;
+            searchState = { ...state };
+            searchState.criteria.search = payload.search;
+            searchState.criteria.location = payload.location;
+            searchState.criteria.loading = false;
+            return searchState;
+        case searchActions.SEARCH_LOAD_STARTED:
+            searchState = { ...state };
+            searchState.result.loading = false;
+        case searchActions.SEARCH_LOAD_SUCCESS:
+            searchState = { ...state };
+            searchState.result.profiles = payload;
         default:
             return state;
     }

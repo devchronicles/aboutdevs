@@ -82,6 +82,7 @@ export interface SearchCriteria {
 export interface SearchResult {
     display: SearchDisplay;
     profiles: UserSearchProfile[];
+    loading: boolean;
 }
 
 export interface SearchState {

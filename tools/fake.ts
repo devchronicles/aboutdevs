@@ -21,11 +21,6 @@ buildDb()
                 name += i;
                 const email = `${name}@gmail.com`;
 
-                const emailAlreadyExists = await db.user.findOne({email: email});
-                if (emailAlreadyExists) {
-                    throw Error(`User name: ${name}. Email: ${email}`);
-                }
-
                 const preUserProfile = {
                     display_name: displayName,
                     email: email,
@@ -84,14 +79,15 @@ buildDb()
 
                 const neighborhood = 'Pavuna';
                 const formattedAddress = `${faker.address.streetName()}, ${neighborhood}, ${faker.address.city()}`;
-                var maxLat = -21.3743555;
-                var minLat = -22.3248544;
 
-                var minLong = -51.5182245;
-                var maxLong = -50.2197401;
+                const maxLat = -21.3743555;
+                const minLat = -22.3248544;
 
-                var randomLat = Math.random() * (maxLat - minLat) + minLat;
-                var randomLong = Math.random() * (maxLong - minLong) + minLong;
+                const minLong = -51.5182245;
+                const maxLong = -50.2197401;
+
+                const randomLat = Math.random() * (maxLat - minLat) + minLat;
+                const randomLong = Math.random() * (maxLong - minLong) + minLong;
 
                 let location = await db.geo_location.findOne({formatted_address: formattedAddress});
 
