@@ -10,6 +10,9 @@ const ProfileCard: React.SFC<SearchProfileCardProps> = ({ profile }) => (
         <div className="star-wrapper">
             <i className="fa fa-star-o" />
         </div>
+        <div className="distance-wrapper">
+            {Math.floor(profile.distance)} km
+        </div>
         <a className="card-body" href="#">
             <div className="image" style={{ backgroundImage: `url(${profile.photoUrl})` }} />
             <p className="display-name"> {profile.displayName} </p>
@@ -29,7 +32,7 @@ const ProfileCard: React.SFC<SearchProfileCardProps> = ({ profile }) => (
             </span>
             <button>
                 Conectar
-                </button>
+            </button>
         </div>
     </li>
 );

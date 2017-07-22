@@ -1,4 +1,7 @@
-.search-wrapper {
+@import '_variables';
+@import '_mixins';
+
+.search-criteria-wrapper {
 
     width: 100%;
     display: flex;
@@ -9,18 +12,6 @@
     text-align: center;
     box-sizing: border-box;
     background-color: $color-gray-dark;
-
-    div.hero {
-        h1 {
-            margin: 0;
-            padding: 0;
-        }
-
-        h2 {
-            margin-top: 2 * $gutter-md;
-            color: lighten($color-dark-light, 50%);
-        }
-    }
 
     .search-criteria {
         max-width: 500px + 2 * $gutter-sm;
@@ -37,5 +28,20 @@
                 }
             }
         }
+    }
+}
+
+
+.search-result {
+    @include elastic-width($max-container-width + 2 * $gutter-md);
+
+    .header {
+        margin: $gutter-md $gutter-sm;
+    }
+    .profiles {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding:0;
     }
 }

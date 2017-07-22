@@ -5,8 +5,9 @@ import * as clientTypes from '../typings';
 import * as ReactRedux from 'react-redux';
 import * as searchActions from '../redux/search/searchActions';
 import * as commonTypes from '../typings/commonTypes';
+import * as gisHelper from '../helpers/gisHelper';
+import * as urlHelper from '../helpers/urlHelper';
 
-import {SearchWrapper} from '../components/SearchWrapper';
 import {SearchForm} from '../components/SearchForm';
 import {SearchResult} from '../components/SearchResult';
 
@@ -28,27 +29,37 @@ declare type SearchPageProps = SearchPageStateProps & SearchPageDispatchProps & 
 class SearchPage extends React.Component<SearchPageProps> {
 
     public componentDidMount() {
-        const { loadSearchCriteria, loadSearchResults } = this.props;
+        const {loadSearchCriteria, loadSearchResults} = this.props;
         const {search, location} = this.props.match.params;
         loadSearchCriteria(search, location);
-        loadSearchResults(search, location, commonTypes.SearchDisplay.ORDER_BY_DISTANCE );
+        loadSearchResults(search, location, commonTypes.SearchDisplay.ORDER_BY_DISTANCE);
     }
 
     private handleFormSubmit = (formValues: any) => {
-        const {history} = this.props;
-        const {location, professional} = formValues;
-        if (location && professional) {
-            history.push(`/s/${location}/${professional}`);
+        const {search, location} = formValues;
+
+        // let's try to see if the entered location is a latitude longitude pair
+        const geoLocation = gisHelper.extractLocationFromText(location);
+
+        const normalizedLocation = geoLocation
+            ? gisHelper.buildUrlParameterFromLocation(geoLocation)
+            : urlHelper.normalizeUrlParameter(location);
+        const normalizedSearch = urlHelper.normalizeUrlParameter(search);
+
+        if (search && location) {
+            this.props.history.push(`/s/${normalizedLocation}/${normalizedSearch}`);
         }
     }
 
     public render() {
-        const { searchCriteria } = this.props;
+        const {searchCriteria} = this.props;
         return (
             <div className="page-wrapper">
-                <SearchWrapper>
-                    <SearchForm handleSubmit={this.handleFormSubmit} initialValues={searchCriteria} />
-                </SearchWrapper>
+                <div className="search-criteria-wrapper">
+                    <div className="search-criteria">
+                        <SearchForm onSubmit={this.handleFormSubmit} initialValues={searchCriteria}/>
+                    </div>
+                </div>
                 <SearchResult/>
             </div>
         );

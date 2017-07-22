@@ -1,54 +1,52 @@
 import * as React from 'react';
+import { Field, reduxForm } from 'redux-form';
+import { SelectLocation, FormRow, FormGroup } from './form/index';
 import * as ReduxForm from 'redux-form';
-import {Field, reduxForm} from 'redux-form';
-import {SelectLocation, FormRow, FormColumn, FormGroup} from './form/index';
 
-interface SearchFormProps extends ReduxForm.FormProps<any, any, any> {
-    handleSubmit: (arg: any) => any;
+interface IndexSearchFormProps extends ReduxForm.FormProps<any, any, any> {
+    onSubmit: (formValues: any) => void;
 }
 
-let SearchForm: React.SFC<SearchFormProps> = (props) => {
-    const {handleSubmit} = props;
+let SearchForm: React.SFC<IndexSearchFormProps> = (props) => {
+    const {
+        handleSubmit,
+        onSubmit,
+    } = props;
     return (
-        <div className="search-criteria">
-            <form onSubmit={handleSubmit}>
-                <FormRow>
-                    <FormColumn eq={true}>
-                        <FormGroup>
-                            <Field
-                                name="search"
-                                component="input"
-                                type="text"
-                                className="form-control"
-                                placeholder="Profissional ou serviço"
-                            />
-                        </FormGroup>
-                    </FormColumn>
-                </FormRow>
-                <FormRow>
-                    <FormColumn eq>
-                        <FormGroup>
-                            <Field
-                                name="location"
-                                component={SelectLocation}
-                                allowCities={true}
-                                placeholder="Localizado próximo a..."
-                            />
-                        </FormGroup>
-                    </FormColumn>
-                </FormRow>
-                <button type="submit" className="vibrant">
-                    <i className="fa fa-search" aria-hidden="true"/>
-                    <span>Pesquisar</span>
-                </button>
-            </form>
-        </div>
+        <form onSubmit={handleSubmit(onSubmit)} className="flex-column flex-align-items-center ">
+            <FormRow>
+                <FormGroup>
+                    <Field
+                        name="search"
+                        component="input"
+                        type="text"
+                        className="form-control"
+                        placeholder="Profissional ou serviço"
+                    />
+                </FormGroup>
+            </FormRow>
+            <FormRow>
+                <FormGroup>
+                    <Field
+                        name="location"
+                        component={SelectLocation}
+                        allowCities={true}
+                        placeholder="Localizado próximo a..."
+                    />
+                </FormGroup>
+            </FormRow>
+            <button type="submit" className="search vibrant">
+                <i className="fa fa-search" aria-hidden="true" />
+                <span>Encontrar profissionais</span>
+            </button>
+        </form>
     );
 };
 
 // Decorate with redux-form
 SearchForm = reduxForm({
-    form: 'search' // a unique identifier for this form
+    form: 'search', // a unique identifier for this form,
+
 })(SearchForm);
 
-export {SearchForm};
+export { SearchForm };

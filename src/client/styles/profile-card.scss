@@ -21,7 +21,12 @@ $cardsPerRow: 4;
         right: $gutter-md;
         top: $gutter-md;
         font-size: 22px;
-        cursor: pointer;
+    }
+
+    .distance-wrapper {
+        position: absolute;
+        left: $gutter-md;
+        top: $gutter-md;
     }
 
     a.card-body {
@@ -46,6 +51,11 @@ $cardsPerRow: 4;
         .display-name {
             font-size: 22px;
             margin: $gutter-md 0 0 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+            line-height: 1.2em;
         }
 
         .profession {

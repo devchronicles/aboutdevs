@@ -7,7 +7,7 @@ import * as urlHelper from '../../common/helpers/urlHelper';
 import * as gisHelper from '../helpers/gisHelper';
 import {Logo} from '../components/Logo';
 
-import {IndexSearchForm} from '../components/IndexSearchForm';
+import {SearchForm} from '../components/SearchForm';
 
 interface IndexPageStateProps {
 
@@ -54,7 +54,7 @@ class IndexPage extends React.Component<IndexPageProps> {
                                 </div>
                             </span>
                         </div>
-                        <IndexSearchForm onSubmit={this.handleSearchSubmit}/>
+                        <SearchForm onSubmit={this.handleSearchSubmit}/>
                         <div className="register-wrapper">
                             <span className="text">
                                 Você é um(a) profissional?
