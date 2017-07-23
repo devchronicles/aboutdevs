@@ -16,11 +16,16 @@ async function saveLocationToCache(searchTerm: string, location: serverTypes.Geo
     if (searchTerm === null || searchTerm === undefined) throw Error('Argument \'search\' should be null or undefined');
     if (location === null || location === undefined) throw Error('Argument \'location\' should be null or undefined');
 
-    const insertedLocation = (await db.geo_location_cache.insert({
-        search: searchTerm,
-        cache: location
-    })) as serverTypes.GeoLocationCache;
-    return insertedLocation ? insertedLocation.cache : undefined;
+    // this should be a in a transaction
+    const locations = await getLocationsFromCache(searchTerm, db);
+    if (!locations) {
+        const insertedLocation = (await db.geo_location_cache.insert({
+            search: searchTerm,
+            cache: location
+        })) as serverTypes.GeoLocationCache;
+        return insertedLocation ? insertedLocation.cache : undefined;
+    }
+    return undefined;
 }
 
 /**
@@ -63,7 +68,11 @@ export async function searchLocations(db: serverTypes.TazzoDatabase, searchTerm:
         return locations;
     }
     locations = await getLocationsFromGoogle(normalizedSearchTerm);
-    await saveLocationToCache(normalizedSearchTerm, locations, db);
+    try {
+        await saveLocationToCache(normalizedSearchTerm, locations, db);
+    } catch (ex) {
+        // TODO: Fix this.
+    }
     return locations;
 }
 

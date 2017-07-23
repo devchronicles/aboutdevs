@@ -36,6 +36,7 @@ class SearchPage extends React.Component<SearchPageProps> {
     }
 
     private handleFormSubmit = (formValues: any) => {
+        const {loadSearchCriteria, loadSearchResults} = this.props;
         const {search, location} = formValues;
 
         // let's try to see if the entered location is a latitude longitude pair
@@ -48,6 +49,8 @@ class SearchPage extends React.Component<SearchPageProps> {
 
         if (search && location) {
             this.props.history.push(`/s/${normalizedLocation}/${normalizedSearch}`);
+            loadSearchCriteria(search, location);
+            loadSearchResults(search, location, commonTypes.SearchDisplay.ORDER_BY_DISTANCE);
         }
     }
 
