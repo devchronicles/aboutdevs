@@ -1,9 +1,7 @@
 import * as React from 'react';
-import {Link} from 'react-router-dom';
 import {Dropdown, DropdownDivider, DropdownHeader, DropdownItem, DropdownMenuSize} from "./Dropdown";
 import * as commonTypes from '../typings/commonTypes';
 import * as textHelper from '../helpers/textHelper';
-import * as stringHelper from '../helpers/stringHelper';
 import * as urlHelper from '../helpers/urlHelper';
 
 interface SearchDisplayDropdownProps {
@@ -14,8 +12,19 @@ interface SearchDisplayDropdownProps {
 
 export class SearchDisplayDropdown extends React.Component<SearchDisplayDropdownProps> {
 
-    public render() {
+    private renderLink = (targetDisplay: commonTypes.SearchDisplay) => {
         const {value, search, location} = this.props;
+        return (
+            <DropdownItem
+                visible={value !== targetDisplay}
+                linkTo={urlHelper.getProfessionalsSearchUrl(search, location, targetDisplay)}
+                text={textHelper.getSearchDisplayText(targetDisplay)}
+            />
+        );
+    }
+
+    public render() {
+        const {value} = this.props;
 
         return (
             <Dropdown
@@ -32,26 +41,10 @@ export class SearchDisplayDropdown extends React.Component<SearchDisplayDropdown
                     Exibindo: <strong className="css-truncate-target">{textHelper.getSearchDisplayText(value)}</strong>
                 </DropdownHeader>
                 <DropdownDivider/>
-                {value !== commonTypes.SearchDisplay.ORDER_BY_DISTANCE && <DropdownItem>
-                    <Link to={urlHelper.getProfessionalsSearchUrl(search, location, commonTypes.SearchDisplay.ORDER_BY_DISTANCE)}>
-                        {textHelper.getSearchDisplayText(commonTypes.SearchDisplay.ORDER_BY_DISTANCE)}
-                    </Link>
-                </DropdownItem>}
-                {value !== commonTypes.SearchDisplay.BEST_PROFESSIONAIS_IN_2_KM && <DropdownItem>
-                    <Link to={urlHelper.getProfessionalsSearchUrl(search, location, commonTypes.SearchDisplay.BEST_PROFESSIONAIS_IN_2_KM)}>
-                        {textHelper.getSearchDisplayText(commonTypes.SearchDisplay.BEST_PROFESSIONAIS_IN_2_KM)}
-                    </Link>
-                </DropdownItem>}
-                {value !== commonTypes.SearchDisplay.BEST_PROFESSIONAIS_IN_5_KM && <DropdownItem>
-                    <Link to={urlHelper.getProfessionalsSearchUrl(search, location, commonTypes.SearchDisplay.BEST_PROFESSIONAIS_IN_5_KM)}>
-                        {textHelper.getSearchDisplayText(commonTypes.SearchDisplay.BEST_PROFESSIONAIS_IN_5_KM)}
-                    </Link>
-                </DropdownItem>}
-                {value !== commonTypes.SearchDisplay.BEST_PROFESSIONAIS_IN_10_KM && <DropdownItem>
-                    <Link to={urlHelper.getProfessionalsSearchUrl(search, location, commonTypes.SearchDisplay.BEST_PROFESSIONAIS_IN_10_KM)}>
-                        {textHelper.getSearchDisplayText(commonTypes.SearchDisplay.BEST_PROFESSIONAIS_IN_10_KM)}
-                    </Link>
-                </DropdownItem>}
+                {this.renderLink(commonTypes.SearchDisplay.ORDER_BY_DISTANCE)}
+                {this.renderLink(commonTypes.SearchDisplay.BEST_PROFESSIONAIS_IN_2_KM)}
+                {this.renderLink(commonTypes.SearchDisplay.BEST_PROFESSIONAIS_IN_5_KM)}
+                {this.renderLink(commonTypes.SearchDisplay.BEST_PROFESSIONAIS_IN_10_KM)}
             </Dropdown>
         );
     }

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {Link} from 'react-router-dom';
 import {Dropdown, DropdownDivider, DropdownHeader, DropdownItem} from "./Dropdown";
 import * as commonTypes from '../typings/commonTypes';
 
@@ -18,28 +17,9 @@ class LoggedUserDropdown extends React.Component<LoggedUserDropdownProps> {
                     Olá, <strong className="css-truncate-target">{displayName}</strong>
                 </DropdownHeader>
                 <DropdownDivider/>
-                <DropdownItem>
-                    <Link to={`/${id}`}>
-                        <span>Seu perfil</span>
-                    </Link>
-                </DropdownItem>
-                <DropdownItem>
-                    <Link to="/config/edituserprofile">
-                        <span>Editar seu perfil</span>
-                    </Link>
-                </DropdownItem>
-
-                <DropdownItem>
-                    <Link to="/config/edituserprofile">
-                        <span>Editar seu perfil</span>
-                    </Link>
-                </DropdownItem>
-
-                <DropdownItem>
-                    <a href="/auth/logout">
-                        Sair
-                    </a>
-                </DropdownItem>
+                <DropdownItem linkTo={`/${id}`} text="Seu perfil"/>
+                <DropdownItem linkTo={`/config/edituserprofile`} text="Editar seu perfil"/>
+                <DropdownItem href="/auth/logout" text="Sair"/>
             </Dropdown>
         );
     }

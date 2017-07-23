@@ -47,12 +47,16 @@
       }
 
       li.dropdown-item {
-        text-decoration: none;
+        padding: 0;
         display: block;
-        padding: $gutter-sm $gutter-md;
-        &:hover {
+        a {
           text-decoration: none;
-          background-color: $color-gray-light;
+          display: block;
+          padding: $gutter-sm $gutter-md;
+          &:hover {
+            text-decoration: none;
+            background-color: $color-gray-light;
+          }
         }
       }
 

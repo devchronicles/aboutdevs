@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {Link} from 'react-router-dom';
 
 export enum DropdownMenuSize {
     SMALL = 0,
@@ -10,10 +11,23 @@ export const DropdownDivider: React.SFC<{}> = () => {
     return <div className="dropdown-divider"/>;
 }
 
-export const DropdownItem: React.SFC<{}> = (props) => {
+export const DropdownItem: React.SFC<{ linkTo?: string; href?: string; text: string, visible?: boolean; }> = (props) => {
+    const {linkTo, href, text, visible} = props;
+    if (visible === false) {
+        return null;
+    }
+    let linkComponent;
+    if (linkTo) {
+        linkComponent = <Link to={linkTo}>{text}</Link>;
+    } else if (href) {
+        linkComponent = <a href={href}>{text}</a>;
+    } else {
+        throw Error('Either linkTo or href should be provided to DropdownItem');
+    }
+
     return (
         <li className="dropdown-item">
-            {props.children}
+            {linkComponent}
         </li>
     );
 }
@@ -52,7 +66,7 @@ export class Dropdown extends React.Component<DropdownProps, DropdownState> {
     }
 
     private getClassForSize(size: DropdownMenuSize) {
-        switch(size) {
+        switch (size) {
             case DropdownMenuSize.SMALL:
                 return 'size-sm';
             case DropdownMenuSize.MEDIUM:
@@ -81,6 +95,10 @@ export class Dropdown extends React.Component<DropdownProps, DropdownState> {
         this.setState({open: !this.state.open});
     }
 
+    private handleOnMenuItemClick = () => {
+        this.setState({open: false});
+    }
+
     /**
      * Alert if clicked on outside of element
      */
@@ -105,7 +123,7 @@ export class Dropdown extends React.Component<DropdownProps, DropdownState> {
                     <i className="fa fa-caret-down"/>
                 </button>
                 <div className={`dropdown-menu-wrapper ${dropdownClass} ${this.getClassForSize(size)}`}>
-                    <div className="dropdown-menu">
+                    <div className="dropdown-menu" onClick={this.handleOnMenuItemClick}>
                         {children}
                     </div>
                 </div>

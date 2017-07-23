@@ -20,7 +20,7 @@ class FormFieldUserName extends React.Component<IFormFieldUserNameProps>  {
         return <FaIcon icon="check" className="ok" />;
     }
 
-    render() {
+    public render() {
 
         const { input, meta } = this.props;
 
@@ -37,10 +37,10 @@ class FormFieldUserName extends React.Component<IFormFieldUserNameProps>  {
             <FormGroup
                 label="Nome do usuário"
                 labelFor="name"
-                help="A URL acima será publicamente visível se você for um profissional"
+                help="A URL acima será publicamente visível e será listada se você for um profissional."
                 error={errorMessage}
             >
-                <InputGroup addOnBefore="indiejobs.com.br/" addOnAfter={validationComponent}>
+                <InputGroup addOnBefore="tazzo.com.br/@" addOnAfter={validationComponent}>
                     <TextBox {...innerComponentProps} />
                 </InputGroup>
             </FormGroup>

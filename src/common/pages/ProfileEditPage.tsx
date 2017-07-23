@@ -52,7 +52,7 @@ class ProfileEditPage extends React.Component<ProfileEditPageProps> {
     }
 
     public render() {
-        const { loggedUser, formValues } = this.props;
+        const { formValues } = this.props;
 
         return (
             <div className="page-wrapper">
