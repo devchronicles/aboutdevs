@@ -1,0 +1,23 @@
+@import '../_variables';
+
+button.dropdown-menu-button {
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  i.fa {
+    margin-left: $gutter-sm * 0.8;
+  }
+
+  img {
+    width: 24px;
+    height: 24px;
+    border-radius: 12px;
+  }
+}
+
+.dropdown-item a {
+  display: block;;
+  text-decoration: none !important;
+}
