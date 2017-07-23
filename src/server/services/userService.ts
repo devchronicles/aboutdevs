@@ -372,7 +372,6 @@ export async function searchProfessionais(db: serverTypes.TazzoDatabase, search:
             id: intermediateResult.id,
             name: intermediateResult.name,
             displayName: intermediateResult.display_name,
-            bio: intermediateResult.bio,
             photoUrl: intermediateResult.photo_url,
             distance: intermediateResult.distance,
             profession: userProfession

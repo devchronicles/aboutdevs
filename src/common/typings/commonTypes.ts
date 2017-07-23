@@ -53,7 +53,6 @@ export interface UserSearchProfile {
     displayName: string;
     photoUrl: string;
     name: string;
-    bio: string;
     distance: number;
     profession: string;
     services: UserService[];
