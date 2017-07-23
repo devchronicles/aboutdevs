@@ -4,16 +4,18 @@ import {Dropdown, DropdownDivider, DropdownHeader, DropdownItem, DropdownMenuSiz
 import * as commonTypes from '../typings/commonTypes';
 import * as textHelper from '../helpers/textHelper';
 import * as stringHelper from '../helpers/stringHelper';
+import * as urlHelper from '../helpers/urlHelper';
 
 interface SearchDisplayDropdownProps {
-    currentOption: commonTypes.SearchDisplay;
+    search: string;
+    location: string;
+    value: commonTypes.SearchDisplay;
 }
 
 export class SearchDisplayDropdown extends React.Component<SearchDisplayDropdownProps> {
 
-
     public render() {
-        const {currentOption} = this.props;
+        const {value, search, location} = this.props;
 
         return (
             <Dropdown
@@ -27,26 +29,26 @@ export class SearchDisplayDropdown extends React.Component<SearchDisplayDropdown
                 }
             >
                 <DropdownHeader>
-                    Exibindo: <strong className="css-truncate-target">{textHelper.getSearchDisplayText(currentOption)}</strong>
+                    Exibindo: <strong className="css-truncate-target">{textHelper.getSearchDisplayText(value)}</strong>
                 </DropdownHeader>
                 <DropdownDivider/>
-                {currentOption !== commonTypes.SearchDisplay.ORDER_BY_DISTANCE && <DropdownItem>
-                    <Link to="/config/edituserprofile">
+                {value !== commonTypes.SearchDisplay.ORDER_BY_DISTANCE && <DropdownItem>
+                    <Link to={urlHelper.getProfessionalsSearchUrl(search, location, commonTypes.SearchDisplay.ORDER_BY_DISTANCE)}>
                         {textHelper.getSearchDisplayText(commonTypes.SearchDisplay.ORDER_BY_DISTANCE)}
                     </Link>
                 </DropdownItem>}
-                {currentOption !== commonTypes.SearchDisplay.BEST_PROFESSIONAIS_IN_2_KM && <DropdownItem>
-                    <Link to="/config/edituserprofile">
+                {value !== commonTypes.SearchDisplay.BEST_PROFESSIONAIS_IN_2_KM && <DropdownItem>
+                    <Link to={urlHelper.getProfessionalsSearchUrl(search, location, commonTypes.SearchDisplay.BEST_PROFESSIONAIS_IN_2_KM)}>
                         {textHelper.getSearchDisplayText(commonTypes.SearchDisplay.BEST_PROFESSIONAIS_IN_2_KM)}
                     </Link>
                 </DropdownItem>}
-                {currentOption !== commonTypes.SearchDisplay.BEST_PROFESSIONAIS_IN_5_KM && <DropdownItem>
-                    <Link to="/config/edituserprofile">
+                {value !== commonTypes.SearchDisplay.BEST_PROFESSIONAIS_IN_5_KM && <DropdownItem>
+                    <Link to={urlHelper.getProfessionalsSearchUrl(search, location, commonTypes.SearchDisplay.BEST_PROFESSIONAIS_IN_5_KM)}>
                         {textHelper.getSearchDisplayText(commonTypes.SearchDisplay.BEST_PROFESSIONAIS_IN_5_KM)}
                     </Link>
                 </DropdownItem>}
-                {currentOption !== commonTypes.SearchDisplay.BEST_PROFESSIONAIS_IN_10_KM && <DropdownItem>
-                    <Link to="/config/edituserprofile">
+                {value !== commonTypes.SearchDisplay.BEST_PROFESSIONAIS_IN_10_KM && <DropdownItem>
+                    <Link to={urlHelper.getProfessionalsSearchUrl(search, location, commonTypes.SearchDisplay.BEST_PROFESSIONAIS_IN_10_KM)}>
                         {textHelper.getSearchDisplayText(commonTypes.SearchDisplay.BEST_PROFESSIONAIS_IN_10_KM)}
                     </Link>
                 </DropdownItem>}

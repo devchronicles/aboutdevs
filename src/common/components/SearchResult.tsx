@@ -16,22 +16,24 @@ interface SearchResultDispatchProps {
 }
 
 interface SearchResultOwnProps {
-
+    location: string;
+    search: string;
+    display: commonTypes.SearchDisplay;
 }
 
 declare type SearchResultProps = SearchResultStateProps & SearchResultDispatchProps & SearchResultOwnProps;
 
 class SearchResult extends React.Component <SearchResultProps> {
     public render() {
-        const {searchResultProfiles} = this.props;
+        const {searchResultProfiles, display, location, search} = this.props;
         return (
             <ul className="search-result">
                 <div className="header">
                     <span className="display">
-                        Exibindo profissionais <b>{stringHelper.decapitalizeFirstLetter(textHelper.getSearchDisplayText(commonTypes.SearchDisplay.ORDER_BY_DISTANCE))}</b>
+                        Exibindo profissionais <b>{stringHelper.decapitalizeFirstLetter(textHelper.getSearchDisplayText(display))}</b>
                     </span>
                     <span className="display-selector">
-                        <SearchDisplayDropdown currentOption={commonTypes.SearchDisplay.ORDER_BY_DISTANCE}/>
+                        <SearchDisplayDropdown value={display} search={search} location={location}/>
                     </span>
                 </div>
                 <div className="profiles">

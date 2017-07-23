@@ -20,7 +20,7 @@ interface SearchPageDispatchProps {
     loadSearchResults: (search: string, location: string, display: commonTypes.SearchDisplay) => void;
 }
 
-interface SearchPageOwnProps extends ReactRouter.RouteComponentProps<{ search: string, location: string }> {
+interface SearchPageOwnProps extends ReactRouter.RouteComponentProps<{ search: string, location: string, display: string }> {
 
 }
 
@@ -30,7 +30,7 @@ class SearchPage extends React.Component<SearchPageProps> {
 
     public componentDidMount() {
         const {loadSearchCriteria, loadSearchResults} = this.props;
-        const {search, location} = this.props.match.params;
+        const {search, location, display } = this.props.match.params;
         loadSearchCriteria(search, location);
         loadSearchResults(search, location, commonTypes.SearchDisplay.ORDER_BY_DISTANCE);
     }
@@ -56,6 +56,8 @@ class SearchPage extends React.Component<SearchPageProps> {
 
     public render() {
         const {searchCriteria} = this.props;
+        const {search, location, display } = this.props.match.params;
+
         return (
             <div className="page-wrapper">
                 <div className="search-criteria-wrapper">
@@ -63,7 +65,7 @@ class SearchPage extends React.Component<SearchPageProps> {
                         <SearchForm onSubmit={this.handleFormSubmit} initialValues={searchCriteria}/>
                     </div>
                 </div>
-                <SearchResult/>
+                <SearchResult search={search} location={location} display={urlHelper.getSearchDisplayFromUrlParameter(display)}/>
             </div>
         );
     }
