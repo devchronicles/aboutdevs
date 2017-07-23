@@ -1,5 +1,11 @@
 import * as React from 'react';
 
+export enum DropdownMenuSize {
+    SMALL = 0,
+    MEDIUM = 1,
+    LARGE = 2,
+}
+
 export const DropdownDivider: React.SFC<{}> = () => {
     return <div className="dropdown-divider"/>;
 }
@@ -21,7 +27,9 @@ export const DropdownHeader: React.SFC<{}> = (props) => {
 }
 
 interface DropdownProps {
+    size?: DropdownMenuSize;
     button: React.ReactNode;
+    className?: string;
 }
 
 interface DropdownState {
@@ -30,6 +38,10 @@ interface DropdownState {
 
 export class Dropdown extends React.Component<DropdownProps, DropdownState> {
 
+    public static defaultProps: Partial<DropdownProps> = {
+        size: DropdownMenuSize.SMALL,
+    };
+
     private wrapperRef: any;
 
     constructor(props: DropdownProps) {
@@ -37,6 +49,17 @@ export class Dropdown extends React.Component<DropdownProps, DropdownState> {
         this.state = {
             open: false,
         };
+    }
+
+    private getClassForSize(size: DropdownMenuSize) {
+        switch(size) {
+            case DropdownMenuSize.SMALL:
+                return 'size-sm';
+            case DropdownMenuSize.MEDIUM:
+                return 'size-md';
+            case DropdownMenuSize.LARGE:
+                return 'size-lg';
+        }
     }
 
     public componentDidMount() {
@@ -68,18 +91,20 @@ export class Dropdown extends React.Component<DropdownProps, DropdownState> {
     }
 
     public render() {
-        const {button, children} = this.props;
+        const {button, children, className, size} = this.props;
         const dropdownClass = this.state.open ? 'visible' : '';
 
+        const finalClassName = `dropdown ${className}`;
+
         return (
-            <div className="dropdown" ref={this.setWrapperRef}>
+            <div className={finalClassName} ref={this.setWrapperRef}>
                 <button className="dropdown-menu-button" onClick={this.handleOpen}>
                     <span className="dropdown-menu-button-content">
                         {button}
                     </span>
                     <i className="fa fa-caret-down"/>
                 </button>
-                <div className={`dropdown-menu-wrapper ${dropdownClass}`}>
+                <div className={`dropdown-menu-wrapper ${dropdownClass} ${this.getClassForSize(size)}`}>
                     <div className="dropdown-menu">
                         {children}
                     </div>

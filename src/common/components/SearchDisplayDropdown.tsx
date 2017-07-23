@@ -1,111 +1,57 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
-import * as commonTypes from '../../common/typings';
+import {Link} from 'react-router-dom';
+import {Dropdown, DropdownDivider, DropdownHeader, DropdownItem, DropdownMenuSize} from "./Dropdown";
+import * as commonTypes from '../typings/commonTypes';
+import * as textHelper from '../helpers/textHelper';
+import * as stringHelper from '../helpers/stringHelper';
 
-interface LoggedUserDropdownProps {
-    loggedUser: commonTypes.ReduxCurrentUserProfile;
+interface SearchDisplayDropdownProps {
+    currentOption: commonTypes.SearchDisplay;
 }
 
-interface LoggedUserDropdownState {
-    open: boolean;
-}
+export class SearchDisplayDropdown extends React.Component<SearchDisplayDropdownProps> {
 
-class LoggedUserDropdown extends React.Component<LoggedUserDropdownProps, LoggedUserDropdownState> {
-
-    private wrapperRef: any;
-
-    constructor(props: LoggedUserDropdownProps) {
-        super(props);
-        this.state = {
-            open: false,
-        };
-    }
-
-    public componentDidMount() {
-        document.addEventListener('mousedown', this.handleClickOutside);
-    }
-
-    public componentWillUnmount() {
-        document.removeEventListener('mousedown', this.handleClickOutside);
-    }
-
-    /**
-     * Set the wrapper ref
-     */
-    private setWrapperRef = (node: any) => {
-        this.wrapperRef = node;
-    }
-
-    private handleOpen = () => {
-        this.setState({ open: !this.state.open });
-    }
-
-    private handleLinkClick = () => {
-        this.setState({ open: false });
-    }
-
-    /**
-     * Alert if clicked on outside of element
-     */
-    private handleClickOutside = (event: Event) => {
-        if (this.state.open && this.wrapperRef && !this.wrapperRef.contains(event.target)) {
-            this.setState({ open: false });
-        }
-    }
 
     public render() {
-        const { loggedUser: { id, displayName, photoUrl } } = this.props;
-        const dropdownClass = this.state.open ? 'visible' : '';
+        const {currentOption} = this.props;
 
         return (
-            <div ref={this.setWrapperRef}>
-                <button className="head-nav-link" onClick={this.handleOpen}>
-                    <img
-                        alt="@andrerpena"
-                        className="avatar"
-                        src={photoUrl}
-                    />
-                    <i className="fa fa-caret-down" aria-hidden="true" />
-                </button>
-                <div className={`dropdown-menu-wrapper ${dropdownClass}`}>
-                    <div className="dropdown-menu">
-                        <div className="dropdown-header header-nav-current-user css-truncate">
-                            Olá, <strong className="css-truncate-target">{displayName}</strong>
-                        </div>
-                        <div className="dropdown-divider" />
-                        <Link
-                            className="dropdown-item"
-                            to={`/${id}`}
-                            onClick={this.handleLinkClick}
-                        >
-                            <span>Seu perfil</span>
-                        </Link>
-                        <Link
-                            className="dropdown-item"
-                            to="/config/edituserprofile"
-                            onClick={this.handleLinkClick}
-                        >
-                            <span>Editar seu perfil</span>
-                        </Link>
-                        <Link
-                            className="dropdown-item"
-                            to={'/'}
-                            onClick={this.handleLinkClick}
-                        >
-                            Suas conexões
-                        </Link>
-
-                        <a
-                            className="dropdown-item"
-                            href="/auth/logout"
-                        >
-                            Sair
-                        </a>
-                    </div>
-                </div>
-            </div>
+            <Dropdown
+                className="search-display-dropdown-button"
+                size={DropdownMenuSize.MEDIUM}
+                button={
+                    <span>
+                            <i className="sort-icon fa fa-sort-amount-desc"/>
+                            <span>Exibir</span>
+                        </span>
+                }
+            >
+                <DropdownHeader>
+                    Exibindo: <strong className="css-truncate-target">{textHelper.getSearchDisplayText(currentOption)}</strong>
+                </DropdownHeader>
+                <DropdownDivider/>
+                {currentOption !== commonTypes.SearchDisplay.ORDER_BY_DISTANCE && <DropdownItem>
+                    <Link to="/config/edituserprofile">
+                        {textHelper.getSearchDisplayText(commonTypes.SearchDisplay.ORDER_BY_DISTANCE)}
+                    </Link>
+                </DropdownItem>}
+                {currentOption !== commonTypes.SearchDisplay.BEST_PROFESSIONAIS_IN_2_KM && <DropdownItem>
+                    <Link to="/config/edituserprofile">
+                        {textHelper.getSearchDisplayText(commonTypes.SearchDisplay.BEST_PROFESSIONAIS_IN_2_KM)}
+                    </Link>
+                </DropdownItem>}
+                {currentOption !== commonTypes.SearchDisplay.BEST_PROFESSIONAIS_IN_5_KM && <DropdownItem>
+                    <Link to="/config/edituserprofile">
+                        {textHelper.getSearchDisplayText(commonTypes.SearchDisplay.BEST_PROFESSIONAIS_IN_5_KM)}
+                    </Link>
+                </DropdownItem>}
+                {currentOption !== commonTypes.SearchDisplay.BEST_PROFESSIONAIS_IN_10_KM && <DropdownItem>
+                    <Link to="/config/edituserprofile">
+                        {textHelper.getSearchDisplayText(commonTypes.SearchDisplay.BEST_PROFESSIONAIS_IN_10_KM)}
+                    </Link>
+                </DropdownItem>}
+            </Dropdown>
         );
     }
 }
 
-export { LoggedUserDropdown };

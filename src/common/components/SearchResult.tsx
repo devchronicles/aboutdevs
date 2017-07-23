@@ -1,8 +1,11 @@
 import * as React from 'react';
 import * as commonTypes from '../../common/typings';
 import * as ReactRedux from 'react-redux';
+import * as textHelper from '../helpers/textHelper';
+import * as stringHelper from '../helpers/stringHelper';
 
 import {ProfileCard} from './SearchProfileCard';
+import {SearchDisplayDropdown} from './SearchDisplayDropdown';
 
 interface SearchResultStateProps {
     searchResultProfiles: commonTypes.UserSearchProfile[];
@@ -24,17 +27,15 @@ class SearchResult extends React.Component <SearchResultProps> {
         return (
             <ul className="search-result">
                 <div className="header">
-                    <span>
-                        <span>
-                            Exibindo:
-                        </span>
-                        <span>
-                            Profissionais ordenados por distância
-                        </span>
+                    <span className="display">
+                        Exibindo profissionais <b>{stringHelper.decapitalizeFirstLetter(textHelper.getSearchDisplayText(commonTypes.SearchDisplay.ORDER_BY_DISTANCE))}</b>
+                    </span>
+                    <span className="display-selector">
+                        <SearchDisplayDropdown currentOption={commonTypes.SearchDisplay.ORDER_BY_DISTANCE}/>
                     </span>
                 </div>
                 <div className="profiles">
-                    {searchResultProfiles.map((p, i) => <ProfileCard key={i} profile={p} />)}
+                    {searchResultProfiles && searchResultProfiles.map((p, i) => <ProfileCard key={i} profile={p}/>)}
                 </div>
             </ul>
         );
