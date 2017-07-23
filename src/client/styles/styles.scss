@@ -11,15 +11,15 @@
 @import 'document';
 @import 'document-view-profile';
 @import 'document-edit-profile';
-@import 'search-page';
+@import 'pages/search-page';
 @import 'profile-card';
 @import 'react-select';
-@import 'login-page';
+@import 'pages/login-page';
 @import 'layout';
 @import 'font-awesome';
 
 //pages
-@import 'index-page.scss';
+@import 'pages/index-page';
 
 
 body {

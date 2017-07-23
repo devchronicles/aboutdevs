@@ -1,11 +1,11 @@
-@import "_variables";
+@import "../variables";
 
 $hero-text-font-size: 25px;
 
 .index-page-wrapper {
 
   background: linear-gradient(rgba(16, 102, 150, 0.97), rgba(35, 60, 64, 0.9)),
-  url('images/bg-6.jpeg');
+  url('../images/bg-6.jpeg');
   background-size: cover;
 
   display: flex;
