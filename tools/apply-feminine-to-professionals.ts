@@ -1,4 +1,5 @@
 import * as fs from 'fs';
+
 const professions = require('../data/professions.json');
 
 class RegexRule {
@@ -13,8 +14,7 @@ class RegexRule {
     public apply(word: string) {
         if (this.exceptionList && this.exceptionList.indexOf(word) !== -1) return word;
         if (word.match(this.regex)) {
-            const newWord = word.replace(this.regex, (m, c1) => c1 + this.replacement);
-            return newWord;
+            return word.replace(this.regex, (m, c1) => c1 + this.replacement);
         }
         return word;
     }

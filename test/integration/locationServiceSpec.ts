@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import {assert} from 'chai';
 import * as geocodeApiFormattingHelper from '../../src/server/helpers/geocodeApiFormattingHelper';
 import * as locationService from '../../src/server/services/locationService';
 import * as serverTypes from '../../src/server/typings';

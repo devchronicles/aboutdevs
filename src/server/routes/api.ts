@@ -5,6 +5,7 @@ import * as searchHelper from '../helpers/searchHelper';
 import * as userService from '../services/userService';
 import * as dbTypes from '../typings/dbTypes';
 import * as stringHelper from '../../common/helpers/stringHelper';
+import * as commonTypes from '../../common/typings/commonTypes';
 
 const router = express.Router();
 
@@ -40,7 +41,7 @@ router.route('/users/myprofile').get((req, res) => {
     apiHelper.sendPromiseDb(res,
         async (db) => {
             const userId = apiHelper.getAndEnsureUserId(req);
-            return userService.getProfile(db, userId);
+            return userService.getProfile(db, userId, userId, commonTypes.Operation.EDIT);
         });
 });
 
@@ -78,7 +79,7 @@ router.route('/users/:id').get((req, res) => {
             const search = req.query.q;
             const location = req.query.l;
             if (!search || !location) {
-                throw Error('Parameters q and l are expected')
+                throw Error('Parameters q and l are expected');
             }
             return userService.searchProfessionais(db, search, location);
         });

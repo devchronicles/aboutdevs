@@ -4,7 +4,6 @@ import * as commonTypes from '../../common/typings/commonTypes';
 import * as serverTypes from '../typings';
 import * as googleOAuthTypes from '../typings/googleOAuthTypes';
 import * as locationService from '../services/locationService';
-import * as searchHelper from '../helpers/searchHelper';
 import * as stringHelper from '../../common/helpers/stringHelper';
 
 /**
@@ -69,15 +68,14 @@ export async function createFromGoogleProfile(db: serverTypes.TazzoDatabase, pro
         photo_url: photoUrl,
     };
 
-    const insertedUser = (await db.user.insert(user)) as serverTypes.User;
-    return insertedUser;
+    return (await db.user.insert(user)) as serverTypes.User;
 }
 
 /**
  * Updates a user object based on the given google profile
  * @param db Massive instance
  * @param existingUser
- * @param profile
+ * @param googleProfile
  */
 export async function updateFromGoogleProfile(db: serverTypes.TazzoDatabase, existingUser: serverTypes.User, googleProfile: googleOAuthTypes.GoogleOAuthProfile): Promise<serverTypes.User> {
     if (!db) throw Error('\'db\' should be truthy');
@@ -107,8 +105,7 @@ export async function updateFromGoogleProfile(db: serverTypes.TazzoDatabase, exi
             raw: googleProfile,
         };
     }
-    const savedUser = (await db.user.save(existingUser)) as serverTypes.User;
-    return savedUser;
+    return (await db.user.save(existingUser)) as serverTypes.User;
 }
 
 /**
@@ -195,30 +192,45 @@ async function getServicesForUser(db: serverTypes.TazzoDatabase, userId: number)
     }));
 }
 
-async function getProfileDataFromUser(db: serverTypes.TazzoDatabase, user: serverTypes.User, operation: commonTypes.Operation): Promise<commonTypes.UserProfile> {
+async function getProfileDataFromUser(db: serverTypes.TazzoDatabase, user: serverTypes.User, currentUserId: number, operation: commonTypes.Operation): Promise<commonTypes.UserProfile> {
     if (!db) throw Error('Argument \'db\' should be truthy');
     if (!user) throw Error('Argument \'user\' should be truthy');
 
-    const result = {
-        id: user.id,
-        name: user.name,
-        displayName: user.display_name,
-        photoUrl: user.photo_url,
-        type: user.type,
-        status: user.status,
-        address: await (user.geo_location_id ? locationService.getFormattedLocationById(db, user.geo_location_id) : null),
-        profession: await getFormattedProfession(db, user.profession_id, user.profession_other, user.gender),
-        phoneWhatsapp: user.phone_whatsapp,
-        phoneAlternative: user.phone_alternative,
-        bio: user.bio,
-        services: await getServicesForUser(db, user.id),
-    };
+    switch (operation) {
+        case commonTypes.Operation.VIEW:
+            const isConnected = !!db.user_connection.findOne({user_id: currentUserId, user_professional_id: user.id});
+            return {
+                id: user.id,
+                name: user.name,
+                displayName: user.display_name,
+                photoUrl: user.photo_url,
+                type: user.type,
+                status: user.status,
+                address: await (user.geo_location_id ? locationService.getFormattedLocationById(db, user.geo_location_id) : null),
+                profession: await getFormattedProfession(db, user.profession_id, user.profession_other, user.gender),
+                phoneWhatsapp: isConnected ? user.phone_whatsapp : undefined,
+                phoneAlternative: isConnected ? user.phone_alternative : undefined,
+                bio: user.bio,
+                services: await getServicesForUser(db, user.id),
+            };
 
-    switch(operation) {
-        case Operation.VIEW:
-
-
-        case Operation.EDIT:
+        case commonTypes.Operation.EDIT:
+            return {
+                id: user.id,
+                name: user.name,
+                displayName: user.display_name,
+                photoUrl: user.photo_url,
+                type: user.type,
+                status: user.status,
+                address: await (user.geo_location_id ? locationService.getFormattedLocationById(db, user.geo_location_id) : null),
+                profession: await getFormattedProfession(db, user.profession_id, user.profession_other, user.gender),
+                phoneWhatsapp: user.phone_whatsapp,
+                phoneAlternative: user.phone_alternative,
+                bio: user.bio,
+                services: await getServicesForUser(db, user.id),
+            };
+        default:
+            throw Error('Operation not supported');
     }
 }
 
@@ -226,10 +238,12 @@ async function getProfileDataFromUser(db: serverTypes.TazzoDatabase, user: serve
  * Gets the profile of the given user
  * @param db The massive object
  * @param userId The id of the user
+ * @param currentUserId
+ * @param operation
  */
-export async function getProfile(db: serverTypes.TazzoDatabase, userId: number): Promise<commonTypes.UserProfile> {
+export async function getProfile(db: serverTypes.TazzoDatabase, userId: number, currentUserId: number, operation: commonTypes.Operation): Promise<commonTypes.UserProfile> {
     const user = await db.user.findOne({id: userId});
-    return getProfileDataFromUser(db, user);
+    return getProfileDataFromUser(db, user, currentUserId, operation);
 }
 
 /**
@@ -304,8 +318,7 @@ export async function saveProfile(db: serverTypes.TazzoDatabase, userId: number,
         const persistedUserServices = await db.user_service.find({user_id: userId});
 
         // add or update services that are persistent already
-        for (let i = 0; i < profileServices.length; i++) {
-            const profileService = profileServices[i];
+        for (const profileService of profileServices) {
             if (profileService.id) {
                 // the service is persistent already
                 const existingService = await db.user_service.findOne({id: profileService.id});
@@ -347,7 +360,7 @@ export async function saveProfile(db: serverTypes.TazzoDatabase, userId: number,
         user = (await db.user.save(user)) as serverTypes.User;
     }
 
-    return getProfileDataFromUser(db, user);
+    return getProfileDataFromUser(db, user, user.id, commonTypes.Operation.EDIT);
 }
 
 /**

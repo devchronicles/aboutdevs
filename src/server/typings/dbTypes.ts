@@ -1,6 +1,11 @@
 import * as massive from 'massive';
 import * as googleGeocodeTypes from './googleGeocodeTypes';
 
+export enum UserGender {
+    MALE = 0,
+    FEMALE = 1,
+}
+
 export interface GeoLocation {
     id: number;
     geo_location_city_id: number;
@@ -31,11 +36,6 @@ export interface GeoLocationCity {
 export interface GeoLocationCache {
     search: string;
     cache: googleGeocodeTypes.GeocodeApiResult;
-}
-
-export enum UserGender {
-    MALE = 0,
-    FEMALE = 1,
 }
 
 export interface UserService {
@@ -70,6 +70,22 @@ export interface User {
     search_canonical: string;
 }
 
+export interface UserConnection {
+    id: number;
+    user_id: number;
+    user_professional_id: number;
+    request: string;
+    created_at: Date;
+}
+
+export interface UserRecommendation {
+    id: number;
+    user_id: number;
+    user_recommended_id: number;
+    text: string;
+    created_at: Date;
+}
+
 export interface UserSearchResult {
     id: number;
     gender: number;
@@ -101,6 +117,8 @@ export interface TazzoDatabase extends massive.Database {
     geo_location_city: massive.Table<GeoLocationCity>;
     user: massive.Table<User>;
     user_service: massive.Table<UserService>;
+    user_connection: massive.Table<UserConnection>;
+    user_recommendation: massive.Table<UserRecommendation>;
     profession: massive.Table<Profession>;
 
     // functions

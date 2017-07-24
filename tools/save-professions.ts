@@ -1,5 +1,6 @@
 import buildDb from '../src/server/db/buildDb';
 import * as searchHelper from '../src/common/helpers/stringHelper';
+
 const professions = require('../data/professions-processed.json');
 
 function normalize(text: string) {

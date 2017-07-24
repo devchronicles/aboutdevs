@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import {assert} from 'chai';
 import * as serverTypes from '../../src/server/typings';
 
 /**
@@ -6,7 +6,6 @@ import * as serverTypes from '../../src/server/typings';
  * @param db The Massive instance
  * @param entityName The name of the entity
  * @param originalObject The original object being saved
- * @param callback The callback to be called after the whole thing
  */
 export function assertCanSaveFindAndDelete(db: serverTypes.TazzoDatabase, entityName: string, originalObject: any) {
     // saves the object

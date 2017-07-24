@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import {assert} from 'chai';
 import * as userHelper from '../../src/server/services/userService';
 
 describe('userService', () => {

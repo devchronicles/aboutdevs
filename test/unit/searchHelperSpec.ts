@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import {assert} from 'chai';
 import * as stringHelper from '../../src/common/helpers/stringHelper';
 
 describe('searchHelperSpec', () => {

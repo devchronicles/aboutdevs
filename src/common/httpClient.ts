@@ -1,4 +1,4 @@
-import axios, { AxiosPromise } from 'axios';
+import axios, {AxiosPromise} from 'axios';
 
 import * as commonTypes from '../common/typings';
 

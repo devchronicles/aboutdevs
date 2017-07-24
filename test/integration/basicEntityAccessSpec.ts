@@ -1,5 +1,5 @@
 import * as serverTypes from '../../src/server/typings';
-import { assertCanSaveFindAndDelete } from './dbTestHelper';
+import {assertCanSaveFindAndDelete} from './dbTestHelper';
 import setupSession from './setupSession';
 
 describe('basicEntityAccess', () => {

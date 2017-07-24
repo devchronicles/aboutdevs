@@ -1,13 +1,13 @@
 import * as bodyParser from 'body-parser';
 import * as cookieParser from 'cookie-parser';
 import * as express from 'express';
-import cookieSession = require('cookie-session');
 import * as colors from 'colors';
 import * as passport from 'passport';
 import setupPassport from './passport/setupPassport';
 import apiRoute from './routes/api';
 import appRoute from './routes/app';
 import authRoute from './routes/auth';
+import cookieSession = require('cookie-session');
 
 const app = express();
 
@@ -39,5 +39,3 @@ app.listen(4000, '0.0.0.0', () => {
     console.log(colors.green(`IndieJobs started at http://localhost:4000/. NODE_ENV: ${process.env.NODE_ENV}`));
     /* tslint-enable */
 });
-
-export default app; // for testing
