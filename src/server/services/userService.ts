@@ -202,14 +202,15 @@ async function getProfileDataFromUser(db: serverTypes.TazzoDatabase, user: serve
             return {
                 id: user.id,
                 name: user.name,
+                email: (isConnected || user.id === currentUserId) ? user.email : undefined,
                 displayName: user.display_name,
                 photoUrl: user.photo_url,
                 type: user.type,
                 status: user.status,
                 address: await (user.geo_location_id ? locationService.getFormattedLocationById(db, user.geo_location_id) : null),
                 profession: await getFormattedProfession(db, user.profession_id, user.profession_other, user.gender),
-                phoneWhatsapp: isConnected ? user.phone_whatsapp : undefined,
-                phoneAlternative: isConnected ? user.phone_alternative : undefined,
+                phoneWhatsapp: (isConnected || user.id === currentUserId) ? user.phone_whatsapp : undefined,
+                phoneAlternative: (isConnected || user.id === currentUserId) ? user.phone_alternative : undefined,
                 bio: user.bio,
                 services: await getServicesForUser(db, user.id),
             };
@@ -218,6 +219,7 @@ async function getProfileDataFromUser(db: serverTypes.TazzoDatabase, user: serve
             return {
                 id: user.id,
                 name: user.name,
+                email: user.email,
                 displayName: user.display_name,
                 photoUrl: user.photo_url,
                 type: user.type,
@@ -370,7 +372,7 @@ export async function saveProfile(db: serverTypes.TazzoDatabase, userId: number,
  * @param {string} location
  * @returns {Promise<UserSearchProfile[]>}
  */
-export async function searchProfessionais(db: serverTypes.TazzoDatabase, search: string, location: string): Promise<commonTypes.UserSearchProfile[]> {
+export async function searchProfessionals(db: serverTypes.TazzoDatabase, search: string, location: string): Promise<commonTypes.UserSearchProfile[]> {
     // we need to convert the location to latitude and longitude
     const locations = await locationService.searchLocations(db, location, true);
     if (!locations.results.length) {

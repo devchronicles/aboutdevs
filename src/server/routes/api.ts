@@ -27,7 +27,7 @@ router.route('/professions').get((req, res) => {
     );
 });
 
-router.route('/users/checkname').get((req, res) => {
+router.route('/users/check_name').get((req, res) => {
     apiHelper.sendPromiseDb(res,
         async (db) => {
             const userId = apiHelper.getAndEnsureUserId(req);
@@ -37,7 +37,7 @@ router.route('/users/checkname').get((req, res) => {
         });
 });
 
-router.route('/users/myprofile').get((req, res) => {
+router.route('/users/edit_my_profile').get((req, res) => {
     apiHelper.sendPromiseDb(res,
         async (db) => {
             const userId = apiHelper.getAndEnsureUserId(req);
@@ -45,7 +45,7 @@ router.route('/users/myprofile').get((req, res) => {
         });
 });
 
-router.route('/users/myprofile').post((req, res) => {
+router.route('/users/edit_my_profile').post((req, res) => {
     apiHelper.sendPromiseDb(res,
         async (db) => {
             if (!req.body) throw Error('profile was not submitted');
@@ -68,7 +68,7 @@ router.route('/users').get((req, res) => {
             if (!search || !location) {
                 throw Error('Parameters q and l are expected');
             }
-            return userService.searchProfessionais(db, search, location);
+            return userService.searchProfessionals(db, search, location);
         });
 });
 
@@ -81,7 +81,7 @@ router.route('/users/:id').get((req, res) => {
             if (!search || !location) {
                 throw Error('Parameters q and l are expected');
             }
-            return userService.searchProfessionais(db, search, location);
+            return userService.searchProfessionals(db, search, location);
         });
 });
 
