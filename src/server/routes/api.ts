@@ -41,7 +41,7 @@ router.route('/users/edit_my_profile').get((req, res) => {
     apiHelper.sendPromiseDb(res,
         async (db) => {
             const userId = apiHelper.getAndEnsureUserId(req);
-            return userService.getProfile(db, userId, userId, commonTypes.Operation.EDIT);
+            return userService.getUserProfileById(db, userId, userId, commonTypes.Operation.EDIT);
         });
 });
 
@@ -72,16 +72,17 @@ router.route('/users').get((req, res) => {
         });
 });
 
-router.route('/users/:id').get((req, res) => {
+router.route('/users/:user_name').get((req, res) => {
     if (!req.body) throw Error('profile was not submitted');
     apiHelper.sendPromiseDb(res,
         async (db) => {
-            const search = req.query.q;
-            const location = req.query.l;
-            if (!search || !location) {
-                throw Error('Parameters q and l are expected');
+            const userName = req.params.user_name;
+            const user = await db.user.findOne({name: userName});
+            if (!user) {
+                throw Error(`Could not find user. User name: ${userName}`);
             }
-            return userService.searchProfessionals(db, search, location);
+            const currentUserId = apiHelper.getAndEnsureUserId(req);
+            return userService.getUserProfileFromUser(db, user, currentUserId, commonTypes.Operation.VIEW);
         });
 });
 

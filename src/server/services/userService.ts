@@ -192,7 +192,7 @@ async function getServicesForUser(db: serverTypes.TazzoDatabase, userId: number)
     }));
 }
 
-async function getProfileDataFromUser(db: serverTypes.TazzoDatabase, user: serverTypes.User, currentUserId: number, operation: commonTypes.Operation): Promise<commonTypes.UserProfile> {
+export async function getUserProfileFromUser(db: serverTypes.TazzoDatabase, user: serverTypes.User, currentUserId: number, operation: commonTypes.Operation): Promise<commonTypes.UserProfile> {
     if (!db) throw Error('Argument \'db\' should be truthy');
     if (!user) throw Error('Argument \'user\' should be truthy');
 
@@ -243,9 +243,9 @@ async function getProfileDataFromUser(db: serverTypes.TazzoDatabase, user: serve
  * @param currentUserId
  * @param operation
  */
-export async function getProfile(db: serverTypes.TazzoDatabase, userId: number, currentUserId: number, operation: commonTypes.Operation): Promise<commonTypes.UserProfile> {
+export async function getUserProfileById(db: serverTypes.TazzoDatabase, userId: number, currentUserId: number, operation: commonTypes.Operation): Promise<commonTypes.UserProfile> {
     const user = await db.user.findOne({id: userId});
-    return getProfileDataFromUser(db, user, currentUserId, operation);
+    return getUserProfileFromUser(db, user, currentUserId, operation);
 }
 
 /**
@@ -362,7 +362,7 @@ export async function saveProfile(db: serverTypes.TazzoDatabase, userId: number,
         user = (await db.user.save(user)) as serverTypes.User;
     }
 
-    return getProfileDataFromUser(db, user, user.id, commonTypes.Operation.EDIT);
+    return getUserProfileFromUser(db, user, user.id, commonTypes.Operation.EDIT);
 }
 
 /**

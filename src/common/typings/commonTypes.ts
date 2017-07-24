@@ -40,7 +40,7 @@ export interface UserProfile {
 
     id?: number; // id is not required because when you are saving a user
     name: string;
-    email: string;
+    email?: string;
     type: UserProfileType;
     loadState?: UserProfileLoadState;
     status?: UserProfileStatus;
