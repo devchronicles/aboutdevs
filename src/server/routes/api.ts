@@ -8,7 +8,7 @@ import * as stringHelper from '../../common/helpers/stringHelper';
 
 const router = express.Router();
 
-router.route('/address').get((req: express.Request, res: express.Response) => {
+router.route('/addresses').get((req: express.Request, res: express.Response) => {
     const allowCities: boolean = req.query.allowcities;
     apiHelper.sendPromiseDb(res, (db: dbTypes.TazzoDatabase) => locationService.getFormattedLocations(db, req.query.q as string, allowCities));
 });
@@ -59,6 +59,19 @@ router.route('/users/myprofile').post((req, res) => {
 });
 
 router.route('/users').get((req, res) => {
+    if (!req.body) throw Error('profile was not submitted');
+    apiHelper.sendPromiseDb(res,
+        async (db) => {
+            const search = req.query.q;
+            const location = req.query.l;
+            if (!search || !location) {
+                throw Error('Parameters q and l are expected');
+            }
+            return userService.searchProfessionais(db, search, location);
+        });
+});
+
+router.route('/users/:id').get((req, res) => {
     if (!req.body) throw Error('profile was not submitted');
     apiHelper.sendPromiseDb(res,
         async (db) => {

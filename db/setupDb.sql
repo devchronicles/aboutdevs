@@ -531,7 +531,8 @@ CREATE TABLE "user" (
     phone_alternative character varying(20),
     search_canonical text,
     name character varying(255) NOT NULL,
-    email character varying(255) NOT NULL
+    email character varying(255) NOT NULL,
+    created_at timestamp without time zone DEFAULT timezone('utc'::text, now()) NOT NULL
 );
 
 
@@ -542,6 +543,77 @@ ALTER TABLE "user" OWNER TO postgres;
 --
 
 COMMENT ON COLUMN "user".oauth_profiles IS 'A JSON containing information returned by OAuth providers';
+
+
+--
+-- Name: user_connection; Type: TABLE; Schema: public; Owner: indiejobs
+--
+
+CREATE TABLE user_connection (
+    id integer NOT NULL,
+    user_id integer NOT NULL,
+    user_professional_id integer NOT NULL,
+    request text NOT NULL,
+    created_at timestamp without time zone DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+
+ALTER TABLE user_connection OWNER TO indiejobs;
+
+--
+-- Name: user_connection_id_seq; Type: SEQUENCE; Schema: public; Owner: indiejobs
+--
+
+CREATE SEQUENCE user_connection_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE user_connection_id_seq OWNER TO indiejobs;
+
+--
+-- Name: user_connection_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: indiejobs
+--
+
+ALTER SEQUENCE user_connection_id_seq OWNED BY user_connection.id;
+
+
+--
+-- Name: user_recommendation; Type: TABLE; Schema: public; Owner: indiejobs
+--
+
+CREATE TABLE user_recommendation (
+    id integer NOT NULL,
+    user_recommended_id integer NOT NULL,
+    user_id integer NOT NULL,
+    created_at timestamp without time zone DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+
+ALTER TABLE user_recommendation OWNER TO indiejobs;
+
+--
+-- Name: user_recommendation_id_seq; Type: SEQUENCE; Schema: public; Owner: indiejobs
+--
+
+CREATE SEQUENCE user_recommendation_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE user_recommendation_id_seq OWNER TO indiejobs;
+
+--
+-- Name: user_recommendation_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: indiejobs
+--
+
+ALTER SEQUENCE user_recommendation_id_seq OWNED BY user_recommendation.id;
 
 
 --
@@ -637,6 +709,20 @@ ALTER TABLE ONLY profession ALTER COLUMN id SET DEFAULT nextval('profession_id_s
 
 
 --
+-- Name: user_connection id; Type: DEFAULT; Schema: public; Owner: indiejobs
+--
+
+ALTER TABLE ONLY user_connection ALTER COLUMN id SET DEFAULT nextval('user_connection_id_seq'::regclass);
+
+
+--
+-- Name: user_recommendation id; Type: DEFAULT; Schema: public; Owner: indiejobs
+--
+
+ALTER TABLE ONLY user_recommendation ALTER COLUMN id SET DEFAULT nextval('user_recommendation_id_seq'::regclass);
+
+
+--
 -- Name: user_service id; Type: DEFAULT; Schema: public; Owner: indiejobs
 --
 
@@ -700,11 +786,27 @@ ALTER TABLE ONLY profession
 
 
 --
+-- Name: user_connection user_connection_pkey; Type: CONSTRAINT; Schema: public; Owner: indiejobs
+--
+
+ALTER TABLE ONLY user_connection
+    ADD CONSTRAINT user_connection_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: user user_id_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY "user"
     ADD CONSTRAINT user_id_pk PRIMARY KEY (id);
+
+
+--
+-- Name: user_recommendation user_recommendation_pkey; Type: CONSTRAINT; Schema: public; Owner: indiejobs
+--
+
+ALTER TABLE ONLY user_recommendation
+    ADD CONSTRAINT user_recommendation_pkey PRIMARY KEY (id);
 
 
 --
@@ -856,6 +958,13 @@ CREATE INDEX search_canonical_idx ON "user" USING gin (to_tsvector('ptu'::regcon
 
 
 --
+-- Name: user_connection_id_uindex; Type: INDEX; Schema: public; Owner: indiejobs
+--
+
+CREATE UNIQUE INDEX user_connection_id_uindex ON user_connection USING btree (id);
+
+
+--
 -- Name: user_email_uindex; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -890,6 +999,22 @@ ALTER TABLE ONLY geo_location_state
 
 ALTER TABLE ONLY notification
     ADD CONSTRAINT notification_user_id_fk FOREIGN KEY (user_id) REFERENCES "user"(id);
+
+
+--
+-- Name: user_connection user_connection_user_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: indiejobs
+--
+
+ALTER TABLE ONLY user_connection
+    ADD CONSTRAINT user_connection_user_id_fk FOREIGN KEY (user_id) REFERENCES "user"(id);
+
+
+--
+-- Name: user_connection user_connection_user_professional_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: indiejobs
+--
+
+ALTER TABLE ONLY user_connection
+    ADD CONSTRAINT user_connection_user_professional_id_fk FOREIGN KEY (user_professional_id) REFERENCES "user"(id);
 
 
 --

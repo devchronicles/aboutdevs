@@ -27,7 +27,7 @@ export function searchProfessionals(search: string, location: string): AxiosProm
 
 export function searchLocations(search: string, allowCities = false): AxiosPromise {
     const queryString = allowCities ? `q=${search}&allowcities=true` : `q=${search}`;
-    return axios.get(`/api/address?${queryString}`);
+    return axios.get(`/api/addresses?${queryString}`);
 }
 
 export function searchProfessions(search: string): AxiosPromise {

@@ -146,7 +146,7 @@ export function findOrCreateFromGoogleProfile(db: serverTypes.TazzoDatabase, pro
         });
 }
 
-export function getReduxDataForLoggedUser(user: serverTypes.User): commonTypes.ReduxCurrentUserProfile {
+export function getReduxDataForLoggedUser(user: serverTypes.User): commonTypes.CurrentUserProfile {
     if (user === null || user === undefined) throw Error('Argument \'user\' should be null or undefined');
     return {
         id: user.id,
@@ -195,11 +195,11 @@ async function getServicesForUser(db: serverTypes.TazzoDatabase, userId: number)
     }));
 }
 
-async function getProfileDataFromUser(db: serverTypes.TazzoDatabase, user: serverTypes.User): Promise<commonTypes.UserProfile> {
+async function getProfileDataFromUser(db: serverTypes.TazzoDatabase, user: serverTypes.User, operation: commonTypes.Operation): Promise<commonTypes.UserProfile> {
     if (!db) throw Error('Argument \'db\' should be truthy');
     if (!user) throw Error('Argument \'user\' should be truthy');
 
-    return {
+    const result = {
         id: user.id,
         name: user.name,
         displayName: user.display_name,
@@ -213,6 +213,13 @@ async function getProfileDataFromUser(db: serverTypes.TazzoDatabase, user: serve
         bio: user.bio,
         services: await getServicesForUser(db, user.id),
     };
+
+    switch(operation) {
+        case Operation.VIEW:
+
+
+        case Operation.EDIT:
+    }
 }
 
 /**

@@ -1,6 +1,11 @@
 import * as ReactNotificationSystem from 'react-notification-system';
 
-export interface ReduxCurrentUserProfile {
+export enum Operation {
+    VIEW = 0,
+    EDIT: 1,
+}
+
+export interface CurrentUserProfile {
     id: number;
     name: string;
     gender: number;
@@ -90,7 +95,7 @@ export interface SearchState {
 }
 
 export interface ReduxState {
-    loggedUser: ReduxCurrentUserProfile;
+    loggedUser: CurrentUserProfile;
     form: {
         profileEdit?: any,
     };

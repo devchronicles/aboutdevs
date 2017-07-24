@@ -11,7 +11,7 @@ import * as ReactNotificationSystem from 'react-notification-system';
 import * as notificationActions from '../../common/redux/notifications/notificationsActions';
 
 interface ProfileEditPageStateOwnProps extends ReactRouter.RouteComponentProps<any> {
-    loggedUser: commonTypes.ReduxCurrentUserProfile;
+    loggedUser: commonTypes.CurrentUserProfile;
     formValues: any;
 }
 

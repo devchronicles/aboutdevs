@@ -1,6 +1,6 @@
 import * as commonTypes from '../../typings';
 
-const defaultLoggedUserState: commonTypes.ReduxCurrentUserProfile = {
+const defaultLoggedUserState: commonTypes.CurrentUserProfile = {
     id: undefined,
     name: undefined,
     displayName: undefined,

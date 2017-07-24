@@ -14,7 +14,7 @@ interface ProfileEditFormStateProps {
     formValues: any;
     formSyncErrors: any;
     formSubmitErrors: any;
-    loggedUser: commonTypes.ReduxCurrentUserProfile;
+    loggedUser: commonTypes.CurrentUserProfile;
 }
 
 interface ProfileEditFormDispatchProps {

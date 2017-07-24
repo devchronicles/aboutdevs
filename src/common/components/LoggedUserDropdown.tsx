@@ -3,7 +3,7 @@ import {Dropdown, DropdownDivider, DropdownHeader, DropdownItem} from "./Dropdow
 import * as commonTypes from '../typings/commonTypes';
 
 interface LoggedUserDropdownProps {
-    loggedUser: commonTypes.ReduxCurrentUserProfile;
+    loggedUser: commonTypes.CurrentUserProfile;
 }
 
 class LoggedUserDropdown extends React.Component<LoggedUserDropdownProps> {

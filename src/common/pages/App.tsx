@@ -12,7 +12,7 @@ import * as ReactNotificationSystem from 'react-notification-system';
 import * as notificationActions from '../../common/redux/notifications/notificationsActions';
 
 interface AppStateProps {
-    loggedUser: commonTypes.ReduxCurrentUserProfile;
+    loggedUser: commonTypes.CurrentUserProfile;
     notifications: ReactNotificationSystem.Notification[];
 }
 
