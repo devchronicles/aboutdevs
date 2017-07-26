@@ -2,35 +2,37 @@
 @import '_variables';
 
 $select-input-border-radius:        $radius-md;
-$select-input-border-width:         0px;
+$select-input-border-width:         1px;
 $select-input-border-color:         $color-gray-light;
 $select-input-border-focus:         $color-gray-light;
 $select-input-box-shadow-focus:     none;
 $select-padding-vertical:           $input-padding-vertical;
 $select-padding-horizontal:         $input-padding-horizontal;
-$select-input-height:               34px;
+$select-input-height:               32px;
 $select-input-placeholder:          $color-placeholder;
+$select-input-internal-height:      32px;
 
 @import '~react-select/scss/default';
 
 // hack
 
-.Select.invalid {
+.Select {
     .Select-control {
-        border-bottom: 2px solid $color-shining-2;
         .Select-input {
-            height: 30px;
+            box-sizing: border-box;
         }
     }
 }
 
+.Select.invalid {
+    .Select-placeholder, .Select-value {
+        border-bottom: 2px solid $color-shining-2;
+    }
+}
 
 .Select.is-focused {
-    .Select-control {
+    .Select-placeholder, .Select-value {
         border-bottom: 2px solid $color-secondary;
-        .Select-input {
-            height: 30px;
-        }
     }
 }
 

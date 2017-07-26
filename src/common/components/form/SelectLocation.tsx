@@ -54,7 +54,7 @@ class SelectLocation extends React.Component<SelectLocationProps, {}> {
             filterOption: this.filterOptions,
             labelKey: "label",
             valueKey: "value",
-            placeholder,
+            placeholder: placeholder || '',
             loadingPlaceholder: "Localizando endereço...",
             searchPromptText: "Digite para pesquisar",
             noResultsText: "Não foi possível encontrar o endereço",
@@ -70,8 +70,8 @@ class SelectLocation extends React.Component<SelectLocationProps, {}> {
         }
 
         return strict
-            ? <ReactSelect.Async {...props} />
-            : <ReactSelect.AsyncCreatable {...props} {...notStrictProps}/>;
+            ? <ReactSelect.Async inputProps={{ autoComplete: 'off', autoCorrect: 'off', spellCheck: 'off' }} {...props} />
+            : <ReactSelect.AsyncCreatable inputProps={{ autoComplete: 'off', autoCorrect: 'off', spellCheck: 'off' }} {...props} {...notStrictProps}/>;
     }
 }
 

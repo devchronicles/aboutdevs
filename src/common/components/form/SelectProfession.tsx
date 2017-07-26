@@ -50,6 +50,7 @@ class SelectProfession extends React.Component<ISelectProfessionProps, {}> {
             <AsyncCreatable
                 value={adjustedValue}
                 onChange={this.handleChange}
+                inputProps={{ autoComplete: 'off', autoCorrect: 'off', spellCheck: 'off' }}
                 loadOptions={this.loadValues}
                 filterOption={(o) => o}
                 labelKey="label"
