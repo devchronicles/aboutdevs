@@ -1,4 +1,5 @@
 @import "../variables";
+@import "../mixins";
 
 $hero-text-font-size: 25px;
 
@@ -6,8 +7,8 @@ $hero-text-font-size: 25px;
 
   background: linear-gradient(rgba(16, 102, 150, 0.97), rgba(35, 60, 64, 0.9)),
   url('images/bg-2.jpeg');
-  background-size: cover;
 
+  background-size: cover;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -17,20 +18,16 @@ $hero-text-font-size: 25px;
   margin-top: -$header-height;
 
   .index-search-form {
-    width: 100%;
-    max-width: 500px;
+    @include elastic-width(500px);
+
     display: flex;
     flex-direction: column;
     justify-content: center;
     position: relative;
-    margin: $gutter-md;
+    padding: $gutter-md;
 
     .fa {
       margin-right: $gutter-sm;
-    }
-
-    .logo-wrapper {
-      margin-bottom: $gutter-md;
     }
 
     .index-hero {
@@ -40,15 +37,29 @@ $hero-text-font-size: 25px;
 
       .hero-text {
         display: flex;
-        flex-direction: row;
-        align-items: baseline;
+        align-items: center;
+        flex-direction: column;
         width: 100%;
         justify-content: space-between;
+
+        @media (min-width: $breakpoint-md) {
+          flex-direction: row;
+          align-items: baseline;
+        }
+
         .logo {
           color: $color-white;
-          font-size: 40px;
+          font-size: 60px;
+          margin: $gutter-md 0;
+
+          @media (min-width: $breakpoint-md) {
+            font-size: 40px;
+            flex-direction: row;
+            align-items: baseline;
+          }
         }
         .hero-motto {
+          margin: $gutter-md 0;
           color: $color-gray-medium;
           opacity: 0.4;
         }

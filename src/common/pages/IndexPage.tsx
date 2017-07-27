@@ -60,7 +60,7 @@ class IndexPage extends React.Component<IndexPageProps> {
                                 Você é um(a) profissional?
                 </span>
                             <button className="faded">
-                                junte-se a nós, é grátis!
+                                junte-se a nós!
                             </button>
                         </div>
                     </div>
