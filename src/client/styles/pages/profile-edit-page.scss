@@ -1,0 +1,81 @@
+@import '../variables';
+@import '../mixins';
+
+.edit-profile-image-button-wrapper {
+  margin: $gutter-md 0;
+  .fa {
+    margin-right: $gutter-sm;
+  }
+}
+
+.user-type-toggle {
+  box-sizing: border-box;
+  border: 1px solid $color-gray-light;
+  width: 100%;
+  button {
+    flex: 1 1 auto;
+
+    &.pushed {
+      background-color: #DCDCDC;
+      .fa {
+        color: $color-secondary;
+        display: "inline-block";
+        margin-right: $gutter-sm;
+      }
+    }
+    &:hover {
+      .fa {
+        color: $color-white;
+      }
+    }
+    &:not(.pushed) {
+      .fa {
+        display: none;
+      }
+    }
+  }
+}
+
+.field-array {
+  ul {
+    li {
+      display: flex;
+      flex-direction: row;
+      align-items: stretch;
+      margin-bottom: $gutter-sm;
+      .counter {
+        font-weight: 500;
+        background-color: $color-gray-light;
+        border-radius: 17px;
+        height: 34px;
+        width: 34px;
+        flex: 0 0 auto;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .form-group {
+        flex: 1 1 auto;
+        margin: 0 $gutter-sm;
+      }
+
+      button.delete {
+        height: 34px;
+      }
+    }
+  }
+  .field-array-button-bar {
+    display: flex;
+    flex-direction: row-reverse;
+  }
+}
+
+.input-group-addon-before-username {
+  display: none !important;
+  @media (min-width: $breakpoint-md) {
+    display: flex !important;
+  }
+}
+

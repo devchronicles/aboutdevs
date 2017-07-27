@@ -10,19 +10,19 @@ const Spinner = ReactActivity.Spinner;
 interface IFormFieldUserNameProps extends ReduxForm.WrappedFieldProps<{}> {
 }
 
-class FormFieldUserName extends React.Component<IFormFieldUserNameProps>  {
+class FormFieldUserName extends React.Component<IFormFieldUserNameProps> {
 
     getAddOnAfterComponent() {
-        const { meta } = this.props;
+        const {meta} = this.props;
 
-        if (meta.asyncValidating) return <Spinner size={10} />;
-        if (meta.error) return <FaIcon icon="exclamation-triangle" className="error" />;
-        return <FaIcon icon="check" className="ok" />;
+        if (meta.asyncValidating) return <Spinner size={10}/>;
+        if (meta.error) return <FaIcon icon="exclamation-triangle" className="error"/>;
+        return <FaIcon icon="check" className="ok"/>;
     }
 
     public render() {
 
-        const { input, meta } = this.props;
+        const {input, meta} = this.props;
 
         const innerComponentProps = {
             input,
@@ -40,7 +40,11 @@ class FormFieldUserName extends React.Component<IFormFieldUserNameProps>  {
                 help="A URL acima será publicamente visível e será listada se você for um profissional."
                 error={errorMessage}
             >
-                <InputGroup addOnBefore="tazzo.com.br/@" addOnAfter={validationComponent}>
+                <InputGroup
+                    addOnBefore="tazzo.com.br/@"
+                    addOnAfter={validationComponent}
+                    addOnBeforeClassName="input-group-addon-before-username"
+                >
                     <TextBox {...innerComponentProps} />
                 </InputGroup>
             </FormGroup>
