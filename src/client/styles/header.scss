@@ -2,37 +2,53 @@
 @import '_mixins';
 
 .header-wrapper {
-    background-color: $color-white;
-    width: 100%;
+  background-color: $color-white;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: $box-shadow;
+  position: fixed;
+  z-index: 10000;
+
+  header.header {
+    @include elastic-width($max-container-width + 2 * $gutter-md);
     display: flex;
-    flex-direction: column;
     align-items: center;
-    box-shadow: $box-shadow;
-    position: fixed;
-    z-index: 10000;
-
-    header.header {
-        @include elastic-width($max-container-width);
+    justify-content: space-between;
+    height: $header-height;
+    position: relative;
+    flex-direction: row;
+    .header-content {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 0 $gutter-md;
+      ul {
         display: flex;
+        flex-direction: row;
+        flex: 1 1 auto;
         align-items: center;
-        justify-content: space-between;
-        height: $header-height;
-        position: relative;
-
-        ul {
+        justify-content: flex-end;
+        li {
+          padding-left: $gutter-md;
+          display: none;
+          justify-content: center;
+          @media (min-width: $breakpoint-lg) {
             display: flex;
-            flex-direction: row;
-            align-items: center;
-            li {
-                padding-left: $gutter-md;
-                display: flex;
-                justify-content: center;
-                a {                    
-                    &:hover {
-                        text-decoration: underline;
-                    }
-                }
+          }
+          &.important-item {
+            display: flex;
+          }
+          a {
+            &:hover {
+              text-decoration: underline;
             }
+          }
         }
+      }
     }
+  }
 }

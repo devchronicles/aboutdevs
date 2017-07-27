@@ -34,17 +34,11 @@
 .search-result {
   @include elastic-width($max-container-width + 2 * $gutter-md);
 
-  .header {
-    margin: $gutter-md $gutter-sm $gutter-sm $gutter-sm;
+  .search-result-header {
+    margin: $gutter-md $gutter-md $gutter-sm $gutter-md;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-  }
-  .profiles {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    padding: 0;
   }
 }

@@ -1,10 +1,30 @@
 @import '_variables';
 
-$cardsPerRow: 4;
+$cardsPerRowSm: 1;
+$cardsPerRowMd: 2;
+$cardsPerRowLg: 3;
+$cardsPerRowXl: 4;
 
 .profile-card {
     box-sizing: border-box;
-    width: calc((100% - (#{$cardsPerRow * 2} * #{$gutter-md / 2}))/ #{$cardsPerRow});
+
+    width: calc((100% - (#{$cardsPerRowSm * 2} * #{$gutter-md / 2}))/ #{$cardsPerRowSm});
+
+    // small
+    @media (min-width: $breakpoint-md) {
+        width: calc((100% - (#{$cardsPerRowMd * 2} * #{$gutter-md / 2}))/ #{$cardsPerRowMd});
+    }
+
+    // medium
+    @media (min-width: $breakpoint-lg) {
+        width: calc((100% - (#{$cardsPerRowLg * 2} * #{$gutter-md / 2}))/ #{$cardsPerRowLg});
+    }
+
+    // big
+    @media (min-width: $breakpoint-xl) {
+        width: calc((100% - (#{$cardsPerRowXl * 2} * #{$gutter-md / 2}))/ #{$cardsPerRowXl});
+    }
+
     margin: $gutter-md / 2;
     background-color: $color-white;
     border-radius: $radius-md;

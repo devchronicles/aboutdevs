@@ -4,8 +4,8 @@ import * as ReactRedux from 'react-redux';
 import * as textHelper from '../helpers/textHelper';
 import * as stringHelper from '../helpers/stringHelper';
 
-import {ProfileCard} from './SearchProfileCard';
 import {SearchDisplayDropdown} from './SearchDisplayDropdown';
+import { ProfileList } from "./ProfileList";
 
 interface SearchResultStateProps {
     searchResultProfiles: commonTypes.UserSearchProfile[];
@@ -28,7 +28,7 @@ class SearchResult extends React.Component <SearchResultProps> {
         const {searchResultProfiles, display, location, search} = this.props;
         return (
             <ul className="search-result">
-                <div className="header">
+                <div className="search-result-header">
                     <span className="display">
                         Exibindo profissionais <b>{stringHelper.decapitalizeFirstLetter(textHelper.getSearchDisplayText(display))}</b>
                     </span>
@@ -36,9 +36,7 @@ class SearchResult extends React.Component <SearchResultProps> {
                         <SearchDisplayDropdown value={display} search={search} location={location}/>
                     </span>
                 </div>
-                <div className="profiles">
-                    {searchResultProfiles && searchResultProfiles.map((p, i) => <ProfileCard key={i} profile={p}/>)}
-                </div>
+                <ProfileList profiles={searchResultProfiles} />
             </ul>
         );
     }
