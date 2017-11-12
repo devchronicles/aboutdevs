@@ -8,7 +8,8 @@ import * as gisHelper from '../helpers/gisHelper';
 import {Logo} from '../components/Logo';
 
 import {SearchForm} from '../components/SearchForm';
-import { IndexSearchForm } from '../IndexSearchForm';
+import { IndexSearchForm } from '../components/IndexSearchForm';
+import { IndexIntro } from '../components/IndexIntro';
 
 interface IndexPageStateProps {
 
@@ -46,7 +47,8 @@ class IndexPage extends React.Component<IndexPageProps> {
         return (
             <div className="page-wrapper">
                 <div className="index-page-wrapper">
-                    <IndexSearchForm handleSearchSubmit={this.handleSearchSubmit}/>
+                    <IndexIntro/>
+                    {/*<IndexSearchForm handleSearchSubmit={this.handleSearchSubmit}/>*/}
                 </div>
             </div>);
     }

@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { SearchForm } from './components/SearchForm';
-import { Logo } from './components/Logo';
+import { SearchForm } from './SearchForm';
+import { Logo } from './Logo';
 
 interface IndexSearchFormProps {
     handleSearchSubmit: (formValues: any) => void;

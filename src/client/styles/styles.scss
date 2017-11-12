@@ -5,9 +5,14 @@
 @import 'forms';
 @import 'logo';
 @import 'header';
+
+// Components
 @import 'components/dropdown-menu';
 @import 'components/logged-user-dropdown-menu';
 @import 'components/search-display-dropdown-menu';
+@import 'components/index-search-form';
+@import 'components/index-intro';
+
 @import 'document';
 @import 'pages/search-page';
 @import 'pages/login-page';
@@ -62,6 +67,10 @@ a {
 
 div {
     box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 500;
 }
 
 .hidden {

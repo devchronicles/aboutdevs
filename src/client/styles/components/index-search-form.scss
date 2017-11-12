@@ -1,0 +1,65 @@
+@import '../variables';
+
+.index-search-form {
+    @include elastic-width(500px);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    padding: $gutter-md;
+
+    .fa {
+        margin-right: $gutter-sm;
+    }
+
+    .index-hero {
+        display: flex;
+        flex-direction: column;
+        font-size: $hero-text-font-size;
+
+        .hero-text {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            width: 100%;
+            justify-content: space-between;
+
+            @media (min-width: $breakpoint-md) {
+                flex-direction: row;
+                align-items: baseline;
+            }
+
+            .logo {
+                color: $color-white;
+                font-size: 60px;
+                margin: $gutter-md 0;
+
+                @media (min-width: $breakpoint-md) {
+                    font-size: 40px;
+                    flex-direction: row;
+                    align-items: baseline;
+                }
+            }
+        }
+    }
+
+    button.search {
+        font-size: 1.2em;
+    }
+
+    .register-wrapper {
+        margin-top: 2 * $gutter-md;
+        padding: $gutter-sm;
+        border-radius: $radius-md;
+        border: 1px solid $color-gray-dark;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        .text {
+            margin-left: $gutter-sm;
+            color: $color-gray-dark;
+        }
+    }
+}
