@@ -6,7 +6,7 @@ $hero-text-font-size: 25px;
 .index-page-wrapper {
 
   background: linear-gradient(rgba(16, 102, 150, 0.97), rgba(35, 60, 64, 0.9)),
-  url('images/bg-2.jpeg');
+  url('images/bg-4.jpeg');
 
   background-size: cover;
   display: flex;
@@ -57,11 +57,6 @@ $hero-text-font-size: 25px;
             flex-direction: row;
             align-items: baseline;
           }
-        }
-        .hero-motto {
-          margin: $gutter-md 0;
-          color: $color-gray-medium;
-          opacity: 0.4;
         }
       }
     }
