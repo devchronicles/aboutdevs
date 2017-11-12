@@ -206,7 +206,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: geo_location_city; Type: TABLE; Schema: public; Owner: indiejobs
+-- Name: geo_location_city; Type: TABLE; Schema: public; Owner: aboutdevs
 --
 
 CREATE TABLE geo_location_city (
@@ -216,10 +216,10 @@ CREATE TABLE geo_location_city (
 );
 
 
-ALTER TABLE geo_location_city OWNER TO indiejobs;
+ALTER TABLE geo_location_city OWNER TO aboutdevs;
 
 --
--- Name: geo_administrative_area_level_2_id_seq; Type: SEQUENCE; Schema: public; Owner: indiejobs
+-- Name: geo_administrative_area_level_2_id_seq; Type: SEQUENCE; Schema: public; Owner: aboutdevs
 --
 
 CREATE SEQUENCE geo_administrative_area_level_2_id_seq
@@ -230,17 +230,17 @@ CREATE SEQUENCE geo_administrative_area_level_2_id_seq
     CACHE 1;
 
 
-ALTER TABLE geo_administrative_area_level_2_id_seq OWNER TO indiejobs;
+ALTER TABLE geo_administrative_area_level_2_id_seq OWNER TO aboutdevs;
 
 --
--- Name: geo_administrative_area_level_2_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: indiejobs
+-- Name: geo_administrative_area_level_2_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: aboutdevs
 --
 
 ALTER SEQUENCE geo_administrative_area_level_2_id_seq OWNED BY geo_location_city.id;
 
 
 --
--- Name: geo_location_state; Type: TABLE; Schema: public; Owner: indiejobs
+-- Name: geo_location_state; Type: TABLE; Schema: public; Owner: aboutdevs
 --
 
 CREATE TABLE geo_location_state (
@@ -251,10 +251,10 @@ CREATE TABLE geo_location_state (
 );
 
 
-ALTER TABLE geo_location_state OWNER TO indiejobs;
+ALTER TABLE geo_location_state OWNER TO aboutdevs;
 
 --
--- Name: geo_adminstrative_area_level_1_id_seq; Type: SEQUENCE; Schema: public; Owner: indiejobs
+-- Name: geo_adminstrative_area_level_1_id_seq; Type: SEQUENCE; Schema: public; Owner: aboutdevs
 --
 
 CREATE SEQUENCE geo_adminstrative_area_level_1_id_seq
@@ -265,17 +265,17 @@ CREATE SEQUENCE geo_adminstrative_area_level_1_id_seq
     CACHE 1;
 
 
-ALTER TABLE geo_adminstrative_area_level_1_id_seq OWNER TO indiejobs;
+ALTER TABLE geo_adminstrative_area_level_1_id_seq OWNER TO aboutdevs;
 
 --
--- Name: geo_adminstrative_area_level_1_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: indiejobs
+-- Name: geo_adminstrative_area_level_1_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: aboutdevs
 --
 
 ALTER SEQUENCE geo_adminstrative_area_level_1_id_seq OWNED BY geo_location_state.id;
 
 
 --
--- Name: geo_location; Type: TABLE; Schema: public; Owner: indiejobs
+-- Name: geo_location; Type: TABLE; Schema: public; Owner: aboutdevs
 --
 
 CREATE TABLE geo_location (
@@ -290,10 +290,10 @@ CREATE TABLE geo_location (
 );
 
 
-ALTER TABLE geo_location OWNER TO indiejobs;
+ALTER TABLE geo_location OWNER TO aboutdevs;
 
 --
--- Name: geo_location_cache; Type: TABLE; Schema: public; Owner: indiejobs
+-- Name: geo_location_cache; Type: TABLE; Schema: public; Owner: aboutdevs
 --
 
 CREATE TABLE geo_location_cache (
@@ -303,10 +303,10 @@ CREATE TABLE geo_location_cache (
 );
 
 
-ALTER TABLE geo_location_cache OWNER TO indiejobs;
+ALTER TABLE geo_location_cache OWNER TO aboutdevs;
 
 --
--- Name: geo_location_country; Type: TABLE; Schema: public; Owner: indiejobs
+-- Name: geo_location_country; Type: TABLE; Schema: public; Owner: aboutdevs
 --
 
 CREATE TABLE geo_location_country (
@@ -316,10 +316,10 @@ CREATE TABLE geo_location_country (
 );
 
 
-ALTER TABLE geo_location_country OWNER TO indiejobs;
+ALTER TABLE geo_location_country OWNER TO aboutdevs;
 
 --
--- Name: geo_location_country_id_seq; Type: SEQUENCE; Schema: public; Owner: indiejobs
+-- Name: geo_location_country_id_seq; Type: SEQUENCE; Schema: public; Owner: aboutdevs
 --
 
 CREATE SEQUENCE geo_location_country_id_seq
@@ -330,17 +330,17 @@ CREATE SEQUENCE geo_location_country_id_seq
     CACHE 1;
 
 
-ALTER TABLE geo_location_country_id_seq OWNER TO indiejobs;
+ALTER TABLE geo_location_country_id_seq OWNER TO aboutdevs;
 
 --
--- Name: geo_location_country_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: indiejobs
+-- Name: geo_location_country_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: aboutdevs
 --
 
 ALTER SEQUENCE geo_location_country_id_seq OWNED BY geo_location_country.id;
 
 
 --
--- Name: geo_location_id_seq; Type: SEQUENCE; Schema: public; Owner: indiejobs
+-- Name: geo_location_id_seq; Type: SEQUENCE; Schema: public; Owner: aboutdevs
 --
 
 CREATE SEQUENCE geo_location_id_seq
@@ -351,17 +351,17 @@ CREATE SEQUENCE geo_location_id_seq
     CACHE 1;
 
 
-ALTER TABLE geo_location_id_seq OWNER TO indiejobs;
+ALTER TABLE geo_location_id_seq OWNER TO aboutdevs;
 
 --
--- Name: geo_location_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: indiejobs
+-- Name: geo_location_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: aboutdevs
 --
 
 ALTER SEQUENCE geo_location_id_seq OWNED BY geo_location.id;
 
 
 --
--- Name: location_cache_id_seq; Type: SEQUENCE; Schema: public; Owner: indiejobs
+-- Name: location_cache_id_seq; Type: SEQUENCE; Schema: public; Owner: aboutdevs
 --
 
 CREATE SEQUENCE location_cache_id_seq
@@ -372,17 +372,17 @@ CREATE SEQUENCE location_cache_id_seq
     CACHE 1;
 
 
-ALTER TABLE location_cache_id_seq OWNER TO indiejobs;
+ALTER TABLE location_cache_id_seq OWNER TO aboutdevs;
 
 --
--- Name: location_cache_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: indiejobs
+-- Name: location_cache_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: aboutdevs
 --
 
 ALTER SEQUENCE location_cache_id_seq OWNED BY geo_location_cache.id;
 
 
 --
--- Name: location_cache_search_seq; Type: SEQUENCE; Schema: public; Owner: indiejobs
+-- Name: location_cache_search_seq; Type: SEQUENCE; Schema: public; Owner: aboutdevs
 --
 
 CREATE SEQUENCE location_cache_search_seq
@@ -393,10 +393,10 @@ CREATE SEQUENCE location_cache_search_seq
     CACHE 1;
 
 
-ALTER TABLE location_cache_search_seq OWNER TO indiejobs;
+ALTER TABLE location_cache_search_seq OWNER TO aboutdevs;
 
 --
--- Name: location_cache_search_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: indiejobs
+-- Name: location_cache_search_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: aboutdevs
 --
 
 ALTER SEQUENCE location_cache_search_seq OWNED BY geo_location_cache.search;
@@ -461,7 +461,7 @@ ALTER SEQUENCE notification_id_seq OWNED BY notification.id;
 
 
 --
--- Name: profession; Type: TABLE; Schema: public; Owner: indiejobs
+-- Name: profession; Type: TABLE; Schema: public; Owner: aboutdevs
 --
 
 CREATE TABLE profession (
@@ -473,10 +473,10 @@ CREATE TABLE profession (
 );
 
 
-ALTER TABLE profession OWNER TO indiejobs;
+ALTER TABLE profession OWNER TO aboutdevs;
 
 --
--- Name: profession_id_seq; Type: SEQUENCE; Schema: public; Owner: indiejobs
+-- Name: profession_id_seq; Type: SEQUENCE; Schema: public; Owner: aboutdevs
 --
 
 CREATE SEQUENCE profession_id_seq
@@ -487,10 +487,10 @@ CREATE SEQUENCE profession_id_seq
     CACHE 1;
 
 
-ALTER TABLE profession_id_seq OWNER TO indiejobs;
+ALTER TABLE profession_id_seq OWNER TO aboutdevs;
 
 --
--- Name: profession_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: indiejobs
+-- Name: profession_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: aboutdevs
 --
 
 ALTER SEQUENCE profession_id_seq OWNED BY profession.id;
@@ -546,7 +546,7 @@ COMMENT ON COLUMN "user".oauth_profiles IS 'A JSON containing information return
 
 
 --
--- Name: user_connection; Type: TABLE; Schema: public; Owner: indiejobs
+-- Name: user_connection; Type: TABLE; Schema: public; Owner: aboutdevs
 --
 
 CREATE TABLE user_connection (
@@ -558,10 +558,10 @@ CREATE TABLE user_connection (
 );
 
 
-ALTER TABLE user_connection OWNER TO indiejobs;
+ALTER TABLE user_connection OWNER TO aboutdevs;
 
 --
--- Name: user_connection_id_seq; Type: SEQUENCE; Schema: public; Owner: indiejobs
+-- Name: user_connection_id_seq; Type: SEQUENCE; Schema: public; Owner: aboutdevs
 --
 
 CREATE SEQUENCE user_connection_id_seq
@@ -572,17 +572,17 @@ CREATE SEQUENCE user_connection_id_seq
     CACHE 1;
 
 
-ALTER TABLE user_connection_id_seq OWNER TO indiejobs;
+ALTER TABLE user_connection_id_seq OWNER TO aboutdevs;
 
 --
--- Name: user_connection_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: indiejobs
+-- Name: user_connection_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: aboutdevs
 --
 
 ALTER SEQUENCE user_connection_id_seq OWNED BY user_connection.id;
 
 
 --
--- Name: user_recommendation; Type: TABLE; Schema: public; Owner: indiejobs
+-- Name: user_recommendation; Type: TABLE; Schema: public; Owner: aboutdevs
 --
 
 CREATE TABLE user_recommendation (
@@ -593,10 +593,10 @@ CREATE TABLE user_recommendation (
 );
 
 
-ALTER TABLE user_recommendation OWNER TO indiejobs;
+ALTER TABLE user_recommendation OWNER TO aboutdevs;
 
 --
--- Name: user_recommendation_id_seq; Type: SEQUENCE; Schema: public; Owner: indiejobs
+-- Name: user_recommendation_id_seq; Type: SEQUENCE; Schema: public; Owner: aboutdevs
 --
 
 CREATE SEQUENCE user_recommendation_id_seq
@@ -607,17 +607,17 @@ CREATE SEQUENCE user_recommendation_id_seq
     CACHE 1;
 
 
-ALTER TABLE user_recommendation_id_seq OWNER TO indiejobs;
+ALTER TABLE user_recommendation_id_seq OWNER TO aboutdevs;
 
 --
--- Name: user_recommendation_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: indiejobs
+-- Name: user_recommendation_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: aboutdevs
 --
 
 ALTER SEQUENCE user_recommendation_id_seq OWNED BY user_recommendation.id;
 
 
 --
--- Name: user_service; Type: TABLE; Schema: public; Owner: indiejobs
+-- Name: user_service; Type: TABLE; Schema: public; Owner: aboutdevs
 --
 
 CREATE TABLE user_service (
@@ -629,10 +629,10 @@ CREATE TABLE user_service (
 );
 
 
-ALTER TABLE user_service OWNER TO indiejobs;
+ALTER TABLE user_service OWNER TO aboutdevs;
 
 --
--- Name: user_service_id_seq; Type: SEQUENCE; Schema: public; Owner: indiejobs
+-- Name: user_service_id_seq; Type: SEQUENCE; Schema: public; Owner: aboutdevs
 --
 
 CREATE SEQUENCE user_service_id_seq
@@ -643,52 +643,52 @@ CREATE SEQUENCE user_service_id_seq
     CACHE 1;
 
 
-ALTER TABLE user_service_id_seq OWNER TO indiejobs;
+ALTER TABLE user_service_id_seq OWNER TO aboutdevs;
 
 --
--- Name: user_service_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: indiejobs
+-- Name: user_service_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: aboutdevs
 --
 
 ALTER SEQUENCE user_service_id_seq OWNED BY user_service.id;
 
 
 --
--- Name: geo_location id; Type: DEFAULT; Schema: public; Owner: indiejobs
+-- Name: geo_location id; Type: DEFAULT; Schema: public; Owner: aboutdevs
 --
 
 ALTER TABLE ONLY geo_location ALTER COLUMN id SET DEFAULT nextval('geo_location_id_seq'::regclass);
 
 
 --
--- Name: geo_location_cache id; Type: DEFAULT; Schema: public; Owner: indiejobs
+-- Name: geo_location_cache id; Type: DEFAULT; Schema: public; Owner: aboutdevs
 --
 
 ALTER TABLE ONLY geo_location_cache ALTER COLUMN id SET DEFAULT nextval('location_cache_id_seq'::regclass);
 
 
 --
--- Name: geo_location_cache search; Type: DEFAULT; Schema: public; Owner: indiejobs
+-- Name: geo_location_cache search; Type: DEFAULT; Schema: public; Owner: aboutdevs
 --
 
 ALTER TABLE ONLY geo_location_cache ALTER COLUMN search SET DEFAULT nextval('location_cache_search_seq'::regclass);
 
 
 --
--- Name: geo_location_city id; Type: DEFAULT; Schema: public; Owner: indiejobs
+-- Name: geo_location_city id; Type: DEFAULT; Schema: public; Owner: aboutdevs
 --
 
 ALTER TABLE ONLY geo_location_city ALTER COLUMN id SET DEFAULT nextval('geo_administrative_area_level_2_id_seq'::regclass);
 
 
 --
--- Name: geo_location_country id; Type: DEFAULT; Schema: public; Owner: indiejobs
+-- Name: geo_location_country id; Type: DEFAULT; Schema: public; Owner: aboutdevs
 --
 
 ALTER TABLE ONLY geo_location_country ALTER COLUMN id SET DEFAULT nextval('geo_location_country_id_seq'::regclass);
 
 
 --
--- Name: geo_location_state id; Type: DEFAULT; Schema: public; Owner: indiejobs
+-- Name: geo_location_state id; Type: DEFAULT; Schema: public; Owner: aboutdevs
 --
 
 ALTER TABLE ONLY geo_location_state ALTER COLUMN id SET DEFAULT nextval('geo_adminstrative_area_level_1_id_seq'::regclass);
@@ -702,35 +702,35 @@ ALTER TABLE ONLY notification ALTER COLUMN id SET DEFAULT nextval('notification_
 
 
 --
--- Name: profession id; Type: DEFAULT; Schema: public; Owner: indiejobs
+-- Name: profession id; Type: DEFAULT; Schema: public; Owner: aboutdevs
 --
 
 ALTER TABLE ONLY profession ALTER COLUMN id SET DEFAULT nextval('profession_id_seq'::regclass);
 
 
 --
--- Name: user_connection id; Type: DEFAULT; Schema: public; Owner: indiejobs
+-- Name: user_connection id; Type: DEFAULT; Schema: public; Owner: aboutdevs
 --
 
 ALTER TABLE ONLY user_connection ALTER COLUMN id SET DEFAULT nextval('user_connection_id_seq'::regclass);
 
 
 --
--- Name: user_recommendation id; Type: DEFAULT; Schema: public; Owner: indiejobs
+-- Name: user_recommendation id; Type: DEFAULT; Schema: public; Owner: aboutdevs
 --
 
 ALTER TABLE ONLY user_recommendation ALTER COLUMN id SET DEFAULT nextval('user_recommendation_id_seq'::regclass);
 
 
 --
--- Name: user_service id; Type: DEFAULT; Schema: public; Owner: indiejobs
+-- Name: user_service id; Type: DEFAULT; Schema: public; Owner: aboutdevs
 --
 
 ALTER TABLE ONLY user_service ALTER COLUMN id SET DEFAULT nextval('user_service_id_seq'::regclass);
 
 
 --
--- Name: geo_location_city geo_location_city_pkey; Type: CONSTRAINT; Schema: public; Owner: indiejobs
+-- Name: geo_location_city geo_location_city_pkey; Type: CONSTRAINT; Schema: public; Owner: aboutdevs
 --
 
 ALTER TABLE ONLY geo_location_city
@@ -738,7 +738,7 @@ ALTER TABLE ONLY geo_location_city
 
 
 --
--- Name: geo_location_country geo_location_country_pkey; Type: CONSTRAINT; Schema: public; Owner: indiejobs
+-- Name: geo_location_country geo_location_country_pkey; Type: CONSTRAINT; Schema: public; Owner: aboutdevs
 --
 
 ALTER TABLE ONLY geo_location_country
@@ -746,7 +746,7 @@ ALTER TABLE ONLY geo_location_country
 
 
 --
--- Name: geo_location geo_location_pkey; Type: CONSTRAINT; Schema: public; Owner: indiejobs
+-- Name: geo_location geo_location_pkey; Type: CONSTRAINT; Schema: public; Owner: aboutdevs
 --
 
 ALTER TABLE ONLY geo_location
@@ -754,7 +754,7 @@ ALTER TABLE ONLY geo_location
 
 
 --
--- Name: geo_location_state geo_location_state_id_pk; Type: CONSTRAINT; Schema: public; Owner: indiejobs
+-- Name: geo_location_state geo_location_state_id_pk; Type: CONSTRAINT; Schema: public; Owner: aboutdevs
 --
 
 ALTER TABLE ONLY geo_location_state
@@ -762,7 +762,7 @@ ALTER TABLE ONLY geo_location_state
 
 
 --
--- Name: geo_location_cache location_cache_pkey; Type: CONSTRAINT; Schema: public; Owner: indiejobs
+-- Name: geo_location_cache location_cache_pkey; Type: CONSTRAINT; Schema: public; Owner: aboutdevs
 --
 
 ALTER TABLE ONLY geo_location_cache
@@ -778,7 +778,7 @@ ALTER TABLE ONLY notification
 
 
 --
--- Name: profession profession_id_pk; Type: CONSTRAINT; Schema: public; Owner: indiejobs
+-- Name: profession profession_id_pk; Type: CONSTRAINT; Schema: public; Owner: aboutdevs
 --
 
 ALTER TABLE ONLY profession
@@ -786,7 +786,7 @@ ALTER TABLE ONLY profession
 
 
 --
--- Name: user_connection user_connection_pkey; Type: CONSTRAINT; Schema: public; Owner: indiejobs
+-- Name: user_connection user_connection_pkey; Type: CONSTRAINT; Schema: public; Owner: aboutdevs
 --
 
 ALTER TABLE ONLY user_connection
@@ -802,7 +802,7 @@ ALTER TABLE ONLY "user"
 
 
 --
--- Name: user_recommendation user_recommendation_pkey; Type: CONSTRAINT; Schema: public; Owner: indiejobs
+-- Name: user_recommendation user_recommendation_pkey; Type: CONSTRAINT; Schema: public; Owner: aboutdevs
 --
 
 ALTER TABLE ONLY user_recommendation
@@ -810,7 +810,7 @@ ALTER TABLE ONLY user_recommendation
 
 
 --
--- Name: user_service user_service_pkey; Type: CONSTRAINT; Schema: public; Owner: indiejobs
+-- Name: user_service user_service_pkey; Type: CONSTRAINT; Schema: public; Owner: aboutdevs
 --
 
 ALTER TABLE ONLY user_service
@@ -818,133 +818,133 @@ ALTER TABLE ONLY user_service
 
 
 --
--- Name: geo_location_city_id_uindex; Type: INDEX; Schema: public; Owner: indiejobs
+-- Name: geo_location_city_id_uindex; Type: INDEX; Schema: public; Owner: aboutdevs
 --
 
 CREATE UNIQUE INDEX geo_location_city_id_uindex ON geo_location_city USING btree (id);
 
 
 --
--- Name: geo_location_country_id_uindex; Type: INDEX; Schema: public; Owner: indiejobs
+-- Name: geo_location_country_id_uindex; Type: INDEX; Schema: public; Owner: aboutdevs
 --
 
 CREATE UNIQUE INDEX geo_location_country_id_uindex ON geo_location_country USING btree (id);
 
 
 --
--- Name: geo_location_country_name_short_uindex; Type: INDEX; Schema: public; Owner: indiejobs
+-- Name: geo_location_country_name_short_uindex; Type: INDEX; Schema: public; Owner: aboutdevs
 --
 
 CREATE UNIQUE INDEX geo_location_country_name_short_uindex ON geo_location_country USING btree (short_name);
 
 
 --
--- Name: geo_location_country_name_uindex; Type: INDEX; Schema: public; Owner: indiejobs
+-- Name: geo_location_country_name_uindex; Type: INDEX; Schema: public; Owner: aboutdevs
 --
 
 CREATE UNIQUE INDEX geo_location_country_name_uindex ON geo_location_country USING btree (long_name);
 
 
 --
--- Name: geo_location_formatted_address_uindex; Type: INDEX; Schema: public; Owner: indiejobs
+-- Name: geo_location_formatted_address_uindex; Type: INDEX; Schema: public; Owner: aboutdevs
 --
 
 CREATE UNIQUE INDEX geo_location_formatted_address_uindex ON geo_location USING btree (formatted_address);
 
 
 --
--- Name: geo_location_gpx; Type: INDEX; Schema: public; Owner: indiejobs
+-- Name: geo_location_gpx; Type: INDEX; Schema: public; Owner: aboutdevs
 --
 
 CREATE INDEX geo_location_gpx ON geo_location USING gist (geography(geometry));
 
 
 --
--- Name: geo_location_id_uindex; Type: INDEX; Schema: public; Owner: indiejobs
+-- Name: geo_location_id_uindex; Type: INDEX; Schema: public; Owner: aboutdevs
 --
 
 CREATE UNIQUE INDEX geo_location_id_uindex ON geo_location USING btree (id);
 
 
 --
--- Name: geo_location_spx; Type: INDEX; Schema: public; Owner: indiejobs
+-- Name: geo_location_spx; Type: INDEX; Schema: public; Owner: aboutdevs
 --
 
 CREATE INDEX geo_location_spx ON geo_location USING gist (geometry);
 
 
 --
--- Name: geo_location_state_id_uindex; Type: INDEX; Schema: public; Owner: indiejobs
+-- Name: geo_location_state_id_uindex; Type: INDEX; Schema: public; Owner: aboutdevs
 --
 
 CREATE UNIQUE INDEX geo_location_state_id_uindex ON geo_location_state USING btree (id);
 
 
 --
--- Name: geo_location_state_long_name_uindex; Type: INDEX; Schema: public; Owner: indiejobs
+-- Name: geo_location_state_long_name_uindex; Type: INDEX; Schema: public; Owner: aboutdevs
 --
 
 CREATE UNIQUE INDEX geo_location_state_long_name_uindex ON geo_location_state USING btree (long_name);
 
 
 --
--- Name: geo_location_state_short_name_uindex; Type: INDEX; Schema: public; Owner: indiejobs
+-- Name: geo_location_state_short_name_uindex; Type: INDEX; Schema: public; Owner: aboutdevs
 --
 
 CREATE UNIQUE INDEX geo_location_state_short_name_uindex ON geo_location_state USING btree (short_name);
 
 
 --
--- Name: location_cache_id_uindex; Type: INDEX; Schema: public; Owner: indiejobs
+-- Name: location_cache_id_uindex; Type: INDEX; Schema: public; Owner: aboutdevs
 --
 
 CREATE UNIQUE INDEX location_cache_id_uindex ON geo_location_cache USING btree (id);
 
 
 --
--- Name: location_cache_search_uindex; Type: INDEX; Schema: public; Owner: indiejobs
+-- Name: location_cache_search_uindex; Type: INDEX; Schema: public; Owner: aboutdevs
 --
 
 CREATE UNIQUE INDEX location_cache_search_uindex ON geo_location_cache USING btree (search);
 
 
 --
--- Name: name_canonical_idx; Type: INDEX; Schema: public; Owner: indiejobs
+-- Name: name_canonical_idx; Type: INDEX; Schema: public; Owner: aboutdevs
 --
 
 CREATE INDEX name_canonical_idx ON profession USING gin (to_tsvector('ptu'::regconfig, (name_canonical)::text));
 
 
 --
--- Name: profession_id_uindex; Type: INDEX; Schema: public; Owner: indiejobs
+-- Name: profession_id_uindex; Type: INDEX; Schema: public; Owner: aboutdevs
 --
 
 CREATE UNIQUE INDEX profession_id_uindex ON profession USING btree (id);
 
 
 --
--- Name: profession_name_canonical_normalized_uindex; Type: INDEX; Schema: public; Owner: indiejobs
+-- Name: profession_name_canonical_normalized_uindex; Type: INDEX; Schema: public; Owner: aboutdevs
 --
 
 CREATE UNIQUE INDEX profession_name_canonical_normalized_uindex ON profession USING btree (name_canonical_normalized);
 
 
 --
--- Name: profession_name_canonical_uindex; Type: INDEX; Schema: public; Owner: indiejobs
+-- Name: profession_name_canonical_uindex; Type: INDEX; Schema: public; Owner: aboutdevs
 --
 
 CREATE UNIQUE INDEX profession_name_canonical_uindex ON profession USING btree (name_canonical);
 
 
 --
--- Name: profession_name_feminine_normalized_uindex; Type: INDEX; Schema: public; Owner: indiejobs
+-- Name: profession_name_feminine_normalized_uindex; Type: INDEX; Schema: public; Owner: aboutdevs
 --
 
 CREATE UNIQUE INDEX profession_name_feminine_normalized_uindex ON profession USING btree (name_feminine_normalized);
 
 
 --
--- Name: profession_name_feminine_uindex; Type: INDEX; Schema: public; Owner: indiejobs
+-- Name: profession_name_feminine_uindex; Type: INDEX; Schema: public; Owner: aboutdevs
 --
 
 CREATE UNIQUE INDEX profession_name_feminine_uindex ON profession USING btree (name_feminine);
@@ -958,7 +958,7 @@ CREATE INDEX search_canonical_idx ON "user" USING gin (to_tsvector('ptu'::regcon
 
 
 --
--- Name: user_connection_id_uindex; Type: INDEX; Schema: public; Owner: indiejobs
+-- Name: user_connection_id_uindex; Type: INDEX; Schema: public; Owner: aboutdevs
 --
 
 CREATE UNIQUE INDEX user_connection_id_uindex ON user_connection USING btree (id);
@@ -979,14 +979,14 @@ CREATE UNIQUE INDEX user_name_uindex ON "user" USING btree (name);
 
 
 --
--- Name: user_service_id_uindex; Type: INDEX; Schema: public; Owner: indiejobs
+-- Name: user_service_id_uindex; Type: INDEX; Schema: public; Owner: aboutdevs
 --
 
 CREATE UNIQUE INDEX user_service_id_uindex ON user_service USING btree (id);
 
 
 --
--- Name: geo_location_state geo_location_state_geo_location_country_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: indiejobs
+-- Name: geo_location_state geo_location_state_geo_location_country_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: aboutdevs
 --
 
 ALTER TABLE ONLY geo_location_state
@@ -1002,7 +1002,7 @@ ALTER TABLE ONLY notification
 
 
 --
--- Name: user_connection user_connection_user_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: indiejobs
+-- Name: user_connection user_connection_user_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: aboutdevs
 --
 
 ALTER TABLE ONLY user_connection
@@ -1010,7 +1010,7 @@ ALTER TABLE ONLY user_connection
 
 
 --
--- Name: user_connection user_connection_user_professional_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: indiejobs
+-- Name: user_connection user_connection_user_professional_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: aboutdevs
 --
 
 ALTER TABLE ONLY user_connection
@@ -1034,7 +1034,7 @@ ALTER TABLE ONLY "user"
 
 
 --
--- Name: user_service user_service_user_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: indiejobs
+-- Name: user_service user_service_user_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: aboutdevs
 --
 
 ALTER TABLE ONLY user_service

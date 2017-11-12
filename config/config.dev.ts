@@ -1,7 +1,7 @@
 // Postgres settings
-const POSTGRES_USER = 'indiejobs';
-const POSTGRES_PASSWORD = 'indiejobs';
-const POSTGRES_DATABASE = 'indiejobs';
+const POSTGRES_USER = 'aboutdevs';
+const POSTGRES_PASSWORD = 'aboutdevs';
+const POSTGRES_DATABASE = 'aboutdevs';
 const POSTGRES_HOST = 'localhost';
 const POSTGRES_PORT = 5432;
 
