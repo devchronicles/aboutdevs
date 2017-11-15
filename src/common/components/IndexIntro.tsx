@@ -25,10 +25,9 @@ export class IndexIntro extends React.Component<IndexIntroProps, IndexIntroState
                             For software developers
                         </h1>
                         <ul>
-                            <li>Create a free personal website</li>
-                            <li>Link all your relevant social media</li>
-                            <li>Showcase your skills and portfolio</li>
-                            <li>Optionally, get searchable by companies and recruiters</li>
+                            <li>Create a free personal website.</li>
+                            <li>Link all your relevant social media.</li>
+                            <li>Showcase your skills and portfolio.</li>
                         </ul>
                     </div>
                     <div className="index-intro-content-box">
@@ -36,8 +35,8 @@ export class IndexIntro extends React.Component<IndexIntroProps, IndexIntroState
                             For companies and recruiters
                         </h1>
                         <ul>
-                            <li>Search for talents with the skill set you need, anywhere in the world</li>
-                            <li>Keep track of your favorite developers</li>
+                            <li>Search for talents with the exact skill set you need, anywhere in the world.</li>
+                            <li>Keep track of your favorite developers.</li>
                         </ul>
                     </div>
                 </div>

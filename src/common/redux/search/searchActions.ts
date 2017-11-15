@@ -9,7 +9,6 @@ export const SEARCH_LOAD_STARTED = 'SEARCH_LOAD_STARTED';
 export const SEARCH_LOAD_SUCCESS = 'SEARCH_LOAD_SUCCESS';
 export const SEARCH_LOAD_ERROR = 'SEARCH_LOAD_ERROR';
 
-
 /**
  * Loads the criteria of the search
  * @param {string} search

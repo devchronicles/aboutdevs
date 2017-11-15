@@ -2,7 +2,7 @@ import * as stringHelper from './stringHelper';
 import * as commonTypes from '../typings/commonTypes';
 
 export function getSearchDisplayFromUrlParameter(parameter: string): commonTypes.SearchDisplay {
-    switch(parameter) {
+    switch (parameter) {
         case 'melhores-2km':
             return commonTypes.SearchDisplay.BEST_PROFESSIONAIS_IN_2_KM;
         case 'melhores-5km':

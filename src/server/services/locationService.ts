@@ -21,7 +21,7 @@ async function saveLocationToCache(searchTerm: string, location: serverTypes.Geo
     if (!locations) {
         const insertedLocation = (await db.geo_location_cache.insert({
             search: searchTerm,
-            cache: location
+            cache: location,
         })) as serverTypes.GeoLocationCache;
         return insertedLocation ? insertedLocation.cache : undefined;
     }
