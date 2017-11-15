@@ -168,7 +168,7 @@ describe('userService', () => {
             };
 
             await userHelper.saveProfile(db, user.id, profile);
-            assert.strictEqual(await db.user_service.count({user_id: user.id}), "2");
+            assert.strictEqual(await db.user_service.count({user_id: user.id}), '2');
         });
     });
 });

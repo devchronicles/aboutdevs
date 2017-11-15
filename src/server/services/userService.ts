@@ -185,7 +185,7 @@ async function getServicesForUser(db: serverTypes.TazzoDatabase, userId: number)
             index: 0,
         }];
     }
-    return services.map(s => ({
+    return services.map((s) => ({
         id: s.id,
         service: s.service,
         index: s.index,
@@ -314,7 +314,7 @@ export async function saveProfile(db: serverTypes.TazzoDatabase, userId: number,
                         index,
                     };
                 })
-                .filter(s => !!s.service_canonical)
+                .filter((s) => !!s.service_canonical)
             : [];
 
         const persistedUserServices = await db.user_service.find({user_id: userId});
@@ -341,14 +341,14 @@ export async function saveProfile(db: serverTypes.TazzoDatabase, userId: number,
 
         // remove services that were removed
         const removedServices = persistedUserServices
-            .filter(dbService => profileServices.findIndex(profileService => profileService.id === dbService.id) === -1);
+            .filter((dbService) => profileServices.findIndex((profileService) => profileService.id === dbService.id) === -1);
 
         for (const removedService of removedServices) {
             await db.user_service.destroy({id: removedService.id});
         }
 
         // search
-        const concatenatedServices = profileServices.map(p => p.service_canonical).reduce((accumulated, current) => `${accumulated} ${current}`, '');
+        const concatenatedServices = profileServices.map((p) => p.service_canonical).reduce((accumulated, current) => `${accumulated} ${current}`, '');
         const professionForSearch = stringHelper.normalizeForSearch(profile.profession);
 
         user.search_canonical = `${professionForSearch} ${concatenatedServices}`;
@@ -399,7 +399,7 @@ export async function searchProfessionals(db: serverTypes.TazzoDatabase, search:
             profession: userProfession
                 ? (intermediateResult.gender === serverTypes.UserGender.MALE ? userProfession.name_canonical : userProfession.name_feminine)
                 : intermediateResult.profession_other,
-            services: userServices.map(us => ({
+            services: userServices.map((us) => ({
                 id: us.id,
                 service: us.service,
                 index: us.index,

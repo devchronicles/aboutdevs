@@ -1,5 +1,5 @@
 
-declare module "react-activity" {
+declare module 'react-activity' {
     import * as React from 'react';
 
     interface IActivityProps {

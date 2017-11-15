@@ -3,67 +3,67 @@ export default {
         {
             address_components: [
                 {
-                    long_name: "300",
-                    short_name: "300",
+                    long_name: '300',
+                    short_name: '300',
                     types: [
-                        "street_number",
+                        'street_number',
                     ],
                 },
                 {
-                    long_name: "Rua Morais e Castro",
-                    short_name: "R. Morais e Castro",
+                    long_name: 'Rua Morais e Castro',
+                    short_name: 'R. Morais e Castro',
                     types: [
-                        "route",
+                        'route',
                     ],
                 },
                 {
-                    long_name: "Passos",
-                    short_name: "Passos",
+                    long_name: 'Passos',
+                    short_name: 'Passos',
                     types: [
-                        "political",
-                        "sublocality",
-                        "sublocality_level_1",
+                        'political',
+                        'sublocality',
+                        'sublocality_level_1',
                     ],
                 },
                 {
-                    long_name: "Juiz de Fora",
-                    short_name: "Juiz de Fora",
+                    long_name: 'Juiz de Fora',
+                    short_name: 'Juiz de Fora',
                     types: [
-                        "administrative_area_level_2",
-                        "political",
+                        'administrative_area_level_2',
+                        'political',
                     ],
                 },
                 {
-                    long_name: "Minas Gerais",
-                    short_name: "MG",
+                    long_name: 'Minas Gerais',
+                    short_name: 'MG',
                     types: [
-                        "administrative_area_level_1",
-                        "political",
+                        'administrative_area_level_1',
+                        'political',
                     ],
                 },
                 {
-                    long_name: "Brazil",
-                    short_name: "BR",
+                    long_name: 'Brazil',
+                    short_name: 'BR',
                     types: [
-                        "country",
-                        "political",
+                        'country',
+                        'political',
                     ],
                 },
                 {
-                    long_name: "36025-160",
-                    short_name: "36025-160",
+                    long_name: '36025-160',
+                    short_name: '36025-160',
                     types: [
-                        "postal_code",
+                        'postal_code',
                     ],
                 },
             ],
-            formatted_address: "R. Morais e Castro, 300 - Passos, Juiz de Fora - MG, 36025-160, Brazil",
+            formatted_address: 'R. Morais e Castro, 300 - Passos, Juiz de Fora - MG, 36025-160, Brazil',
             geometry: {
                 location: {
                     lat: -21.775896,
                     lng: -43.348194,
                 },
-                location_type: "APPROXIMATE",
+                location_type: 'APPROXIMATE',
                 viewport: {
                     northeast: {
                         lat: -21.774548,
@@ -75,14 +75,14 @@ export default {
                     },
                 },
             },
-            place_id: "ChIJ27Kka0KbmAAR-UvWMGrqLmo",
+            place_id: 'ChIJ27Kka0KbmAAR-UvWMGrqLmo',
             types: [
-                "establishment",
-                "food",
-                "point_of_interest",
-                "restaurant",
+                'establishment',
+                'food',
+                'point_of_interest',
+                'restaurant',
             ],
         },
     ],
-    status: "OK",
+    status: 'OK',
 };
