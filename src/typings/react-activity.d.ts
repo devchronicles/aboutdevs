@@ -2,6 +2,7 @@
 declare module 'react-activity' {
     import * as React from 'react';
 
+    /* tslint:disable */
     interface IActivityProps {
         size: number;
     }
