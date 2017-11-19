@@ -30,9 +30,9 @@ export const searchCriteriaLoad = (search: string, location: string) => {
             : null;
 
         if (firstMatchingLocation) {
-            dispatch({type: SEARCH_CRITERIA_LOAD_SUCCESS, payload: { search, location: firstMatchingLocation }});
+            dispatch({type: SEARCH_CRITERIA_LOAD_SUCCESS, payload: {search, location: firstMatchingLocation}});
         } else {
-            dispatch({type: SEARCH_CRITERIA_LOAD_ERROR, payload: { search, location }});
+            dispatch({type: SEARCH_CRITERIA_LOAD_ERROR, payload: {search, location}});
         }
     };
 };

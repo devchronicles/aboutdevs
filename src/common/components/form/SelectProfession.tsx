@@ -1,15 +1,14 @@
 import * as React from 'react';
-import { AsyncCreatable } from 'react-select';
 import * as ReactSelect from 'react-select';
 import * as ReduxForm from 'redux-form';
 import * as stringHelper from '../../../common/helpers/stringHelper';
 import { searchProfessions } from '../../httpClient';
 
-interface ISelectProfessionProps extends ReduxForm.WrappedFieldProps<{}> {
+interface SelectProfessionProps extends ReduxForm.WrappedFieldProps<{}> {
     placeholder: string;
 }
 
-class SelectProfession extends React.Component<ISelectProfessionProps, {}> {
+class SelectProfession extends React.Component<SelectProfessionProps, {}> {
 
     private currentFetchTimeout: any;
 
@@ -24,7 +23,7 @@ class SelectProfession extends React.Component<ISelectProfessionProps, {}> {
                     const options = res.data.map((i: any) => ({ value: i, label: i }));
                     callback(null, { options, complete: true });
                 })
-                .catch(error => callback(error, undefined));
+                .catch((error) => callback(error, undefined));
         }, 800);
     }
 
@@ -47,12 +46,12 @@ class SelectProfession extends React.Component<ISelectProfessionProps, {}> {
         };
 
         return (
-            <AsyncCreatable
+            <ReactSelect.AsyncCreatable
                 value={adjustedValue}
                 onChange={this.handleChange}
                 inputProps={{ autoComplete: 'off', autoCorrect: 'off', spellCheck: 'off' }}
                 loadOptions={this.loadValues}
-                filterOption={(o) => o}
+                filterOption={() => true}
                 labelKey="label"
                 valueKey="value"
                 placeholder=""
@@ -71,4 +70,4 @@ class SelectProfession extends React.Component<ISelectProfessionProps, {}> {
     }
 }
 
-export { SelectProfession }
+export { SelectProfession };

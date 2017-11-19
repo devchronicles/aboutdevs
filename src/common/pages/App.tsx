@@ -1,15 +1,14 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { Switch, Route } from 'react-router';
+import { Switch, Route, RouteComponentProps } from 'react-router';
 import { Header } from '../components/Header';
 import { IndexPage } from './IndexPage';
 import { ProfileEditPage } from './ProfileEditPage';
 import { SearchPage } from './SearchPage';
 import * as commonTypes from '../../common/typings';
-import * as ReactRedux from 'react-redux';
-import * as ReactRouter from 'react-router';
 import * as ReactNotificationSystem from 'react-notification-system';
 import * as notificationActions from '../../common/redux/notifications/notificationsActions';
+import { Dispatch } from 'redux';
 
 interface AppStateProps {
     loggedUser: commonTypes.CurrentUserProfile;
@@ -20,7 +19,7 @@ interface AppDispatchProps {
     dequeueNotification: () => void;
 }
 
-interface AppOwnProps extends ReactRouter.RouteComponentProps<any> {
+interface AppOwnProps extends RouteComponentProps<any> {
 
 }
 
@@ -65,7 +64,7 @@ const mapStateToProps = (state: commonTypes.ReduxState): AppStateProps => ({
     notifications: state.notifications,
 });
 
-const mapDispatchToProps = (dispatch: ReactRedux.Dispatch<commonTypes.ReduxState>): AppDispatchProps => ({
+const mapDispatchToProps = (dispatch: Dispatch<commonTypes.ReduxState>): AppDispatchProps => ({
     dequeueNotification: () => dispatch(notificationActions.dequeueNotification()),
 });
 

@@ -4,11 +4,11 @@ import * as ReactRouter from 'react-router';
 import { ProfileEditForm } from '../components/ProfileEditForm';
 import * as profileEditActions from '../../common/redux/profileEdit/profileEditActions';
 import * as commonTypes from '../../common/typings';
-import * as ReactRedux from 'react-redux';
 import * as ReduxForm from 'redux-form';
 import * as httpClient from '../httpClient';
 import * as ReactNotificationSystem from 'react-notification-system';
 import * as notificationActions from '../../common/redux/notifications/notificationsActions';
+import { Dispatch } from 'redux';
 
 interface ProfileEditPageStateOwnProps extends ReactRouter.RouteComponentProps<any> {
     loggedUser: commonTypes.CurrentUserProfile;
@@ -69,7 +69,7 @@ const mapStateToProps = (state: commonTypes.ReduxState): ProfileEditPageStatePro
     formValues: state.form.profileEdit,
 });
 
-const mapDispatchToProps = (dispatch: ReactRedux.Dispatch<commonTypes.ReduxState>): ProfileEditPageDispatchProps => ({
+const mapDispatchToProps = (dispatch: Dispatch<commonTypes.ReduxState>): ProfileEditPageDispatchProps => ({
     profileEditLoadData: () => dispatch(profileEditActions.profileEditLoadData()),
     enqueueNotification: (notification: ReactNotificationSystem.Notification) => dispatch(notificationActions.enqueueNotification(notification)),
 });
