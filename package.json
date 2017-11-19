@@ -59,7 +59,7 @@
     "@types/react-select": "^1.0.48",
     "@types/redux-form": "^6.6.6",
     "@types/webpack": "^3.8.1",
-    "awesome-typescript-loader": "^3.2.1",
+    "awesome-typescript-loader": "^3.4.0",
     "chai": "^4.0.2",
     "child-process-promise": "^2.2.1",
     "classnames": "^2.2.5",
