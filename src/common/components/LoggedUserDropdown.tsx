@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Dropdown, DropdownDivider, DropdownHeader, DropdownItem} from "./Dropdown";
+import {Dropdown, DropdownDivider, DropdownHeader, DropdownItem} from './Dropdown';
 import * as commonTypes from '../typings/commonTypes';
 
 interface LoggedUserDropdownProps {

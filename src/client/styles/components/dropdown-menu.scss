@@ -1,8 +1,9 @@
 @import '../variables';
 
-.dropdown {
+ul.dropdown {
   position: relative;
   z-index: 1000;
+  display: block !important;
   .dropdown-menu-wrapper {
     display: none;
     margin-top: $gutter-sm;

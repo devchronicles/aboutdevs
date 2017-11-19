@@ -112,10 +112,10 @@ export class Dropdown extends React.Component<DropdownProps, DropdownState> {
         const {button, children, className, size} = this.props;
         const dropdownClass = this.state.open ? 'visible' : '';
 
-        const finalClassName = `dropdown ${className}`;
+        const finalClassName = `dropdown ${className ? className : ''}`;
 
         return (
-            <div className={finalClassName} ref={this.setWrapperRef}>
+            <ul className={finalClassName} ref={this.setWrapperRef}>
                 <button className="dropdown-menu-button" onClick={this.handleOpen}>
                     <span className="dropdown-menu-button-content">
                         {button}
@@ -127,7 +127,7 @@ export class Dropdown extends React.Component<DropdownProps, DropdownState> {
                         {children}
                     </div>
                 </div>
-            </div>
+            </ul>
         );
     }
 }
