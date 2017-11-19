@@ -32,6 +32,7 @@
         "no-var-requires": false,
         "ordered-imports": false,
         "space-before-function-paren": false,
-        "no-empty-interface": false
+        "no-empty-interface": false,
+        "no-implicit-dependencies": [true, "dev"]
     }
 }
