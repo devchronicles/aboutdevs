@@ -51,7 +51,7 @@ class SelectProfession extends React.Component<SelectProfessionProps, {}> {
                 onChange={this.handleChange}
                 inputProps={{ autoComplete: 'off', autoCorrect: 'off', spellCheck: 'off' }}
                 loadOptions={this.loadValues}
-                filterOption={() => true}
+                filterOption={(o) => o}
                 labelKey="label"
                 valueKey="value"
                 placeholder=""
