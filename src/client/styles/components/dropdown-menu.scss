@@ -1,72 +1,69 @@
 @import '../variables';
 
 ul.dropdown {
-  position: relative;
-  z-index: 1000;
-  display: block !important;
-  .dropdown-menu-wrapper {
-    display: none;
-    margin-top: $gutter-sm;
-    box-sizing: border-box;
-    position: absolute;
-    right: 0;
-    background-color: $color-gray-even-lighter;
-    border-radius: $radius-md;
-    box-shadow: $box-shadow;
+    position: relative;
+    z-index: 1000;
+    .dropdown-menu-wrapper {
+        display: none;
+        margin-top: $gutter-sm;
+        box-sizing: border-box;
+        position: absolute;
+        right: 0;
+        background-color: $color-gray-even-lighter;
+        border-radius: $radius-md;
+        box-shadow: $box-shadow;
 
-    &.visible {
-      display: block;
-    }
-
-    &:before {
-      top: -16px;
-      right: 9px;
-      position: absolute;
-      border: 8px solid transparent;
-      border-bottom-color: $color-gray-even-lighter;
-      content: ""
-    }
-
-    &.size-sm {
-      width: 200px;
-    }
-
-    &.size-md {
-      width: 350px;
-    }
-
-    .size-lg {
-      width: 600px;
-    }
-
-    .dropdown-menu {
-      position: relative;
-      padding: $gutter-xs 0;
-
-      div.dropdown-header {
-        padding: $gutter-sm $gutter-md;
-      }
-
-      li.dropdown-item {
-        padding: 0;
-        display: block;
-        a {
-          text-decoration: none;
-          display: block;
-          padding: $gutter-sm $gutter-md;
-          &:hover {
-            text-decoration: none;
-            background-color: $color-gray-light;
-          }
+        &.visible {
+            display: block;
         }
-      }
 
-      div.dropdown-divider {
-        display: block;
-        height: 1px;
-        margin: $gutter-xs 0;
-        background-color: $background-color;
-      }
+        &:before {
+            top: -16px;
+            right: 9px;
+            position: absolute;
+            border: 8px solid transparent;
+            border-bottom-color: $color-gray-even-lighter;
+            content: ""
+        }
+
+        &.size-sm {
+            width: 200px;
+        }
+
+        &.size-md {
+            width: 350px;
+        }
+
+        .size-lg {
+            width: 600px;
+        }
+
+        .dropdown-menu {
+            position: relative;
+            padding: $gutter-xs 0;
+
+            div.dropdown-header {
+                padding: $gutter-sm $gutter-md;
+            }
+
+            li.dropdown-item {
+                padding: 0;
+                a {
+                    text-decoration: none;
+                    padding: $gutter-sm $gutter-md;
+                    &:hover {
+                        text-decoration: none;
+                        background-color: $color-gray-light;
+                    }
+                }
+            }
+
+            div.dropdown-divider {
+                display: block;
+                height: 1px;
+                margin: $gutter-xs 0;
+                background-color: $background-color;
+            }
+        }
     }
-  }
 }

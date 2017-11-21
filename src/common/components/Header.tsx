@@ -20,7 +20,7 @@ const Header: React.SFC<HeaderProps> = ({loggedUser}) => {
                     <Link to="/" className="logo-wrapper">
                         <Logo/>
                     </Link>
-                    <ul>
+                    <ul className="header-content-list">
                         <li>
                             <a href="#">Quanto custa?</a>
                         </li>

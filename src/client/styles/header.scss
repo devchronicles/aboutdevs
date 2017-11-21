@@ -29,13 +29,13 @@
       .logo {
         font-size: 26px;
       }
-      ul {
+      ul.header-content-list {
         display: flex;
         flex-direction: row;
         flex: 1 1 auto;
         align-items: center;
         justify-content: flex-end;
-        li {
+        > li {
           padding-left: $gutter-md;
           display: none;
           justify-content: center;
