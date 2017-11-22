@@ -2,11 +2,10 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
 import configureStore from '../common/redux/store';
-import {ConnectedRouter} from 'react-router-redux';
 import createHistory from 'history/createBrowserHistory';
 import {App} from './pages/App';
 import {LoginPage} from './pages/LoginPage';
-import {Route, Switch} from "react-router";
+import { Route, Router, Switch } from "react-router";
 
 require('../../node_modules/normalize.css/normalize.css');
 require('../../node_modules/font-awesome/css/font-awesome.css');
@@ -22,12 +21,12 @@ if ((module as any).hot) {
 
 ReactDOM.render(
     <Provider store={store}>
-        <ConnectedRouter history={history}>
+        <Router history={history}>
             <Switch>
                 <Route exact={true} path="/login" component={LoginPage}/>
                 <Route path="/" component={App}/>
             </Switch>
-        </ConnectedRouter>
+        </Router>
     </Provider>,
     document.getElementById('app'),
 );
