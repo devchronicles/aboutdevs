@@ -114,7 +114,7 @@ export async function updateFromGoogleProfile(db: serverTypes.TazzoDatabase, exi
  * @param profile
  * @returns {Promise}
  */
-export function findOrCreateFromGoogleProfile(db: serverTypes.TazzoDatabase, profile: googleOAuthTypes.GoogleOAuthProfile): Promise<serverTypes.User> {
+export async function findOrCreateFromGoogleProfile(db: serverTypes.TazzoDatabase, profile: googleOAuthTypes.GoogleOAuthProfile): Promise<serverTypes.User> {
     if (!db) throw Error("'db' should be truthy");
     if (!profile) throw Error("'profile' should be truthy");
 
@@ -124,23 +124,22 @@ export function findOrCreateFromGoogleProfile(db: serverTypes.TazzoDatabase, pro
         throw Error("Google profile is not valid");
     }
 
-    return db.user.findOne({email})
-        .then((user: serverTypes.User) => {
-            if (!user) {
-                return createFromGoogleProfile(db, profile);
-            }
+    const user = await db.user.findOne({email});
 
-            // if the existing user is associated with Google already
-            // (u.oauth_profiles.google.id exists), returns it
-            const existingUserGoogleId = safeRead((u) => u.oauth_profiles.google.id, user, null);
-            if (existingUserGoogleId) {
-                return user;
-            }
+    if (!user) {
+        return createFromGoogleProfile(db, profile);
+    }
 
-            // if not, let's associate the user with the given Google profile
-            updateFromGoogleProfile(db, user, profile);
-            return user;
-        });
+    // if the existing user is associated with Google already
+    // (u.oauth_profiles.google.id exists), returns it
+    const existingUserGoogleId = safeRead((u) => u.oauth_profiles.google.id, user, null);
+    if (existingUserGoogleId) {
+        return user;
+    }
+
+    // if not, let's associate the user with the given Google profile
+    await updateFromGoogleProfile(db, user, profile);
+    return user;
 }
 
 export function getReduxDataForLoggedUser(user: serverTypes.User): commonTypes.CurrentUserProfile {
