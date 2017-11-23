@@ -18,7 +18,7 @@ export function extractUserNameFromEmail(email: string) {
 /**
  * Returns a suggested user name given the user e-mail
  */
-export async function getValidUserName(db: serverTypes.TazzoDatabase, userName: string) {
+export async function getValidUserName(db: serverTypes.AboutDevsDatabase, userName: string) {
     if (db === null || db === undefined) throw Error("Argument 'db' should be null or undefined");
     if (userName === null || userName === undefined) throw Error("Argument 'email' should be null or undefined");
 
@@ -44,7 +44,7 @@ export async function getValidUserName(db: serverTypes.TazzoDatabase, userName: 
  * @param profile
  * @returns Promise
  */
-export async function createFromGoogleProfile(db: serverTypes.TazzoDatabase, profile: googleOAuthTypes.GoogleOAuthProfile) {
+export async function createFromGoogleProfile(db: serverTypes.AboutDevsDatabase, profile: googleOAuthTypes.GoogleOAuthProfile) {
     if (!db) throw Error("'db' should be truthy");
     if (!profile) throw Error("'profile' should be truthy");
 
@@ -77,7 +77,7 @@ export async function createFromGoogleProfile(db: serverTypes.TazzoDatabase, pro
  * @param existingUser
  * @param googleProfile
  */
-export async function updateFromGoogleProfile(db: serverTypes.TazzoDatabase, existingUser: serverTypes.User, googleProfile: googleOAuthTypes.GoogleOAuthProfile): Promise<serverTypes.User> {
+export async function updateFromGoogleProfile(db: serverTypes.AboutDevsDatabase, existingUser: serverTypes.User, googleProfile: googleOAuthTypes.GoogleOAuthProfile): Promise<serverTypes.User> {
     if (!db) throw Error("'db' should be truthy");
     if (!existingUser) throw Error("'existingUser' should be truthy");
     if (!googleProfile) throw Error("'profile' should be truthy");
@@ -114,7 +114,7 @@ export async function updateFromGoogleProfile(db: serverTypes.TazzoDatabase, exi
  * @param profile
  * @returns {Promise}
  */
-export async function findOrCreateFromGoogleProfile(db: serverTypes.TazzoDatabase, profile: googleOAuthTypes.GoogleOAuthProfile): Promise<serverTypes.User> {
+export async function findOrCreateFromGoogleProfile(db: serverTypes.AboutDevsDatabase, profile: googleOAuthTypes.GoogleOAuthProfile): Promise<serverTypes.User> {
     if (!db) throw Error("'db' should be truthy");
     if (!profile) throw Error("'profile' should be truthy");
 
@@ -160,7 +160,7 @@ export function getReduxDataForLoggedUser(user: serverTypes.User): commonTypes.C
  * @param otherProfession The profession_other field of the user
  * @param userGender The user gender
  */
-async function getFormattedProfession(db: serverTypes.TazzoDatabase, professionId: number, otherProfession: string, userGender: serverTypes.UserGender): Promise<string> {
+async function getFormattedProfession(db: serverTypes.AboutDevsDatabase, professionId: number, otherProfession: string, userGender: serverTypes.UserGender): Promise<string> {
     if (professionId) {
         const profession = await db.profession.findOne({id: professionId});
         if (profession) {
@@ -175,7 +175,7 @@ async function getFormattedProfession(db: serverTypes.TazzoDatabase, professionI
     return otherProfession;
 }
 
-async function getServicesForUser(db: serverTypes.TazzoDatabase, userId: number): Promise<commonTypes.UserService[]> {
+async function getServicesForUser(db: serverTypes.AboutDevsDatabase, userId: number): Promise<commonTypes.UserService[]> {
     const services = await db.user_service.find({user_id: userId});
     if (!services.length) {
         return [{
@@ -191,7 +191,7 @@ async function getServicesForUser(db: serverTypes.TazzoDatabase, userId: number)
     }));
 }
 
-export async function getUserProfileFromUser(db: serverTypes.TazzoDatabase, user: serverTypes.User, currentUserId: number, operation: commonTypes.Operation): Promise<commonTypes.UserProfile> {
+export async function getUserProfileFromUser(db: serverTypes.AboutDevsDatabase, user: serverTypes.User, currentUserId: number, operation: commonTypes.Operation): Promise<commonTypes.UserProfile> {
     if (!db) throw Error("Argument 'db' should be truthy");
     if (!user) throw Error("Argument 'user' should be truthy");
 
@@ -242,7 +242,7 @@ export async function getUserProfileFromUser(db: serverTypes.TazzoDatabase, user
  * @param currentUserId
  * @param operation
  */
-export async function getUserProfileById(db: serverTypes.TazzoDatabase, userId: number, currentUserId: number, operation: commonTypes.Operation): Promise<commonTypes.UserProfile> {
+export async function getUserProfileById(db: serverTypes.AboutDevsDatabase, userId: number, currentUserId: number, operation: commonTypes.Operation): Promise<commonTypes.UserProfile> {
     const user = await db.user.findOne({id: userId});
     return getUserProfileFromUser(db, user, currentUserId, operation);
 }
@@ -255,7 +255,7 @@ export async function getUserProfileById(db: serverTypes.TazzoDatabase, userId: 
  * @param professionId The profession id. This is for testing only. In production, this variable cannot contain value
  * @param locationId The location id. This is for testing only. In production, this variable cannot contain value
  */
-export async function saveProfile(db: serverTypes.TazzoDatabase, userId: number, profile: commonTypes.UserProfile, professionId?: number, locationId?: number): Promise<commonTypes.UserProfile> {
+export async function saveProfile(db: serverTypes.AboutDevsDatabase, userId: number, profile: commonTypes.UserProfile, professionId?: number, locationId?: number): Promise<commonTypes.UserProfile> {
     let user = await db.user.findOne({id: userId});
     if (!user) throw Error("could not find user");
 
@@ -366,12 +366,12 @@ export async function saveProfile(db: serverTypes.TazzoDatabase, userId: number,
 
 /**
  * Searches professionals
- * @param {TazzoDatabase} db
+ * @param {AboutDevsDatabase} db
  * @param {string} search
  * @param {string} location
  * @returns {Promise<UserSearchProfile[]>}
  */
-export async function searchProfessionals(db: serverTypes.TazzoDatabase, search: string, location: string): Promise<commonTypes.UserSearchProfile[]> {
+export async function searchProfessionals(db: serverTypes.AboutDevsDatabase, search: string, location: string): Promise<commonTypes.UserSearchProfile[]> {
     // we need to convert the location to latitude and longitude
     const locations = await locationService.searchLocations(db, location, true);
     if (!locations.results.length) {
@@ -414,7 +414,7 @@ export async function searchProfessionals(db: serverTypes.TazzoDatabase, search:
  * @param db The database
  * @param profile The profile being validated
  */
-export async function validateProfile(db: serverTypes.TazzoDatabase, profile: commonTypes.UserProfile) {
+export async function validateProfile(db: serverTypes.AboutDevsDatabase, profile: commonTypes.UserProfile) {
     const updatedProfile = {
         name: "",
         type: 0,

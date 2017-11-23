@@ -5,7 +5,7 @@ import * as serverTypes from "../../src/server/typings";
  * Truncates (delete) data from all tables
  * @param db
  */
-function truncateData(db: serverTypes.TazzoDatabase) {
+function truncateData(db: serverTypes.AboutDevsDatabase) {
     if (!db) throw Error("'db' should be truthy");
 
     const entities = [
@@ -37,12 +37,12 @@ export default function setupSession(
     after: (callback: (this: Mocha.IHookCallbackContext, done: MochaDone) => any) => void,
     beforeEach: (callback: (this: Mocha.IBeforeAndAfterContext, done: MochaDone) => any) => void,
     afterEach: (callback: (this: Mocha.IBeforeAndAfterContext, done: MochaDone) => any) => void,
-    callback: (db: serverTypes.TazzoDatabase) => void) {
+    callback: (db: serverTypes.AboutDevsDatabase) => void) {
 
     if (!before) throw Error("'before' should be truthy");
     if (!after) throw Error("'after' should be truthy");
 
-    let db: serverTypes.TazzoDatabase = null;
+    let db: serverTypes.AboutDevsDatabase = null;
 
     // runs before all tests in a file
     before((done) => {

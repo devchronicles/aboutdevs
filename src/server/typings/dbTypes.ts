@@ -107,7 +107,7 @@ export interface Profession {
     name_feminine_normalized: string;
 }
 
-export interface TazzoDatabase extends massive.Database {
+export interface AboutDevsDatabase extends massive.Database {
     [key: string]: any;
     // tables
     geo_location_cache: massive.Table<GeoLocationCache>;

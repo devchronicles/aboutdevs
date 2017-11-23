@@ -6,7 +6,7 @@ import setupSession from "./setupSession";
 import * as commonTypes from "../../src/common/typings/commonTypes";
 
 describe("userService", () => {
-    let db: serverTypes.TazzoDatabase = null;
+    let db: serverTypes.AboutDevsDatabase = null;
     setupSession(before, after, beforeEach, afterEach, ($db) => {
         db = $db;
     });

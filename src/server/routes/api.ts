@@ -11,12 +11,12 @@ const router = express.Router();
 
 router.route("/addresses").get((req: express.Request, res: express.Response) => {
     const allowCities: boolean = req.query.allowcities;
-    apiHelper.sendPromiseDb(res, (db: dbTypes.TazzoDatabase) => locationService.getFormattedLocations(db, req.query.q as string, allowCities));
+    apiHelper.sendPromiseDb(res, (db: dbTypes.AboutDevsDatabase) => locationService.getFormattedLocations(db, req.query.q as string, allowCities));
 });
 
 router.route("/professions").get((req, res) => {
     apiHelper.sendPromiseDb(res,
-        async (db: dbTypes.TazzoDatabase) => {
+        async (db: dbTypes.AboutDevsDatabase) => {
             apiHelper.getAndEnsureUserId(req);
             const professions = await db.search_professions(searchHelper.convertToTsVector(stringHelper.normalizeForSearch(req.query.q)));
             return professions.map((p) => {

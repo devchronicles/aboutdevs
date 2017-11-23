@@ -12,7 +12,7 @@ import * as stringHelper from "../../common/helpers/stringHelper";
  * @param {object} location The location to be saved in the cache
  * @param {object} db The db object
  */
-async function saveLocationToCache(searchTerm: string, location: serverTypes.GeocodeApiResult, db: serverTypes.TazzoDatabase): Promise<serverTypes.GeocodeApiResult> {
+async function saveLocationToCache(searchTerm: string, location: serverTypes.GeocodeApiResult, db: serverTypes.AboutDevsDatabase): Promise<serverTypes.GeocodeApiResult> {
     if (searchTerm === null || searchTerm === undefined) throw Error("Argument 'search' should be null or undefined");
     if (location === null || location === undefined) throw Error("Argument 'location' should be null or undefined");
 
@@ -33,7 +33,7 @@ async function saveLocationToCache(searchTerm: string, location: serverTypes.Geo
  * @param {string} searchTerm The search term the user typed
  * @param {object} db The db object
  */
-export function getLocationsFromCache(searchTerm: string, db: serverTypes.TazzoDatabase): Promise<serverTypes.GeocodeApiResult> {
+export function getLocationsFromCache(searchTerm: string, db: serverTypes.AboutDevsDatabase): Promise<serverTypes.GeocodeApiResult> {
     if (searchTerm === null || searchTerm === undefined) throw Error("Argument 'partialAddress' should be null or undefined");
     return db.geo_location_cache.findOne({search: searchTerm})
         .then((r) => (r ? r.cache : undefined));
@@ -57,7 +57,7 @@ export async function getLocationsFromGoogle(searchTerm: string): Promise<server
     return res.data;
 }
 
-export async function searchLocations(db: serverTypes.TazzoDatabase, searchTerm: string, allowCities: boolean): Promise<serverTypes.GeocodeApiResult> {
+export async function searchLocations(db: serverTypes.AboutDevsDatabase, searchTerm: string, allowCities: boolean): Promise<serverTypes.GeocodeApiResult> {
     const normalizedSearchTerm = stringHelper.normalizeForSearch(searchTerm);
     if (!normalizedSearchTerm) {
         return Promise.resolve<serverTypes.GeocodeApiResult>(undefined);
@@ -76,13 +76,13 @@ export async function searchLocations(db: serverTypes.TazzoDatabase, searchTerm:
     return locations;
 }
 
-export async function getFormattedLocations(db: serverTypes.TazzoDatabase, searchTerm: string, allowCities: boolean): Promise<string[]> {
+export async function getFormattedLocations(db: serverTypes.AboutDevsDatabase, searchTerm: string, allowCities: boolean): Promise<string[]> {
     const locations = await searchLocations(db, searchTerm, allowCities);
     const formattedLocations = await geocodeApiFormattingHelper.getFormattedLocations(locations, allowCities);
     return formattedLocations;
 }
 
-export async function saveCountry(db: serverTypes.TazzoDatabase, shortName: string, longName: string): Promise<serverTypes.GeoLocationCountry> {
+export async function saveCountry(db: serverTypes.AboutDevsDatabase, shortName: string, longName: string): Promise<serverTypes.GeoLocationCountry> {
     let country = await db.geo_location_country.findOne({short_name: shortName});
     if (!country) {
         country = (await db.geo_location_country.insert({
@@ -93,7 +93,7 @@ export async function saveCountry(db: serverTypes.TazzoDatabase, shortName: stri
     return country;
 }
 
-export async function saveState(db: serverTypes.TazzoDatabase, shortName: string, longName: string, countryId: number): Promise<serverTypes.GeoLocationState> {
+export async function saveState(db: serverTypes.AboutDevsDatabase, shortName: string, longName: string, countryId: number): Promise<serverTypes.GeoLocationState> {
     let state = await db.geo_location_state.findOne({short_name: shortName});
     if (!state) {
         state = (await db.geo_location_state.insert({
@@ -105,7 +105,7 @@ export async function saveState(db: serverTypes.TazzoDatabase, shortName: string
     return state;
 }
 
-export async function saveCity(db: serverTypes.TazzoDatabase, shortName: string, stateId: number): Promise<serverTypes.GeoLocationCity> {
+export async function saveCity(db: serverTypes.AboutDevsDatabase, shortName: string, stateId: number): Promise<serverTypes.GeoLocationCity> {
     let city = await db.geo_location_city.findOne({short_name: shortName});
     if (!city) {
         city = (await db.geo_location_city.insert({
@@ -116,7 +116,7 @@ export async function saveCity(db: serverTypes.TazzoDatabase, shortName: string,
     return city;
 }
 
-export async function saveLocation(db: serverTypes.TazzoDatabase, formattedAddress: string, neighborhood: string, cityId: number, latitude: number, longitude: number): Promise<serverTypes.GeoLocation> {
+export async function saveLocation(db: serverTypes.AboutDevsDatabase, formattedAddress: string, neighborhood: string, cityId: number, latitude: number, longitude: number): Promise<serverTypes.GeoLocation> {
     const location = (await db.geo_location.insert({
         formatted_address: formattedAddress,
         geo_location_city_id: cityId,
@@ -128,7 +128,7 @@ export async function saveLocation(db: serverTypes.TazzoDatabase, formattedAddre
     return location;
 }
 
-export async function saveAddress(db: serverTypes.TazzoDatabase, formattedText: string): Promise<serverTypes.GeoLocation> {
+export async function saveAddress(db: serverTypes.AboutDevsDatabase, formattedText: string): Promise<serverTypes.GeoLocation> {
     const locationData = await searchLocations(db, formattedText, false);
     if (!locationData || !locationData.results || !locationData.results.length) throw Error("could not get location");
     if (locationData.results.length > 1) throw Error("the given location is not unique");
@@ -152,7 +152,7 @@ export async function saveAddress(db: serverTypes.TazzoDatabase, formattedText: 
     return location;
 }
 
-export async function getFormattedLocationById(db: serverTypes.TazzoDatabase, geoLocationId: number) {
+export async function getFormattedLocationById(db: serverTypes.AboutDevsDatabase, geoLocationId: number) {
     if (!db) throw Error("Argument 'db' should be truthy");
     if (!geoLocationId) throw Error("Argument 'geoLocationId' should be truthy");
 

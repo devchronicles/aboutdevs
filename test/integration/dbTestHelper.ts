@@ -7,7 +7,7 @@ import * as serverTypes from "../../src/server/typings";
  * @param entityName The name of the entity
  * @param originalObject The original object being saved
  */
-export function assertCanSaveFindAndDelete(db: serverTypes.TazzoDatabase, entityName: string, originalObject: any) {
+export function assertCanSaveFindAndDelete(db: serverTypes.AboutDevsDatabase, entityName: string, originalObject: any) {
     // saves the object
     return db[entityName].save(originalObject)
         // tries to find the object we just saved

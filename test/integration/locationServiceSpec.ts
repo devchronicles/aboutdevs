@@ -5,8 +5,8 @@ import * as serverTypes from "../../src/server/typings";
 import setupSession from "./setupSession";
 
 describe("locationHelperSpec", () => {
-    let db: serverTypes.TazzoDatabase = null;
-    setupSession(before, after, beforeEach, afterEach, ($db: serverTypes.TazzoDatabase) => {
+    let db: serverTypes.AboutDevsDatabase = null;
+    setupSession(before, after, beforeEach, afterEach, ($db: serverTypes.AboutDevsDatabase) => {
         db = $db;
     });
     describe("getLocationsFromGoogle", () => {
