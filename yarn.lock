@@ -114,9 +114,9 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-redux@^4.4.45":
-  version "4.4.46"
-  resolved "https://registry.yarnpkg.com/@types/react-redux/-/react-redux-4.4.46.tgz#83b78c8783f31fc890d9a4d1e2acf9c4665fa913"
+"@types/react-redux@^5.0.13":
+  version "5.0.13"
+  resolved "https://registry.yarnpkg.com/@types/react-redux/-/react-redux-5.0.13.tgz#dcc67764b7455ed54422a0302fedf47e32db3579"
   dependencies:
     "@types/react" "*"
     redux "^3.6.0"
@@ -5341,9 +5341,9 @@ react-motion@^0.4.4:
     prop-types "^15.5.8"
     raf "^3.1.0"
 
-react-notification-system@^0.2.14:
-  version "0.2.14"
-  resolved "https://registry.yarnpkg.com/react-notification-system/-/react-notification-system-0.2.14.tgz#21f917f39feee145516864350875041433c4d5c0"
+react-notification-system@^0.2.16:
+  version "0.2.16"
+  resolved "https://registry.yarnpkg.com/react-notification-system/-/react-notification-system-0.2.16.tgz#9b9da20b0d34786b60057c52b42516ea1295374a"
   dependencies:
     create-react-class "^15.5.1"
     object-assign "^4.0.1"

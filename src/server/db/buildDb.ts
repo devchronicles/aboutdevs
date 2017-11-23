@@ -1,6 +1,6 @@
-import * as massive from 'massive';
-import config from '../../../config/config';
-import * as dbTypes from '../typings/dbTypes';
+import * as massive from "massive";
+import config from "../../../config/config";
+import * as dbTypes from "../typings/dbTypes";
 
 let db: dbTypes.TazzoDatabase;
 

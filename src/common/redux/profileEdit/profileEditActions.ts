@@ -1,11 +1,11 @@
-import * as ReactRedux from 'react-redux';
-import { initialize } from 'redux-form';
-import { getProfileData } from '../../httpClient';
-import * as clientTypes from '../../typings';
+import * as ReactRedux from "react-redux";
+import { initialize } from "redux-form";
+import { getProfileData } from "../../httpClient";
+import * as clientTypes from "../../typings";
 
-export const PROFILE_EDIT_LOAD_STARTED = 'PROFILE_EDIT_LOAD_STARTED';
-export const PROFILE_EDIT_LOAD_SUCCESS = 'PROFILE_EDIT_LOAD_SUCCESS';
-export const PROFILE_EDIT_LOAD_ERROR = 'PROFILE_EDIT_LOAD_ERROR';
+export const PROFILE_EDIT_LOAD_STARTED = "PROFILE_EDIT_LOAD_STARTED";
+export const PROFILE_EDIT_LOAD_SUCCESS = "PROFILE_EDIT_LOAD_SUCCESS";
+export const PROFILE_EDIT_LOAD_ERROR = "PROFILE_EDIT_LOAD_ERROR";
 
 /**
  * Changes the type of the search
@@ -22,7 +22,7 @@ export const profileEditLoadData = () => {
                         break;
                     case 200:
                         dispatch({ type: PROFILE_EDIT_LOAD_SUCCESS, payload: response.data });
-                        dispatch(initialize('profileEdit', response.data));
+                        dispatch(initialize("profileEdit", response.data));
                         break;
                     default:
                         throw Error(`profileEditLoadData error. Unexpected status code. Status code: ${response.status}`);

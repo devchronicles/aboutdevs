@@ -1,5 +1,5 @@
-import * as massive from 'massive';
-import * as googleGeocodeTypes from './googleGeocodeTypes';
+import * as massive from "massive";
+import * as googleGeocodeTypes from "./googleGeocodeTypes";
 
 export enum UserGender {
     MALE = 0,

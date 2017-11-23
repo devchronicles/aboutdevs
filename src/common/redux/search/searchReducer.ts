@@ -1,6 +1,6 @@
-import * as commonTypes from '../../../common/typings';
+import * as commonTypes from "../../../common/typings";
 
-import * as searchActions from './searchActions';
+import * as searchActions from "./searchActions";
 
 const defaultSearchState: commonTypes.SearchState = {
     criteria: {

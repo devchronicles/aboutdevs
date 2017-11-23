@@ -1,15 +1,15 @@
-import * as geocodeTypes from '../typings/googleGeocodeTypes';
+import * as geocodeTypes from "../typings/googleGeocodeTypes";
 
-export const STREET_NUMBER_COMPONENT_TYPE = 'street_number';
-export const STREET_COMPONENT_TYPE = 'route';
-export const NEIGHBORHOOD_COMPONENT_TYPE = 'sublocality_level_1';
-export const CITY_COMPONENT_TYPE = 'administrative_area_level_2';
-export const STATE_COMPONENT_TYPE = 'administrative_area_level_1';
-export const COUNTRY_COMPONENT_TYPE = 'country';
+export const STREET_NUMBER_COMPONENT_TYPE = "street_number";
+export const STREET_COMPONENT_TYPE = "route";
+export const NEIGHBORHOOD_COMPONENT_TYPE = "sublocality_level_1";
+export const CITY_COMPONENT_TYPE = "administrative_area_level_2";
+export const STATE_COMPONENT_TYPE = "administrative_area_level_1";
+export const COUNTRY_COMPONENT_TYPE = "country";
 
 export function findLocationComponentByType(result: geocodeTypes.Result, type: string): geocodeTypes.AddressComponent {
-    if (result === null || result === undefined) throw Error('Argument \'result\' should be null or undefined');
-    if (type === null || type === undefined) throw Error('Argument \'type\' should be null or undefined');
+    if (result === null || result === undefined) throw Error("Argument 'result' should be null or undefined");
+    if (type === null || type === undefined) throw Error("Argument 'type' should be null or undefined");
 
     return result.address_components.find((e) => e.types.includes(type));
 }

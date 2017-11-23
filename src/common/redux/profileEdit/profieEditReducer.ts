@@ -1,6 +1,6 @@
-import * as commonTypes from '../../../common/typings';
+import * as commonTypes from "../../../common/typings";
 
-import { PROFILE_EDIT_LOAD_ERROR, PROFILE_EDIT_LOAD_STARTED, PROFILE_EDIT_LOAD_SUCCESS } from './profileEditActions';
+import { PROFILE_EDIT_LOAD_ERROR, PROFILE_EDIT_LOAD_STARTED, PROFILE_EDIT_LOAD_SUCCESS } from "./profileEditActions";
 
 const defaultProfileEditState: commonTypes.UserProfile = {
     id: undefined,

@@ -1,13 +1,13 @@
-import * as stringHelper from './stringHelper';
-import * as commonTypes from '../typings/commonTypes';
+import * as stringHelper from "./stringHelper";
+import * as commonTypes from "../typings/commonTypes";
 
 export function getSearchDisplayFromUrlParameter(parameter: string): commonTypes.SearchDisplay {
     switch (parameter) {
-        case 'melhores-2km':
+        case "melhores-2km":
             return commonTypes.SearchDisplay.BEST_PROFESSIONAIS_IN_2_KM;
-        case 'melhores-5km':
+        case "melhores-5km":
             return commonTypes.SearchDisplay.BEST_PROFESSIONAIS_IN_5_KM;
-        case 'melhores-10km':
+        case "melhores-10km":
             return commonTypes.SearchDisplay.BEST_PROFESSIONAIS_IN_10_KM;
     }
 }
@@ -31,7 +31,7 @@ export function normalizeUrlParameter(denormalizedParameter: string): string {
     }
     let normalizedParameter = denormalizedParameter.toLowerCase();
     normalizedParameter = stringHelper.removeDiacritics(normalizedParameter);
-    normalizedParameter = normalizedParameter.replace(/[,\s]+/g, '-');
+    normalizedParameter = normalizedParameter.replace(/[,\s]+/g, "-");
     return normalizedParameter;
 }
 

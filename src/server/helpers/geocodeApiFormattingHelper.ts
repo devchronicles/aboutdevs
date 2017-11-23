@@ -1,12 +1,12 @@
-import * as geocodeTypes from '../typings/googleGeocodeTypes';
-import { Result } from './../typings/googleGeocodeTypes';
-import * as geocodeApiHelper from './geocodeApiHelper';
+import * as geocodeTypes from "../typings/googleGeocodeTypes";
+import { Result } from "./../typings/googleGeocodeTypes";
+import * as geocodeApiHelper from "./geocodeApiHelper";
 
 /**
  * Validates if the result corresponds to a valid address.
  */
 function validateResult(allowCities = false) {
-    const minimumAddressComponentType = allowCities ? 'administrative_area_level_2' : 'route';
+    const minimumAddressComponentType = allowCities ? "administrative_area_level_2" : "route";
     return (r: geocodeTypes.Result) =>
         r.address_components.filter((c: geocodeTypes.AddressComponent) => c.types.includes(minimumAddressComponentType)).length > 0;
 }
@@ -19,7 +19,7 @@ function getFormattedAddress(result: geocodeTypes.Result): string {
         geocodeApiHelper.getCity(result),
         geocodeApiHelper.getState(result),
     ].filter((v) => v);
-    return addressComponents.join(', ');
+    return addressComponents.join(", ");
 }
 
 export function getFormattedLocations(data: geocodeTypes.GeocodeApiResult, allowCities = false): string[] {

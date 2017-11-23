@@ -1,5 +1,5 @@
-import {assert} from 'chai';
-import * as serverTypes from '../../src/server/typings';
+import {assert} from "chai";
+import * as serverTypes from "../../src/server/typings";
 
 /**
  * Asserts it can save, find and delete the given object

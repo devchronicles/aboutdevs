@@ -1,13 +1,13 @@
-import * as ReactNotificationSystem from 'react-notification-system';
-import * as ReactRedux from 'react-redux';
-import * as clientTypes from '../../typings';
+import * as ReactNotificationSystem from "react-notification-system";
+import * as ReactRedux from "react-redux";
+import * as clientTypes from "../../typings";
 
-export const ENQUEUE_NOTIFICATION = 'ENQUEUE_NOTIFICATION';
-export const DEQUEUE_NOTIFICATION = 'DEQUEUE_NOTIFICATION';
+export const ENQUEUE_NOTIFICATION = "ENQUEUE_NOTIFICATION";
+export const DEQUEUE_NOTIFICATION = "DEQUEUE_NOTIFICATION";
 
 const defaultNotificatioObject: ReactNotificationSystem.Notification = {
-    position: 'bl',
-    level: 'success',
+    position: "bl",
+    level: "success",
 };
 
 /**

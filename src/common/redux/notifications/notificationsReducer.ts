@@ -1,7 +1,7 @@
-import * as commonTypes from '../../../common/typings';
-import * as ReactNotificationSystem from 'react-notification-system';
+import * as commonTypes from "../../../common/typings";
+import * as ReactNotificationSystem from "react-notification-system";
 
-import { ENQUEUE_NOTIFICATION } from './notificationsActions';
+import { ENQUEUE_NOTIFICATION } from "./notificationsActions";
 
 const defaultNotificationsState: ReactNotificationSystem.Notification[] = [];
 

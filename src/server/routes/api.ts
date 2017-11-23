@@ -1,20 +1,20 @@
-import * as express from 'express';
-import * as apiHelper from '../helpers/apiHelper';
-import * as locationService from '../services/locationService';
-import * as searchHelper from '../helpers/searchHelper';
-import * as userService from '../services/userService';
-import * as dbTypes from '../typings/dbTypes';
-import * as stringHelper from '../../common/helpers/stringHelper';
-import * as commonTypes from '../../common/typings/commonTypes';
+import * as express from "express";
+import * as apiHelper from "../helpers/apiHelper";
+import * as locationService from "../services/locationService";
+import * as searchHelper from "../helpers/searchHelper";
+import * as userService from "../services/userService";
+import * as dbTypes from "../typings/dbTypes";
+import * as stringHelper from "../../common/helpers/stringHelper";
+import * as commonTypes from "../../common/typings/commonTypes";
 
 const router = express.Router();
 
-router.route('/addresses').get((req: express.Request, res: express.Response) => {
+router.route("/addresses").get((req: express.Request, res: express.Response) => {
     const allowCities: boolean = req.query.allowcities;
     apiHelper.sendPromiseDb(res, (db: dbTypes.TazzoDatabase) => locationService.getFormattedLocations(db, req.query.q as string, allowCities));
 });
 
-router.route('/professions').get((req, res) => {
+router.route("/professions").get((req, res) => {
     apiHelper.sendPromiseDb(res,
         async (db: dbTypes.TazzoDatabase) => {
             apiHelper.getAndEnsureUserId(req);
@@ -27,7 +27,7 @@ router.route('/professions').get((req, res) => {
     );
 });
 
-router.route('/users/check_name').get((req, res) => {
+router.route("/users/check_name").get((req, res) => {
     apiHelper.sendPromiseDb(res,
         async (db) => {
             const userId = apiHelper.getAndEnsureUserId(req);
@@ -37,7 +37,7 @@ router.route('/users/check_name').get((req, res) => {
         });
 });
 
-router.route('/users/edit_my_profile').get((req, res) => {
+router.route("/users/edit_my_profile").get((req, res) => {
     apiHelper.sendPromiseDb(res,
         async (db) => {
             const userId = apiHelper.getAndEnsureUserId(req);
@@ -45,10 +45,10 @@ router.route('/users/edit_my_profile').get((req, res) => {
         });
 });
 
-router.route('/users/edit_my_profile').post((req, res) => {
+router.route("/users/edit_my_profile").post((req, res) => {
     apiHelper.sendPromiseDb(res,
         async (db) => {
-            if (!req.body) throw Error('profile was not submitted');
+            if (!req.body) throw Error("profile was not submitted");
             const profile = req.body;
             const userId = apiHelper.getAndEnsureUserId(req);
             const errors = await userService.validateProfile(db, profile);
@@ -59,21 +59,21 @@ router.route('/users/edit_my_profile').post((req, res) => {
         });
 });
 
-router.route('/users').get((req, res) => {
-    if (!req.body) throw Error('profile was not submitted');
+router.route("/users").get((req, res) => {
+    if (!req.body) throw Error("profile was not submitted");
     apiHelper.sendPromiseDb(res,
         async (db) => {
             const search = req.query.q;
             const location = req.query.l;
             if (!search || !location) {
-                throw Error('Parameters q and l are expected');
+                throw Error("Parameters q and l are expected");
             }
             return userService.searchProfessionals(db, search, location);
         });
 });
 
-router.route('/users/:user_name').get((req, res) => {
-    if (!req.body) throw Error('profile was not submitted');
+router.route("/users/:user_name").get((req, res) => {
+    if (!req.body) throw Error("profile was not submitted");
     apiHelper.sendPromiseDb(res,
         async (db) => {
             const userName = req.params.user_name;
@@ -89,7 +89,7 @@ router.route('/users/:user_name').get((req, res) => {
 /**
  * Get user
  */
-router.route('/users/:id').get((req, res) => {
+router.route("/users/:id").get((req, res) => {
     apiHelper.sendPromiseDb(res,
         async (db) => {
             apiHelper.getAndEnsureUserId(req);
@@ -98,7 +98,7 @@ router.route('/users/:id').get((req, res) => {
             if (user) {
                 return user;
             }
-            throw Error('could not find user');
+            throw Error("could not find user");
         });
 });
 

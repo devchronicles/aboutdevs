@@ -1,6 +1,6 @@
 
-declare module 'react-activity' {
-    import * as React from 'react';
+declare module "react-activity" {
+    import * as React from "react";
 
     /* tslint:disable */
     interface IActivityProps {

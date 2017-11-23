@@ -1,4 +1,4 @@
-import * as commonTypes from '../../typings';
+import * as commonTypes from "../../typings";
 
 const defaultLoggedUserState: commonTypes.CurrentUserProfile = {
     id: undefined,

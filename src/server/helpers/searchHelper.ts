@@ -1,6 +1,6 @@
 export function convertToTsVector(search: string) {
     if (!search) {
-        return '';
+        return "";
     }
-    return search.split(' ').join(' & ');
+    return search.split(" ").join(" & ");
 }

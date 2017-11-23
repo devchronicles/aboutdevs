@@ -1,10 +1,10 @@
-import axios from 'axios';
-import config from '../../../config/config';
-import * as serverTypes from '../../server/typings';
-import * as geocodeApiFormattingHelper from '../helpers/geocodeApiFormattingHelper';
-import * as geocodeApiHelper from '../helpers/geocodeApiHelper';
-import * as searchHelper from '../helpers/searchHelper';
-import * as stringHelper from '../../common/helpers/stringHelper';
+import axios from "axios";
+import config from "../../../config/config";
+import * as serverTypes from "../../server/typings";
+import * as geocodeApiFormattingHelper from "../helpers/geocodeApiFormattingHelper";
+import * as geocodeApiHelper from "../helpers/geocodeApiHelper";
+import * as searchHelper from "../helpers/searchHelper";
+import * as stringHelper from "../../common/helpers/stringHelper";
 
 /**
  * Saves the given {search, location} to the cache and returns the location if everything goes fine
@@ -13,8 +13,8 @@ import * as stringHelper from '../../common/helpers/stringHelper';
  * @param {object} db The db object
  */
 async function saveLocationToCache(searchTerm: string, location: serverTypes.GeocodeApiResult, db: serverTypes.TazzoDatabase): Promise<serverTypes.GeocodeApiResult> {
-    if (searchTerm === null || searchTerm === undefined) throw Error('Argument \'search\' should be null or undefined');
-    if (location === null || location === undefined) throw Error('Argument \'location\' should be null or undefined');
+    if (searchTerm === null || searchTerm === undefined) throw Error("Argument 'search' should be null or undefined");
+    if (location === null || location === undefined) throw Error("Argument 'location' should be null or undefined");
 
     // this should be a in a transaction
     const locations = await getLocationsFromCache(searchTerm, db);
@@ -34,7 +34,7 @@ async function saveLocationToCache(searchTerm: string, location: serverTypes.Geo
  * @param {object} db The db object
  */
 export function getLocationsFromCache(searchTerm: string, db: serverTypes.TazzoDatabase): Promise<serverTypes.GeocodeApiResult> {
-    if (searchTerm === null || searchTerm === undefined) throw Error('Argument \'partialAddress\' should be null or undefined');
+    if (searchTerm === null || searchTerm === undefined) throw Error("Argument 'partialAddress' should be null or undefined");
     return db.geo_location_cache.findOne({search: searchTerm})
         .then((r) => (r ? r.cache : undefined));
 }
@@ -44,7 +44,7 @@ export function getLocationsFromCache(searchTerm: string, db: serverTypes.TazzoD
  * @param {string} searchTerm The search term the user typed
  */
 export async function getLocationsFromGoogle(searchTerm: string): Promise<serverTypes.GeocodeApiResult> {
-    if (searchTerm === null || searchTerm === undefined) throw Error('Argument \'partialAddress\' should be null or undefined');
+    if (searchTerm === null || searchTerm === undefined) throw Error("Argument 'partialAddress' should be null or undefined");
     const encodedLocation = encodeURIComponent(searchTerm);
     const key: string = config.google.geocodeApiKey;
     const googleGeoCodeApiAdress
@@ -130,8 +130,8 @@ export async function saveLocation(db: serverTypes.TazzoDatabase, formattedAddre
 
 export async function saveAddress(db: serverTypes.TazzoDatabase, formattedText: string): Promise<serverTypes.GeoLocation> {
     const locationData = await searchLocations(db, formattedText, false);
-    if (!locationData || !locationData.results || !locationData.results.length) throw Error('could not get location');
-    if (locationData.results.length > 1) throw Error('the given location is not unique');
+    if (!locationData || !locationData.results || !locationData.results.length) throw Error("could not get location");
+    if (locationData.results.length > 1) throw Error("the given location is not unique");
 
     let location = await db.geo_location.findOne({formatted_address: formattedText});
     if (location) return location;
@@ -153,10 +153,10 @@ export async function saveAddress(db: serverTypes.TazzoDatabase, formattedText: 
 }
 
 export async function getFormattedLocationById(db: serverTypes.TazzoDatabase, geoLocationId: number) {
-    if (!db) throw Error('Argument \'db\' should be truthy');
-    if (!geoLocationId) throw Error('Argument \'geoLocationId\' should be truthy');
+    if (!db) throw Error("Argument 'db' should be truthy");
+    if (!geoLocationId) throw Error("Argument 'geoLocationId' should be truthy");
 
     const location = await db.geo_location.findOne({id: geoLocationId});
-    if (!location) throw Error('could not find location');
+    if (!location) throw Error("could not find location");
     return location.formatted_address;
 }

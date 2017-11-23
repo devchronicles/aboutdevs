@@ -1,17 +1,17 @@
-import * as commonTypes from '../typings/commonTypes';
+import * as commonTypes from "../typings/commonTypes";
 
-export const REQUIRED = 'required';
-export const REQUIRED_IF_PROFESSIONAL = 'required-if-professional';
-export const INVALID_PHONE = 'invalid-phone';
-export const AT_LEAST_ONE_PHONE = 'at-least-one-phone';
-export const MAX_LENGTH_50 = 'max-length-50';
-export const MAX_LENGTH_60 = 'max-length-80';
-export const MAX_LENGTH_80 = 'max-length-80';
-export const MAX_LENGTH_500 = 'max-length-500';
-export const USER_NAME_IS_TAKEN = 'user-name-is-taken';
+export const REQUIRED = "required";
+export const REQUIRED_IF_PROFESSIONAL = "required-if-professional";
+export const INVALID_PHONE = "invalid-phone";
+export const AT_LEAST_ONE_PHONE = "at-least-one-phone";
+export const MAX_LENGTH_50 = "max-length-50";
+export const MAX_LENGTH_60 = "max-length-80";
+export const MAX_LENGTH_80 = "max-length-80";
+export const MAX_LENGTH_500 = "max-length-500";
+export const USER_NAME_IS_TAKEN = "user-name-is-taken";
 
 export function validateRequired(value: any) {
-    return (value === null || value === undefined || value === '') ? REQUIRED : undefined;
+    return (value === null || value === undefined || value === "") ? REQUIRED : undefined;
 }
 
 export function validateMaxLength50(value: string) {
@@ -43,39 +43,39 @@ export function validateMaxLength500(value: string) {
 }
 
 export function validationRequiredIfProfessional(value: any, user: commonTypes.UserProfile) {
-    return (user.type === commonTypes.UserProfileType.PROFESSIONAL && (value === null || value === undefined || value === '')) ? REQUIRED_IF_PROFESSIONAL : undefined;
+    return (user.type === commonTypes.UserProfileType.PROFESSIONAL && (value === null || value === undefined || value === "")) ? REQUIRED_IF_PROFESSIONAL : undefined;
 }
 
 export function validatePhone(value: string) {
-    if (value === null || value === undefined || value === '') {
+    if (value === null || value === undefined || value === "") {
         return undefined;
     }
     return /\(\d{2}\)\s\d{3,5}-\d{4}/.test(value) ? undefined : INVALID_PHONE;
 }
 
 export function validateAtLeastOnePhone(value: string, user: commonTypes.UserProfile) {
-    const invalidWhatsapp = user.phoneWhatsapp === null || user.phoneWhatsapp === undefined || user.phoneWhatsapp === '';
-    const invalidAlternatePhone = user.phoneAlternative === null || user.phoneAlternative === undefined || user.phoneAlternative === '';
+    const invalidWhatsapp = user.phoneWhatsapp === null || user.phoneWhatsapp === undefined || user.phoneWhatsapp === "";
+    const invalidAlternatePhone = user.phoneAlternative === null || user.phoneAlternative === undefined || user.phoneAlternative === "";
     return invalidWhatsapp && invalidAlternatePhone ? AT_LEAST_ONE_PHONE : undefined;
 }
 
 export function getValidatorsForField(fieldName: string): Array<(value: any, user: commonTypes.UserProfile) => string> {
     switch (fieldName) {
-        case 'name':
+        case "name":
             return [validateRequired, validateMaxLength50];
-        case 'displayName':
+        case "displayName":
             return [validateRequired, validateMaxLength50];
-        case 'profession':
+        case "profession":
             return [validationRequiredIfProfessional, validateMaxLength80];
-        case 'bio':
+        case "bio":
             return [validationRequiredIfProfessional, validateMaxLength500];
-        case 'activities':
+        case "activities":
             return [validationRequiredIfProfessional, validateMaxLength500];
-        case 'address':
+        case "address":
             return [validateRequired];
-        case 'phoneWhatsapp':
+        case "phoneWhatsapp":
             return [validateAtLeastOnePhone, validatePhone];
-        case 'phoneAlternative':
+        case "phoneAlternative":
             return [validateAtLeastOnePhone, validatePhone];
         default:
             return [];

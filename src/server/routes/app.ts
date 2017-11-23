@@ -1,5 +1,5 @@
-import * as express from 'express';
-import * as fs from 'fs';
+import * as express from "express";
+import * as fs from "fs";
 
 const router = express.Router();
 
@@ -8,17 +8,17 @@ const router = express.Router();
  * @param response
  */
 function sendApp(res: express.Response, preloadedHtml: string, preloadedState: object) {
-    fs.readFile('src/common/index.html', 'utf8', (error, data) => {
+    fs.readFile("src/common/index.html", "utf8", (error, data) => {
         let result = data;
-        result = result.replace(/\$\{css\}/g, '');
-        result = result.replace(/\$\{js\}/g, 'http://localhost:8080/bundle.js');
-        result = result.replace(/\$\{preloadedState\}/g, JSON.stringify(preloadedState).replace(/</g, '\\u003c'));
-        result = result.replace(/\$\{html\}/g, preloadedHtml || '');
+        result = result.replace(/\$\{css\}/g, "");
+        result = result.replace(/\$\{js\}/g, "http://localhost:8080/bundle.js");
+        result = result.replace(/\$\{preloadedState\}/g, JSON.stringify(preloadedState).replace(/</g, "\\u003c"));
+        result = result.replace(/\$\{html\}/g, preloadedHtml || "");
         res.status(200).send(result);
     });
 }
 
-router.route('/s/:location/:profession').get((req, res) => {
+router.route("/s/:location/:profession").get((req, res) => {
     sendApp(res, null, {
         loggedUser: req.user,
     });
@@ -27,7 +27,7 @@ router.route('/s/:location/:profession').get((req, res) => {
 /**
  * Wild-card route
  */
-router.route('*').get((req, res) => {
+router.route("*").get((req, res) => {
     sendApp(res, null, {
         loggedUser: req.user,
     });

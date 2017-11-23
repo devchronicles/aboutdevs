@@ -1,17 +1,17 @@
-import * as fieldValidationHelper from '../../common/helpers/fieldValidationHelper';
-import {safeRead} from '../../common/helpers/objectHelpers';
-import * as commonTypes from '../../common/typings/commonTypes';
-import * as serverTypes from '../typings';
-import * as googleOAuthTypes from '../typings/googleOAuthTypes';
-import * as locationService from '../services/locationService';
-import * as stringHelper from '../../common/helpers/stringHelper';
+import * as fieldValidationHelper from "../../common/helpers/fieldValidationHelper";
+import {safeRead} from "../../common/helpers/objectHelpers";
+import * as commonTypes from "../../common/typings/commonTypes";
+import * as serverTypes from "../typings";
+import * as googleOAuthTypes from "../typings/googleOAuthTypes";
+import * as locationService from "../services/locationService";
+import * as stringHelper from "../../common/helpers/stringHelper";
 
 /**
  * Extracts the user name from the user's e-mail
  */
 export function extractUserNameFromEmail(email: string) {
-    if (email === null || email === undefined) throw Error('Argument \'email\' should be null or undefined');
-    const atPosition = email.indexOf('@');
+    if (email === null || email === undefined) throw Error("Argument 'email' should be null or undefined");
+    const atPosition = email.indexOf("@");
     return email.substring(0, atPosition);
 }
 
@@ -19,15 +19,15 @@ export function extractUserNameFromEmail(email: string) {
  * Returns a suggested user name given the user e-mail
  */
 export async function getValidUserName(db: serverTypes.TazzoDatabase, userName: string) {
-    if (db === null || db === undefined) throw Error('Argument \'db\' should be null or undefined');
-    if (userName === null || userName === undefined) throw Error('Argument \'email\' should be null or undefined');
+    if (db === null || db === undefined) throw Error("Argument 'db' should be null or undefined");
+    if (userName === null || userName === undefined) throw Error("Argument 'email' should be null or undefined");
 
     const user = await db.user.findOne({name: userName});
     if (!user) {
         return userName;
     }
 
-    const existingUsers = await db.user.find({'name ilike': `${userName}%`});
+    const existingUsers = await db.user.find({"name ilike": `${userName}%`});
     if (existingUsers.length === 0) return userName;
 
     const lowerCaseUserNames = existingUsers.map((s) => s.name.toLowerCase());
@@ -45,12 +45,12 @@ export async function getValidUserName(db: serverTypes.TazzoDatabase, userName: 
  * @returns Promise
  */
 export async function createFromGoogleProfile(db: serverTypes.TazzoDatabase, profile: googleOAuthTypes.GoogleOAuthProfile) {
-    if (!db) throw Error('\'db\' should be truthy');
-    if (!profile) throw Error('\'profile\' should be truthy');
+    if (!db) throw Error("'db' should be truthy");
+    if (!profile) throw Error("'profile' should be truthy");
 
     const email = safeRead((p: googleOAuthTypes.GoogleOAuthProfile) => p.emails[0].value, profile, null);
     const photoUrl = safeRead((p: googleOAuthTypes.GoogleOAuthProfile) => p.photos[0].value, profile, null);
-    const gender = profile.gender === 'male' ? serverTypes.UserGender.MALE : serverTypes.UserGender.FEMALE;
+    const gender = profile.gender === "male" ? serverTypes.UserGender.MALE : serverTypes.UserGender.FEMALE;
 
     const userName = await getValidUserName(db, extractUserNameFromEmail(email));
 
@@ -78,12 +78,12 @@ export async function createFromGoogleProfile(db: serverTypes.TazzoDatabase, pro
  * @param googleProfile
  */
 export async function updateFromGoogleProfile(db: serverTypes.TazzoDatabase, existingUser: serverTypes.User, googleProfile: googleOAuthTypes.GoogleOAuthProfile): Promise<serverTypes.User> {
-    if (!db) throw Error('\'db\' should be truthy');
-    if (!existingUser) throw Error('\'existingUser\' should be truthy');
-    if (!googleProfile) throw Error('\'profile\' should be truthy');
+    if (!db) throw Error("'db' should be truthy");
+    if (!existingUser) throw Error("'existingUser' should be truthy");
+    if (!googleProfile) throw Error("'profile' should be truthy");
 
     if (existingUser.gender === null || existingUser.gender === undefined) {
-        existingUser.gender = googleProfile.gender === 'male' ? 0 : 1;
+        existingUser.gender = googleProfile.gender === "male" ? 0 : 1;
     }
     if (!existingUser.display_name) {
         existingUser.display_name = googleProfile.displayName;
@@ -115,13 +115,13 @@ export async function updateFromGoogleProfile(db: serverTypes.TazzoDatabase, exi
  * @returns {Promise}
  */
 export function findOrCreateFromGoogleProfile(db: serverTypes.TazzoDatabase, profile: googleOAuthTypes.GoogleOAuthProfile): Promise<serverTypes.User> {
-    if (!db) throw Error('\'db\' should be truthy');
-    if (!profile) throw Error('\'profile\' should be truthy');
+    if (!db) throw Error("'db' should be truthy");
+    if (!profile) throw Error("'profile' should be truthy");
 
     const email = safeRead((p) => p.emails[0].value, profile, null);
 
     if (!email) {
-        throw Error('Google profile is not valid');
+        throw Error("Google profile is not valid");
     }
 
     return db.user.findOne({email})
@@ -144,7 +144,7 @@ export function findOrCreateFromGoogleProfile(db: serverTypes.TazzoDatabase, pro
 }
 
 export function getReduxDataForLoggedUser(user: serverTypes.User): commonTypes.CurrentUserProfile {
-    if (user === null || user === undefined) throw Error('Argument \'user\' should be null or undefined');
+    if (user === null || user === undefined) throw Error("Argument 'user' should be null or undefined");
     return {
         id: user.id,
         name: user.name,
@@ -181,7 +181,7 @@ async function getServicesForUser(db: serverTypes.TazzoDatabase, userId: number)
     if (!services.length) {
         return [{
             id: undefined,
-            service: '',
+            service: "",
             index: 0,
         }];
     }
@@ -193,8 +193,8 @@ async function getServicesForUser(db: serverTypes.TazzoDatabase, userId: number)
 }
 
 export async function getUserProfileFromUser(db: serverTypes.TazzoDatabase, user: serverTypes.User, currentUserId: number, operation: commonTypes.Operation): Promise<commonTypes.UserProfile> {
-    if (!db) throw Error('Argument \'db\' should be truthy');
-    if (!user) throw Error('Argument \'user\' should be truthy');
+    if (!db) throw Error("Argument 'db' should be truthy");
+    if (!user) throw Error("Argument 'user' should be truthy");
 
     switch (operation) {
         case commonTypes.Operation.VIEW:
@@ -232,7 +232,7 @@ export async function getUserProfileFromUser(db: serverTypes.TazzoDatabase, user
                 services: await getServicesForUser(db, user.id),
             };
         default:
-            throw Error('Operation not supported');
+            throw Error("Operation not supported");
     }
 }
 
@@ -258,7 +258,7 @@ export async function getUserProfileById(db: serverTypes.TazzoDatabase, userId: 
  */
 export async function saveProfile(db: serverTypes.TazzoDatabase, userId: number, profile: commonTypes.UserProfile, professionId?: number, locationId?: number): Promise<commonTypes.UserProfile> {
     let user = await db.user.findOne({id: userId});
-    if (!user) throw Error('could not find user');
+    if (!user) throw Error("could not find user");
 
     user.name = profile.name;
     user.display_name = profile.displayName;
@@ -281,8 +281,8 @@ export async function saveProfile(db: serverTypes.TazzoDatabase, userId: number,
             user.profession_other = profile.profession;
         }
     } else {
-        if (process.env.NODE_ENV === 'production') {
-            throw Error('Passing location id is a not enabled in production');
+        if (process.env.NODE_ENV === "production") {
+            throw Error("Passing location id is a not enabled in production");
         }
         user.profession_id = professionId;
         user.profession_other = undefined;
@@ -293,8 +293,8 @@ export async function saveProfile(db: serverTypes.TazzoDatabase, userId: number,
         const location = await locationService.saveAddress(db, profile.address);
         user.geo_location_id = location.id;
     } else {
-        if (process.env.NODE_ENV === 'production') {
-            throw Error('Passing location id is a not enabled in production');
+        if (process.env.NODE_ENV === "production") {
+            throw Error("Passing location id is a not enabled in production");
         }
         user.geo_location_id = locationId;
     }
@@ -348,7 +348,7 @@ export async function saveProfile(db: serverTypes.TazzoDatabase, userId: number,
         }
 
         // search
-        const concatenatedServices = profileServices.map((p) => p.service_canonical).reduce((accumulated, current) => `${accumulated} ${current}`, '');
+        const concatenatedServices = profileServices.map((p) => p.service_canonical).reduce((accumulated, current) => `${accumulated} ${current}`, "");
         const professionForSearch = stringHelper.normalizeForSearch(profile.profession);
 
         user.search_canonical = `${professionForSearch} ${concatenatedServices}`;
@@ -417,14 +417,14 @@ export async function searchProfessionals(db: serverTypes.TazzoDatabase, search:
  */
 export async function validateProfile(db: serverTypes.TazzoDatabase, profile: commonTypes.UserProfile) {
     const updatedProfile = {
-        name: '',
+        name: "",
         type: 0,
-        displayName: '',
-        profession: '',
-        bio: '',
-        address: '',
-        phoneWhatsapp: '',
-        phoneAlternative: '',
+        displayName: "",
+        profession: "",
+        bio: "",
+        address: "",
+        phoneWhatsapp: "",
+        phoneAlternative: "",
         ...profile,
     };
 
