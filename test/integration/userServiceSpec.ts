@@ -88,7 +88,7 @@ describe("userService", () => {
         it("when the user did not exist yet", () =>
             db.user.findOne({email: "andrerpena@gmail.com"})
                 .then((u: serverTypes.User) => {
-                    assert.isUndefined(u);
+                    assert.isNull(u);
                     return userHelper.findOrCreateFromGoogleProfile(db, googleProfileSample);
                 })
 

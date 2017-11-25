@@ -333,20 +333,12 @@ ansistyles@~0.1.3:
   version "0.1.3"
   resolved "https://registry.yarnpkg.com/ansistyles/-/ansistyles-0.1.3.tgz#5de60415bda071bb37127854c864f41b23254539"
 
-any-promise@^1.0.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/any-promise/-/any-promise-1.3.0.tgz#abc6afeedcea52e809cdc0376aed3ce39635d17f"
-
 anymatch@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/anymatch/-/anymatch-1.3.0.tgz#a3e52fa39168c825ff57b0248126ce5a8ff95507"
   dependencies:
     arrify "^1.0.0"
     micromatch "^2.1.5"
-
-ap@~0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/ap/-/ap-0.2.0.tgz#ae0942600b29912f0d2b14ec60c45e8f330b6110"
 
 aproba@^1.0.3, aproba@^1.1.1:
   version "1.1.2"
@@ -1142,7 +1134,7 @@ combined-stream@^1.0.5, combined-stream@~1.0.5:
   dependencies:
     delayed-stream "~1.0.0"
 
-commander@2.11.0, commander@^2.6.0, commander@^2.9.0:
+commander@2.11.0, commander@^2.9.0, commander@~2.11.0:
   version "2.11.0"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.11.0.tgz#157152fd1e7a6c8d98a5b715cf376df928004563"
 
@@ -2432,10 +2424,6 @@ generate-object-property@^1.1.0:
   dependencies:
     is-property "^1.0.0"
 
-generic-pool@2.4.2:
-  version "2.4.2"
-  resolved "https://registry.yarnpkg.com/generic-pool/-/generic-pool-2.4.2.tgz#886bc5bf0beb7db96e81bcbba078818de5a62683"
-
 genfun@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/genfun/-/genfun-4.0.1.tgz#ed10041f2e4a7f1b0a38466d17a5c3e27df1dfc1"
@@ -3231,6 +3219,10 @@ js-base64@^2.1.8, js-base64@^2.1.9:
   version "2.1.9"
   resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-2.1.9.tgz#f0e80ae039a4bd654b5f281fc93f04a914a7fcce"
 
+js-string-escape@1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/js-string-escape/-/js-string-escape-1.0.1.tgz#e2625badbc0d67c7533e9edc1068c587ae4137ef"
+
 js-tokens@^3.0.0:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-3.0.2.tgz#9866df395102130e38f7f996bceb65443209c25b"
@@ -3639,9 +3631,9 @@ make-fetch-happen@^2.5.0:
     socks-proxy-agent "^3.0.1"
     ssri "^5.0.0"
 
-manakin@^0.4.7:
-  version "0.4.7"
-  resolved "https://registry.yarnpkg.com/manakin/-/manakin-0.4.7.tgz#41ca449b55bea9c4c4fecec393b9c4d63818fc3f"
+manakin@~0.5.1:
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/manakin/-/manakin-0.5.1.tgz#c4a7116f6b00df3d5f1a37ad3ca515d22065a658"
 
 map-cache@^0.2.2:
   version "0.2.2"
@@ -3662,16 +3654,15 @@ map-visit@^0.1.5:
     lazy-cache "^2.0.1"
     object-visit "^0.3.4"
 
-massive@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/massive/-/massive-3.0.0.tgz#076d6628ed58e170c261167ff8384362427f23cd"
+massive@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/massive/-/massive-4.5.0.tgz#7d030182f36bc37da8b43087b4d52439bfb8cb46"
   dependencies:
-    commander "^2.6.0"
-    glob "^7.1.1"
-    lodash "^4.17.4"
-    mz "^2.6.0"
-    pg-promise "^5.9.6"
-    pg-query-stream "^1.0.0"
+    commander "~2.11.0"
+    glob "~7.1.1"
+    lodash "~4.17.4"
+    pg-promise "~6.7.1"
+    pg-query-stream "~1.0.0"
 
 math-expression-evaluator@^1.2.14:
   version "1.2.17"
@@ -3923,14 +3914,6 @@ multicast-dns@^6.0.1:
 mute-stream@~0.0.4:
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.7.tgz#3075ce93bc21b8fab43e1bc4da7e8115ed1e7bab"
-
-mz@^2.6.0:
-  version "2.6.0"
-  resolved "https://registry.yarnpkg.com/mz/-/mz-2.6.0.tgz#c8b8521d958df0a4f2768025db69c719ee4ef1ce"
-  dependencies:
-    any-promise "^1.0.0"
-    object-assign "^4.0.1"
-    thenify-all "^1.0.0"
 
 nan@^2.3.0, nan@^2.3.2:
   version "2.6.2"
@@ -4480,9 +4463,9 @@ package-json@^4.0.0:
     registry-url "^3.0.3"
     semver "^5.1.0"
 
-packet-reader@0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/packet-reader/-/packet-reader-0.2.0.tgz#819df4d010b82d5ea5671f8a1a3acf039bcd7700"
+packet-reader@0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/packet-reader/-/packet-reader-0.3.1.tgz#cd62e60af8d7fea8a705ec4ff990871c46871f27"
 
 pacote@~6.0.2:
   version "6.0.4"
@@ -4707,51 +4690,55 @@ pg-cursor@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/pg-cursor/-/pg-cursor-1.0.0.tgz#b5b4b7bf277b3478de8c11cdf9d34bcda6973c0f"
 
-pg-minify@0.4:
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/pg-minify/-/pg-minify-0.4.2.tgz#c75b4b5878960fb09c3b9a4d4eb1036aea7ea0e3"
+pg-minify@~0.5.3:
+  version "0.5.3"
+  resolved "https://registry.yarnpkg.com/pg-minify/-/pg-minify-0.5.3.tgz#aa09befa3cbe29fab6461bf819100e0471215011"
 
-pg-promise@^5.9.6:
-  version "5.9.7"
-  resolved "https://registry.yarnpkg.com/pg-promise/-/pg-promise-5.9.7.tgz#4c78f58061cf04d6afa86baacf0bdd0cf8281c8e"
+pg-pool@~2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/pg-pool/-/pg-pool-2.0.3.tgz#c022032c8949f312a4f91fb6409ce04076be3257"
+
+pg-promise@~6.7.1:
+  version "6.7.1"
+  resolved "https://registry.yarnpkg.com/pg-promise/-/pg-promise-6.7.1.tgz#4b61b5d387b358bef1d99a741837214fd73eeca6"
   dependencies:
-    manakin "^0.4.7"
-    pg "^5.1.0"
-    pg-minify "0.4"
-    spex "1.2"
+    manakin "~0.5.1"
+    pg "~7.3.0"
+    pg-minify "~0.5.3"
+    spex "~1.2.0"
 
-pg-query-stream@^1.0.0:
+pg-query-stream@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/pg-query-stream/-/pg-query-stream-1.0.0.tgz#a9b34da5c81c0a4c37b28b1af35259e89430fc98"
   dependencies:
     pg-cursor "1.0.0"
     readable-stream "^2.0.4"
 
-pg-types@1.*:
-  version "1.12.0"
-  resolved "https://registry.yarnpkg.com/pg-types/-/pg-types-1.12.0.tgz#8ad3b7b897e3fd463e62de241ad5fc640b4a66f0"
+pg-types@~1.12.1:
+  version "1.12.1"
+  resolved "https://registry.yarnpkg.com/pg-types/-/pg-types-1.12.1.tgz#d64087e3903b58ffaad279e7595c52208a14c3d2"
   dependencies:
-    ap "~0.2.0"
     postgres-array "~1.0.0"
     postgres-bytea "~1.0.0"
     postgres-date "~1.0.0"
     postgres-interval "^1.1.0"
 
-pg@^5.1.0:
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/pg/-/pg-5.1.0.tgz#073b9b36763ad8a5478dbb85effef45e739ba9d8"
+pg@~7.3.0:
+  version "7.3.0"
+  resolved "https://registry.yarnpkg.com/pg/-/pg-7.3.0.tgz#275e27466e54a645f6b4a16f6acadf6b849ad83b"
   dependencies:
     buffer-writer "1.0.1"
-    generic-pool "2.4.2"
-    packet-reader "0.2.0"
+    js-string-escape "1.0.1"
+    packet-reader "0.3.1"
     pg-connection-string "0.1.3"
-    pg-types "1.*"
-    pgpass "0.0.6"
+    pg-pool "~2.0.3"
+    pg-types "~1.12.1"
+    pgpass "1.x"
     semver "4.3.2"
 
-pgpass@0.0.6:
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/pgpass/-/pgpass-0.0.6.tgz#f6276200d01739da1eea63138bdca35ff4bd7280"
+pgpass@1.x:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/pgpass/-/pgpass-1.0.2.tgz#2a7bb41b6065b67907e91da1b07c1847c877b306"
   dependencies:
     split "^1.0.0"
 
@@ -6209,9 +6196,9 @@ spdy@^3.4.1:
     select-hose "^2.0.0"
     spdy-transport "^2.0.18"
 
-spex@1.2:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/spex/-/spex-1.2.0.tgz#6264b3b8acbc444477f06dbb66d425c0ee1074c0"
+spex@~1.2.0:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/spex/-/spex-1.2.1.tgz#18c3127540b457a08a71d0ef018a578ca2480b89"
 
 split-string@^2.1.0:
   version "2.1.1"
@@ -6491,18 +6478,6 @@ term-size@^1.2.0:
 text-table@~0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/text-table/-/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"
-
-thenify-all@^1.0.0:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/thenify-all/-/thenify-all-1.6.0.tgz#1a1918d402d8fc3f98fbf234db0bcc8cc10e9726"
-  dependencies:
-    thenify ">= 3.1.0 < 4"
-
-"thenify@>= 3.1.0 < 4":
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/thenify/-/thenify-3.3.0.tgz#e69e38a1babe969b0108207978b9f62b88604839"
-  dependencies:
-    any-promise "^1.0.0"
 
 through2@^2.0.0:
   version "2.0.3"

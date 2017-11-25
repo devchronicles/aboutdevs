@@ -26,5 +26,5 @@ export function assertCanSaveFindAndDelete(db: serverTypes.AboutDevsDatabase, en
         // now tries to find the object again.
         // objs will the the array of objects deleted, in this case, there's only one
         .then((objs: any) => db[entityName].findOne({ id: objs[0].id }))
-        .then((obj: any) => assert.isUndefined(obj));
+        .then((obj: any) => assert.isNull(obj));
 }
