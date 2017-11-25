@@ -107,9 +107,21 @@ export interface Profession {
     name_feminine_normalized: string;
 }
 
+export interface Tag {
+    id: number;
+    name: string;
+}
+
+export interface UserTag {
+    id: number;
+    user_id: number;
+    tag_id: number;
+}
+
 export interface AboutDevsDatabase extends massive.Database {
     [key: string]: any;
     // tables
+    tag: massive.Table<Tag>;
     geo_location_cache: massive.Table<GeoLocationCache>;
     geo_location: massive.Table<GeoLocation>;
     geo_location_country: massive.Table<GeoLocationCountry>;
@@ -119,6 +131,7 @@ export interface AboutDevsDatabase extends massive.Database {
     user_service: massive.Table<UserService>;
     user_connection: massive.Table<UserConnection>;
     user_recommendation: massive.Table<UserRecommendation>;
+    user_tag: massive.Table<UserTag>;
     profession: massive.Table<Profession>;
 
     // functions

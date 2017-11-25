@@ -49,6 +49,7 @@ export interface UserProfile {
     bio?: string;
     photoUrl?: string;
     services?: UserService[];
+    tags: UserTag[];
     phoneWhatsapp?: string;
     phoneAlternative?: string;
     address: string;
@@ -67,6 +68,11 @@ export interface UserSearchProfile {
 export interface UserService {
     id?: number;
     service: string;
+}
+
+export interface UserTag {
+    id?: number;
+    tag: string;
 }
 
 // SEARCH

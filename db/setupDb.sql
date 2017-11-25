@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.6.3
--- Dumped by pg_dump version 9.6.3
+-- Dumped from database version 9.6.6
+-- Dumped by pg_dump version 9.6.6
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -497,6 +497,39 @@ ALTER SEQUENCE profession_id_seq OWNED BY profession.id;
 
 
 --
+-- Name: tag; Type: TABLE; Schema: public; Owner: aboutdevs
+--
+
+CREATE TABLE tag (
+    id integer NOT NULL,
+    name character varying(50) NOT NULL
+);
+
+
+ALTER TABLE tag OWNER TO aboutdevs;
+
+--
+-- Name: tag_id_seq; Type: SEQUENCE; Schema: public; Owner: aboutdevs
+--
+
+CREATE SEQUENCE tag_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE tag_id_seq OWNER TO aboutdevs;
+
+--
+-- Name: tag_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: aboutdevs
+--
+
+ALTER SEQUENCE tag_id_seq OWNED BY tag.id;
+
+
+--
 -- Name: user_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -653,6 +686,40 @@ ALTER SEQUENCE user_service_id_seq OWNED BY user_service.id;
 
 
 --
+-- Name: user_tag; Type: TABLE; Schema: public; Owner: aboutdevs
+--
+
+CREATE TABLE user_tag (
+    id integer NOT NULL,
+    user_id integer NOT NULL,
+    tag_id integer NOT NULL
+);
+
+
+ALTER TABLE user_tag OWNER TO aboutdevs;
+
+--
+-- Name: user_tag_id_seq; Type: SEQUENCE; Schema: public; Owner: aboutdevs
+--
+
+CREATE SEQUENCE user_tag_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE user_tag_id_seq OWNER TO aboutdevs;
+
+--
+-- Name: user_tag_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: aboutdevs
+--
+
+ALTER SEQUENCE user_tag_id_seq OWNED BY user_tag.id;
+
+
+--
 -- Name: geo_location id; Type: DEFAULT; Schema: public; Owner: aboutdevs
 --
 
@@ -709,6 +776,13 @@ ALTER TABLE ONLY profession ALTER COLUMN id SET DEFAULT nextval('profession_id_s
 
 
 --
+-- Name: tag id; Type: DEFAULT; Schema: public; Owner: aboutdevs
+--
+
+ALTER TABLE ONLY tag ALTER COLUMN id SET DEFAULT nextval('tag_id_seq'::regclass);
+
+
+--
 -- Name: user_connection id; Type: DEFAULT; Schema: public; Owner: aboutdevs
 --
 
@@ -727,6 +801,13 @@ ALTER TABLE ONLY user_recommendation ALTER COLUMN id SET DEFAULT nextval('user_r
 --
 
 ALTER TABLE ONLY user_service ALTER COLUMN id SET DEFAULT nextval('user_service_id_seq'::regclass);
+
+
+--
+-- Name: user_tag id; Type: DEFAULT; Schema: public; Owner: aboutdevs
+--
+
+ALTER TABLE ONLY user_tag ALTER COLUMN id SET DEFAULT nextval('user_tag_id_seq'::regclass);
 
 
 --
@@ -786,6 +867,14 @@ ALTER TABLE ONLY profession
 
 
 --
+-- Name: tag tag_pkey; Type: CONSTRAINT; Schema: public; Owner: aboutdevs
+--
+
+ALTER TABLE ONLY tag
+    ADD CONSTRAINT tag_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: user_connection user_connection_pkey; Type: CONSTRAINT; Schema: public; Owner: aboutdevs
 --
 
@@ -815,6 +904,14 @@ ALTER TABLE ONLY user_recommendation
 
 ALTER TABLE ONLY user_service
     ADD CONSTRAINT user_service_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: user_tag user_tag_pkey; Type: CONSTRAINT; Schema: public; Owner: aboutdevs
+--
+
+ALTER TABLE ONLY user_tag
+    ADD CONSTRAINT user_tag_pkey PRIMARY KEY (id);
 
 
 --
@@ -958,6 +1055,20 @@ CREATE INDEX search_canonical_idx ON "user" USING gin (to_tsvector('ptu'::regcon
 
 
 --
+-- Name: tag_id_uindex; Type: INDEX; Schema: public; Owner: aboutdevs
+--
+
+CREATE UNIQUE INDEX tag_id_uindex ON tag USING btree (id);
+
+
+--
+-- Name: tag_name_uindex; Type: INDEX; Schema: public; Owner: aboutdevs
+--
+
+CREATE UNIQUE INDEX tag_name_uindex ON tag USING btree (name);
+
+
+--
 -- Name: user_connection_id_uindex; Type: INDEX; Schema: public; Owner: aboutdevs
 --
 
@@ -983,6 +1094,13 @@ CREATE UNIQUE INDEX user_name_uindex ON "user" USING btree (name);
 --
 
 CREATE UNIQUE INDEX user_service_id_uindex ON user_service USING btree (id);
+
+
+--
+-- Name: user_tag_id_uindex; Type: INDEX; Schema: public; Owner: aboutdevs
+--
+
+CREATE UNIQUE INDEX user_tag_id_uindex ON user_tag USING btree (id);
 
 
 --
@@ -1039,6 +1157,22 @@ ALTER TABLE ONLY "user"
 
 ALTER TABLE ONLY user_service
     ADD CONSTRAINT user_service_user_id_fk FOREIGN KEY (user_id) REFERENCES "user"(id);
+
+
+--
+-- Name: user_tag user_tag_tag_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: aboutdevs
+--
+
+ALTER TABLE ONLY user_tag
+    ADD CONSTRAINT user_tag_tag_id_fk FOREIGN KEY (tag_id) REFERENCES tag(id);
+
+
+--
+-- Name: user_tag user_tag_user_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: aboutdevs
+--
+
+ALTER TABLE ONLY user_tag
+    ADD CONSTRAINT user_tag_user_id_fk FOREIGN KEY (user_id) REFERENCES "user"(id);
 
 
 --
