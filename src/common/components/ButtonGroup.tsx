@@ -1,7 +1,6 @@
-import * as React from 'react';
+import * as React from "react";
 
 interface ButtonGroupProps {
-    childre: JSX.Element[];
 }
 
 const ButtonGroup: React.SFC<ButtonGroupProps> = ({ children }) => (
@@ -10,4 +9,4 @@ const ButtonGroup: React.SFC<ButtonGroupProps> = ({ children }) => (
     </div>
 );
 
-export { ButtonGroup }
+export { ButtonGroup };
