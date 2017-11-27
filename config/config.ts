@@ -1,14 +1,16 @@
-import * as devConfig from "./config.dev";
-import * as prodConfig from "./config.prod";
-import * as testConfig from "./config.test";
+import devConfig from "./config.dev";
+import devSecretConfig from "./config.dev.secret";
+import prodConfig from "./config.prod";
+import testConfig from "./config.test";
+import { Config } from "./typings";
 
-let config: any;
+let config: Config;
 switch (process.env.NODE_ENV) {
     case "development":
-        config = devConfig;
+        config = {...devConfig, ...devSecretConfig};
         break;
     case "test":
-        config = testConfig;
+        config = {...testConfig, ...devSecretConfig};
         break;
     default:
         config = prodConfig;

@@ -1,4 +1,7 @@
 // TODO: Add prod settings here. This should not be committed to GitHub
-// TODO: ADd this to .gitignore
-export const google = {};
-export const db = {};
+// TODO: Add this to .gitignore
+import { Config } from "./typings";
+
+export const config: Config = {};
+
+export default config;
