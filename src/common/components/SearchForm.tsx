@@ -1,7 +1,7 @@
-import * as React from 'react';
-import { Field, reduxForm } from 'redux-form';
-import { SelectLocation, FormRow, FormGroup } from './form/index';
-import * as ReduxForm from 'redux-form';
+import * as React from "react";
+import * as ReduxForm from "redux-form";
+import { Field, reduxForm } from "redux-form";
+import { FormGroup, FormRow, SelectLocation } from "./form/index";
 
 interface IndexSearchFormProps extends ReduxForm.FormProps<any, any, any> {
     onSubmit: (formValues: any) => void;
@@ -45,7 +45,7 @@ let SearchForm: React.SFC<IndexSearchFormProps> = (props) => {
 
 // Decorate with redux-form
 SearchForm = reduxForm({
-    form: 'search', // a unique identifier for this form,
+    form: "search", // a unique identifier for this form,
 
 })(SearchForm);
 

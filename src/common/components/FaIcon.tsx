@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 
 interface FaIconProps {
     icon: string;
@@ -7,4 +7,4 @@ interface FaIconProps {
 
 const FaIcon: React.SFC<FaIconProps> = (props) => <i className={`fa fa-${props.icon} ${props.className}`} aria-hidden="true" />;
 
-export { FaIcon }
+export { FaIcon };

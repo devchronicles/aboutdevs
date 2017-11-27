@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 
 export interface IFormColumn {
     children: string | JSX.Element | JSX.Element[];
@@ -7,7 +7,7 @@ export interface IFormColumn {
 }
 
 const FormColumn: React.SFC<IFormColumn> = ({ eq, style, children }) => (
-    <div className={`form-column ${eq ? 'eq' : ''}`} style={style}>
+    <div className={`form-column ${eq ? "eq" : ""}`} style={style}>
         {children}
     </div>
 );

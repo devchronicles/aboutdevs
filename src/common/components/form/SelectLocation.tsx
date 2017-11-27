@@ -1,7 +1,7 @@
-import * as React from 'react';
-import * as ReactSelect from 'react-select';
-import * as ReduxForm from 'redux-form';
-import * as httpClient from '../../httpClient';
+import * as React from "react";
+import * as ReactSelect from "react-select";
+import * as ReduxForm from "redux-form";
+import * as httpClient from "../../httpClient";
 
 interface SelectLocationProps extends ReduxForm.WrappedFieldProps<{}> {
     allowCities: boolean;
@@ -30,18 +30,18 @@ class SelectLocation extends React.Component<SelectLocationProps, {}> {
                 })
                 .catch((error) => callback(error, undefined));
         }, 800);
-    }
+    };
 
     private filterOptions = (options: any) => options;
 
     private handleChange = (row: any) => {
         const {onChange} = this.props.input;
         onChange(row ? row.value : null);
-    }
+    };
 
     public render() {
         const {input: {value, onBlur}, meta: {error, touched}, placeholder, strict} = this.props;
-        const className = error && touched ? 'invalid' : '';
+        const className = error && touched ? "invalid" : "";
         const adjustedValue = value ? {
             value,
             label: value,
@@ -54,7 +54,7 @@ class SelectLocation extends React.Component<SelectLocationProps, {}> {
             filterOption: this.filterOptions,
             labelKey: "label",
             valueKey: "value",
-            placeholder: placeholder || '',
+            placeholder: placeholder || "",
             loadingPlaceholder: "Localizando endereço...",
             searchPromptText: "Digite para pesquisar",
             noResultsText: "Não foi possível encontrar o endereço",
@@ -66,12 +66,16 @@ class SelectLocation extends React.Component<SelectLocationProps, {}> {
         };
 
         const notStrictProps = {
-            promptTextCreator: (label:string) => `Utilizar endereço não exato: ${label}`,
-        }
+            promptTextCreator: (label: string) => `Utilizar endereço não exato: ${label}`,
+        };
 
         return strict
-            ? <ReactSelect.Async inputProps={{ autoComplete: 'off', autoCorrect: 'off', spellCheck: 'off' }} {...props} />
-            : <ReactSelect.AsyncCreatable inputProps={{ autoComplete: 'off', autoCorrect: 'off', spellCheck: 'off' }} {...props} {...notStrictProps}/>;
+            ? <ReactSelect.Async inputProps={{autoComplete: "off", autoCorrect: "off", spellCheck: "off"}} {...props} />
+            : <ReactSelect.AsyncCreatable inputProps={{
+                autoComplete: "off",
+                autoCorrect: "off",
+                spellCheck: "off",
+            }} {...props} {...notStrictProps}/>;
     }
 }
 
@@ -79,4 +83,4 @@ SelectLocation.defaultProps = {
     strict: true,
 };
 
-export {SelectLocation}
+export { SelectLocation };

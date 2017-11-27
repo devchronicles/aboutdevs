@@ -1,4 +1,4 @@
-import * as commonTypes from '../typings/commonTypes';
+import * as commonTypes from "../typings/commonTypes";
 
 export function getSearchDisplayText(item: commonTypes.SearchDisplay) {
     switch (item) {

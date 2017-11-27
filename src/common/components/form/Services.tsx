@@ -1,7 +1,7 @@
-import * as React from 'react';
-import * as ReduxForm from 'redux-form';
-import { Field, FormField, TextBox, FormGroup, FormRow } from './index';
-import { validateRequired, validateMaxLength60 } from '../../helpers/fieldValidationHelper';
+import * as React from "react";
+import * as ReduxForm from "redux-form";
+import { Field, FormField, FormGroup, TextBox } from "./index";
+import { validateMaxLength60 } from "../../helpers/fieldValidationHelper";
 
 interface ServicesProps extends ReduxForm.WrappedFieldArrayProps<{}> {
 }

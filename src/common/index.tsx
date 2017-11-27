@@ -1,16 +1,16 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import {Provider} from 'react-redux';
-import configureStore from '../common/redux/store';
-import createHistory from 'history/createBrowserHistory';
-import {App} from './pages/App';
-import {LoginPage} from './pages/LoginPage';
+import * as React from "react";
+import * as ReactDOM from "react-dom";
+import { Provider } from "react-redux";
+import configureStore from "../common/redux/store";
+import createHistory from "history/createBrowserHistory";
+import { App } from "./pages/App";
+import { LoginPage } from "./pages/LoginPage";
 import { Route, Router, Switch } from "react-router";
 
-require('../../node_modules/normalize.css/normalize.css');
-require('../../node_modules/font-awesome/css/font-awesome.css');
-require('../../node_modules/react-activity/dist/react-activity.css');
-require('../client/styles/styles.scss');
+require("../../node_modules/normalize.css/normalize.css");
+require("../../node_modules/font-awesome/css/font-awesome.css");
+require("../../node_modules/react-activity/dist/react-activity.css");
+require("../client/styles/styles.scss");
 
 const history = createHistory();
 const store = configureStore((window as any).__PRELOADED_STATE__, history);
@@ -28,5 +28,5 @@ ReactDOM.render(
             </Switch>
         </Router>
     </Provider>,
-    document.getElementById('app'),
+    document.getElementById("app"),
 );

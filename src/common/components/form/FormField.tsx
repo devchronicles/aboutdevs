@@ -1,8 +1,8 @@
-import * as React from 'react';
-import * as ReduxForm from 'redux-form';
-import * as fieldValidationMessageHelper from '../../../common/helpers/fieldValidationMessageHelper';
-import { FormGroup } from './FormGroup';
-import { InputGroup } from './InputGroup';
+import * as React from "react";
+import * as ReduxForm from "redux-form";
+import * as fieldValidationMessageHelper from "../../../common/helpers/fieldValidationMessageHelper";
+import { FormGroup } from "./FormGroup";
+import { InputGroup } from "./InputGroup";
 
 interface IFormFieldProps extends ReduxForm.WrappedFieldProps<{}> {
     name: string;
@@ -27,7 +27,7 @@ const FormField: React.SFC<IFormFieldProps> = (props) => {
     } = props;
 
     if (!innerComponent) {
-        throw Error('Inner component is required');
+        throw Error("Inner component is required");
     }
 
     const innerComponentProps = {
@@ -52,11 +52,11 @@ const FormField: React.SFC<IFormFieldProps> = (props) => {
 };
 
 FormField.defaultProps = {
-    help: '',
+    help: "",
     addOnBefore: undefined,
     addOnAfter: undefined,
     validate: [],
-    placeHolder: '',
+    placeHolder: "",
 };
 
 export { FormField };

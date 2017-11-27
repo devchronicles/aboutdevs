@@ -1,6 +1,6 @@
-import * as React from 'react';
-import * as ReduxForm from 'redux-form';
-import * as commonTypes from '../../typings/commonTypes';
+import * as React from "react";
+import * as ReduxForm from "redux-form";
+import * as commonTypes from "../../typings/commonTypes";
 
 interface IUserTypeToggle extends ReduxForm.WrappedFieldProps<{}> {
 }
@@ -12,7 +12,7 @@ const UserTypeToggle: React.SFC<IUserTypeToggle> = (field) => {
 
     // props for the professional button
     const professionalButtonProps = {
-        className: value === commonTypes.UserProfileType.PROFESSIONAL ? 'pushed' : null,
+        className: value === commonTypes.UserProfileType.PROFESSIONAL ? "pushed" : null,
         onClick: (event: React.SyntheticEvent<any>) => {
             event.preventDefault();
             onChange(commonTypes.UserProfileType.PROFESSIONAL, undefined, undefined);
@@ -21,7 +21,7 @@ const UserTypeToggle: React.SFC<IUserTypeToggle> = (field) => {
 
     // props for the non-professional button
     const nonProfessionalButtonProps = {
-        className: value === commonTypes.UserProfileType.USER ? 'pushed' : null,
+        className: value === commonTypes.UserProfileType.USER ? "pushed" : null,
         onClick: (event: React.SyntheticEvent<any>) => {
             event.preventDefault();
             onChange(commonTypes.UserProfileType.USER, undefined, undefined);

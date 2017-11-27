@@ -1,6 +1,6 @@
-import * as React from 'react';
-import {Dropdown, DropdownDivider, DropdownHeader, DropdownItem} from './Dropdown';
-import * as commonTypes from '../typings/commonTypes';
+import * as React from "react";
+import { Dropdown, DropdownDivider, DropdownHeader, DropdownItem } from "./Dropdown";
+import * as commonTypes from "../typings/commonTypes";
 
 interface LoggedUserDropdownProps {
     loggedUser: commonTypes.CurrentUserProfile;

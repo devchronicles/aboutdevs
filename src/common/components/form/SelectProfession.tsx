@@ -1,8 +1,8 @@
-import * as React from 'react';
-import * as ReactSelect from 'react-select';
-import * as ReduxForm from 'redux-form';
-import * as stringHelper from '../../../common/helpers/stringHelper';
-import { searchProfessions } from '../../httpClient';
+import * as React from "react";
+import * as ReactSelect from "react-select";
+import * as ReduxForm from "redux-form";
+import * as stringHelper from "../../../common/helpers/stringHelper";
+import { searchProfessions } from "../../httpClient";
 
 interface SelectProfessionProps extends ReduxForm.WrappedFieldProps<{}> {
     placeholder: string;
@@ -25,21 +25,21 @@ class SelectProfession extends React.Component<SelectProfessionProps, {}> {
                 })
                 .catch((error) => callback(error, undefined));
         }, 800);
-    }
+    };
 
     private handleChange = (row: any) => {
         const { onChange } = this.props.input;
         onChange(row ? row.value : null);
-    }
+    };
 
     private isOptionUnique = ({ option, options }: ({ option: ReactSelect.Option, options: ReactSelect.Option[] })) => {
-        const selectedValue = option.value ? (option.value as string).toLowerCase() : '';
+        const selectedValue = option.value ? (option.value as string).toLowerCase() : "";
         return !options.map((o: ReactSelect.Option) => stringHelper.removeDiacritics(o.value as string).toLowerCase()).includes(selectedValue);
-    }
+    };
 
     public render() {
         const { input: { value, onBlur }, meta: { error, touched } } = this.props;
-        const className = error && touched ? 'invalid' : '';
+        const className = error && touched ? "invalid" : "";
         const adjustedValue = {
             value,
             label: value,
@@ -49,7 +49,7 @@ class SelectProfession extends React.Component<SelectProfessionProps, {}> {
             <ReactSelect.AsyncCreatable
                 value={adjustedValue}
                 onChange={this.handleChange}
-                inputProps={{ autoComplete: 'off', autoCorrect: 'off', spellCheck: 'off' }}
+                inputProps={{autoComplete: "off", autoCorrect: "off", spellCheck: "off"}}
                 loadOptions={this.loadValues}
                 filterOption={(o) => true}
                 labelKey="label"

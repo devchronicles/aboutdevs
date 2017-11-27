@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 
 interface IFormRow {
     children: string | JSX.Element | JSX.Element[];

@@ -1,14 +1,27 @@
-import * as React from 'react';
-import { getFormSubmitErrors, getFormSyncErrors, getFormValues, reduxForm, SubmissionError } from 'redux-form';
-import { connect } from 'react-redux';
-import { FaIcon } from './FaIcon';
-import { Field, FieldArray, Services, TextBox, TextArea, FormField, FormGroup, FormFieldUserName, FormRow, SelectLocation, SelectProfession, UserTypeToggle } from './form/index';
-import { DocumentSection } from './DocumentSection';
-import normalizePhone from '../lib/redux-form/normalizePhone';
-import asyncValidation from '../lib/redux-form/asyncValidation';
-import * as ReduxForm from 'redux-form';
-import * as ReactRedux from 'react-redux';
-import * as commonTypes from '../typings/commonTypes';
+import * as React from "react";
+import * as ReduxForm from "redux-form";
+import { getFormSubmitErrors, getFormSyncErrors, getFormValues, reduxForm } from "redux-form";
+import * as ReactRedux from "react-redux";
+import { connect } from "react-redux";
+import { FaIcon } from "./FaIcon";
+import {
+    Field,
+    FieldArray,
+    FormField,
+    FormFieldUserName,
+    FormGroup,
+    FormRow,
+    SelectLocation,
+    SelectProfession,
+    Services,
+    TextArea,
+    TextBox,
+    UserTypeToggle,
+} from "./form/index";
+import { DocumentSection } from "./DocumentSection";
+import normalizePhone from "../lib/redux-form/normalizePhone";
+import asyncValidation from "../lib/redux-form/asyncValidation";
+import * as commonTypes from "../typings/commonTypes";
 
 interface ProfileEditFormStateProps {
     formValues: any;
@@ -147,13 +160,13 @@ let ProfileEditForm: React.SFC<ProfileEditorFormProps> = (props) => {
     );
 };
 
-const FORM_NAME = 'profileEdit';
+const FORM_NAME = "profileEdit";
 
 // Decorate with redux-form
 ProfileEditForm = reduxForm({
     form: FORM_NAME, // a unique identifier for this form,
     asyncValidate: asyncValidation,
-    asyncBlurFields: ['name'],
+    asyncBlurFields: ["name"],
 })(ProfileEditForm);
 
 // Decorate with connect to read form values
@@ -181,4 +194,4 @@ const ConnectedProfileEditForm = connect<ProfileEditFormStateProps, ProfileEditF
     mergeProps,
 )(ProfileEditForm);
 
-export { ConnectedProfileEditForm as ProfileEditForm }
+export { ConnectedProfileEditForm as ProfileEditForm };

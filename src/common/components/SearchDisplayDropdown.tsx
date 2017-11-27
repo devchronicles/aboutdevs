@@ -1,8 +1,8 @@
-import * as React from 'react';
-import {Dropdown, DropdownDivider, DropdownHeader, DropdownItem, DropdownMenuSize} from "./Dropdown";
-import * as commonTypes from '../typings/commonTypes';
-import * as textHelper from '../helpers/textHelper';
-import * as urlHelper from '../helpers/urlHelper';
+import * as React from "react";
+import { Dropdown, DropdownDivider, DropdownHeader, DropdownItem, DropdownMenuSize } from "./Dropdown";
+import * as commonTypes from "../typings/commonTypes";
+import * as textHelper from "../helpers/textHelper";
+import * as urlHelper from "../helpers/urlHelper";
 
 interface SearchDisplayDropdownProps {
     search: string;
@@ -21,7 +21,7 @@ export class SearchDisplayDropdown extends React.Component<SearchDisplayDropdown
                 text={textHelper.getSearchDisplayText(targetDisplay)}
             />
         );
-    }
+    };
 
     public render() {
         const {value} = this.props;

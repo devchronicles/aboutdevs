@@ -1,6 +1,6 @@
-import * as React from 'react';
-import { LoggedUserDropdown } from './LoggedUserDropdown';
-import * as commonTypes from '../../common/typings';
+import * as React from "react";
+import { LoggedUserDropdown } from "./LoggedUserDropdown";
+import * as commonTypes from "../../common/typings";
 
 interface TopMenuProps {
     loggedUser: commonTypes.CurrentUserProfile;

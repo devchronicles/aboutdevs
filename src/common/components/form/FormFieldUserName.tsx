@@ -1,9 +1,9 @@
-import * as React from 'react';
-import * as ReduxForm from 'redux-form';
-import * as ReactActivity from 'react-activity';
-import { FormGroup, InputGroup, TextBox } from './index';
-import { FaIcon } from '../FaIcon';
-import * as fieldValidationMessageHelper from '../../../common/helpers/fieldValidationMessageHelper';
+import * as React from "react";
+import * as ReduxForm from "redux-form";
+import * as ReactActivity from "react-activity";
+import { FormGroup, InputGroup, TextBox } from "./index";
+import { FaIcon } from "../FaIcon";
+import * as fieldValidationMessageHelper from "../../../common/helpers/fieldValidationMessageHelper";
 
 const Spinner = ReactActivity.Spinner;
 

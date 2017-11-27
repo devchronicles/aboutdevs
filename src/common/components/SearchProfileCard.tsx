@@ -1,5 +1,5 @@
-import * as React from 'react';
-import * as commonTypes from '../../common/typings';
+import * as React from "react";
+import * as commonTypes from "../../common/typings";
 
 interface SearchProfileCardProps {
     profile: commonTypes.UserSearchProfile;
@@ -17,7 +17,7 @@ const ProfileCard: React.SFC<SearchProfileCardProps> = ({ profile }) => (
             <div className="image" style={{ backgroundImage: `url(${profile.photoUrl})` }} />
             <p className="display-name"> {profile.displayName} </p>
             <p className="profession"> {profile.profession} </p>
-            <p className="bio"> {profile.services.map(s => s.service).join('; ')} </p>
+            <p className="bio"> {profile.services.map((s) => s.service).join("; ")} </p>
         </a>
         <div className="card-footer">
             <span className="recomendations">

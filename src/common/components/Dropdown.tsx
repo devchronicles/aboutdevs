@@ -1,5 +1,5 @@
-import * as React from 'react';
-import {Link} from 'react-router-dom';
+import * as React from "react";
+import { Link } from "react-router-dom";
 
 export enum DropdownMenuSize {
     SMALL = 0,
@@ -9,7 +9,7 @@ export enum DropdownMenuSize {
 
 export const DropdownDivider: React.SFC<{}> = () => {
     return <div className="dropdown-divider"/>;
-}
+};
 
 export const DropdownItem: React.SFC<{ linkTo?: string; href?: string; text: string, visible?: boolean; }> = (props) => {
     const {linkTo, href, text, visible} = props;
@@ -22,7 +22,7 @@ export const DropdownItem: React.SFC<{ linkTo?: string; href?: string; text: str
     } else if (href) {
         linkComponent = <a href={href}>{text}</a>;
     } else {
-        throw Error('Either linkTo or href should be provided to DropdownItem');
+        throw Error("Either linkTo or href should be provided to DropdownItem");
     }
 
     return (
@@ -30,7 +30,7 @@ export const DropdownItem: React.SFC<{ linkTo?: string; href?: string; text: str
             {linkComponent}
         </li>
     );
-}
+};
 
 export const DropdownHeader: React.SFC<{}> = (props) => {
     return (
@@ -38,7 +38,7 @@ export const DropdownHeader: React.SFC<{}> = (props) => {
             {props.children}
         </div>
     );
-}
+};
 
 interface DropdownProps {
     size?: DropdownMenuSize;
@@ -65,40 +65,18 @@ export class Dropdown extends React.Component<DropdownProps, DropdownState> {
         };
     }
 
-    private getClassForSize(size: DropdownMenuSize) {
-        switch (size) {
-            case DropdownMenuSize.SMALL:
-                return 'size-sm';
-            case DropdownMenuSize.MEDIUM:
-                return 'size-md';
-            case DropdownMenuSize.LARGE:
-                return 'size-lg';
-        }
-    }
-
-    public componentDidMount() {
-        document.addEventListener('mousedown', this.handleClickOutside);
-    }
-
-    public componentWillUnmount() {
-        document.removeEventListener('mousedown', this.handleClickOutside);
-    }
-
     /**
      * Set the wrapper ref
      */
     private setWrapperRef = (node: any) => {
         this.wrapperRef = node;
-    }
-
+    };
     private handleOpen = () => {
         this.setState({open: !this.state.open});
-    }
-
+    };
     private handleOnMenuItemClick = () => {
         this.setState({open: false});
-    }
-
+    };
     /**
      * Alert if clicked on outside of element
      */
@@ -106,13 +84,21 @@ export class Dropdown extends React.Component<DropdownProps, DropdownState> {
         if (this.state.open && this.wrapperRef && !this.wrapperRef.contains(event.target)) {
             this.setState({open: false});
         }
+    };
+
+    public componentDidMount() {
+        document.addEventListener("mousedown", this.handleClickOutside);
+    }
+
+    public componentWillUnmount() {
+        document.removeEventListener("mousedown", this.handleClickOutside);
     }
 
     public render() {
         const {button, children, className, size} = this.props;
-        const dropdownClass = this.state.open ? 'visible' : '';
+        const dropdownClass = this.state.open ? "visible" : "";
 
-        const finalClassName = `dropdown ${className ? className : ''}`;
+        const finalClassName = `dropdown ${className ? className : ""}`;
 
         return (
             <ul className={finalClassName} ref={this.setWrapperRef}>
@@ -129,5 +115,16 @@ export class Dropdown extends React.Component<DropdownProps, DropdownState> {
                 </div>
             </ul>
         );
+    }
+
+    private getClassForSize(size: DropdownMenuSize) {
+        switch (size) {
+            case DropdownMenuSize.SMALL:
+                return "size-sm";
+            case DropdownMenuSize.MEDIUM:
+                return "size-md";
+            case DropdownMenuSize.LARGE:
+                return "size-lg";
+        }
     }
 }

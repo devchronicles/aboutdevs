@@ -7,7 +7,7 @@ const normalizePhone = (value: string) => {
     // 3299168204 - 10 digits
     // 32999168204 - 11 digits
 
-    const onlyNums = value.replace(/[^\d]/g, '');
+    const onlyNums = value.replace(/[^\d]/g, "");
     if (onlyNums.length < 3) {
         return onlyNums;
     }

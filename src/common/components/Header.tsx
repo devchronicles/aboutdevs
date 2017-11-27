@@ -1,8 +1,8 @@
-import * as React from 'react';
-import { Link } from 'react-router-dom';
-import * as commonTypes from '../../common/typings';
-import { LoggedUserDropdown } from './LoggedUserDropdown';
-import { Logo } from './Logo';
+import * as React from "react";
+import { Link } from "react-router-dom";
+import * as commonTypes from "../../common/typings";
+import { LoggedUserDropdown } from "./LoggedUserDropdown";
+import { Logo } from "./Logo";
 
 interface HeaderProps {
     loggedUser: commonTypes.CurrentUserProfile;
@@ -43,4 +43,4 @@ const Header: React.SFC<HeaderProps> = ({loggedUser}) => {
     );
 };
 
-export { Header }
+export { Header };

@@ -1,13 +1,13 @@
 // Postgres settings
-const POSTGRES_USER = 'aboutdevs';
-const POSTGRES_PASSWORD = 'aboutdevs';
-const POSTGRES_DATABASE = 'aboutdevs';
-const POSTGRES_HOST = 'localhost';
+const POSTGRES_USER = "aboutdevs";
+const POSTGRES_PASSWORD = "aboutdevs";
+const POSTGRES_DATABASE = "aboutdevs";
+const POSTGRES_HOST = "localhost";
 const POSTGRES_PORT = 5432;
 
 export const google = {
     // you can steal this if you want. It's for development only
-    geocodeApiKey: 'AIzaSyAWW8gOlj0-P0iT6ISsL1WFX27tNNPZ7_4',
+    geocodeApiKey: "AIzaSyAWW8gOlj0-P0iT6ISsL1WFX27tNNPZ7_4",
 };
 
 export const db = {

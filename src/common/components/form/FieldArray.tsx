@@ -1,7 +1,6 @@
-import * as React from 'react';
-import * as ReduxForm from 'redux-form';
-import { FieldArray as RfFieldArray } from 'redux-form';
-import * as fieldValidationHelper from '../../../common/helpers/fieldValidationHelper';
+import * as React from "react";
+import * as ReduxForm from "redux-form";
+import { FieldArray as RfFieldArray } from "redux-form";
 
 interface IFieldProps extends ReduxForm.BaseFieldsProps {
 }

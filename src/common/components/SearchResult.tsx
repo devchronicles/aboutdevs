@@ -1,10 +1,10 @@
-import * as React from 'react';
-import * as commonTypes from '../../common/typings';
-import * as ReactRedux from 'react-redux';
-import * as textHelper from '../helpers/textHelper';
-import * as stringHelper from '../helpers/stringHelper';
+import * as React from "react";
+import * as commonTypes from "../../common/typings";
+import * as ReactRedux from "react-redux";
+import * as textHelper from "../helpers/textHelper";
+import * as stringHelper from "../helpers/stringHelper";
 
-import {SearchDisplayDropdown} from './SearchDisplayDropdown';
+import { SearchDisplayDropdown } from "./SearchDisplayDropdown";
 import { ProfileList } from "./ProfileList";
 
 interface SearchResultStateProps {
