@@ -20,25 +20,25 @@ class SelectProfession extends React.Component<SelectProfessionProps, {}> {
         this.currentFetchTimeout = setTimeout(() => {
             searchProfessions(inputText)
                 .then((res) => {
-                    const options = res.data.map((i: any) => ({ value: i, label: i }));
-                    callback(null, { options, complete: true });
+                    const options = res.data.map((i: any) => ({value: i, label: i}));
+                    callback(null, {options, complete: true});
                 })
                 .catch((error) => callback(error, undefined));
         }, 800);
-    };
+    }
 
     private handleChange = (row: any) => {
-        const { onChange } = this.props.input;
+        const {onChange} = this.props.input;
         onChange(row ? row.value : null);
-    };
+    }
 
-    private isOptionUnique = ({ option, options }: ({ option: ReactSelect.Option, options: ReactSelect.Option[] })) => {
+    private isOptionUnique = ({option, options}: ({ option: ReactSelect.Option, options: ReactSelect.Option[] })) => {
         const selectedValue = option.value ? (option.value as string).toLowerCase() : "";
         return !options.map((o: ReactSelect.Option) => stringHelper.removeDiacritics(o.value as string).toLowerCase()).includes(selectedValue);
-    };
+    }
 
     public render() {
-        const { input: { value, onBlur }, meta: { error, touched } } = this.props;
+        const {input: {value, onBlur}, meta: {error, touched}} = this.props;
         const className = error && touched ? "invalid" : "";
         const adjustedValue = {
             value,

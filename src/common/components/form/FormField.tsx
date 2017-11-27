@@ -4,7 +4,7 @@ import * as fieldValidationMessageHelper from "../../../common/helpers/fieldVali
 import { FormGroup } from "./FormGroup";
 import { InputGroup } from "./InputGroup";
 
-interface IFormFieldProps extends ReduxForm.WrappedFieldProps<{}> {
+interface FormFieldProps extends ReduxForm.WrappedFieldProps<{}> {
     name: string;
     label: string;
     innerComponent: any;
@@ -15,7 +15,7 @@ interface IFormFieldProps extends ReduxForm.WrappedFieldProps<{}> {
     placeHolder: string;
 }
 
-const FormField: React.SFC<IFormFieldProps> = (props) => {
+const FormField: React.SFC<FormFieldProps> = (props) => {
 
     const {
         name,

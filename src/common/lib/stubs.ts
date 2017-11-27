@@ -30,6 +30,7 @@ export const profiles: commonTypes.UserProfile[] = [
         bio: loremIpsum,
         profession: "Contador",
         address: "Rua Henrique Surerus 28 Apto 904",
+        tags: [],
     },
     {
         id: 3,
@@ -41,6 +42,7 @@ export const profiles: commonTypes.UserProfile[] = [
         bio: loremIpsum,
         profession: "Contadora",
         address: "Rua Henrique Surerus 28 Apto 904",
+        tags: [],
     },
     {
         id: 4,
@@ -52,6 +54,7 @@ export const profiles: commonTypes.UserProfile[] = [
         bio: loremIpsum,
         profession: "Contador",
         address: "Rua Henrique Surerus 28 Apto 904",
+        tags: [],
     },
     {
         id: 5,
@@ -63,6 +66,7 @@ export const profiles: commonTypes.UserProfile[] = [
         bio: loremIpsum,
         profession: "Contador",
         address: "Rua Henrique Surerus 28 Apto 904",
+        tags: [],
     },
     {
         id: 2,
@@ -74,6 +78,7 @@ export const profiles: commonTypes.UserProfile[] = [
         bio: loremIpsum,
         profession: "Contador",
         address: "Rua Henrique Surerus 28 Apto 904",
+        tags: [],
     },
     {
         id: 3,
@@ -85,6 +90,7 @@ export const profiles: commonTypes.UserProfile[] = [
         bio: loremIpsum,
         profession: "Contadora",
         address: "Rua Henrique Surerus 28 Apto 904",
+        tags: [],
     },
     {
         id: 4,
@@ -96,6 +102,7 @@ export const profiles: commonTypes.UserProfile[] = [
         bio: loremIpsum,
         profession: "Contador",
         address: "Rua Henrique Surerus 28 Apto 904",
+        tags: [],
     },
     {
         id: 5,
@@ -107,5 +114,6 @@ export const profiles: commonTypes.UserProfile[] = [
         bio: loremIpsum,
         profession: "Contador",
         address: "Rua Henrique Surerus 28 Apto 904",
+        tags: [],
     },
 ];

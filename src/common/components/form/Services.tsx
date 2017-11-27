@@ -45,4 +45,3 @@ export class Services extends React.Component<ServicesProps> {
         );
     }
 }
-

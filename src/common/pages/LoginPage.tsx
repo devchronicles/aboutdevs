@@ -1,7 +1,6 @@
-import * as React from 'react';
-import { SocialButton } from '../components/SocialButton';
-import { Logo } from '../components/Logo';
-
+import * as React from "react";
+import { SocialButton } from "../components/SocialButton";
+import { Logo } from "../components/Logo";
 
 const LoginPage = () => (
     <div className="login-page-wrapper">

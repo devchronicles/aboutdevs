@@ -1,15 +1,10 @@
-import * as React from 'react';
-import {connect} from 'react-redux';
-import * as ReactRouter from 'react-router';
-import * as clientTypes from '../typings';
-import * as ReactRedux from 'react-redux';
-import * as urlHelper from '../../common/helpers/urlHelper';
-import * as gisHelper from '../helpers/gisHelper';
-import {Logo} from '../components/Logo';
-
-import {SearchForm} from '../components/SearchForm';
-import { IndexSearchForm } from '../components/IndexSearchForm';
-import { IndexIntro } from '../components/IndexIntro';
+import * as React from "react";
+import { connect, Dispatch } from "react-redux";
+import * as ReactRouter from "react-router";
+import * as clientTypes from "../typings";
+import * as urlHelper from "../../common/helpers/urlHelper";
+import * as gisHelper from "../helpers/gisHelper";
+import { IndexIntro } from "../components/IndexIntro";
 
 interface IndexPageStateProps {
 
@@ -60,7 +55,7 @@ const mapStateToProps = (state: clientTypes.ReduxState): IndexPageStateProps => 
     loggedUser: state.loggedUser,
 });
 
-const mapDispatchToProps = (dispatch: ReactRedux.Dispatch<clientTypes.ReduxState>): IndexPageDispatchProps => ({});
+const mapDispatchToProps = (dispatch: Dispatch<clientTypes.ReduxState>): IndexPageDispatchProps => ({});
 
 const mergeProps = (stateProps: IndexPageStateProps, dispatchProps: IndexPageDispatchProps, ownProps: IndexPageOwnProps): IndexPageProps => ({
     ...stateProps,

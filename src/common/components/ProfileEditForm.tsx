@@ -1,8 +1,4 @@
 import * as React from "react";
-import * as ReduxForm from "redux-form";
-import { getFormSubmitErrors, getFormSyncErrors, getFormValues, reduxForm } from "redux-form";
-import * as ReactRedux from "react-redux";
-import { connect } from "react-redux";
 import { FaIcon } from "./FaIcon";
 import {
     Field,
@@ -21,6 +17,8 @@ import {
 import { DocumentSection } from "./DocumentSection";
 import normalizePhone from "../lib/redux-form/normalizePhone";
 import asyncValidation from "../lib/redux-form/asyncValidation";
+import * as ReduxForm from "redux-form";
+import * as ReactRedux from "react-redux";
 import * as commonTypes from "../typings/commonTypes";
 
 interface ProfileEditFormStateProps {
@@ -163,7 +161,7 @@ let ProfileEditForm: React.SFC<ProfileEditorFormProps> = (props) => {
 const FORM_NAME = "profileEdit";
 
 // Decorate with redux-form
-ProfileEditForm = reduxForm({
+ProfileEditForm = ReduxForm.reduxForm({
     form: FORM_NAME, // a unique identifier for this form,
     asyncValidate: asyncValidation,
     asyncBlurFields: ["name"],
@@ -172,9 +170,9 @@ ProfileEditForm = reduxForm({
 // Decorate with connect to read form values
 
 const mapStateToProps = (state: commonTypes.ReduxState): ProfileEditFormStateProps => ({
-    formValues: getFormValues(FORM_NAME)(state),
-    formSyncErrors: getFormSyncErrors(FORM_NAME)(state),
-    formSubmitErrors: getFormSubmitErrors(FORM_NAME)(state),
+    formValues: ReduxForm.getFormValues(FORM_NAME)(state),
+    formSyncErrors: ReduxForm.getFormSyncErrors(FORM_NAME)(state),
+    formSubmitErrors: ReduxForm.getFormSubmitErrors(FORM_NAME)(state),
     loggedUser: state.loggedUser,
 });
 
@@ -188,7 +186,7 @@ const mergeProps = (stateProps: ProfileEditFormStateProps, dispatchProps: Profil
     ...ownProps,
 });
 
-const ConnectedProfileEditForm = connect<ProfileEditFormStateProps, ProfileEditFormDispatchProps, ProfileEditFormOwnProps, ProfileEditorFormProps>(
+const ConnectedProfileEditForm = ReactRedux.connect<ProfileEditFormStateProps, ProfileEditFormDispatchProps, ProfileEditFormOwnProps, ProfileEditorFormProps>(
     mapStateToProps,
     mapDispatchToProps,
     mergeProps,

@@ -70,13 +70,13 @@ export class Dropdown extends React.Component<DropdownProps, DropdownState> {
      */
     private setWrapperRef = (node: any) => {
         this.wrapperRef = node;
-    };
+    }
     private handleOpen = () => {
         this.setState({open: !this.state.open});
-    };
+    }
     private handleOnMenuItemClick = () => {
         this.setState({open: false});
-    };
+    }
     /**
      * Alert if clicked on outside of element
      */
@@ -84,7 +84,7 @@ export class Dropdown extends React.Component<DropdownProps, DropdownState> {
         if (this.state.open && this.wrapperRef && !this.wrapperRef.contains(event.target)) {
             this.setState({open: false});
         }
-    };
+    }
 
     public componentDidMount() {
         document.addEventListener("mousedown", this.handleClickOutside);
@@ -92,6 +92,17 @@ export class Dropdown extends React.Component<DropdownProps, DropdownState> {
 
     public componentWillUnmount() {
         document.removeEventListener("mousedown", this.handleClickOutside);
+    }
+
+    private static getClassForSize(size: DropdownMenuSize) {
+        switch (size) {
+            case DropdownMenuSize.SMALL:
+                return "size-sm";
+            case DropdownMenuSize.MEDIUM:
+                return "size-md";
+            case DropdownMenuSize.LARGE:
+                return "size-lg";
+        }
     }
 
     public render() {
@@ -108,23 +119,12 @@ export class Dropdown extends React.Component<DropdownProps, DropdownState> {
                     </span>
                     <i className="fa fa-caret-down"/>
                 </button>
-                <div className={`dropdown-menu-wrapper ${dropdownClass} ${this.getClassForSize(size)}`}>
+                <div className={`dropdown-menu-wrapper ${dropdownClass} ${Dropdown.getClassForSize(size)}`}>
                     <div className="dropdown-menu" onClick={this.handleOnMenuItemClick}>
                         {children}
                     </div>
                 </div>
             </ul>
         );
-    }
-
-    private getClassForSize(size: DropdownMenuSize) {
-        switch (size) {
-            case DropdownMenuSize.SMALL:
-                return "size-sm";
-            case DropdownMenuSize.MEDIUM:
-                return "size-md";
-            case DropdownMenuSize.LARGE:
-                return "size-lg";
-        }
     }
 }

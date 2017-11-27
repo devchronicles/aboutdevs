@@ -1,14 +1,14 @@
-import * as React from 'react';
-import { connect } from 'react-redux';
-import * as ReactRouter from 'react-router';
-import * as searchActions from '../redux/search/searchActions';
-import * as commonTypes from '../typings/commonTypes';
-import * as gisHelper from '../helpers/gisHelper';
-import * as urlHelper from '../helpers/urlHelper';
+import * as React from "react";
+import { connect } from "react-redux";
+import * as ReactRouter from "react-router";
+import * as searchActions from "../redux/search/searchActions";
+import * as commonTypes from "../typings/commonTypes";
+import * as gisHelper from "../helpers/gisHelper";
+import * as urlHelper from "../helpers/urlHelper";
 
-import {SearchForm} from '../components/SearchForm';
-import {SearchResult} from '../components/SearchResult';
-import { Dispatch } from 'redux';
+import { SearchForm } from "../components/SearchForm";
+import { SearchResult } from "../components/SearchResult";
+import { Dispatch } from "redux";
 
 interface SearchPageStateProps {
     searchCriteria: commonTypes.SearchCriteria;

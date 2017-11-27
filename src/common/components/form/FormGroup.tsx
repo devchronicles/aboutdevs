@@ -1,6 +1,6 @@
 import * as React from "react";
 
-interface IFormGroupProps {
+interface FormGroupProps {
     label?: string;
     labelFor?: string;
     help?: string;
@@ -8,7 +8,7 @@ interface IFormGroupProps {
     children: string | JSX.Element | JSX.Element[];
 }
 
-const FormGroup: React.SFC<IFormGroupProps> = ({ label, labelFor, help, error, children }) => {
+const FormGroup: React.SFC<FormGroupProps> = ({label, labelFor, help, error, children}) => {
     let labelComponent = null;
     let helpComponent = null;
 

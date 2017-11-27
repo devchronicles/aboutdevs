@@ -3,7 +3,6 @@ import config from "../../../config/config";
 import * as serverTypes from "../../server/typings";
 import * as geocodeApiFormattingHelper from "../helpers/geocodeApiFormattingHelper";
 import * as geocodeApiHelper from "../helpers/geocodeApiHelper";
-import * as searchHelper from "../helpers/searchHelper";
 import * as stringHelper from "../../common/helpers/stringHelper";
 
 /**

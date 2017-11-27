@@ -21,7 +21,7 @@ class SocialButton extends React.Component<SocialButtonProps, SocialButtonState>
         } else {
             this.setState({loading: true});
         }
-    };
+    }
 
     constructor(props: SocialButtonProps) {
         super(props);

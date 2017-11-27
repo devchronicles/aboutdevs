@@ -2,10 +2,10 @@ import * as React from "react";
 import * as ReduxForm from "redux-form";
 import * as commonTypes from "../../typings/commonTypes";
 
-interface IUserTypeToggle extends ReduxForm.WrappedFieldProps<{}> {
+interface UserTypeToggle extends ReduxForm.WrappedFieldProps<{}> {
 }
 
-const UserTypeToggle: React.SFC<IUserTypeToggle> = (field) => {
+const UserTypeToggle: React.SFC<UserTypeToggle> = (field) => {
     const { value, onChange } = field.input;
 
     const checkComponent = <i className="fa fa-check" />;

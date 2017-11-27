@@ -1,10 +1,10 @@
 import * as React from "react";
 
-interface IFormRow {
-    children: string | JSX.Element | JSX.Element[];
+interface FormRow {
+    children: React.ReactNode;
 }
 
-const FormRow: React.SFC<IFormRow> = ({ children }: IFormRow) => (
+const FormRow: React.SFC<FormRow> = ({children}: FormRow) => (
     <div className="form-row">
         {children}
     </div>

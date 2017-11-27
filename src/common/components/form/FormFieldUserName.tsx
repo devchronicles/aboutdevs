@@ -7,10 +7,10 @@ import * as fieldValidationMessageHelper from "../../../common/helpers/fieldVali
 
 const Spinner = ReactActivity.Spinner;
 
-interface IFormFieldUserNameProps extends ReduxForm.WrappedFieldProps<{}> {
+interface FormFieldUserNameProps extends ReduxForm.WrappedFieldProps<{}> {
 }
 
-class FormFieldUserName extends React.Component<IFormFieldUserNameProps> {
+export class FormFieldUserName extends React.Component<FormFieldUserNameProps> {
 
     getAddOnAfterComponent() {
         const {meta} = this.props;
@@ -51,5 +51,3 @@ class FormFieldUserName extends React.Component<IFormFieldUserNameProps> {
         );
     }
 }
-
-export { FormFieldUserName };

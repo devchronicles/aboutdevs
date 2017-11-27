@@ -1,14 +1,14 @@
-import * as React from 'react';
-import { connect } from 'react-redux';
-import * as ReactRouter from 'react-router';
-import { ProfileEditForm } from '../components/ProfileEditForm';
-import * as profileEditActions from '../../common/redux/profileEdit/profileEditActions';
-import * as commonTypes from '../../common/typings';
-import * as ReduxForm from 'redux-form';
-import * as httpClient from '../httpClient';
-import * as ReactNotificationSystem from 'react-notification-system';
-import * as notificationActions from '../../common/redux/notifications/notificationsActions';
-import { Dispatch } from 'redux';
+import * as React from "react";
+import { connect } from "react-redux";
+import * as ReactRouter from "react-router";
+import { ProfileEditForm } from "../components/ProfileEditForm";
+import * as profileEditActions from "../../common/redux/profileEdit/profileEditActions";
+import * as commonTypes from "../../common/typings";
+import * as ReduxForm from "redux-form";
+import * as httpClient from "../httpClient";
+import * as ReactNotificationSystem from "react-notification-system";
+import * as notificationActions from "../../common/redux/notifications/notificationsActions";
+import { Dispatch } from "redux";
 
 interface ProfileEditPageStateOwnProps extends ReactRouter.RouteComponentProps<any> {
     loggedUser: commonTypes.CurrentUserProfile;
@@ -40,15 +40,15 @@ class ProfileEditPage extends React.Component<ProfileEditPageProps> {
             throw new ReduxForm.SubmissionError(axiosResult.data.errors);
         } else {
             enqueueNotification({
-                message: 'Seu perfil foi salvo com sucesso',
-                level: 'success',
+                message: "Seu perfil foi salvo com sucesso",
+                level: "success",
             });
-            this.props.history.push('/');
+            this.props.history.push("/");
         }
     }
 
     private onFormCancel = () => {
-        this.props.history.push('/');
+        this.props.history.push("/");
     }
 
     public render() {

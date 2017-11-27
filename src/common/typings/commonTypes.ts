@@ -49,7 +49,7 @@ export interface UserProfile {
     bio?: string;
     photoUrl?: string;
     services?: UserService[];
-    tags: UserTag[];
+    tags?: UserTag[];
     phoneWhatsapp?: string;
     phoneAlternative?: string;
     address: string;

@@ -21,7 +21,7 @@ export class SearchDisplayDropdown extends React.Component<SearchDisplayDropdown
                 text={textHelper.getSearchDisplayText(targetDisplay)}
             />
         );
-    };
+    }
 
     public render() {
         const {value} = this.props;
@@ -49,4 +49,3 @@ export class SearchDisplayDropdown extends React.Component<SearchDisplayDropdown
         );
     }
 }
-

@@ -30,14 +30,14 @@ class SelectLocation extends React.Component<SelectLocationProps, {}> {
                 })
                 .catch((error) => callback(error, undefined));
         }, 800);
-    };
+    }
 
     private filterOptions = (options: any) => options;
 
     private handleChange = (row: any) => {
         const {onChange} = this.props.input;
         onChange(row ? row.value : null);
-    };
+    }
 
     public render() {
         const {input: {value, onBlur}, meta: {error, touched}, placeholder, strict} = this.props;
@@ -71,11 +71,17 @@ class SelectLocation extends React.Component<SelectLocationProps, {}> {
 
         return strict
             ? <ReactSelect.Async inputProps={{autoComplete: "off", autoCorrect: "off", spellCheck: "off"}} {...props} />
-            : <ReactSelect.AsyncCreatable inputProps={{
-                autoComplete: "off",
-                autoCorrect: "off",
-                spellCheck: "off",
-            }} {...props} {...notStrictProps}/>;
+            : (
+                <ReactSelect.AsyncCreatable
+                    inputProps={{
+                        autoComplete: "off",
+                        autoCorrect: "off",
+                        spellCheck: "off",
+                    }}
+                    {...props}
+                    {...notStrictProps}
+                />
+            );
     }
 }
 

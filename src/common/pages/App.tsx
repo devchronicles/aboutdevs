@@ -1,14 +1,14 @@
-import * as React from 'react';
-import { connect } from 'react-redux';
-import { Switch, Route, RouteComponentProps } from 'react-router';
-import { Header } from '../components/Header';
-import { IndexPage } from './IndexPage';
-import { ProfileEditPage } from './ProfileEditPage';
-import { SearchPage } from './SearchPage';
-import * as commonTypes from '../../common/typings';
-import * as ReactNotificationSystem from 'react-notification-system';
-import * as notificationActions from '../../common/redux/notifications/notificationsActions';
-import { Dispatch } from 'redux';
+import * as React from "react";
+import { connect } from "react-redux";
+import { Route, RouteComponentProps, Switch } from "react-router";
+import { Header } from "../components/Header";
+import { IndexPage } from "./IndexPage";
+import { ProfileEditPage } from "./ProfileEditPage";
+import { SearchPage } from "./SearchPage";
+import * as commonTypes from "../../common/typings";
+import * as ReactNotificationSystem from "react-notification-system";
+import * as notificationActions from "../../common/redux/notifications/notificationsActions";
+import { Dispatch } from "redux";
 
 interface AppStateProps {
     loggedUser: commonTypes.CurrentUserProfile;

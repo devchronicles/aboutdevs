@@ -1,6 +1,6 @@
 import * as React from "react";
 
-interface IInputGroupProps {
+interface InputGroupProps {
     addOnBefore: any;
     addOnBeforeClassName?: string;
     addOnAfter: any;
@@ -8,7 +8,7 @@ interface IInputGroupProps {
     children?: React.ReactNode;
 }
 
-const InputGroup: React.SFC<IInputGroupProps> = (props) => {
+const InputGroup: React.SFC<InputGroupProps> = (props) => {
     const {addOnBefore, addOnBeforeClassName, addOnAfter, addOnAfterClassName, children} = props;
 
     const addOnBeforeComponent = addOnBefore
