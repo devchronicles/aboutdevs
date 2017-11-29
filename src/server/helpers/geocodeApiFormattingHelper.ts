@@ -1,5 +1,4 @@
-import * as geocodeTypes from "../typings/googleGeocodeTypes";
-import { Result } from "./../typings/googleGeocodeTypes";
+import * as geocodeTypes from "../typings/googleGeocodeApiTypes";
 import * as geocodeApiHelper from "./geocodeApiHelper";
 
 /**

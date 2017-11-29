@@ -11,12 +11,12 @@ import * as stringHelper from "../../common/helpers/stringHelper";
  * @param {object} location The location to be saved in the cache
  * @param {object} db The db object
  */
-async function saveLocationToCache(searchTerm: string, location: serverTypes.GeocodeApiResult, db: serverTypes.AboutDevsDatabase): Promise<serverTypes.GeocodeApiResult> {
+async function saveLocationToCache(db: serverTypes.AboutDevsDatabase, searchTerm: string, location: serverTypes.GeocodeApiResult): Promise<serverTypes.GeocodeApiResult> {
     if (searchTerm === null || searchTerm === undefined) throw Error("Argument 'search' should be null or undefined");
     if (location === null || location === undefined) throw Error("Argument 'location' should be null or undefined");
 
     // this should be a in a transaction
-    const locations = await getLocationsFromCache(searchTerm, db);
+    const locations = await getLocationsFromCache(db, searchTerm);
     if (!locations) {
         const insertedLocation = (await db.geo_location_cache.insert({
             search: searchTerm,
@@ -32,10 +32,10 @@ async function saveLocationToCache(searchTerm: string, location: serverTypes.Geo
  * @param {string} searchTerm The search term the user typed
  * @param {object} db The db object
  */
-export function getLocationsFromCache(searchTerm: string, db: serverTypes.AboutDevsDatabase): Promise<serverTypes.GeocodeApiResult> {
-    if (searchTerm === null || searchTerm === undefined) throw Error("Argument 'partialAddress' should be null or undefined");
-    return db.geo_location_cache.findOne({search: searchTerm})
-        .then((r) => (r ? r.cache : undefined));
+export async function getLocationsFromCache(db: serverTypes.AboutDevsDatabase, searchTerm: string): Promise<serverTypes.GeocodeApiResult> {
+    if (searchTerm === null || searchTerm === undefined) throw Error("Argument 'searchTerm' should be null or undefined");
+    const result = await db.geo_location_cache.findOne({search: searchTerm});
+    return result ? result.cache : undefined;
 }
 
 /**
@@ -43,13 +43,13 @@ export function getLocationsFromCache(searchTerm: string, db: serverTypes.AboutD
  * @param {string} searchTerm The search term the user typed
  */
 export async function getLocationsFromGoogle(searchTerm: string): Promise<serverTypes.GeocodeApiResult> {
-    if (searchTerm === null || searchTerm === undefined) throw Error("Argument 'partialAddress' should be null or undefined");
+    if (searchTerm === null || searchTerm === undefined) throw Error("Argument 'searchTerm' should be null or undefined");
     const encodedLocation = encodeURIComponent(searchTerm);
     const key: string = config.google.geocodeApiKey;
-    const googleGeoCodeApiAdress
+    const googleGeoCodeApiAddress
         = `https://maps.google.com/maps/api/geocode/json?address=${encodedLocation}&components=country:BR&key=${key}`;
 
-    const res = await axios.get(googleGeoCodeApiAdress);
+    const res = await axios.get(googleGeoCodeApiAddress);
     if (res.data.errorMessage) {
         throw Error(res.data.errorMessage);
     }
@@ -62,13 +62,13 @@ export async function searchLocations(db: serverTypes.AboutDevsDatabase, searchT
         return Promise.resolve<serverTypes.GeocodeApiResult>(undefined);
     }
 
-    let locations = await getLocationsFromCache(normalizedSearchTerm, db);
+    let locations = await getLocationsFromCache(db, normalizedSearchTerm);
     if (locations) {
         return locations;
     }
     locations = await getLocationsFromGoogle(normalizedSearchTerm);
     try {
-        await saveLocationToCache(normalizedSearchTerm, locations, db);
+        await saveLocationToCache(db, normalizedSearchTerm, locations);
     } catch (ex) {
         // TODO: Fix this.
     }

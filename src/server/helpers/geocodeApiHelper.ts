@@ -1,4 +1,4 @@
-import * as geocodeTypes from "../typings/googleGeocodeTypes";
+import * as geocodeTypes from "../typings/googleGeocodeApiTypes";
 
 export const STREET_NUMBER_COMPONENT_TYPE = "street_number";
 export const STREET_COMPONENT_TYPE = "route";
