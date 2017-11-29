@@ -497,6 +497,40 @@ ALTER SEQUENCE profession_id_seq OWNED BY profession.id;
 
 
 --
+-- Name: stackoverflow_tags_cache; Type: TABLE; Schema: public; Owner: aboutdevs
+--
+
+CREATE TABLE stackoverflow_tags_cache (
+    id integer NOT NULL,
+    search character varying(50) NOT NULL,
+    cache json NOT NULL
+);
+
+
+ALTER TABLE stackoverflow_tags_cache OWNER TO aboutdevs;
+
+--
+-- Name: stackoverflow_tags_cache_id_seq; Type: SEQUENCE; Schema: public; Owner: aboutdevs
+--
+
+CREATE SEQUENCE stackoverflow_tags_cache_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE stackoverflow_tags_cache_id_seq OWNER TO aboutdevs;
+
+--
+-- Name: stackoverflow_tags_cache_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: aboutdevs
+--
+
+ALTER SEQUENCE stackoverflow_tags_cache_id_seq OWNED BY stackoverflow_tags_cache.id;
+
+
+--
 -- Name: tag; Type: TABLE; Schema: public; Owner: aboutdevs
 --
 
@@ -776,6 +810,13 @@ ALTER TABLE ONLY profession ALTER COLUMN id SET DEFAULT nextval('profession_id_s
 
 
 --
+-- Name: stackoverflow_tags_cache id; Type: DEFAULT; Schema: public; Owner: aboutdevs
+--
+
+ALTER TABLE ONLY stackoverflow_tags_cache ALTER COLUMN id SET DEFAULT nextval('stackoverflow_tags_cache_id_seq'::regclass);
+
+
+--
 -- Name: tag id; Type: DEFAULT; Schema: public; Owner: aboutdevs
 --
 
@@ -864,6 +905,14 @@ ALTER TABLE ONLY notification
 
 ALTER TABLE ONLY profession
     ADD CONSTRAINT profession_id_pk PRIMARY KEY (id);
+
+
+--
+-- Name: stackoverflow_tags_cache stackoverflow_tags_cache_pkey; Type: CONSTRAINT; Schema: public; Owner: aboutdevs
+--
+
+ALTER TABLE ONLY stackoverflow_tags_cache
+    ADD CONSTRAINT stackoverflow_tags_cache_pkey PRIMARY KEY (id);
 
 
 --
@@ -1052,6 +1101,20 @@ CREATE UNIQUE INDEX profession_name_feminine_uindex ON profession USING btree (n
 --
 
 CREATE INDEX search_canonical_idx ON "user" USING gin (to_tsvector('ptu'::regconfig, search_canonical));
+
+
+--
+-- Name: stackoverflow_tags_cache_id_uindex; Type: INDEX; Schema: public; Owner: aboutdevs
+--
+
+CREATE UNIQUE INDEX stackoverflow_tags_cache_id_uindex ON stackoverflow_tags_cache USING btree (id);
+
+
+--
+-- Name: stackoverflow_tags_cache_search_uindex; Type: INDEX; Schema: public; Owner: aboutdevs
+--
+
+CREATE UNIQUE INDEX stackoverflow_tags_cache_search_uindex ON stackoverflow_tags_cache USING btree (search);
 
 
 --
