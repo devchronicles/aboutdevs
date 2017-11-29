@@ -33,7 +33,7 @@ async function saveTagsToCache(db: serverTypes.AboutDevsDatabase, searchTerm: st
     if (!existingCache) {
         const insertedCache = (await db.stackoverflow_tags_cache.insert({
             search: searchTerm,
-            cache: location,
+            cache: tags,
         })) as serverTypes.StackoverflowTagsCache;
         return insertedCache ? insertedCache.cache : undefined;
     }
