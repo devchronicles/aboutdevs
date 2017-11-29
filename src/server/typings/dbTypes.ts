@@ -1,5 +1,5 @@
 import * as massive from "massive";
-import * as googleGeocodeTypes from "./googleGeocodeTypes";
+import * as serverTypes from "./index";
 
 export enum UserGender {
     MALE = 0,
@@ -35,7 +35,7 @@ export interface GeoLocationCity {
 
 export interface GeoLocationCache {
     search: string;
-    cache: googleGeocodeTypes.GeocodeApiResult;
+    cache: serverTypes.GeocodeApiResult;
 }
 
 export interface UserService {
@@ -107,6 +107,12 @@ export interface Profession {
     name_feminine_normalized: string;
 }
 
+export interface StackoverflowTagsCache {
+    id: number;
+    search: string;
+    cache: serverTypes.TagSearchResult;
+}
+
 export interface Tag {
     id: number;
     name: string;
@@ -133,6 +139,7 @@ export interface AboutDevsDatabase extends massive.Database {
     user_recommendation: massive.Table<UserRecommendation>;
     user_tag: massive.Table<UserTag>;
     profession: massive.Table<Profession>;
+    stackoverflow_tags_cache: massive.Table<StackoverflowTagsCache>;
 
     // functions
     is_user_name_taken: (userName: string, userId: number) => Promise<Array<{ exists: boolean }>>;
