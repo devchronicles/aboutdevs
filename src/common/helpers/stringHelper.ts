@@ -209,21 +209,25 @@ export function incrementLast(str: string, addIfNoNumber: boolean = false) {
 /**
  * Returns a completely normalized version of the given string
  * @param {string} text
- * @param {boolean} ranc
- * @param {boolean} rd
- * @param {boolean} ns
- * @param {boolean} lc
+ * @param {boolean} noAlphaNumerics
+ * @param {boolean} noDiacritics
+ * @param {boolean} noDuplicateSpaces
+ * @param {boolean} noUpperCase
  * @returns {any}
  */
-export function normalizeForSearch(text: string, ranc = true, rd = true, ns = true, lc = true) {
+export function normalizeForSearch(text: string,
+                                   noAlphaNumerics = true,
+                                   noDiacritics = true,
+                                   noDuplicateSpaces = true,
+                                   noUpperCase = true) {
     if (!text) {
         return "";
     }
     let normalizedSearch = text;
-    normalizedSearch = lc ? normalizedSearch.toLowerCase() : normalizedSearch;
-    normalizedSearch = rd ? removeDiacritics(normalizedSearch) : normalizedSearch;
-    normalizedSearch = ranc ? replaceNonAlphaNumericCharactersWith(normalizedSearch, " ") : normalizedSearch;
-    normalizedSearch = ns ? removeDuplicateSpaces(normalizedSearch) : normalizedSearch;
+    normalizedSearch = noUpperCase ? normalizedSearch.toLowerCase() : normalizedSearch;
+    normalizedSearch = noDiacritics ? removeDiacritics(normalizedSearch) : normalizedSearch;
+    normalizedSearch = noAlphaNumerics ? replaceNonAlphaNumericCharactersWith(normalizedSearch, " ") : normalizedSearch;
+    normalizedSearch = noDuplicateSpaces ? removeDuplicateSpaces(normalizedSearch) : normalizedSearch;
     normalizedSearch = normalizedSearch.trim();
     return normalizedSearch;
 }
