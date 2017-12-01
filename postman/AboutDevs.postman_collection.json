@@ -1,0 +1,76 @@
+{
+  "info": {
+    "name": "AboutDevs",
+    "_postman_id": "bef4bb92-5c01-7155-4d20-a174ebdbb518",
+    "description": "",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Search tags",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "user-id",
+            "value": "1"
+          }
+        ],
+        "body": {},
+        "url": {
+          "raw": "localhost:4000/api/addresses?q=Rua Iracema",
+          "host": [
+            "localhost"
+          ],
+          "port": "4000",
+          "path": [
+            "api",
+            "addresses"
+          ],
+          "query": [
+            {
+              "key": "q",
+              "value": "Rua Iracema",
+              "equals": true
+            }
+          ]
+        },
+        "description": ""
+      },
+      "response": []
+    },
+    {
+      "name": "Search addresses",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "user-id",
+            "value": "1"
+          }
+        ],
+        "body": {},
+        "url": {
+          "raw": "localhost:4000/api/addresses?q=Rua Iracema",
+          "host": [
+            "localhost"
+          ],
+          "port": "4000",
+          "path": [
+            "api",
+            "addresses"
+          ],
+          "query": [
+            {
+              "key": "q",
+              "value": "Rua Iracema",
+              "equals": true
+            }
+          ]
+        },
+        "description": ""
+      },
+      "response": []
+    }
+  ]
+}
