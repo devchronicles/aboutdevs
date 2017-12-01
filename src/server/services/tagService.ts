@@ -57,3 +57,9 @@ export async function searchTags(db: serverTypes.AboutDevsDatabase, searchTerm: 
     }
     return tags;
 }
+
+export async function searchTagsFormatted(db: serverTypes.AboutDevsDatabase, searchTerm: string): Promise<string[]> {
+    const tags = await searchTags(db, searchTerm);
+    if (!tags || !tags.items || !tags.items.length) return [];
+    return tags.items.map((t) => t.name);
+}

@@ -56,31 +56,6 @@ export async function getLocationsFromGoogle(searchTerm: string): Promise<server
     return res.data;
 }
 
-export async function searchLocations(db: serverTypes.AboutDevsDatabase, searchTerm: string, allowCities: boolean): Promise<serverTypes.GeocodeApiResult> {
-    const normalizedSearchTerm = stringHelper.normalizeForSearch(searchTerm);
-    if (!normalizedSearchTerm) {
-        return Promise.resolve<serverTypes.GeocodeApiResult>(undefined);
-    }
-
-    let locations = await getLocationsFromCache(db, normalizedSearchTerm);
-    if (locations) {
-        return locations;
-    }
-    locations = await getLocationsFromGoogle(normalizedSearchTerm);
-    try {
-        await saveLocationToCache(db, normalizedSearchTerm, locations);
-    } catch (ex) {
-        // TODO: Fix this.
-    }
-    return locations;
-}
-
-export async function getFormattedLocations(db: serverTypes.AboutDevsDatabase, searchTerm: string, allowCities: boolean): Promise<string[]> {
-    const locations = await searchLocations(db, searchTerm, allowCities);
-    const formattedLocations = await geocodeApiFormattingHelper.getFormattedLocations(locations, allowCities);
-    return formattedLocations;
-}
-
 export async function saveCountry(db: serverTypes.AboutDevsDatabase, shortName: string, longName: string): Promise<serverTypes.GeoLocationCountry> {
     let country = await db.geo_location_country.findOne({short_name: shortName});
     if (!country) {
@@ -158,4 +133,28 @@ export async function getFormattedLocationById(db: serverTypes.AboutDevsDatabase
     const location = await db.geo_location.findOne({id: geoLocationId});
     if (!location) throw Error("could not find location");
     return location.formatted_address;
+}
+
+export async function searchLocations(db: serverTypes.AboutDevsDatabase, searchTerm: string, allowCities: boolean): Promise<serverTypes.GeocodeApiResult> {
+    const normalizedSearchTerm = stringHelper.normalizeForSearch(searchTerm);
+    if (!normalizedSearchTerm) {
+        return Promise.resolve<serverTypes.GeocodeApiResult>(undefined);
+    }
+
+    let locations = await getLocationsFromCache(db, normalizedSearchTerm);
+    if (locations) {
+        return locations;
+    }
+    locations = await getLocationsFromGoogle(normalizedSearchTerm);
+    try {
+        await saveLocationToCache(db, normalizedSearchTerm, locations);
+    } catch (ex) {
+        // TODO: Fix this.
+    }
+    return locations;
+}
+
+export async function searchLocationsFormatted(db: serverTypes.AboutDevsDatabase, searchTerm: string, allowCities: boolean): Promise<string[]> {
+    const locations = await searchLocations(db, searchTerm, allowCities);
+    return geocodeApiFormattingHelper.getFormattedLocations(locations, allowCities);
 }

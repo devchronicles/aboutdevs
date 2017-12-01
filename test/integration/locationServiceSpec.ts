@@ -1,4 +1,4 @@
-import {assert} from "chai";
+import { assert } from "chai";
 import * as geocodeApiFormattingHelper from "../../src/server/helpers/geocodeApiFormattingHelper";
 import * as locationService from "../../src/server/services/locationService";
 import * as serverTypes from "../../src/server/typings";
@@ -65,7 +65,7 @@ describe("locationHelperSpec", () => {
             const searchTerm = "henrique surerus jf";
             let locationCache = await db.geo_location_cache.findOne({ search: searchTerm });
             assert.isNotOk(locationCache);
-            const formattedLocations = await locationService.getFormattedLocations(db, searchTerm, false);
+            const formattedLocations = await locationService.searchLocationsFormatted(db, searchTerm, false);
             assert.equal(1, formattedLocations.length);
             locationCache = await db.geo_location_cache.findOne({ search: searchTerm });
             assert.ok(locationCache);

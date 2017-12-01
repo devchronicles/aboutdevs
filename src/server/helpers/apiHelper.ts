@@ -1,5 +1,4 @@
 import * as express from "express";
-import * as massive from "massive";
 import buildDb from "../db/buildDb";
 import * as dbTypes from "../typings/dbTypes";
 
@@ -21,7 +20,7 @@ export function getAndEnsureUserId(req: express.Request): number {
 export function apiExceptionCatcher(res: express.Response): (ex: Error) => any {
     if (!res) throw Error("Argument 'res' should be truthy");
 
-    return (ex: Error) => res.status(500).send({ error: ex.message });
+    return (ex: Error) => res.status(500).send({error: ex.message});
 }
 
 /**
@@ -35,7 +34,7 @@ export function sendError(res: express.Response, error: Error | string, status =
 
     const resultError = error instanceof Error ? error.message : error;
     const finalError = process.env.NODE_ENV !== "production" ? resultError : "Something went wrong in the server";
-    return res.status(status).send({ error: finalError });
+    return res.status(status).send({error: finalError});
 }
 
 /**
@@ -71,19 +70,20 @@ export function sendPromise(res: express.Response, promise: Promise<any>): Promi
         .catch((e) => sendError(res, e));
 }
 
-export async function sendPromiseDb(res: express.Response, promiseFunction: (db: dbTypes.AboutDevsDatabase) => any): Promise<express.Response> {
+export async function sendDbConnectedPromise(res: express.Response, promiseFunction: (db: dbTypes.AboutDevsDatabase) => any): Promise<void> {
     if (!res) throw Error("Argument 'res' should be truthy");
     if (!promiseFunction) throw Error("Argument 'promiseFunction' should be truthy");
 
-    return buildDb()
-        .then((db) => promiseFunction(db))
-        .then((result) => sendOk(res, result))
-        .catch((e) => {
-            if (process.env.NODE_ENV !== "production") {
-                /* tslint:disable */
-                console.log(e);
-                /* tslint:enable */
-            }
-            return sendError(res, e);
-        });
+    const db = await buildDb();
+    try {
+        const promiseResult = await promiseFunction(db);
+        sendOk(res, promiseResult);
+    } catch (ex) {
+        if (process.env.NODE_ENV !== "production") {
+            /* tslint:disable */
+            console.log(ex);
+            /* tslint:enable */
+        }
+        sendError(res, ex);
+    }
 }

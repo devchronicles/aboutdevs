@@ -36,6 +36,6 @@ app.use("", appRoute);
 
 app.listen(4000, "0.0.0.0", () => {
     /* tslint:disable */
-    console.log(colors.green(`IndieJobs started at http://localhost:4000/. NODE_ENV: ${process.env.NODE_ENV}`));
+    console.log(colors.green(`AboutDevs started at http://localhost:4000/. NODE_ENV: ${process.env.NODE_ENV}`));
     /* tslint-enable */
 });

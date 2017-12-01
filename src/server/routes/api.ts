@@ -1,5 +1,6 @@
 import * as express from "express";
 import * as apiHelper from "../helpers/apiHelper";
+import * as tagService from "../services/tagService";
 import * as locationService from "../services/locationService";
 import * as searchHelper from "../helpers/searchHelper";
 import * as userService from "../services/userService";
@@ -9,13 +10,22 @@ import * as commonTypes from "../../common/typings/commonTypes";
 
 const router = express.Router();
 
-router.route("/addresses").get((req: express.Request, res: express.Response) => {
+router.route("/addresses").get(async (req: express.Request, res: express.Response) => {
     const allowCities: boolean = req.query.allowcities;
-    apiHelper.sendPromiseDb(res, (db: dbTypes.AboutDevsDatabase) => locationService.getFormattedLocations(db, req.query.q as string, allowCities));
+    await apiHelper.sendDbConnectedPromise(res,
+        (db: dbTypes.AboutDevsDatabase) => locationService.searchLocationsFormatted(db, req.query.q as string, allowCities));
 });
 
-router.route("/professions").get((req, res) => {
-    apiHelper.sendPromiseDb(res,
+router.route("/tags").get(async (req, res) => {
+    await apiHelper.sendDbConnectedPromise(res,
+        async (db: dbTypes.AboutDevsDatabase) => {
+            apiHelper.getAndEnsureUserId(req);
+            return tagService.searchTagsFormatted(db, req.query.q as string);
+        });
+});
+
+router.route("/professions").get(async (req, res) => {
+    await apiHelper.sendDbConnectedPromise(res,
         async (db: dbTypes.AboutDevsDatabase) => {
             apiHelper.getAndEnsureUserId(req);
             const professions = await db.search_professions(searchHelper.convertToTsVector(stringHelper.normalizeForSearch(req.query.q)));
@@ -27,8 +37,8 @@ router.route("/professions").get((req, res) => {
     );
 });
 
-router.route("/users/check_name").get((req, res) => {
-    apiHelper.sendPromiseDb(res,
+router.route("/users/check_name").get(async (req, res) => {
+    await apiHelper.sendDbConnectedPromise(res,
         async (db) => {
             const userId = apiHelper.getAndEnsureUserId(req);
             const userName = req.query.q;
@@ -37,16 +47,16 @@ router.route("/users/check_name").get((req, res) => {
         });
 });
 
-router.route("/users/edit_my_profile").get((req, res) => {
-    apiHelper.sendPromiseDb(res,
+router.route("/users/edit_my_profile").get(async (req, res) => {
+    await apiHelper.sendDbConnectedPromise(res,
         async (db) => {
             const userId = apiHelper.getAndEnsureUserId(req);
             return userService.getUserProfileById(db, userId, userId, commonTypes.Operation.EDIT);
         });
 });
 
-router.route("/users/edit_my_profile").post((req, res) => {
-    apiHelper.sendPromiseDb(res,
+router.route("/users/edit_my_profile").post(async (req, res) => {
+    await apiHelper.sendDbConnectedPromise(res,
         async (db) => {
             if (!req.body) throw Error("profile was not submitted");
             const profile = req.body;
@@ -59,9 +69,9 @@ router.route("/users/edit_my_profile").post((req, res) => {
         });
 });
 
-router.route("/users").get((req, res) => {
+router.route("/users").get(async (req, res) => {
     if (!req.body) throw Error("profile was not submitted");
-    apiHelper.sendPromiseDb(res,
+    await apiHelper.sendDbConnectedPromise(res,
         async (db) => {
             const search = req.query.q;
             const location = req.query.l;
@@ -72,9 +82,9 @@ router.route("/users").get((req, res) => {
         });
 });
 
-router.route("/users/:user_name").get((req, res) => {
+router.route("/users/:user_name").get(async (req, res) => {
     if (!req.body) throw Error("profile was not submitted");
-    apiHelper.sendPromiseDb(res,
+    await apiHelper.sendDbConnectedPromise(res,
         async (db) => {
             const userName = req.params.user_name;
             const user = await db.user.findOne({name: userName});
@@ -89,8 +99,8 @@ router.route("/users/:user_name").get((req, res) => {
 /**
  * Get user
  */
-router.route("/users/:id").get((req, res) => {
-    apiHelper.sendPromiseDb(res,
+router.route("/users/:id").get(async (req, res) => {
+    await apiHelper.sendDbConnectedPromise(res,
         async (db) => {
             apiHelper.getAndEnsureUserId(req);
             const entityId = req.params.id;
