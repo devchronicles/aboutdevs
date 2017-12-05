@@ -1,9 +1,13 @@
-import {assert} from "chai";
+import { assert } from "chai";
 import * as userHelper from "../../src/server/services/userService";
 import * as serverTypes from "../../src/server/typings";
 import googleProfileSample from "./resources/googleProfileSample";
 import setupSession from "./setupSession";
 import * as commonTypes from "../../src/common/typings/commonTypes";
+import {
+    createFromGoogleProfile, findOrCreateFromGoogleProfile,
+    updateFromGoogleProfile,
+} from "../../src/server/services/googleOAuthService";
 
 describe("userService", () => {
     let db: serverTypes.AboutDevsDatabase = null;
@@ -52,7 +56,7 @@ describe("userService", () => {
     });
     describe("createFromGoogleProfile", () => {
         it("Basic scenario", () =>
-            userHelper.createFromGoogleProfile(db, googleProfileSample)
+            createFromGoogleProfile(db, googleProfileSample)
                 .then((u) => {
                     assert.isOk(u);
                     // let's go to the database to see if the user has actually been added
@@ -76,7 +80,7 @@ describe("userService", () => {
                 photo_url: "foo.com/image.jpeg",
             })) as serverTypes.User;
 
-            user = await userHelper.updateFromGoogleProfile(db, user, googleProfileSample);
+            user = await updateFromGoogleProfile(db, user, googleProfileSample);
 
             assert.isOk(user);
             assert.isOk(user.oauth_profiles);
@@ -89,7 +93,7 @@ describe("userService", () => {
             db.user.findOne({email: "andrerpena@gmail.com"})
                 .then((u: serverTypes.User) => {
                     assert.isNull(u);
-                    return userHelper.findOrCreateFromGoogleProfile(db, googleProfileSample);
+                    return findOrCreateFromGoogleProfile(db, googleProfileSample);
                 })
 
                 .then((u: serverTypes.User) => {
@@ -105,7 +109,7 @@ describe("userService", () => {
                 display_name: "André Pena",
                 photo_url: "foo.com/image.jpeg",
             })
-                .then(() => userHelper.findOrCreateFromGoogleProfile(db, googleProfileSample))
+                .then(() => findOrCreateFromGoogleProfile(db, googleProfileSample))
                 .then((u) => {
                     assert.strictEqual(u.email, "andrerpena@gmail.com");
                     assert.ok(u.oauth_profiles.google);

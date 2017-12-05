@@ -52,7 +52,11 @@ export interface User {
     email: string;
     photo_url: string;
     oauth_profiles: {
-        google: {
+        google?: {
+            id: string,
+            raw: any,
+        },
+        linkedin?: {
             id: string,
             raw: any,
         },

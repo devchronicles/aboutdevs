@@ -1,15 +1,18 @@
 import * as passport from "passport";
 import { OAuth2Strategy as GoogleStrategy } from "passport-google-oauth";
+import { OAuth2Strategy as LinkedInStrategy } from "passport-linkedin-oauth2";
 import buildDb from "../db/buildDb";
 import * as userHelper from "../services/userService";
-import * as dbTypes from "../typings/dbTypes";
 import * as googleOAuthTypes from "../typings/googleOAuthTypes";
+import * as linkedInOAuthTypes from "../typings/linkedInOAuthTypes";
+import { findOrCreateFromGoogleProfile } from "../services/googleOAuthService";
+import { findOrCreateFromLinkedInProfile } from "../services/linkedInOAuthService";
 
 /**
  * Setups up passport
  * @param passportInstance
  */
-export default function(passportInstance: passport.Passport) {
+export default function (passportInstance: passport.Passport) {
     if (!passportInstance) throw Error("'passport' should be truthy");
 
     passportInstance.serializeUser((userId, done) => {
@@ -18,7 +21,7 @@ export default function(passportInstance: passport.Passport) {
 
     passportInstance.deserializeUser((userId, done) => {
         buildDb()
-            .then((db) => db.user.findOne({ id: userId })
+            .then((db) => db.user.findOne({id: userId})
                 .then((u) => (u ? userHelper.getReduxDataForLoggedUser(u) : null))
                 .then((u) => done(null, u))
                 .catch(done),
@@ -32,13 +35,33 @@ export default function(passportInstance: passport.Passport) {
             clientSecret: "0RSivJavPFZIkPlPIWMTSLzO",
             callbackURL: "http://127.0.0.1:4000/auth/google/callback",
         },
-        (accessToken, refreshToken, profile: googleOAuthTypes.GoogleOAuthProfile, done) => {
-            buildDb()
-                .then((db: dbTypes.AboutDevsDatabase) =>
-                    userHelper.findOrCreateFromGoogleProfile(db, profile)
-                        .then((u: dbTypes.User) => done(null, u.id)) // this will call passport.serializeUser
-                        .catch(done),
-                );
+        async (accessToken, refreshToken, profile: googleOAuthTypes.GoogleOAuthProfile, done) => {
+            try {
+                const db = await buildDb();
+                const user = await findOrCreateFromGoogleProfile(db, profile);
+                done(null, user.id);
+            } catch (ex) {
+                done(ex);
+            }
+        },
+    ));
+
+    // sets up passport for LinkedIn
+    passportInstance.use(new LinkedInStrategy(
+        {
+            clientID: "78noh1ykaqsz15",
+            clientSecret: "4eBPrUndcmjO12xE",
+            callbackURL: "http://127.0.0.1:4000/auth/linkedin/callback",
+            scope: ["r_emailaddress", "r_basicprofile"],
+        },
+        async (accessToken, refreshToken, profile: linkedInOAuthTypes.LinkedInOAuthProfile, done) => {
+            try {
+                const db = await buildDb();
+                const user = await findOrCreateFromLinkedInProfile(db, profile);
+                done(null, user.id);
+            } catch (ex) {
+                done(ex);
+            }
         },
     ));
 }

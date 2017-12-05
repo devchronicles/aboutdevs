@@ -5,6 +5,11 @@ import { redirectToHome, redirectToProfileEdit } from "../helpers/urlHelper";
 
 const router = express.Router();
 
+router.route("/google").get(passport.authenticate("google", {
+    scope: ["https://www.googleapis.com/auth/userinfo.profile",
+        "https://www.googleapis.com/auth/userinfo.email"],
+}));
+
 router.route("/google/callback").get(passport.authenticate("google", {
     failureRedirect: "/error",
 }), (req, res) => {
@@ -14,10 +19,17 @@ router.route("/google/callback").get(passport.authenticate("google", {
     res.redirect("/auth/verifyuserprofile");
 });
 
-router.route("/google").get(passport.authenticate("google", {
-    scope: ["https://www.googleapis.com/auth/userinfo.profile",
-        "https://www.googleapis.com/auth/userinfo.email"],
+router.route("/linkedin").get(passport.authenticate("linkedin", {
 }));
+
+router.route("/linkedin/callback").get(passport.authenticate("linkedin", {
+    failureRedirect: "/error",
+}), (req, res) => {
+    // this is a hack, I'm storing this value just so I can obtain it back
+    // in my own connect-middleware on every request
+    req.session.userId = req.user;
+    res.redirect("/auth/verifyuserprofile");
+});
 
 /**
  * Called after a successful authentication.
@@ -30,7 +42,7 @@ router.route("/verifyuserprofile").get((req, res) => {
     } else {
         buildDb()
             .then((db) =>
-                db.user.findOne({ id: user.id })
+                db.user.findOne({id: user.id})
                     .then((u) => {
                         if (u) {
                             if (u.status === 0) {
