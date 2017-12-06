@@ -8,14 +8,13 @@ export enum Operation {
 export interface CurrentUserProfile {
     id: number;
     name: string;
-    gender: number;
     displayName: string;
     photoUrl: string;
 }
 
 export enum UserProfileType {
-    USER = 0,
-    PROFESSIONAL = 1,
+    DEVELOPER = 0,
+    RECRUITER = 1,
 }
 
 export enum UserProfileLoadState {
@@ -29,15 +28,7 @@ export enum UserProfileStatus {
     READY = 1,
 }
 
-export interface UserService {
-    id?: number;
-    service: string;
-    index: number;
-}
-
 export interface UserProfile {
-    [key: string]: any;
-
     id?: number; // id is not required because when you are saving a user
     name: string;
     email?: string;
@@ -45,13 +36,10 @@ export interface UserProfile {
     loadState?: UserProfileLoadState;
     status?: UserProfileStatus;
     displayName: string;
-    profession: string;
+    title: string;
     bio?: string;
     photoUrl?: string;
-    services?: UserService[];
     tags?: UserTag[];
-    phoneWhatsapp?: string;
-    phoneAlternative?: string;
     address: string;
 }
 
@@ -61,18 +49,13 @@ export interface UserSearchProfile {
     photoUrl: string;
     name: string;
     distance: number;
-    profession: string;
-    services: UserService[];
-}
-
-export interface UserService {
-    id?: number;
-    service: string;
+    title: string;
+    tags: UserTag[];
 }
 
 export interface UserTag {
     id?: number;
-    tag: string;
+    name: string;
 }
 
 // SEARCH

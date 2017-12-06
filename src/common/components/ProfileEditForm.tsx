@@ -1,18 +1,8 @@
 import * as React from "react";
 import { FaIcon } from "./FaIcon";
 import {
-    Field,
-    FieldArray,
-    FormField,
-    FormFieldUserName,
-    FormGroup,
-    FormRow,
-    SelectLocation,
-    SelectProfession,
-    Services,
-    TextArea,
-    TextBox,
-    UserTypeToggle,
+    Field, FieldArray, FormField, FormFieldUserName, FormGroup, FormRow, SelectLocation, SelectProfession,
+    Services, TextArea, TextBox, UserTypeToggle,
 } from "./form/index";
 import { DocumentSection } from "./DocumentSection";
 import normalizePhone from "../lib/redux-form/normalizePhone";
@@ -86,7 +76,8 @@ let ProfileEditForm: React.SFC<ProfileEditorFormProps> = (props) => {
                         </FormGroup>
                     </FormRow>
                 </DocumentSection>
-                <DocumentSection visible={formValues ? formValues.type === commonTypes.UserProfileType.PROFESSIONAL : true} className="flex-column flex-align-items-center">
+                <DocumentSection visible={formValues ? formValues.type === commonTypes.UserProfileType.RECRUITER : true}
+                                 className="flex-column flex-align-items-center">
                     <FormRow>
                         <Field
                             name="profession"

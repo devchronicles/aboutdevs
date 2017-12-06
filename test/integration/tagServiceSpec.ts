@@ -3,7 +3,7 @@ import * as serverTypes from "../../src/server/typings";
 import * as tagService from "../../src/server/services/tagService";
 import setupSession from "./setupSession";
 
-describe("locationHelperSpec", () => {
+describe("tagHelperSpec", () => {
     let db: serverTypes.AboutDevsDatabase = null;
     setupSession(before, after, beforeEach, afterEach, ($db: serverTypes.AboutDevsDatabase) => {
         db = $db;

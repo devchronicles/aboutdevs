@@ -68,6 +68,22 @@ COMMENT ON EXTENSION unaccent IS 'text search dictionary that removes accents';
 SET search_path = public, pg_catalog;
 
 --
+-- Name: _aboutdevs_select_tags_from_user(integer); Type: FUNCTION; Schema: public; Owner: aboutdevs
+--
+
+CREATE FUNCTION _aboutdevs_select_tags_from_user(user_id integer) RETURNS TABLE(id integer, tag character varying)
+    LANGUAGE sql
+    AS $_$
+SELECT t.id, t.name
+    FROM tag t INNER JOIN user_tag ut ON t.id = ut.tag_id
+    INNER JOIN "user" u ON u.id = ut.user_id
+    WHERE u.id = $1
+$_$;
+
+
+ALTER FUNCTION public._aboutdevs_select_tags_from_user(user_id integer) OWNER TO aboutdevs;
+
+--
 -- Name: ptu; Type: TEXT SEARCH CONFIGURATION; Schema: public; Owner: postgres
 --
 
@@ -461,42 +477,6 @@ ALTER SEQUENCE notification_id_seq OWNED BY notification.id;
 
 
 --
--- Name: profession; Type: TABLE; Schema: public; Owner: aboutdevs
---
-
-CREATE TABLE profession (
-    name_canonical character varying(80) NOT NULL,
-    name_feminine character varying(80),
-    id integer NOT NULL,
-    name_canonical_normalized character varying(80),
-    name_feminine_normalized character varying(80)
-);
-
-
-ALTER TABLE profession OWNER TO aboutdevs;
-
---
--- Name: profession_id_seq; Type: SEQUENCE; Schema: public; Owner: aboutdevs
---
-
-CREATE SEQUENCE profession_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE profession_id_seq OWNER TO aboutdevs;
-
---
--- Name: profession_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: aboutdevs
---
-
-ALTER SEQUENCE profession_id_seq OWNED BY profession.id;
-
-
---
 -- Name: stackoverflow_tags_cache; Type: TABLE; Schema: public; Owner: aboutdevs
 --
 
@@ -588,14 +568,9 @@ CREATE TABLE "user" (
     oauth_profiles json,
     status smallint DEFAULT 0 NOT NULL,
     type smallint DEFAULT 0 NOT NULL,
-    profession_other character varying(80),
-    gender smallint NOT NULL,
+    title character varying(80),
     geo_location_id integer,
-    profession_id integer,
     bio character varying(500),
-    activities character varying(500),
-    phone_whatsapp character varying(20),
-    phone_alternative character varying(20),
     search_canonical text,
     name character varying(255) NOT NULL,
     email character varying(255) NOT NULL,
@@ -610,113 +585,6 @@ ALTER TABLE "user" OWNER TO postgres;
 --
 
 COMMENT ON COLUMN "user".oauth_profiles IS 'A JSON containing information returned by OAuth providers';
-
-
---
--- Name: user_connection; Type: TABLE; Schema: public; Owner: aboutdevs
---
-
-CREATE TABLE user_connection (
-    id integer NOT NULL,
-    user_id integer NOT NULL,
-    user_professional_id integer NOT NULL,
-    request text NOT NULL,
-    created_at timestamp without time zone DEFAULT timezone('utc'::text, now()) NOT NULL
-);
-
-
-ALTER TABLE user_connection OWNER TO aboutdevs;
-
---
--- Name: user_connection_id_seq; Type: SEQUENCE; Schema: public; Owner: aboutdevs
---
-
-CREATE SEQUENCE user_connection_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE user_connection_id_seq OWNER TO aboutdevs;
-
---
--- Name: user_connection_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: aboutdevs
---
-
-ALTER SEQUENCE user_connection_id_seq OWNED BY user_connection.id;
-
-
---
--- Name: user_recommendation; Type: TABLE; Schema: public; Owner: aboutdevs
---
-
-CREATE TABLE user_recommendation (
-    id integer NOT NULL,
-    user_recommended_id integer NOT NULL,
-    user_id integer NOT NULL,
-    created_at timestamp without time zone DEFAULT timezone('utc'::text, now()) NOT NULL
-);
-
-
-ALTER TABLE user_recommendation OWNER TO aboutdevs;
-
---
--- Name: user_recommendation_id_seq; Type: SEQUENCE; Schema: public; Owner: aboutdevs
---
-
-CREATE SEQUENCE user_recommendation_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE user_recommendation_id_seq OWNER TO aboutdevs;
-
---
--- Name: user_recommendation_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: aboutdevs
---
-
-ALTER SEQUENCE user_recommendation_id_seq OWNED BY user_recommendation.id;
-
-
---
--- Name: user_service; Type: TABLE; Schema: public; Owner: aboutdevs
---
-
-CREATE TABLE user_service (
-    id integer NOT NULL,
-    user_id integer NOT NULL,
-    service character varying(64) NOT NULL,
-    index smallint NOT NULL,
-    service_canonical character varying(64) NOT NULL
-);
-
-
-ALTER TABLE user_service OWNER TO aboutdevs;
-
---
--- Name: user_service_id_seq; Type: SEQUENCE; Schema: public; Owner: aboutdevs
---
-
-CREATE SEQUENCE user_service_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE user_service_id_seq OWNER TO aboutdevs;
-
---
--- Name: user_service_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: aboutdevs
---
-
-ALTER SEQUENCE user_service_id_seq OWNED BY user_service.id;
 
 
 --
@@ -803,13 +671,6 @@ ALTER TABLE ONLY notification ALTER COLUMN id SET DEFAULT nextval('notification_
 
 
 --
--- Name: profession id; Type: DEFAULT; Schema: public; Owner: aboutdevs
---
-
-ALTER TABLE ONLY profession ALTER COLUMN id SET DEFAULT nextval('profession_id_seq'::regclass);
-
-
---
 -- Name: stackoverflow_tags_cache id; Type: DEFAULT; Schema: public; Owner: aboutdevs
 --
 
@@ -821,27 +682,6 @@ ALTER TABLE ONLY stackoverflow_tags_cache ALTER COLUMN id SET DEFAULT nextval('s
 --
 
 ALTER TABLE ONLY tag ALTER COLUMN id SET DEFAULT nextval('tag_id_seq'::regclass);
-
-
---
--- Name: user_connection id; Type: DEFAULT; Schema: public; Owner: aboutdevs
---
-
-ALTER TABLE ONLY user_connection ALTER COLUMN id SET DEFAULT nextval('user_connection_id_seq'::regclass);
-
-
---
--- Name: user_recommendation id; Type: DEFAULT; Schema: public; Owner: aboutdevs
---
-
-ALTER TABLE ONLY user_recommendation ALTER COLUMN id SET DEFAULT nextval('user_recommendation_id_seq'::regclass);
-
-
---
--- Name: user_service id; Type: DEFAULT; Schema: public; Owner: aboutdevs
---
-
-ALTER TABLE ONLY user_service ALTER COLUMN id SET DEFAULT nextval('user_service_id_seq'::regclass);
 
 
 --
@@ -900,14 +740,6 @@ ALTER TABLE ONLY notification
 
 
 --
--- Name: profession profession_id_pk; Type: CONSTRAINT; Schema: public; Owner: aboutdevs
---
-
-ALTER TABLE ONLY profession
-    ADD CONSTRAINT profession_id_pk PRIMARY KEY (id);
-
-
---
 -- Name: stackoverflow_tags_cache stackoverflow_tags_cache_pkey; Type: CONSTRAINT; Schema: public; Owner: aboutdevs
 --
 
@@ -924,35 +756,11 @@ ALTER TABLE ONLY tag
 
 
 --
--- Name: user_connection user_connection_pkey; Type: CONSTRAINT; Schema: public; Owner: aboutdevs
---
-
-ALTER TABLE ONLY user_connection
-    ADD CONSTRAINT user_connection_pkey PRIMARY KEY (id);
-
-
---
 -- Name: user user_id_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY "user"
     ADD CONSTRAINT user_id_pk PRIMARY KEY (id);
-
-
---
--- Name: user_recommendation user_recommendation_pkey; Type: CONSTRAINT; Schema: public; Owner: aboutdevs
---
-
-ALTER TABLE ONLY user_recommendation
-    ADD CONSTRAINT user_recommendation_pkey PRIMARY KEY (id);
-
-
---
--- Name: user_service user_service_pkey; Type: CONSTRAINT; Schema: public; Owner: aboutdevs
---
-
-ALTER TABLE ONLY user_service
-    ADD CONSTRAINT user_service_pkey PRIMARY KEY (id);
 
 
 --
@@ -1055,48 +863,6 @@ CREATE UNIQUE INDEX location_cache_search_uindex ON geo_location_cache USING btr
 
 
 --
--- Name: name_canonical_idx; Type: INDEX; Schema: public; Owner: aboutdevs
---
-
-CREATE INDEX name_canonical_idx ON profession USING gin (to_tsvector('ptu'::regconfig, (name_canonical)::text));
-
-
---
--- Name: profession_id_uindex; Type: INDEX; Schema: public; Owner: aboutdevs
---
-
-CREATE UNIQUE INDEX profession_id_uindex ON profession USING btree (id);
-
-
---
--- Name: profession_name_canonical_normalized_uindex; Type: INDEX; Schema: public; Owner: aboutdevs
---
-
-CREATE UNIQUE INDEX profession_name_canonical_normalized_uindex ON profession USING btree (name_canonical_normalized);
-
-
---
--- Name: profession_name_canonical_uindex; Type: INDEX; Schema: public; Owner: aboutdevs
---
-
-CREATE UNIQUE INDEX profession_name_canonical_uindex ON profession USING btree (name_canonical);
-
-
---
--- Name: profession_name_feminine_normalized_uindex; Type: INDEX; Schema: public; Owner: aboutdevs
---
-
-CREATE UNIQUE INDEX profession_name_feminine_normalized_uindex ON profession USING btree (name_feminine_normalized);
-
-
---
--- Name: profession_name_feminine_uindex; Type: INDEX; Schema: public; Owner: aboutdevs
---
-
-CREATE UNIQUE INDEX profession_name_feminine_uindex ON profession USING btree (name_feminine);
-
-
---
 -- Name: search_canonical_idx; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -1132,13 +898,6 @@ CREATE UNIQUE INDEX tag_name_uindex ON tag USING btree (name);
 
 
 --
--- Name: user_connection_id_uindex; Type: INDEX; Schema: public; Owner: aboutdevs
---
-
-CREATE UNIQUE INDEX user_connection_id_uindex ON user_connection USING btree (id);
-
-
---
 -- Name: user_email_uindex; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -1150,13 +909,6 @@ CREATE UNIQUE INDEX user_email_uindex ON "user" USING btree (email);
 --
 
 CREATE UNIQUE INDEX user_name_uindex ON "user" USING btree (name);
-
-
---
--- Name: user_service_id_uindex; Type: INDEX; Schema: public; Owner: aboutdevs
---
-
-CREATE UNIQUE INDEX user_service_id_uindex ON user_service USING btree (id);
 
 
 --
@@ -1183,43 +935,11 @@ ALTER TABLE ONLY notification
 
 
 --
--- Name: user_connection user_connection_user_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: aboutdevs
---
-
-ALTER TABLE ONLY user_connection
-    ADD CONSTRAINT user_connection_user_id_fk FOREIGN KEY (user_id) REFERENCES "user"(id);
-
-
---
--- Name: user_connection user_connection_user_professional_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: aboutdevs
---
-
-ALTER TABLE ONLY user_connection
-    ADD CONSTRAINT user_connection_user_professional_id_fk FOREIGN KEY (user_professional_id) REFERENCES "user"(id);
-
-
---
 -- Name: user user_geo_location_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY "user"
     ADD CONSTRAINT user_geo_location_id_fk FOREIGN KEY (geo_location_id) REFERENCES geo_location(id);
-
-
---
--- Name: user user_profession_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY "user"
-    ADD CONSTRAINT user_profession_id_fk FOREIGN KEY (profession_id) REFERENCES profession(id);
-
-
---
--- Name: user_service user_service_user_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: aboutdevs
---
-
-ALTER TABLE ONLY user_service
-    ADD CONSTRAINT user_service_user_id_fk FOREIGN KEY (user_id) REFERENCES "user"(id);
 
 
 --

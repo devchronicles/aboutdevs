@@ -18,7 +18,7 @@ function sendApp(res: express.Response, preloadedHtml: string, preloadedState: o
     });
 }
 
-router.route("/s/:location/:profession").get((req, res) => {
+router.route("/s/:location/:title").get((req, res) => {
     sendApp(res, null, {
         loggedUser: req.user,
     });

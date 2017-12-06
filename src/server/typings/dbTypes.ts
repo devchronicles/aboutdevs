@@ -1,11 +1,6 @@
 import * as massive from "massive";
 import * as serverTypes from "./index";
 
-export enum UserGender {
-    MALE = 0,
-    FEMALE = 1,
-}
-
 export interface GeoLocation {
     id: number;
     geo_location_city_id: number;
@@ -38,14 +33,6 @@ export interface GeoLocationCache {
     cache: serverTypes.GeocodeApiResult;
 }
 
-export interface UserService {
-    id: number;
-    service: string;
-    service_canonical: string;
-    index: number;
-    user_id: number;
-}
-
 export interface User {
     id: number;
     display_name: string;
@@ -63,36 +50,14 @@ export interface User {
     };
     status: number;
     type: number;
-    profession_other: string;
+    title: string;
     name: string;
-    gender: UserGender;
     geo_location_id: number;
-    profession_id: number;
     bio: string;
-    phone_whatsapp: string;
-    phone_alternative: string;
-    search_canonical: string;
-}
-
-export interface UserConnection {
-    id: number;
-    user_id: number;
-    user_professional_id: number;
-    request: string;
-    created_at: Date;
-}
-
-export interface UserRecommendation {
-    id: number;
-    user_id: number;
-    user_recommended_id: number;
-    text: string;
-    created_at: Date;
 }
 
 export interface UserSearchResult {
     id: number;
-    gender: number;
     display_name: string;
     email: string;
     photo_url: string;
@@ -129,7 +94,6 @@ export interface UserTag {
 }
 
 export interface AboutDevsDatabase extends massive.Database {
-    [key: string]: any;
     // tables
     tag: massive.Table<Tag>;
     geo_location_cache: massive.Table<GeoLocationCache>;
@@ -138,14 +102,12 @@ export interface AboutDevsDatabase extends massive.Database {
     geo_location_state: massive.Table<GeoLocationState>;
     geo_location_city: massive.Table<GeoLocationCity>;
     user: massive.Table<User>;
-    user_service: massive.Table<UserService>;
-    user_connection: massive.Table<UserConnection>;
-    user_recommendation: massive.Table<UserRecommendation>;
     user_tag: massive.Table<UserTag>;
-    profession: massive.Table<Profession>;
     stackoverflow_tags_cache: massive.Table<StackoverflowTagsCache>;
 
     // functions
+
+    _aboutdevs_select_tags_from_user: (userId: number) => Promise<Tag[]>;
     is_user_name_taken: (userName: string, userId: number) => Promise<Array<{ exists: boolean }>>;
     search_professions_for_save: (profession: string) => Promise<Array<{ id: number }>>;
     search_professions: (profession: string) => Promise<Profession[]>;

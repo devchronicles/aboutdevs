@@ -8,10 +8,10 @@ const defaultProfileEditState: commonTypes.UserProfile = {
     displayName: undefined,
     photoUrl: undefined,
     loadState: undefined,
-    profession: undefined,
+    title: undefined,
     bio: undefined,
     activities: undefined,
-    type: commonTypes.UserProfileType.USER,
+    type: commonTypes.UserProfileType.DEVELOPER,
     address: undefined,
 };
 

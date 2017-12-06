@@ -5,7 +5,6 @@ const defaultLoggedUserState: commonTypes.CurrentUserProfile = {
     name: undefined,
     displayName: undefined,
     photoUrl: undefined,
-    gender: undefined,
 };
 
 export function loggedUserReducer(state = defaultLoggedUserState) {

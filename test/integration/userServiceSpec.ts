@@ -22,7 +22,6 @@ describe("userService", () => {
         it("When it does exist", () =>
             db.user.insert({
                 name: "foo",
-                gender: 0,
                 display_name: "Foo",
                 email: "foo@fooland.com",
                 photo_url: "foo.com/image.jpeg",
@@ -158,14 +157,14 @@ describe("userService", () => {
                 activities: "Great software",
                 phone_whatsapp: "(32) 999168205",
                 address: "Rua Henrique Surerus, 28, Juiz de Fora",
-                profession: "medico",
+                title: "medico",
                 services: [
                     {
-                        service: "Cirurgia",
+                        name: "Cirurgia",
                         index: 1,
                     },
                     {
-                        service: "Anestesia",
+                        name: "Anestesia",
                         index: 2,
                     },
                 ],

@@ -1,4 +1,4 @@
-import * as stringHelper from '../src/common/helpers/stringHelper';
+import * as stringHelper from "../src/common/helpers/stringHelper";
 
 const professions = require('../data/professions-processed.json');
 
@@ -8,7 +8,7 @@ const nameFeminineMap: { [key: string]: boolean } = {};
 const nameFeminineNormalizedMap: { [key: string]: boolean } = {};
 
 function normalize(text: string) {
-    if (!text) throw Error('Inconsistent profession');
+    if (!text) throw Error("Inconsistent text");
     return stringHelper.normalizeForSearch(text, false);
 }
 

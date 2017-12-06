@@ -43,7 +43,7 @@ export function validateMaxLength500(value: string) {
 }
 
 export function validationRequiredIfProfessional(value: any, user: commonTypes.UserProfile) {
-    return (user.type === commonTypes.UserProfileType.PROFESSIONAL && (value === null || value === undefined || value === "")) ? REQUIRED_IF_PROFESSIONAL : undefined;
+    return (user.type === commonTypes.UserProfileType.RECRUITER && (value === null || value === undefined || value === "")) ? REQUIRED_IF_PROFESSIONAL : undefined;
 }
 
 export function validatePhone(value: string) {
@@ -65,7 +65,7 @@ export function getValidatorsForField(fieldName: string): Array<(value: any, use
             return [validateRequired, validateMaxLength50];
         case "displayName":
             return [validateRequired, validateMaxLength50];
-        case "profession":
+        case "title":
             return [validationRequiredIfProfessional, validateMaxLength80];
         case "bio":
             return [validationRequiredIfProfessional, validateMaxLength500];

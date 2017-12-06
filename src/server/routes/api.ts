@@ -2,10 +2,8 @@ import * as express from "express";
 import * as apiHelper from "../helpers/apiHelper";
 import * as tagService from "../services/tagService";
 import * as locationService from "../services/locationService";
-import * as searchHelper from "../helpers/searchHelper";
 import * as userService from "../services/userService";
 import * as dbTypes from "../typings/dbTypes";
-import * as stringHelper from "../../common/helpers/stringHelper";
 import * as commonTypes from "../../common/typings/commonTypes";
 
 const router = express.Router();
@@ -22,19 +20,6 @@ router.route("/tags").get(async (req, res) => {
             apiHelper.getAndEnsureUserId(req);
             return tagService.searchTagsFormatted(db, req.query.q as string);
         });
-});
-
-router.route("/professions").get(async (req, res) => {
-    await apiHelper.sendDbConnectedPromise(res,
-        async (db: dbTypes.AboutDevsDatabase) => {
-            apiHelper.getAndEnsureUserId(req);
-            const professions = await db.search_professions(searchHelper.convertToTsVector(stringHelper.normalizeForSearch(req.query.q)));
-            return professions.map((p) => {
-                const gender = req.user.gender;
-                return gender === 0 ? p.name_canonical : p.name_feminine;
-            });
-        },
-    );
 });
 
 router.route("/users/check_name").get(async (req, res) => {

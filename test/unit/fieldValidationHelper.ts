@@ -1,11 +1,11 @@
-import {assert} from "chai";
+import { assert } from "chai";
 import * as fieldValidationHelper from "../../src/common/helpers/fieldValidationHelper";
 import * as commonTypes from "../../src/common/typings";
 
 function createProfile(object: any): commonTypes.UserProfile {
     const emptyProfile = {
         name: "",
-        type: commonTypes.UserProfileType.PROFESSIONAL,
+        type: commonTypes.UserProfileType.RECRUITER,
         displayName: "",
         profession: "",
         bio: "",
@@ -19,7 +19,7 @@ function createProfile(object: any): commonTypes.UserProfile {
 describe("fieldValidationHelper", () => {
     describe("validate", () => {
         it("Validate empty object - User normal", () => {
-            const profile = createProfile({ type: commonTypes.UserProfileType.USER });
+            const profile = createProfile({type: commonTypes.UserProfileType.DEVELOPER});
             const errors = fieldValidationHelper.validate(profile);
             assert.deepEqual(errors, {
                 name: "required",

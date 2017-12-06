@@ -41,92 +41,32 @@ export function getReduxDataForLoggedUser(user: serverTypes.User): commonTypes.C
     return {
         id: user.id,
         name: user.name,
-        gender: user.gender,
         displayName: user.display_name,
         photoUrl: user.photo_url,
     };
 }
 
-/**
- * Gets the profession in a way that it can be presented in the client
- * @param db The database object
- * @param professionId The id of the profession of the id
- * @param otherProfession The profession_other field of the user
- * @param userGender The user gender
- */
-async function getFormattedProfession(db: serverTypes.AboutDevsDatabase, professionId: number, otherProfession: string, userGender: serverTypes.UserGender): Promise<string> {
-    if (professionId) {
-        const profession = await db.profession.findOne({id: professionId});
-        if (profession) {
-            switch (userGender) {
-                case serverTypes.UserGender.MALE:
-                    return profession.name_canonical;
-                case serverTypes.UserGender.FEMALE:
-                    return profession.name_feminine;
-            }
-        }
-    }
-    return otherProfession;
-}
-
-async function getServicesForUser(db: serverTypes.AboutDevsDatabase, userId: number): Promise<commonTypes.UserService[]> {
-    const services = await db.user_service.find({user_id: userId});
-    if (!services.length) {
-        return [{
-            id: undefined,
-            service: "",
-            index: 0,
-        }];
-    }
-    return services.map((s) => ({
-        id: s.id,
-        service: s.service,
-        index: s.index,
-    }));
+async function getTagsForUser(db: serverTypes.AboutDevsDatabase, userId: number): Promise<commonTypes.UserTag[]> {
+    return db._aboutdevs_select_tags_from_user(userId);
 }
 
 export async function getUserProfileFromUser(db: serverTypes.AboutDevsDatabase, user: serverTypes.User, currentUserId: number, operation: commonTypes.Operation): Promise<commonTypes.UserProfile> {
     if (!db) throw Error("Argument 'db' should be truthy");
     if (!user) throw Error("Argument 'user' should be truthy");
 
-    switch (operation) {
-        case commonTypes.Operation.VIEW:
-            const isConnected = !!db.user_connection.findOne({user_id: currentUserId, user_professional_id: user.id});
-            return {
-                id: user.id,
-                name: user.name,
-                email: (isConnected || user.id === currentUserId) ? user.email : undefined,
-                displayName: user.display_name,
-                photoUrl: user.photo_url,
-                type: user.type,
-                status: user.status,
-                address: await (user.geo_location_id ? locationService.getFormattedLocationById(db, user.geo_location_id) : null),
-                profession: await getFormattedProfession(db, user.profession_id, user.profession_other, user.gender),
-                phoneWhatsapp: (isConnected || user.id === currentUserId) ? user.phone_whatsapp : undefined,
-                phoneAlternative: (isConnected || user.id === currentUserId) ? user.phone_alternative : undefined,
-                bio: user.bio,
-                services: await getServicesForUser(db, user.id),
-            };
-
-        case commonTypes.Operation.EDIT:
-            return {
-                id: user.id,
-                name: user.name,
-                email: user.email,
-                displayName: user.display_name,
-                photoUrl: user.photo_url,
-                type: user.type,
-                status: user.status,
-                address: await (user.geo_location_id ? locationService.getFormattedLocationById(db, user.geo_location_id) : null),
-                profession: await getFormattedProfession(db, user.profession_id, user.profession_other, user.gender),
-                phoneWhatsapp: user.phone_whatsapp,
-                phoneAlternative: user.phone_alternative,
-                bio: user.bio,
-                services: await getServicesForUser(db, user.id),
-            };
-        default:
-            throw Error("Operation not supported");
-    }
+    return {
+        id: user.id,
+        name: user.name,
+        title: user.title,
+        email: user.email,
+        displayName: user.display_name,
+        photoUrl: user.photo_url,
+        type: user.type,
+        status: user.status,
+        address: await (user.geo_location_id ? locationService.getFormattedLocationById(db, user.geo_location_id) : null),
+        bio: user.bio,
+        tags: await getTagsForUser(db, user.id),
+    };
 }
 
 /**
@@ -146,7 +86,7 @@ export async function getUserProfileById(db: serverTypes.AboutDevsDatabase, user
  * @param db The massive object
  * @param userId The user id. This id must really exist
  * @param profile The user profile
- * @param professionId The profession id. This is for testing only. In production, this variable cannot contain value
+ * @param professionId The title id. This is for testing only. In production, this variable cannot contain value
  * @param locationId The location id. This is for testing only. In production, this variable cannot contain value
  */
 export async function saveProfile(db: serverTypes.AboutDevsDatabase, userId: number, profile: commonTypes.UserProfile, professionId?: number, locationId?: number): Promise<commonTypes.UserProfile> {
@@ -156,30 +96,8 @@ export async function saveProfile(db: serverTypes.AboutDevsDatabase, userId: num
     user.name = profile.name;
     user.display_name = profile.displayName;
     user.type = profile.type;
-    user.phone_whatsapp = profile.phoneWhatsapp;
-    user.phone_alternative = profile.phoneAlternative;
-    if (profile.type === commonTypes.UserProfileType.PROFESSIONAL) {
-        user.bio = profile.bio;
-    }
-
-    // profession
-    if (!professionId) {
-        const professionNormalized = stringHelper.normalizeForSearch(profile.profession);
-        const professions = await db.search_professions_for_save(professionNormalized);
-        if (professions.length) {
-            user.profession_id = professions[0].id;
-            user.profession_other = undefined;
-        } else {
-            user.profession_id = undefined;
-            user.profession_other = profile.profession;
-        }
-    } else {
-        if (process.env.NODE_ENV === "production") {
-            throw Error("Passing location id is a not enabled in production");
-        }
-        user.profession_id = professionId;
-        user.profession_other = undefined;
-    }
+    user.bio = profile.bio;
+    user.title = profile.title;
 
     // location
     if (!locationId) {
@@ -192,57 +110,52 @@ export async function saveProfile(db: serverTypes.AboutDevsDatabase, userId: num
         user.geo_location_id = locationId;
     }
 
-    // services
-    if (profile.type === commonTypes.UserProfileType.PROFESSIONAL) {
+    // tags
+    if (profile.type === commonTypes.UserProfileType.DEVELOPER) {
 
-        type UserServiceCanonical = commonTypes.UserService & { service_canonical: string };
+        const profileTags = profile.tags;
+        const persistedTags = await db._aboutdevs_select_tags_from_user(userId);
 
-        const profileServices: UserServiceCanonical[] = profile.services
-            ? profile
-                .services.map((s, index) => {
-                    return {
-                        id: s.id,
-                        service: s.service,
-                        service_canonical: stringHelper.normalizeForSearch(s.service),
-                        index,
-                    };
-                })
-                .filter((s) => !!s.service_canonical)
-            : [];
+        // add tags that were added
+        const addedTags = profileTags.filter((profileTag) =>
+            persistedTags.findIndex((persistedTag) => persistedTag.name === profileTag.name) === -1);
 
-        const persistedUserServices = await db.user_service.find({user_id: userId});
+        // for each tag that is being added to the user we have to check 2 things:
+        // 1) If the tag name is valid - If it's not, the tag should be discarded
+        // 2) If the tag exists in the database - If it does, the tag can be included without further verification
+        // 3) If the tag exists in stackoverflow
 
-        // add or update services that are persistent already
-        for (const profileService of profileServices) {
-            if (profileService.id) {
-                // the service is persistent already
-                const existingService = await db.user_service.findOne({id: profileService.id});
-                existingService.service = profileService.service;
-                existingService.service_canonical = stringHelper.normalizeForSearch(profileService.service);
-                existingService.index = profileService.index;
-                await db.user_service.update(existingService);
-            } else {
-                // the service hasn't been persisted yet
-                await db.user_service.insert({
-                    service: profileService.service,
-                    service_canonical: stringHelper.normalizeForSearch(profileService.service),
-                    user_id: userId,
-                    index: profileService.index,
-                });
-            }
-        }
 
-        // remove services that were removed
-        const removedServices = persistedUserServices
-            .filter((dbService) => profileServices.findIndex((profileService) => profileService.id === dbService.id) === -1);
+        // for (const profileTag of profileTags) {
+        //     if (profileTag.id) {
+        //         // the service is persistent already
+        //         const existingService = await db.user_service.findOne({id: profileTag.id});
+        //         existingService.name = profileTag.name;
+        //         existingService.service_canonical = stringHelper.normalizeForSearch(profileTag.name);
+        //         existingService.index = profileTag.index;
+        //         await db.user_service.update(existingService);
+        //     } else {
+        //         // the service hasn't been persisted yet
+        //         await db.user_service.insert({
+        //             service: profileTag.name,
+        //             service_canonical: stringHelper.normalizeForSearch(profileTag.name),
+        //             user_id: userId,
+        //             index: profileTag.index,
+        //         });
+        //     }
+        // }
+
+        // remove tags that were removed
+        const removedServices = persistedTags
+            .filter((dbTag) => profileTags.findIndex((profileTag) => profileTag.id === dbTag.id) === -1);
 
         for (const removedService of removedServices) {
             await db.user_service.destroy({id: removedService.id});
         }
 
         // search
-        const concatenatedServices = profileServices.map((p) => p.service_canonical).reduce((accumulated, current) => `${accumulated} ${current}`, "");
-        const professionForSearch = stringHelper.normalizeForSearch(profile.profession);
+        const concatenatedServices = profileTags.map((p) => p.service_canonical).reduce((accumulated, current) => `${accumulated} ${current}`, "");
+        const professionForSearch = stringHelper.normalizeForSearch(profile.title);
 
         user.search_canonical = `${professionForSearch} ${concatenatedServices}`;
     }
@@ -289,12 +202,10 @@ export async function searchProfessionals(db: serverTypes.AboutDevsDatabase, sea
             displayName: intermediateResult.display_name,
             photoUrl: intermediateResult.photo_url,
             distance: intermediateResult.distance,
-            profession: userProfession
-                ? (intermediateResult.gender === serverTypes.UserGender.MALE ? userProfession.name_canonical : userProfession.name_feminine)
-                : intermediateResult.profession_other,
+            title: intermediateResult.profession_other,
             services: userServices.map((us) => ({
                 id: us.id,
-                service: us.service,
+                service: us.name,
                 index: us.index,
             })).sort((us1, us2) => us1.index - us2.index),
         };

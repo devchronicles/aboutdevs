@@ -16,14 +16,11 @@ export async function createFromGoogleProfile(db: serverTypes.AboutDevsDatabase,
 
     const email = safeRead((p: googleOAuthTypes.GoogleOAuthProfile) => p.emails[0].value, profile, null);
     const photoUrl = getGravatarImageFromEmail(email, GravatarSize.medium);
-    const gender = profile.gender === "male" ? serverTypes.UserGender.MALE : serverTypes.UserGender.FEMALE;
-
     const userName = await getValidUserName(db, extractUserNameFromEmail(email));
 
     const user = {
         display_name: profile.displayName,
         email,
-        gender,
         name: userName,
         oauth_profiles: {
             google: {
@@ -48,9 +45,6 @@ export async function updateFromGoogleProfile(db: serverTypes.AboutDevsDatabase,
     if (!existingUser) throw Error("'existingUser' should be truthy");
     if (!profile) throw Error("'profile' should be truthy");
 
-    if (existingUser.gender === null || existingUser.gender === undefined) {
-        existingUser.gender = profile.gender === "male" ? 0 : 1;
-    }
     if (!existingUser.display_name) {
         existingUser.display_name = profile.displayName;
     }

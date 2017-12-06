@@ -16,7 +16,6 @@ function truncateData(db: serverTypes.AboutDevsDatabase) {
         "geo_location_country",
         "geo_location_state",
         "geo_location_city",
-        "profession",
         "user_service",
     ];
 

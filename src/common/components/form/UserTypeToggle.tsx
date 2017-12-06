@@ -12,19 +12,19 @@ const UserTypeToggle: React.SFC<UserTypeToggle> = (field) => {
 
     // props for the professional button
     const professionalButtonProps = {
-        className: value === commonTypes.UserProfileType.PROFESSIONAL ? "pushed" : null,
+        className: value === commonTypes.UserProfileType.RECRUITER ? "pushed" : null,
         onClick: (event: React.SyntheticEvent<any>) => {
             event.preventDefault();
-            onChange(commonTypes.UserProfileType.PROFESSIONAL, undefined, undefined);
+            onChange(commonTypes.UserProfileType.RECRUITER, undefined, undefined);
         },
     };
 
     // props for the non-professional button
     const nonProfessionalButtonProps = {
-        className: value === commonTypes.UserProfileType.USER ? "pushed" : null,
+        className: value === commonTypes.UserProfileType.DEVELOPER ? "pushed" : null,
         onClick: (event: React.SyntheticEvent<any>) => {
             event.preventDefault();
-            onChange(commonTypes.UserProfileType.USER, undefined, undefined);
+            onChange(commonTypes.UserProfileType.DEVELOPER, undefined, undefined);
         },
     };
 
