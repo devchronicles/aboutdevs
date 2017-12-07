@@ -7,11 +7,9 @@ function createProfile(object: any): commonTypes.UserProfile {
         name: "",
         type: commonTypes.UserProfileType.RECRUITER,
         displayName: "",
-        profession: "",
+        title: "",
         bio: "",
         address: "",
-        phoneWhatsapp: "",
-        phoneAlternative: "",
     };
     return { ...emptyProfile, ...object };
 }
@@ -25,8 +23,6 @@ describe("fieldValidationHelper", () => {
                 name: "required",
                 displayName: "required",
                 address: "required",
-                phoneWhatsapp: "at-least-one-phone",
-                phoneAlternative: "at-least-one-phone",
             });
         });
     });

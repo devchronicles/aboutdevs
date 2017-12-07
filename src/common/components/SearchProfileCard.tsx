@@ -17,7 +17,7 @@ const ProfileCard: React.SFC<SearchProfileCardProps> = ({ profile }) => (
             <div className="image" style={{ backgroundImage: `url(${profile.photoUrl})` }} />
             <p className="display-name"> {profile.displayName} </p>
             <p className="profession"> {profile.title} </p>
-            <p className="bio"> {profile.services.map((s) => s.name).join("; ")} </p>
+            <p className="bio"> {profile.tags.map((s) => s.name).join("; ")} </p>
         </a>
         <div className="card-footer">
             <span className="recomendations">

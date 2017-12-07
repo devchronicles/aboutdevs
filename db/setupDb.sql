@@ -88,16 +88,18 @@ ALTER FUNCTION public._aboutdevs_select_tags_from_user(user_id integer) OWNER TO
 -- Name: _aboutdevs_update_tag(character varying, integer); Type: FUNCTION; Schema: public; Owner: aboutdevs
 --
 
-CREATE FUNCTION _aboutdevs_update_tag(name character varying, relevance integer) RETURNS timestamp without time zone
+CREATE FUNCTION _aboutdevs_update_tag(_name character varying, _relevance integer) RETURNS void
     LANGUAGE plpgsql
     AS $$
 BEGIN
-  RETURN now()::TIMESTAMP WITH TIME ZONE;
+  IF NOT exists(SELECT 1 FROM tag t WHERE t.name = _name) THEN
+      INSERT INTO tag(name, relevance) VALUES (_name, _relevance);
+    END IF;
 END;
 $$;
 
 
-ALTER FUNCTION public._aboutdevs_update_tag(name character varying, relevance integer) OWNER TO aboutdevs;
+ALTER FUNCTION public._aboutdevs_update_tag(_name character varying, _relevance integer) OWNER TO aboutdevs;
 
 --
 -- Name: ptu; Type: TEXT SEARCH CONFIGURATION; Schema: public; Owner: postgres
@@ -435,71 +437,14 @@ ALTER SEQUENCE location_cache_search_seq OWNED BY geo_location_cache.search;
 
 
 --
--- Name: notification; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE notification (
-    id integer NOT NULL,
-    created_at timestamp without time zone NOT NULL,
-    read boolean DEFAULT false NOT NULL,
-    type smallint NOT NULL,
-    data json NOT NULL,
-    user_id integer NOT NULL
-);
-
-
-ALTER TABLE notification OWNER TO postgres;
-
---
--- Name: COLUMN notification.read; Type: COMMENT; Schema: public; Owner: postgres
---
-
-COMMENT ON COLUMN notification.read IS 'Whether or not the user has read the notification';
-
-
---
--- Name: COLUMN notification.type; Type: COMMENT; Schema: public; Owner: postgres
---
-
-COMMENT ON COLUMN notification.type IS 'Notification type. This is an enum/const that will be defined in code';
-
-
---
--- Name: COLUMN notification.user_id; Type: COMMENT; Schema: public; Owner: postgres
---
-
-COMMENT ON COLUMN notification.user_id IS 'The user the notification is for';
-
-
---
--- Name: notification_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE notification_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE notification_id_seq OWNER TO postgres;
-
---
--- Name: notification_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE notification_id_seq OWNED BY notification.id;
-
-
---
 -- Name: stackoverflow_tags_cache; Type: TABLE; Schema: public; Owner: aboutdevs
 --
 
 CREATE TABLE stackoverflow_tags_cache (
     id integer NOT NULL,
     search character varying(50) NOT NULL,
-    cache json NOT NULL
+    cache json NOT NULL,
+    last_updated_at timestamp without time zone DEFAULT (now())::timestamp without time zone NOT NULL
 );
 
 
@@ -682,13 +627,6 @@ ALTER TABLE ONLY geo_location_state ALTER COLUMN id SET DEFAULT nextval('geo_adm
 
 
 --
--- Name: notification id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY notification ALTER COLUMN id SET DEFAULT nextval('notification_id_seq'::regclass);
-
-
---
 -- Name: stackoverflow_tags_cache id; Type: DEFAULT; Schema: public; Owner: aboutdevs
 --
 
@@ -747,14 +685,6 @@ ALTER TABLE ONLY geo_location_state
 
 ALTER TABLE ONLY geo_location_cache
     ADD CONSTRAINT location_cache_pkey PRIMARY KEY (id);
-
-
---
--- Name: notification notification_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY notification
-    ADD CONSTRAINT notification_pkey PRIMARY KEY (id);
 
 
 --
@@ -942,14 +872,6 @@ CREATE UNIQUE INDEX user_tag_id_uindex ON user_tag USING btree (id);
 
 ALTER TABLE ONLY geo_location_state
     ADD CONSTRAINT geo_location_state_geo_location_country_id_fk FOREIGN KEY (geo_location_country_id) REFERENCES geo_location_country(id);
-
-
---
--- Name: notification notification_user_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY notification
-    ADD CONSTRAINT notification_user_id_fk FOREIGN KEY (user_id) REFERENCES "user"(id);
 
 
 --

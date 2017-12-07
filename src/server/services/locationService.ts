@@ -98,7 +98,7 @@ export async function saveLocation(db: serverTypes.AboutDevsDatabase, formattedA
         longitude,
         latitude,
     })) as serverTypes.GeoLocation;
-    await db.update_geometry(location.id, longitude, latitude);
+    await db._aboutdevs_update_geometry(location.id, longitude, latitude);
     return location;
 }
 

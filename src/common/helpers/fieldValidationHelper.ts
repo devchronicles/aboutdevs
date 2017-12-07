@@ -1,8 +1,7 @@
 import * as commonTypes from "../typings/commonTypes";
 
 export const REQUIRED = "required";
-export const REQUIRED_IF_PROFESSIONAL = "required-if-professional";
-export const INVALID_PHONE = "invalid-phone";
+export const REQUIRED_IF_DEVELOPER = "required-if-developer";
 export const AT_LEAST_ONE_PHONE = "at-least-one-phone";
 export const MAX_LENGTH_50 = "max-length-50";
 export const MAX_LENGTH_60 = "max-length-80";
@@ -42,41 +41,22 @@ export function validateMaxLength500(value: string) {
     return value.length > 500 ? MAX_LENGTH_500 : undefined;
 }
 
-export function validationRequiredIfProfessional(value: any, user: commonTypes.UserProfile) {
-    return (user.type === commonTypes.UserProfileType.RECRUITER && (value === null || value === undefined || value === "")) ? REQUIRED_IF_PROFESSIONAL : undefined;
+export function validationRequiredIfDeveloper(value: any, user: commonTypes.UserProfile) {
+    return (user.type === commonTypes.UserProfileType.RECRUITER && (value === null || value === undefined || value === "")) ? REQUIRED_IF_DEVELOPER : undefined;
 }
 
-export function validatePhone(value: string) {
-    if (value === null || value === undefined || value === "") {
-        return undefined;
-    }
-    return /\(\d{2}\)\s\d{3,5}-\d{4}/.test(value) ? undefined : INVALID_PHONE;
-}
-
-export function validateAtLeastOnePhone(value: string, user: commonTypes.UserProfile) {
-    const invalidWhatsapp = user.phoneWhatsapp === null || user.phoneWhatsapp === undefined || user.phoneWhatsapp === "";
-    const invalidAlternatePhone = user.phoneAlternative === null || user.phoneAlternative === undefined || user.phoneAlternative === "";
-    return invalidWhatsapp && invalidAlternatePhone ? AT_LEAST_ONE_PHONE : undefined;
-}
-
-export function getValidatorsForField(fieldName: string): Array<(value: any, user: commonTypes.UserProfile) => string> {
+export function getValidatorsForField(fieldName: keyof commonTypes.UserProfile): Array<(value: any, user: commonTypes.UserProfile) => string> {
     switch (fieldName) {
         case "name":
             return [validateRequired, validateMaxLength50];
         case "displayName":
             return [validateRequired, validateMaxLength50];
         case "title":
-            return [validationRequiredIfProfessional, validateMaxLength80];
+            return [validateRequired, validateMaxLength80];
         case "bio":
-            return [validationRequiredIfProfessional, validateMaxLength500];
-        case "activities":
-            return [validationRequiredIfProfessional, validateMaxLength500];
+            return [validationRequiredIfDeveloper, validateMaxLength500];
         case "address":
             return [validateRequired];
-        case "phoneWhatsapp":
-            return [validateAtLeastOnePhone, validatePhone];
-        case "phoneAlternative":
-            return [validateAtLeastOnePhone, validatePhone];
         default:
             return [];
     }
