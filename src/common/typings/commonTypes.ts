@@ -43,7 +43,7 @@ export interface UserProfile {
     address: string;
 }
 
-export interface UserSearchProfile {
+export interface DeveloperSearchProfile {
     id: number;
     displayName: string;
     photoUrl: string;
@@ -75,7 +75,7 @@ export interface SearchCriteria {
 
 export interface SearchResult {
     display: SearchDisplay;
-    profiles: UserSearchProfile[];
+    profiles: DeveloperSearchProfile[];
     loading: boolean;
 }
 

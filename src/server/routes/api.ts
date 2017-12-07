@@ -63,7 +63,7 @@ router.route("/users").get(async (req, res) => {
             if (!search || !location) {
                 throw Error("Parameters q and l are expected");
             }
-            return userService.searchProfessionals(db, search, location);
+            return userService.searchDevelopers(db, search, location);
         });
 });
 

@@ -106,12 +106,8 @@ export interface AboutDevsDatabase extends massive.Database {
     stackoverflow_tags_cache: massive.Table<StackoverflowTagsCache>;
 
     // functions
-
     _aboutdevs_select_tags_from_user: (userId: number) => Promise<Tag[]>;
-    is_user_name_taken: (userName: string, userId: number) => Promise<Array<{ exists: boolean }>>;
-    search_professions_for_save: (profession: string) => Promise<Array<{ id: number }>>;
-    search_professions: (profession: string) => Promise<Profession[]>;
-    update_geometry: (geoLocationId: number, longitude: number, latitude: number) => void;
-    search_users: (textNormalized: string, longitude: number, latitude: number) => Promise<UserSearchResult[]>;
-    get_random_profession: () => Promise<Profession[]>;
+    _aboutdevs_is_user_name_taken: (userName: string, userId: number) => Promise<Array<{ exists: boolean }>>;
+    _aboutdevs_update_geometry: (geoLocationId: number, longitude: number, latitude: number) => void;
+    _aboutdevs_search_developers: (tags: string[], longitude: number, latitude: number) => Promise<UserSearchResult[]>;
 }

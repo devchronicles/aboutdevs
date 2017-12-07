@@ -95,11 +95,12 @@ export async function saveProfile(db: serverTypes.AboutDevsDatabase, userId: num
 
     user.name = profile.name;
     user.display_name = profile.displayName;
+    user.title = profile.title;
     user.type = profile.type;
     user.bio = profile.bio;
-    user.title = profile.title;
 
     // location
+    // TODO: Add location redundancy to the user type
     if (!locationId) {
         const location = await locationService.saveAddress(db, profile.address);
         user.geo_location_id = location.id;
@@ -112,52 +113,20 @@ export async function saveProfile(db: serverTypes.AboutDevsDatabase, userId: num
 
     // tags
     if (profile.type === commonTypes.UserProfileType.DEVELOPER) {
-
         const profileTags = profile.tags;
         const persistedTags = await db._aboutdevs_select_tags_from_user(userId);
-
         // add tags that were added
         const addedTags = profileTags.filter((profileTag) =>
             persistedTags.findIndex((persistedTag) => persistedTag.name === profileTag.name) === -1);
-
-        // for each tag that is being added to the user we have to check 2 things:
-        // 1) If the tag name is valid - If it's not, the tag should be discarded
-        // 2) If the tag exists in the database - If it does, the tag can be included without further verification
-        // 3) If the tag exists in stackoverflow
-
-
-        // for (const profileTag of profileTags) {
-        //     if (profileTag.id) {
-        //         // the service is persistent already
-        //         const existingService = await db.user_service.findOne({id: profileTag.id});
-        //         existingService.name = profileTag.name;
-        //         existingService.service_canonical = stringHelper.normalizeForSearch(profileTag.name);
-        //         existingService.index = profileTag.index;
-        //         await db.user_service.update(existingService);
-        //     } else {
-        //         // the service hasn't been persisted yet
-        //         await db.user_service.insert({
-        //             service: profileTag.name,
-        //             service_canonical: stringHelper.normalizeForSearch(profileTag.name),
-        //             user_id: userId,
-        //             index: profileTag.index,
-        //         });
-        //     }
-        // }
-
-        // remove tags that were removed
-        const removedServices = persistedTags
-            .filter((dbTag) => profileTags.findIndex((profileTag) => profileTag.id === dbTag.id) === -1);
-
-        for (const removedService of removedServices) {
-            await db.user_service.destroy({id: removedService.id});
+        for (const addedTag of addedTags) {
+            await db.user_tag.insert({name: addedTag.name});
         }
-
-        // search
-        const concatenatedServices = profileTags.map((p) => p.service_canonical).reduce((accumulated, current) => `${accumulated} ${current}`, "");
-        const professionForSearch = stringHelper.normalizeForSearch(profile.title);
-
-        user.search_canonical = `${professionForSearch} ${concatenatedServices}`;
+        // remove tags that were removed
+        const removedTags = persistedTags
+            .filter((dbTag) => profileTags.findIndex((profileTag) => profileTag.id === dbTag.id) === -1);
+        for (const removedTag of removedTags) {
+            await db.user_tag.destroy({id: removedTag.id});
+        }
     }
 
     user = (await db.user.update(user)) as serverTypes.User;
@@ -172,13 +141,9 @@ export async function saveProfile(db: serverTypes.AboutDevsDatabase, userId: num
 }
 
 /**
- * Searches professionals
- * @param {AboutDevsDatabase} db
- * @param {string} search
- * @param {string} location
- * @returns {Promise<UserSearchProfile[]>}
+ * Searches developers
  */
-export async function searchProfessionals(db: serverTypes.AboutDevsDatabase, search: string, location: string): Promise<commonTypes.UserSearchProfile[]> {
+export async function searchDevelopers(db: serverTypes.AboutDevsDatabase, tags: string[], location: string): Promise<commonTypes.DeveloperSearchProfile[]> {
     // we need to convert the location to latitude and longitude
     const locations = await locationService.searchLocations(db, location, true);
     if (!locations.results.length) {
@@ -186,28 +151,18 @@ export async function searchProfessionals(db: serverTypes.AboutDevsDatabase, sea
     }
     const googleApiResult = locations.results[0];
     const {lat, lng} = googleApiResult.geometry.location;
-    const searchNormalized = stringHelper.normalizeForSearch(search);
+    const result: commonTypes.DeveloperSearchProfile[] = [];
+    const dbDevelopers = await db._aboutdevs_search_developers(tags, lng, lat);
 
-    const result: commonTypes.UserSearchProfile[] = [];
-    const searchIntermediateResult = await db.search_users(searchNormalized, lng, lat);
-
-    for (const intermediateResult of searchIntermediateResult) {
-        const userServices = await db.user_service.find({user_id: intermediateResult.id});
-        const userProfession = intermediateResult.profession_id
-            ? (await db.profession.findOne({id: intermediateResult.profession_id}))
-            : null;
-        const user: commonTypes.UserSearchProfile = {
-            id: intermediateResult.id,
-            name: intermediateResult.name,
-            displayName: intermediateResult.display_name,
-            photoUrl: intermediateResult.photo_url,
-            distance: intermediateResult.distance,
-            title: intermediateResult.profession_other,
-            services: userServices.map((us) => ({
-                id: us.id,
-                service: us.name,
-                index: us.index,
-            })).sort((us1, us2) => us1.index - us2.index),
+    for (const dbDeveloper of dbDevelopers) {
+        const user: commonTypes.DeveloperSearchProfile = {
+            id: dbDeveloper.id,
+            name: dbDeveloper.name,
+            displayName: dbDeveloper.display_name,
+            photoUrl: dbDeveloper.photo_url,
+            distance: dbDeveloper.distance,
+            title: dbDeveloper.profession_other,
+            tags: await db._aboutdevs_select_tags_from_user(dbDeveloper.id),
         };
         result.push(user);
     }
@@ -224,16 +179,14 @@ export async function validateProfile(db: serverTypes.AboutDevsDatabase, profile
         name: "",
         type: 0,
         displayName: "",
-        profession: "",
+        title: "",
         bio: "",
         address: "",
-        phoneWhatsapp: "",
-        phoneAlternative: "",
         ...profile,
     };
 
     const errors = fieldValidationHelper.validate(updatedProfile);
-    const userNameTaken = (await db.is_user_name_taken(updatedProfile.name, updatedProfile.id))[0];
+    const userNameTaken = (await db._aboutdevs_is_user_name_taken(updatedProfile.name, updatedProfile.id))[0];
     if (userNameTaken.exists) {
         errors.name = fieldValidationHelper.USER_NAME_IS_TAKEN;
     }

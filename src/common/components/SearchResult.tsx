@@ -8,7 +8,7 @@ import { SearchDisplayDropdown } from "./SearchDisplayDropdown";
 import { ProfileList } from "./ProfileList";
 
 interface SearchResultStateProps {
-    searchResultProfiles: commonTypes.UserSearchProfile[];
+    searchResultProfiles: commonTypes.DeveloperSearchProfile[];
 }
 
 interface SearchResultDispatchProps {

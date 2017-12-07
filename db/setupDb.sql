@@ -71,17 +71,33 @@ SET search_path = public, pg_catalog;
 -- Name: _aboutdevs_select_tags_from_user(integer); Type: FUNCTION; Schema: public; Owner: aboutdevs
 --
 
-CREATE FUNCTION _aboutdevs_select_tags_from_user(user_id integer) RETURNS TABLE(id integer, tag character varying)
+CREATE FUNCTION _aboutdevs_select_tags_from_user(user_id integer) RETURNS TABLE(id integer, name character varying)
     LANGUAGE sql
     AS $_$
-SELECT t.id, t.name
+SELECT t.id as id, t.name as name
     FROM tag t INNER JOIN user_tag ut ON t.id = ut.tag_id
     INNER JOIN "user" u ON u.id = ut.user_id
     WHERE u.id = $1
+    ORDER BY name
 $_$;
 
 
 ALTER FUNCTION public._aboutdevs_select_tags_from_user(user_id integer) OWNER TO aboutdevs;
+
+--
+-- Name: _aboutdevs_update_tag(character varying, integer); Type: FUNCTION; Schema: public; Owner: aboutdevs
+--
+
+CREATE FUNCTION _aboutdevs_update_tag(name character varying, relevance integer) RETURNS timestamp without time zone
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+  RETURN now()::TIMESTAMP WITH TIME ZONE;
+END;
+$$;
+
+
+ALTER FUNCTION public._aboutdevs_update_tag(name character varying, relevance integer) OWNER TO aboutdevs;
 
 --
 -- Name: ptu; Type: TEXT SEARCH CONFIGURATION; Schema: public; Owner: postgres
@@ -516,7 +532,9 @@ ALTER SEQUENCE stackoverflow_tags_cache_id_seq OWNED BY stackoverflow_tags_cache
 
 CREATE TABLE tag (
     id integer NOT NULL,
-    name character varying(50) NOT NULL
+    name character varying(50) NOT NULL,
+    relevance integer NOT NULL,
+    last_updated_at timestamp without time zone DEFAULT (now())::timestamp without time zone NOT NULL
 );
 
 

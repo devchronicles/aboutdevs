@@ -1,9 +1,9 @@
 import * as React from "react";
-import { UserSearchProfile } from "../typings/commonTypes";
+import { DeveloperSearchProfile } from "../typings/commonTypes";
 import { ProfileCard } from "./SearchProfileCard";
 
 interface ProfileListProps {
-    profiles: UserSearchProfile[];
+    profiles: DeveloperSearchProfile[];
 }
 
 export const ProfileList: React.SFC<ProfileListProps> = ({profiles}) => (

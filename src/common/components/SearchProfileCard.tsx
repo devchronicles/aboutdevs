@@ -2,7 +2,7 @@ import * as React from "react";
 import * as commonTypes from "../../common/typings";
 
 interface SearchProfileCardProps {
-    profile: commonTypes.UserSearchProfile;
+    profile: commonTypes.DeveloperSearchProfile;
 }
 
 const ProfileCard: React.SFC<SearchProfileCardProps> = ({ profile }) => (
