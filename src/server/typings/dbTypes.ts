@@ -1,4 +1,5 @@
 import * as massive from "massive";
+import * as commonTypes from "../../common/typings/commonTypes";
 import * as serverTypes from "./index";
 
 export interface GeoLocation {
@@ -48,8 +49,8 @@ export interface User {
             raw: any,
         },
     };
-    status: number;
-    type: number;
+    status: commonTypes.UserProfileStatus;
+    type: commonTypes.UserProfileType;
     title: string;
     name: string;
     geo_location_id: number;
@@ -66,14 +67,6 @@ export interface UserSearchResult {
     profession_other: string;
     profession_id: number;
     distance: number;
-}
-
-export interface Profession {
-    id: number;
-    name_canonical: string;
-    name_feminine: string;
-    name_canonical_normalized: string;
-    name_feminine_normalized: string;
 }
 
 export interface StackoverflowTagsCache {
@@ -94,6 +87,8 @@ export interface UserTag {
 }
 
 export interface AboutDevsDatabase extends massive.Database {
+    _aboutdevs_update_tag: (name: string, relevance: number) => Promise<void>;
+
     // tables
     tag: massive.Table<Tag>;
     geo_location_cache: massive.Table<GeoLocationCache>;
@@ -107,6 +102,8 @@ export interface AboutDevsDatabase extends massive.Database {
 
     // functions
     _aboutdevs_select_tags_from_user: (userId: number) => Promise<Tag[]>;
+
+    [key: string]: any;
     _aboutdevs_is_user_name_taken: (userName: string, userId: number) => Promise<Array<{ exists: boolean }>>;
     _aboutdevs_update_geometry: (geoLocationId: number, longitude: number, latitude: number) => void;
     _aboutdevs_search_developers: (tags: string[], longitude: number, latitude: number) => Promise<UserSearchResult[]>;

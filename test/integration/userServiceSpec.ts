@@ -129,12 +129,10 @@ describe("userService", () => {
             const profile = {
                 name: "andrerpena",
                 displayName: "André Pena",
-                type: 1,
+                type: commonTypes.UserProfileType.DEVELOPER,
                 bio: "Great developer",
-                activities: "Great software",
-                phone_whatsapp: "(32) 999168205",
                 address: "Rua Henrique Surerus, 28, Juiz de Fora",
-                profession: "medico",
+                title: "medico",
             };
 
             await userHelper.saveProfile(db, user.id, profile);
@@ -154,20 +152,8 @@ describe("userService", () => {
                 displayName: "André Pena",
                 type: 1,
                 bio: "Great developer",
-                activities: "Great software",
-                phone_whatsapp: "(32) 999168205",
                 address: "Rua Henrique Surerus, 28, Juiz de Fora",
                 title: "medico",
-                services: [
-                    {
-                        name: "Cirurgia",
-                        index: 1,
-                    },
-                    {
-                        name: "Anestesia",
-                        index: 2,
-                    },
-                ],
             };
 
             await userHelper.saveProfile(db, user.id, profile);

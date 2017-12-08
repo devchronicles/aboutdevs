@@ -9,7 +9,7 @@ export async function getTagsFromCache(db: serverTypes.AboutDevsDatabase, search
     return result ? result.cache : undefined;
 }
 
-export async function getTagsFromStackOverflow(searchTerm: string): Promise<serverTypes.TagSearchResult> {
+export async function getAndSaveTagsFromStackOverflow(db: serverTypes.AboutDevsDatabase, searchTerm: string): Promise<serverTypes.TagSearchResult> {
     if (searchTerm === null || searchTerm === undefined) throw Error("Argument 'searchTerm' should be null or undefined");
     const encodedLocation = encodeURIComponent(searchTerm);
     const key: string = config.stackoverflow.key;
@@ -21,7 +21,14 @@ export async function getTagsFromStackOverflow(searchTerm: string): Promise<serv
     if (res.data.error_message) {
         throw Error(res.data.error_message);
     }
-    return res.data;
+
+    const data: serverTypes.TagSearchResult = res.data;
+
+    for (const tag of data.items) {
+        await db._aboutdevs_update_tag(tag.name, tag.count);
+    }
+
+    return data;
 }
 
 async function saveTagsToCache(db: serverTypes.AboutDevsDatabase, searchTerm: string, tags: serverTypes.TagSearchResult): Promise<serverTypes.TagSearchResult> {
@@ -49,7 +56,7 @@ export async function searchTags(db: serverTypes.AboutDevsDatabase, searchTerm: 
     if (tags) {
         return tags;
     }
-    tags = await getTagsFromStackOverflow(normalizedSearchTerm);
+    tags = await getAndSaveTagsFromStackOverflow(db, normalizedSearchTerm);
     try {
         await saveTagsToCache(db, normalizedSearchTerm, tags);
     } catch (ex) {

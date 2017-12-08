@@ -13,8 +13,8 @@ export interface CurrentUserProfile {
 }
 
 export enum UserProfileType {
-    DEVELOPER = 0,
-    RECRUITER = 1,
+    RECRUITER = 0,
+    DEVELOPER = 1,
 }
 
 export enum UserProfileLoadState {
@@ -29,6 +29,8 @@ export enum UserProfileStatus {
 }
 
 export interface UserProfile {
+    [key: string]: any;
+
     id?: number; // id is not required because when you are saving a user
     name: string;
     email?: string;

@@ -14,8 +14,6 @@ export function getErrorMessage(error: string) {
             return "Tamanho máximo: 500 caracteres.";
         case fieldValidation.REQUIRED_IF_DEVELOPER:
             return "Campo obrigatório quando o usuário é um profissional.";
-        case fieldValidation.INVALID_PHONE:
-            return "Telefone inválido.";
         case fieldValidation.AT_LEAST_ONE_PHONE:
             return "Pelo menos um dos telefones precisa ser preenchido.";
         case fieldValidation.USER_NAME_IS_TAKEN:
