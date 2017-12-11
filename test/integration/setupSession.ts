@@ -9,14 +9,14 @@ function truncateData(db: serverTypes.AboutDevsDatabase) {
     if (!db) throw Error("'db' should be truthy");
 
     const entities = [
-        "notification",
-        "user",
         "geo_location",
         "geo_location_cache",
+        "geo_location_city",
         "geo_location_country",
         "geo_location_state",
-        "geo_location_city",
-        "user_service",
+        "user",
+        "tag",
+        "user_tag",
     ];
 
     // concatenates all entities from the database
@@ -31,12 +31,11 @@ function truncateData(db: serverTypes.AboutDevsDatabase) {
  * @param before
  * @param after
  */
-export default function setupSession(
-    before: (callback: (this: Mocha.IHookCallbackContext, done: MochaDone) => any) => void,
-    after: (callback: (this: Mocha.IHookCallbackContext, done: MochaDone) => any) => void,
-    beforeEach: (callback: (this: Mocha.IBeforeAndAfterContext, done: MochaDone) => any) => void,
-    afterEach: (callback: (this: Mocha.IBeforeAndAfterContext, done: MochaDone) => any) => void,
-    callback: (db: serverTypes.AboutDevsDatabase) => void) {
+export default function setupSession(before: (callback: (this: Mocha.IHookCallbackContext, done: MochaDone) => any) => void,
+                                     after: (callback: (this: Mocha.IHookCallbackContext, done: MochaDone) => any) => void,
+                                     beforeEach: (callback: (this: Mocha.IBeforeAndAfterContext, done: MochaDone) => any) => void,
+                                     afterEach: (callback: (this: Mocha.IBeforeAndAfterContext, done: MochaDone) => any) => void,
+                                     callback: (db: serverTypes.AboutDevsDatabase) => void) {
 
     if (!before) throw Error("'before' should be truthy");
     if (!after) throw Error("'after' should be truthy");
@@ -46,7 +45,11 @@ export default function setupSession(
     // runs before all tests in a file
     before((done) => {
         buildDb()
-            .then((m) => { db = m; callback(m); return m; })
+            .then((m) => {
+                db = m;
+                callback(m);
+                return m;
+            })
             .then(() => done())
             .catch(done);
     });

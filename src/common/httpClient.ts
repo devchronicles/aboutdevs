@@ -1,4 +1,4 @@
-import axios, {AxiosPromise} from "axios";
+import axios, { AxiosPromise } from "axios";
 
 import * as commonTypes from "../common/typings";
 
@@ -19,7 +19,7 @@ export function checkUserName(userName: string): AxiosPromise {
 
 // SEARCH
 
-export function searchProfessionals(search: string, location: string): AxiosPromise {
+export function searchDevelopers(search: string, location: string): AxiosPromise {
     if (!search) throw Error("search should be truthy");
     if (!location) throw Error("location should be truthy");
     return axios.get(`/api/users?q=${search}&l=${location}`);
@@ -28,9 +28,4 @@ export function searchProfessionals(search: string, location: string): AxiosProm
 export function searchLocations(search: string, allowCities = false): AxiosPromise {
     const queryString = allowCities ? `q=${search}&allowcities=true` : `q=${search}`;
     return axios.get(`/api/addresses?${queryString}`);
-}
-
-export function searchProfessions(search: string): AxiosPromise {
-    const queryString = `q=${search}`;
-    return axios.get(`/api/professions?${queryString}`);
 }

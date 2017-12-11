@@ -49,7 +49,7 @@ export const searchLoad = (search: string, location: string, display: commonType
 
     return async (dispatch: ReactRedux.Dispatch<commonTypes.ReduxState>) => {
         dispatch({type: SEARCH_LOAD_STARTED});
-        const searchResult = await httpClient.searchProfessionals(search, location);
+        const searchResult = await httpClient.searchDevelopers(search, location);
         dispatch({type: SEARCH_LOAD_SUCCESS, payload: searchResult.data});
     };
 };

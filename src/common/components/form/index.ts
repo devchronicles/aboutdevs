@@ -8,7 +8,6 @@ export * from "./InputGroup";
 export * from "./TextBox";
 export * from "./TextArea";
 export * from "./SelectLocation";
-export * from "./SelectProfession";
 export * from "./Field";
 export * from "./FieldArray";
 export * from "./UserTypeToggle";

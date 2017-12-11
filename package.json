@@ -109,11 +109,8 @@
     "test:all": "cross-env NODE_ENV=test mocha ./test/unit/*Spec.ts ./test/integration/*Spec.ts --exit",
     "test:integration": "cross-env NODE_ENV=test mocha ./test/integration/*Spec.ts --exit",
     "test:p": "cross-env NODE_ENV=test mocha --exit",
-    "tools:apply-feminine-to-professions": "ts-node ./tools/apply-feminine-to-professionals.ts",
     "tools:massive-repl": "massive -c postgres://aboutdevs:aboutdevs@localhost:5432/indiejobs",
     "tools:print-config": "ts-node ./tools/print-config.ts",
-    "tools:save-professions": "cross-env NODE_ENV=development ts-node ./tools/save-professions.ts",
-    "tools:validate-professions": "cross-env NODE_ENV=development ts-node ./tools/validate-professions.ts",
     "tools:fake": "cross-env NODE_ENV=development ts-node ./tools/fake.ts",
     "tslint": "tslint --project ./tslint.json",
     "tslint:fix": "tslint --project ./tslint.json --fix"
