@@ -23,6 +23,7 @@ describe("fieldValidationHelper", () => {
                 name: "required",
                 displayName: "required",
                 address: "required",
+                title: "required",
             });
         });
     });
