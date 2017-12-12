@@ -23,6 +23,7 @@ export async function createFromLinkedInProfile(db: serverTypes.AboutDevsDatabas
         display_name: profile.formattedName,
         email,
         name: userName,
+        title: profile.headline,
         oauth_profiles: {
             linkedin: {
                 id: profile.id,

@@ -1,13 +1,13 @@
 import { assert } from "chai";
 import * as userHelper from "../../src/server/services/userService";
 import * as serverTypes from "../../src/server/typings";
-import googleProfileSample from "./resources/googleProfileSample";
+import linkedInSampleProfile from "./resources/linkedInProfileSample";
 import setupSession from "./setupSession";
 import * as commonTypes from "../../src/common/typings/commonTypes";
 import {
-    createFromGoogleProfile, findOrCreateFromGoogleProfile,
-    updateFromGoogleProfile,
-} from "../../src/server/services/googleOAuthService";
+    createFromLinkedInProfile, findOrCreateFromLinkedInProfile,
+    updateFromLinkedInProfile,
+} from "../../src/server/services/linkedInOAuthService";
 
 describe("userService", () => {
     let db: serverTypes.AboutDevsDatabase = null;
@@ -32,132 +32,127 @@ describe("userService", () => {
                 }),
         );
 
-        it("When it does exist 2", () =>
-            db.user.insert({
+        it("When it does exist 2", async () => {
+            await  db.user.insert({
                 name: "foo",
-                gender: 0,
                 display_name: "Foo",
                 email: "foo@fooland.com",
                 photo_url: "foo.com/image.jpeg",
-            })
-                .then(() => db.user.insert({
-                    name: "foo1",
-                    gender: 0,
-                    display_name: "Foo",
-                    email: "foo2@fooland.com",
+                title: "something",
+            });
+            await db.user.insert({
+                name: "foo1",
+                display_name: "Foo",
+                email: "foo2@fooland.com",
+                photo_url: "foo.com/image.jpeg",
+                title: "something",
+            });
+            const nextValidUserName = await userHelper.getValidUserName(db, "foo");
+            assert.equal(nextValidUserName, "foo2");
+        });
+        describe("createFromLinkedInProfile", () => {
+            it("Basic scenario", () =>
+                createFromLinkedInProfile(db, linkedInSampleProfile)
+                    .then((u) => {
+                        assert.isOk(u);
+                        // let's go to the database to see if the user has actually been added
+                        return db.user.findOne(u.id);
+                    })
+                    .then((u) => {
+                        assert.isOk(u);
+                        assert.isOk(u.oauth_profiles);
+                        assert.strictEqual(u.oauth_profiles.linkedin.id, "0A5e6_lH2j");
+                        return db.user.destroy({id: u.id});
+                    }),
+            );
+        });
+        describe("updateFromLinkedInProfile", () => {
+            it("Basic scenario", async () => {
+                let user = (await db.user.save({
+                    name: "andrerpena",
+                    email: "andrerpena@gmail.com",
+                    display_name: "André Pena",
                     photo_url: "foo.com/image.jpeg",
-                }))
-                .then(() => userHelper.getValidUserName(db, "foo"))
-                .then((userName) => {
-                    assert.equal(userName, "foo2");
-                }),
-        );
-    });
-    describe("createFromGoogleProfile", () => {
-        it("Basic scenario", () =>
-            createFromGoogleProfile(db, googleProfileSample)
-                .then((u) => {
-                    assert.isOk(u);
-                    // let's go to the database to see if the user has actually been added
-                    return db.user.findOne(u.id);
-                })
-                .then((u) => {
-                    assert.isOk(u);
-                    assert.isOk(u.oauth_profiles);
-                    assert.strictEqual(u.oauth_profiles.google.id, "109199054588840596357");
-                    return db.user.destroy({id: u.id});
-                }),
-        );
-    });
-    describe("updateFromGoogleProfile", () => {
-        it("Basic scenario", async () => {
-            let user = (await db.user.save({
-                name: "andrerpena",
-                gender: 0,
-                email: "andrerpena@gmail.com",
-                display_name: "André Pena",
-                photo_url: "foo.com/image.jpeg",
-            })) as serverTypes.User;
+                })) as serverTypes.User;
 
-            user = await updateFromGoogleProfile(db, user, googleProfileSample);
+                user = await updateFromLinkedInProfile(db, user, linkedInSampleProfile);
 
-            assert.isOk(user);
-            assert.isOk(user.oauth_profiles);
-            assert.strictEqual(user.oauth_profiles.google.id, "109199054588840596357");
-            await db.user.destroy({id: user.id});
+                assert.isOk(user);
+                assert.isOk(user.oauth_profiles);
+                assert.strictEqual(user.oauth_profiles.linkedin.id, "0A5e6_lH2j");
+                await db.user.destroy({id: user.id});
+            });
         });
-    });
-    describe("findOrCreateFromGoogleProfile", () => {
-        it("when the user did not exist yet", () =>
-            db.user.findOne({email: "andrerpena@gmail.com"})
-                .then((u: serverTypes.User) => {
-                    assert.isNull(u);
-                    return findOrCreateFromGoogleProfile(db, googleProfileSample);
+        describe("findOrCreateFromLinkedInProfile", () => {
+            it("when the user did not exist yet", () =>
+                db.user.findOne({email: "andrerpena@gmail.com"})
+                    .then((u: serverTypes.User) => {
+                        assert.isNull(u);
+                        return findOrCreateFromLinkedInProfile(db, linkedInSampleProfile);
+                    })
+
+                    .then((u: serverTypes.User) => {
+                        assert.strictEqual(u.email, "andrerpena@gmail.com");
+                        return db.user.destroy({id: u.id});
+                    }),
+            );
+            it("when a user with the same e-mail address already existed", () =>
+                db.user.save({
+                    name: "andrerpena",
+                    email: "andrerpena@gmail.com",
+                    display_name: "André Pena",
+                    photo_url: "foo.com/image.jpeg",
                 })
-
-                .then((u: serverTypes.User) => {
-                    assert.strictEqual(u.email, "andrerpena@gmail.com");
-                    return db.user.destroy({id: u.id});
-                }),
-        );
-        it("when a user with the same e-mail address already existed", () =>
-            db.user.save({
-                name: "andrerpena",
-                gender: 0,
-                email: "andrerpena@gmail.com",
-                display_name: "André Pena",
-                photo_url: "foo.com/image.jpeg",
-            })
-                .then(() => findOrCreateFromGoogleProfile(db, googleProfileSample))
-                .then((u) => {
-                    assert.strictEqual(u.email, "andrerpena@gmail.com");
-                    assert.ok(u.oauth_profiles.google);
-                    return db.user.destroy({id: u.id});
-                }),
-        );
-    });
-    describe("saveProfile", () => {
-        it("Basic scenario", async () => {
-            const user = (await db.user.insert({
-                name: "andrerpena",
-                gender: 0,
-                email: "andrerpena@gmail.com",
-                display_name: "André Pena",
-                photo_url: "foo.com/image.jpeg",
-            })) as serverTypes.User;
-
-            const profile = {
-                name: "andrerpena",
-                displayName: "André Pena",
-                type: commonTypes.UserProfileType.DEVELOPER,
-                bio: "Great developer",
-                address: "Rua Henrique Surerus, 28, Juiz de Fora",
-                title: "medico",
-            };
-
-            await userHelper.saveProfile(db, user.id, profile);
+                    .then(() => findOrCreateFromLinkedInProfile(db, linkedInSampleProfile))
+                    .then((u) => {
+                        assert.strictEqual(u.email, "andrerpena@gmail.com");
+                        assert.ok(u.oauth_profiles.linkedin);
+                        return db.user.destroy({id: u.id});
+                    }),
+            );
         });
+        describe("saveProfile", () => {
+            it("Basic scenario", async () => {
+                const user = (await db.user.insert({
+                    name: "andrerpena",
+                    email: "andrerpena@gmail.com",
+                    display_name: "André Pena",
+                    photo_url: "foo.com/image.jpeg",
+                    title: "medico",
+                })) as serverTypes.User;
 
-        it("Multiple services", async () => {
-            const user = (await db.user.insert({
-                name: "andrerpena",
-                gender: 0,
-                email: "andrerpena@gmail.com",
-                display_name: "André Pena",
-                photo_url: "foo.com/image.jpeg",
-            })) as serverTypes.User;
+                const profile = {
+                    name: "andrerpena",
+                    displayName: "André Pena",
+                    type: commonTypes.UserProfileType.DEVELOPER,
+                    bio: "Great developer",
+                    address: "Rua Henrique Surerus, 28, Juiz de Fora",
+                    title: "medico",
+                };
 
-            const profile: commonTypes.UserProfile = {
-                name: "andrerpena",
-                displayName: "André Pena",
-                type: 1,
-                bio: "Great developer",
-                address: "Rua Henrique Surerus, 28, Juiz de Fora",
-                title: "medico",
-            };
+                await userHelper.saveProfile(db, user.id, profile);
+            });
+//
+//     it("Multiple services", async () => {
+//         const user = (await db.user.insert({
+//             name: "andrerpena",
+//             email: "andrerpena@gmail.com",
+//             display_name: "André Pena",
+//             photo_url: "foo.com/image.jpeg",
 
-            await userHelper.saveProfile(db, user.id, profile);
-            assert.strictEqual(await db.user_service.count({user_id: user.id}), "2");
+//         })) as serverTypes.User;
+//
+//         const profile: commonTypes.UserProfile = {
+//             name: "andrerpena",
+//             displayName: "André Pena",
+//             type: 1,
+//             bio: "Great developer",
+//             address: "Rua Henrique Surerus, 28, Juiz de Fora",
+//             title: "medico",
+//         };
+//
+//         await userHelper.saveProfile(db, user.id, profile);
+//         assert.strictEqual(await db.user_service.count({user_id: user.id}), "2");
         });
     });
 });

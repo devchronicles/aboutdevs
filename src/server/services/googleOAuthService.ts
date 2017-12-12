@@ -92,8 +92,7 @@ export async function findOrCreateFromGoogleProfile(db: serverTypes.AboutDevsDat
     }
 
     // if the existing user is associated with Google already
-    // (u.oauth_profiles.google.id exists), returns it
-    const existingUserGoogleId = safeRead((u) => u.oauth_profiles.google.id, user, null);
+    const existingUserGoogleId = safeRead((u) => u.oauth_profiles.linkedin.id, user, null);
     if (existingUserGoogleId) {
         return user;
     }

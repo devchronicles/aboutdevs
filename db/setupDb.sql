@@ -85,6 +85,23 @@ $_$;
 ALTER FUNCTION public._aboutdevs_select_tags_from_user(user_id integer) OWNER TO aboutdevs;
 
 --
+-- Name: _aboutdevs_update_geometry(integer, double precision, double precision); Type: FUNCTION; Schema: public; Owner: aboutdevs
+--
+
+CREATE FUNCTION _aboutdevs_update_geometry(id integer, x double precision, y double precision) RETURNS void
+    LANGUAGE plpgsql
+    AS $_$
+BEGIN
+  UPDATE geo_location
+  SET geometry = ST_SetSRID(ST_MakePoint($2,$3),4326)
+  WHERE id = $1;
+END;
+$_$;
+
+
+ALTER FUNCTION public._aboutdevs_update_geometry(id integer, x double precision, y double precision) OWNER TO aboutdevs;
+
+--
 -- Name: _aboutdevs_update_tag(character varying, integer); Type: FUNCTION; Schema: public; Owner: aboutdevs
 --
 
