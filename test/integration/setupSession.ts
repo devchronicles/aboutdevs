@@ -5,25 +5,10 @@ import * as serverTypes from "../../src/server/typings";
  * Truncates (delete) data from all tables
  * @param db
  */
-function truncateData(db: serverTypes.AboutDevsDatabase) {
+async function truncateData(db: serverTypes.AboutDevsDatabase) {
     if (!db) throw Error("'db' should be truthy");
-
-    const entities = [
-        "geo_location",
-        "geo_location_cache",
-        "geo_location_city",
-        "geo_location_country",
-        "geo_location_state",
-        "user",
-        "tag",
-        "user_tag",
-    ];
-
-    // concatenates all entities from the database
-    const entitiesAsString = entities.map((e) => `"${e}"`).join(", ");
-
     // nukes the database (puff.. nothing left)
-    return db.run(`truncate ${entitiesAsString} cascade`, {});
+    await db._aboutdevs_cleanup_db();
 }
 
 /**
@@ -55,9 +40,8 @@ export default function setupSession(before: (callback: (this: Mocha.IHookCallba
     });
 
     // runs before each test in a file
-    beforeEach((done) => {
-        truncateData(db)
-            .then(() => done());
+    beforeEach(async () => {
+        await truncateData(db);
     });
 
     // runs after all tests in a file

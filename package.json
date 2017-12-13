@@ -96,7 +96,6 @@
   },
   "scripts": {
     "build:ts": "tsc",
-    "db:clean": "cross-env COMMAND=clean_up_dev_dbs PGPASSWORD=pgadmin ts-node ./tools/db-manager.ts",
     "db:drop": "cross-env COMMAND=drop_dev_dbs PGPASSWORD=pgadmin ts-node ./tools/db-manager.ts",
     "db:generate": "cross-env COMMAND=generate_scripts PGPASSWORD=pgadmin ts-node ./tools/db-manager.ts",
     "db:install": "cross-env COMMAND=create_dev_dbs PGPASSWORD=pgadmin ts-node ./tools/db-manager.ts",

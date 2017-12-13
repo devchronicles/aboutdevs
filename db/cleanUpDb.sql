@@ -1,9 +1,0 @@
-TRUNCATE
-    "geo_location",
-    "geo_location_cache",
-    "geo_location_city",
-    "geo_location_country",
-    "geo_location_state",
-    "user",
-    "tag",
-    "user_tag"

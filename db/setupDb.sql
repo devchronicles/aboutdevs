@@ -68,6 +68,28 @@ COMMENT ON EXTENSION unaccent IS 'text search dictionary that removes accents';
 SET search_path = public, pg_catalog;
 
 --
+-- Name: _aboutdevs_cleanup_db(); Type: FUNCTION; Schema: public; Owner: aboutdevs
+--
+
+CREATE FUNCTION _aboutdevs_cleanup_db() RETURNS void
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+  l_stmt TEXT;
+BEGIN
+  SELECT 'truncate ' || string_agg(format('%I.%I', schemaname, tablename), ',')
+  INTO l_stmt
+  FROM pg_tables
+  WHERE schemaname IN ('public');
+
+  EXECUTE l_stmt;
+END;
+$$;
+
+
+ALTER FUNCTION public._aboutdevs_cleanup_db() OWNER TO aboutdevs;
+
+--
 -- Name: _aboutdevs_select_tags_from_user(integer); Type: FUNCTION; Schema: public; Owner: aboutdevs
 --
 

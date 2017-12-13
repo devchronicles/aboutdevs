@@ -104,6 +104,8 @@ export interface AboutDevsDatabase extends massive.Database {
     _aboutdevs_select_tags_from_user: (userId: number) => Promise<Tag[]>;
 
     [key: string]: any;
+
+    _aboutdevs_cleanup_db: () => void;
     _aboutdevs_is_user_name_taken: (userName: string, userId: number) => Promise<Array<{ exists: boolean }>>;
     _aboutdevs_update_geometry: (geoLocationId: number, longitude: number, latitude: number) => void;
     _aboutdevs_search_developers: (tags: string[], longitude: number, latitude: number) => Promise<UserSearchResult[]>;

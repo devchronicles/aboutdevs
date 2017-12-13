@@ -30,14 +30,6 @@ switch (selectedCommand) {
         dropdb -U ${userName} ${dbTestsName}
     `;
         break;
-    case "clean_up_dev_dbs":
-        commands = `
-        echo ===Cleaning up the ${dbName} dev db===
-        psql -f db/cleanUpDb.sql -U ${userName} -d ${dbName}
-        echo ===dropping the ${dbTestsName} dev db===
-        psql -f db/cleanUpDb.sql -U ${userName} -d ${dbTestsName}
-    `;
-        break;
     case "generate_scripts":
         commands = `
         echo ===Create the setupDb.sql file===

@@ -116,8 +116,13 @@ export async function saveProfile(db: serverTypes.AboutDevsDatabase, userId: num
         const profileTags = profile.tags;
         const persistedTags = await db._aboutdevs_select_tags_from_user(userId);
         // add tags that were added
-        const addedTags = profileTags.filter((profileTag) =>
-            persistedTags.findIndex((persistedTag) => persistedTag.name === profileTag.name) === -1);
+
+        const addedTags =
+            (profileTags && profileTags.length)
+                ? profileTags.filter((profileTag) =>
+                persistedTags.findIndex((persistedTag) => persistedTag.name === profileTag.name) === -1)
+                : [];
+
         for (const addedTag of addedTags) {
             await db.user_tag.insert({name: addedTag.name});
         }
