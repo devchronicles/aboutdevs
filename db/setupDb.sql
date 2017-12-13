@@ -71,35 +71,35 @@ SET search_path = public, pg_catalog;
 -- Name: _aboutdevs_select_tags_from_user(integer); Type: FUNCTION; Schema: public; Owner: aboutdevs
 --
 
-CREATE FUNCTION _aboutdevs_select_tags_from_user(user_id integer) RETURNS TABLE(id integer, name character varying)
+CREATE FUNCTION _aboutdevs_select_tags_from_user(_user_id integer) RETURNS TABLE(id integer, name character varying)
     LANGUAGE sql
-    AS $_$
+    AS $$
 SELECT t.id as id, t.name as name
     FROM tag t INNER JOIN user_tag ut ON t.id = ut.tag_id
     INNER JOIN "user" u ON u.id = ut.user_id
-    WHERE u.id = $1
+    WHERE u.id = _user_id
     ORDER BY name
-$_$;
+$$;
 
 
-ALTER FUNCTION public._aboutdevs_select_tags_from_user(user_id integer) OWNER TO aboutdevs;
+ALTER FUNCTION public._aboutdevs_select_tags_from_user(_user_id integer) OWNER TO aboutdevs;
 
 --
 -- Name: _aboutdevs_update_geometry(integer, double precision, double precision); Type: FUNCTION; Schema: public; Owner: aboutdevs
 --
 
-CREATE FUNCTION _aboutdevs_update_geometry(id integer, x double precision, y double precision) RETURNS void
+CREATE FUNCTION _aboutdevs_update_geometry(_id integer, _x double precision, _y double precision) RETURNS void
     LANGUAGE plpgsql
-    AS $_$
+    AS $$
 BEGIN
   UPDATE geo_location
-  SET geometry = ST_SetSRID(ST_MakePoint($2,$3),4326)
-  WHERE id = $1;
+  SET geometry = ST_SetSRID(ST_MakePoint(_x,_y),4326)
+  WHERE id = _id;
 END;
-$_$;
+$$;
 
 
-ALTER FUNCTION public._aboutdevs_update_geometry(id integer, x double precision, y double precision) OWNER TO aboutdevs;
+ALTER FUNCTION public._aboutdevs_update_geometry(_id integer, _x double precision, _y double precision) OWNER TO aboutdevs;
 
 --
 -- Name: _aboutdevs_update_tag(character varying, integer); Type: FUNCTION; Schema: public; Owner: aboutdevs
