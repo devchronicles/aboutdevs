@@ -58,7 +58,7 @@ body {
         ::-webkit-scrollbar-thumb {
             // sets the radius and the background of the handle
             border-radius: $radius-md * 2;
-            background-color: $color-gray-dark;
+            background-color: darken($color-gray-dark, 20%);
         }
     }
 

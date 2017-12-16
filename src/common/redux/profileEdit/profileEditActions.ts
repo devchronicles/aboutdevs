@@ -13,20 +13,18 @@ export const PROFILE_EDIT_LOAD_ERROR = "PROFILE_EDIT_LOAD_ERROR";
 
 export const profileEditLoadData = () => {
     return async (dispatch: ReactRedux.Dispatch<clientTypes.ReduxState>) => {
-        dispatch({ type: PROFILE_EDIT_LOAD_STARTED });
-        getProfileData()
-            .then((response) => {
-                switch (response.status) {
-                    case 500:
-                        dispatch({ type: PROFILE_EDIT_LOAD_ERROR });
-                        break;
-                    case 200:
-                        dispatch({ type: PROFILE_EDIT_LOAD_SUCCESS, payload: response.data });
-                        dispatch(initialize("profileEdit", response.data));
-                        break;
-                    default:
-                        throw Error(`profileEditLoadData error. Unexpected status code. Status code: ${response.status}`);
-                }
-            });
+        dispatch({type: PROFILE_EDIT_LOAD_STARTED});
+        const response = await getProfileData();
+        switch (response.status) {
+            case 500:
+                dispatch({type: PROFILE_EDIT_LOAD_ERROR});
+                break;
+            case 200:
+                dispatch({type: PROFILE_EDIT_LOAD_SUCCESS, payload: response.data});
+                dispatch(initialize("profileEdit", response.data));
+                break;
+            default:
+                throw Error(`profileEditLoadData error. Unexpected status code. Status code: ${response.status}`);
+        }
     };
 };

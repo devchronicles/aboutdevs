@@ -12,7 +12,7 @@
   z-index: 10000;
 
   header.header {
-    @include elastic-width($max-container-width + 2 * $gutter-md);
+      width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
