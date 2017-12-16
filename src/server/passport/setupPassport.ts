@@ -4,7 +4,6 @@ import { OAuth2Strategy as LinkedInStrategy } from "passport-linkedin-oauth2";
 import buildDb from "../db/buildDb";
 import * as userHelper from "../services/userService";
 import * as googleOAuthTypes from "../typings/googleOAuthTypes";
-import * as linkedInOAuthTypes from "../typings/linkedInOAuthTypes";
 import { findOrCreateFromGoogleProfile } from "../services/googleOAuthService";
 import { findOrCreateFromLinkedInProfile } from "../services/linkedInOAuthService";
 
@@ -54,10 +53,10 @@ export default function (passportInstance: passport.Passport) {
             callbackURL: "http://127.0.0.1:4000/auth/linkedin/callback",
             scope: ["r_emailaddress", "r_basicprofile"],
         },
-        async (accessToken, refreshToken, profile: linkedInOAuthTypes.LinkedInOAuthProfile, done) => {
+        async (accessToken, refreshToken, profile: any, done) => {
             try {
                 const db = await buildDb();
-                const user = await findOrCreateFromLinkedInProfile(db, profile);
+                const user = await findOrCreateFromLinkedInProfile(db, profile._json);
                 done(null, user.id);
             } catch (ex) {
                 done(ex);
