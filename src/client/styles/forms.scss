@@ -3,7 +3,7 @@
 input, textarea, select, button {
     font-family: 'Roboto', sans-serif;
     font-size: $font-size;
-    color: #333;
+    color: $color-font-dark;
 }
 
 textarea {
@@ -17,13 +17,8 @@ input[type="text"], textarea {
     border: 1px solid $color-gray-light;
     box-sizing: border-box;
     &.invalid {
-        padding-top: $input-padding-vertical + 2px;
-        border-bottom: 2px solid $color-shining-2;
-    }
-    &:focus
-    {
-        padding-top: $input-padding-vertical + 2px;
-        border-bottom: 2px solid $color-secondary;
+        padding-top: $input-padding-vertical + 1px;
+        border-bottom: 1px solid $color-shining-2;
     }
 }
 

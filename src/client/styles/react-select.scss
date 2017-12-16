@@ -12,6 +12,11 @@ $select-input-height:               32px;
 $select-input-placeholder:          $color-placeholder;
 $select-input-internal-height:      32px;
 
+$select-item-padding-vertical: 1px;
+$select-item-bg: $color-gray-even-lighter;
+$select-item-color: $color-font-dark;
+$select-item-border-color: $color-gray-light;
+
 @import '~react-select/scss/default';
 
 // hack
@@ -26,13 +31,6 @@ $select-input-internal-height:      32px;
 
 .Select.invalid {
     .Select-placeholder, .Select-value {
-        border-bottom: 2px solid $color-shining-2;
+        border-bottom: 1px solid $color-shining-2;
     }
 }
-
-.Select.is-focused {
-    .Select-placeholder, .Select-value {
-        border-bottom: 2px solid $color-secondary;
-    }
-}
-

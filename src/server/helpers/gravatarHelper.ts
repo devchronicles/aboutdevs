@@ -7,5 +7,5 @@ export enum GravatarSize {
 }
 
 export function getGravatarImageFromEmail(email: string, size: GravatarSize): string {
-    return gravatar.url(email, {s: size, d: "retro", f: "y"});
+    return gravatar.url(email, {s: size, d: "retro"});
 }

@@ -29,3 +29,8 @@ export function searchLocations(search: string, allowCities = false): AxiosPromi
     const queryString = allowCities ? `q=${search}&allowcities=true` : `q=${search}`;
     return axios.get(`/api/addresses?${queryString}`);
 }
+
+export function searchTags(search: string): AxiosPromise {
+    const queryString = `q=${search}`;
+    return axios.get(`/api/tags?${queryString}`);
+}

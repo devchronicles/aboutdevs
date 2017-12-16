@@ -56,8 +56,13 @@ class ProfileEditPage extends React.Component<ProfileEditPageProps> {
 
         return (
             <div className="page-wrapper">
-                <div className="document-wrapper">
-                    <ProfileEditForm onSubmit={this.handleFormSubmit} onCancel={this.onFormCancel} initialValues={formValues} />
+                <div className="profile-edit-page-wrapper">
+                    <div className="profile-edit-view-wrapper">
+                    </div>
+                    <div className="profile-edit-wrapper">
+                        <ProfileEditForm onSubmit={this.handleFormSubmit} onCancel={this.onFormCancel}
+                                         initialValues={formValues}/>
+                    </div>
                 </div>
             </div>
         );

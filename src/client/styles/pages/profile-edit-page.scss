@@ -1,81 +1,131 @@
 @import '../variables';
 @import '../mixins';
 
-.edit-profile-image-button-wrapper {
-  margin: $gutter-md 0;
-  .fa {
-    margin-right: $gutter-sm;
-  }
-}
+.profile-edit-page-wrapper {
+    @extend .flex-row;
+    width: 100%;
 
-.user-type-toggle {
-  box-sizing: border-box;
-  border: 1px solid $color-gray-light;
-  width: 100%;
-  button {
-    flex: 1 1 auto;
+    .profile-edit-view-wrapper {
+        flex: 1 0 auto;
+    }
 
-    &.pushed {
-      background-color: #DCDCDC;
-      .fa {
-        color: $color-secondary;
-        display: "inline-block";
-        margin-right: $gutter-sm;
-      }
-    }
-    &:hover {
-      .fa {
-        color: $color-white;
-      }
-    }
-    &:not(.pushed) {
-      .fa {
-        display: none;
-      }
-    }
-  }
-}
+    .profile-edit-wrapper {
+        @extend .flex-column;
+        flex-wrap: wrap;
+        padding: 0;
+        overflow-y: auto;
+        height: calc(100vh - #{$header-height});
 
-.field-array {
-  ul {
-    li {
-      display: flex;
-      flex-direction: row;
-      align-items: stretch;
-      margin-bottom: $gutter-sm;
-      .counter {
-        font-weight: 500;
-        background-color: $color-gray-light;
-        border-radius: 17px;
-        height: 34px;
-        width: 34px;
-        flex: 0 0 auto;
+        @media (min-width: $breakpoint-lg) {
+            @include elastic-width(550px);
+        }
+
+        .document {
+            box-sizing: border-box;
+            background: $color-gray-even-lighter;
+            .document-section {
+                padding: $gutter-lg;
+                &:not(:last-child) {
+                    border-bottom: 1px solid $color-gray-light;
+                }
+            }
+
+            .image {
+                box-sizing: border-box;
+                border: 2px solid $color-white;
+                padding: $gutter-md;
+                height: 120px;
+                width: 120px;
+                border-radius: 9999px;
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+                margin-bottom: $gutter-md;
+            }
+
+            .button-bar {
+                * {
+                    margin-left: $gutter-sm;
+                }
+            }
+        }
+    }
+
+    .edit-profile-image-button-wrapper {
+        margin: $gutter-md 0;
+        .fa {
+            margin-right: $gutter-sm;
+        }
+    }
+
+    .user-type-toggle {
         box-sizing: border-box;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
+        border: 1px solid $color-gray-light;
+        width: 100%;
+        button {
+            flex: 1 1 auto;
 
-      .form-group {
-        flex: 1 1 auto;
-        margin: 0 $gutter-sm;
-      }
-
-      button.delete {
-        height: 34px;
-      }
+            &.pushed {
+                background-color: #DCDCDC;
+                .fa {
+                    color: $color-secondary;
+                    display: "inline-block";
+                    margin-right: $gutter-sm;
+                }
+            }
+            &:hover {
+                .fa {
+                    color: $color-white;
+                }
+            }
+            &:not(.pushed) {
+                .fa {
+                    display: none;
+                }
+            }
+        }
     }
-  }
-  .field-array-button-bar {
-    display: flex;
-    flex-direction: row-reverse;
-  }
-}
 
-.input-group-addon-before-username {
-  display: none !important;
-  @media (min-width: $breakpoint-md) {
-    display: flex !important;
-  }
-}
+    .field-array {
+        ul {
+            li {
+                display: flex;
+                flex-direction: row;
+                align-items: stretch;
+                margin-bottom: $gutter-sm;
+                .counter {
+                    font-weight: 500;
+                    background-color: $color-gray-light;
+                    border-radius: 17px;
+                    height: 34px;
+                    width: 34px;
+                    flex: 0 0 auto;
+                    box-sizing: border-box;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
 
+                .form-group {
+                    flex: 1 1 auto;
+                    margin: 0 $gutter-sm;
+                }
+
+                button.delete {
+                    height: 34px;
+                }
+            }
+        }
+        .field-array-button-bar {
+            display: flex;
+            flex-direction: row-reverse;
+        }
+    }
+
+    .input-group-addon-before-username {
+        display: none !important;
+        @media (min-width: $breakpoint-md) {
+            display: flex !important;
+        }
+    }
+
+}

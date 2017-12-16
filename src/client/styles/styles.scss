@@ -13,7 +13,6 @@
 @import 'components/index-search-form';
 @import 'components/index-intro';
 
-@import 'document';
 @import 'pages/search-page';
 @import 'pages/login-page';
 @import 'pages/profile-edit-page';
@@ -26,6 +25,9 @@
 //pages
 @import 'pages/index-page';
 
+html, body {
+    height: 100%;
+}
 
 body {
     font-family: 'Roboto', sans-serif;
@@ -42,6 +44,22 @@ body {
         flex-direction: column;
         align-items: center;
         box-sizing: border-box;
+
+        ::-webkit-scrollbar-track {
+            // sets the background of the tracker
+            //background-color: red;
+        }
+
+        ::-webkit-scrollbar {
+            // sets the width of the scrollbar
+            width: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            // sets the radius and the background of the handle
+            border-radius: $radius-md * 2;
+            background-color: $color-gray-dark;
+        }
     }
 
     .container {

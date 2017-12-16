@@ -1,15 +1,15 @@
 import * as React from "react";
 import { FaIcon } from "./FaIcon";
 import {
-    Field, FieldArray, FormField, FormFieldUserName, FormGroup, FormRow, SelectLocation, SelectProfession,
-    Services, TextArea, TextBox, UserTypeToggle,
-} from "./form/index";
+    Field, FieldArray, FormField, FormFieldUserName, FormGroup, FormRow, SelectLocation, Services, TextArea,
+    TextBox, UserTypeToggle,
+} from "./form";
 import { DocumentSection } from "./DocumentSection";
-import normalizePhone from "../lib/redux-form/normalizePhone";
 import asyncValidation from "../lib/redux-form/asyncValidation";
 import * as ReduxForm from "redux-form";
 import * as ReactRedux from "react-redux";
 import * as commonTypes from "../typings/commonTypes";
+import { SelectTags } from "./form/SelectTags";
 
 interface ProfileEditFormStateProps {
     formValues: any;
@@ -27,7 +27,10 @@ interface ProfileEditFormOwnProps extends ReduxForm.FormProps<any, any, any> {
     onCancel: () => void;
 }
 
-declare type ProfileEditorFormProps = ProfileEditFormStateProps & ProfileEditFormDispatchProps & ProfileEditFormOwnProps;
+declare type ProfileEditorFormProps =
+    ProfileEditFormStateProps
+    & ProfileEditFormDispatchProps
+    & ProfileEditFormOwnProps;
 
 let ProfileEditForm: React.SFC<ProfileEditorFormProps> = (props) => {
     const {
@@ -46,7 +49,7 @@ let ProfileEditForm: React.SFC<ProfileEditorFormProps> = (props) => {
         <div className="document">
             <form onSubmit={handleSubmit(onSubmit)}>
                 <DocumentSection className="flex-column flex-align-items-center">
-                    <div className="image" style={{ backgroundImage: `url(${loggedUser.photoUrl})` }} />
+                    <div className="image" style={{backgroundImage: `url(${loggedUser.photoUrl})`}}/>
                     <FormRow>
                         <Field
                             name="name"
@@ -60,7 +63,7 @@ let ProfileEditForm: React.SFC<ProfileEditorFormProps> = (props) => {
                             component={FormField}
                             innerComponent={TextBox}
                             help="É assim que seu nome será exibido aos outros."
-                            addOnBefore={<FaIcon icon="user" />}
+                            addOnBefore={<FaIcon icon="user"/>}
                         />
                     </FormRow>
                     <FormRow>
@@ -76,16 +79,18 @@ let ProfileEditForm: React.SFC<ProfileEditorFormProps> = (props) => {
                         </FormGroup>
                     </FormRow>
                 </DocumentSection>
-                <DocumentSection visible={formValues ? formValues.type === commonTypes.UserProfileType.RECRUITER : true}
-                                 className="flex-column flex-align-items-center">
+                <DocumentSection
+                    visible={formValues ? formValues.type === commonTypes.UserProfileType.RECRUITER : true}
+                    className="flex-column flex-align-items-center"
+                >
                     <FormRow>
                         <Field
                             name="profession"
                             label="Profissão"
                             component={FormField}
-                            innerComponent={SelectProfession}
+                            innerComponent={SelectTags}
                             help="Escreva o que melhor descreve a sua profissão."
-                            addOnBefore={<FaIcon icon="briefcase" />}
+                            addOnBefore={<FaIcon icon="briefcase"/>}
                         />
                     </FormRow>
                     <FormRow>
@@ -112,31 +117,7 @@ let ProfileEditForm: React.SFC<ProfileEditorFormProps> = (props) => {
                             component={FormField}
                             innerComponent={SelectLocation}
                             help="Seu endereço não será exibido. Este campo é usado somente para geo-localização."
-                            addOnBefore={<FaIcon icon="map-marker" />}
-                        />
-                    </FormRow>
-                </DocumentSection>
-                <DocumentSection className="flex-column flex-align-items-center">
-                    <FormRow>
-                        <Field
-                            name="phoneWhatsapp"
-                            label="Whatsapp"
-                            component={FormField}
-                            innerComponent={TextBox}
-                            help="Seu Whatsapp será exibido somente aos usuários com os quais você se conectar."
-                            addOnBefore={<FaIcon icon="whatsapp" />}
-                            normalize={normalizePhone}
-                        />
-                    </FormRow>
-                    <FormRow>
-                        <Field
-                            name="phoneAlternative"
-                            label="Telefone alternativo"
-                            component={FormField}
-                            innerComponent={TextBox}
-                            help="Seu telefone alternativo será exibido somente aos usuários com os quais você se conectar."
-                            addOnBefore={<FaIcon icon="phone" />}
-                            normalize={normalizePhone}
+                            addOnBefore={<FaIcon icon="map-marker"/>}
                         />
                     </FormRow>
                 </DocumentSection>
@@ -144,8 +125,8 @@ let ProfileEditForm: React.SFC<ProfileEditorFormProps> = (props) => {
                     <button onClick={() => onCancel()}>Cancelar</button>
                     <button type="submit" className="vibrant" disabled={pristine || submitting}>Salvar</button>
                 </DocumentSection>
-            </form >
-        </div >
+            </form>
+        </div>
     );
 };
 
@@ -167,9 +148,7 @@ const mapStateToProps = (state: commonTypes.ReduxState): ProfileEditFormStatePro
     loggedUser: state.loggedUser,
 });
 
-const mapDispatchToProps = (dispatch: ReactRedux.Dispatch<commonTypes.ReduxState>): ProfileEditFormDispatchProps => ({
-
-});
+const mapDispatchToProps = (dispatch: ReactRedux.Dispatch<commonTypes.ReduxState>): ProfileEditFormDispatchProps => ({});
 
 const mergeProps = (stateProps: ProfileEditFormStateProps, dispatchProps: ProfileEditFormDispatchProps, ownProps: ProfileEditFormOwnProps): ProfileEditorFormProps => ({
     ...stateProps,
