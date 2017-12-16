@@ -57,17 +57,6 @@ $cardsPerRowXl: 4;
         overflow: hidden;
         padding: $gutter-md;
 
-        .image {
-            margin-top: $gutter-sm;
-            box-sizing: border-box;
-            padding: $gutter-md;
-            height: 120px;
-            width: 120px;
-            border-radius: 9999px;
-            background-repeat: no-repeat;
-            background-size: 100% 100%;
-        }
-
         .display-name {
             font-size: 22px;
             margin: $gutter-md 0 0 0;

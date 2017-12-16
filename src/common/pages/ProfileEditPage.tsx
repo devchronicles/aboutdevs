@@ -9,6 +9,7 @@ import * as httpClient from "../httpClient";
 import * as ReactNotificationSystem from "react-notification-system";
 import * as notificationActions from "../../common/redux/notifications/notificationsActions";
 import { Dispatch } from "redux";
+import { ProfileView } from "../components/ProfileView";
 
 interface ProfileEditPageStateOwnProps extends ReactRouter.RouteComponentProps<any> {
     loggedUser: commonTypes.CurrentUserProfile;
@@ -24,17 +25,15 @@ interface ProfileEditPageStateProps {
 
 }
 
-declare type ProfileEditPageProps = ProfileEditPageStateProps & ProfileEditPageDispatchProps & ProfileEditPageStateOwnProps;
+declare type ProfileEditPageProps =
+    ProfileEditPageStateProps
+    & ProfileEditPageDispatchProps
+    & ProfileEditPageStateOwnProps;
 
 class ProfileEditPage extends React.Component<ProfileEditPageProps> {
 
-    public componentDidMount() {
-        const { profileEditLoadData } = this.props;
-        profileEditLoadData();
-    }
-
     private handleFormSubmit = async (values: any) => {
-        const { enqueueNotification } = this.props;
+        const {enqueueNotification} = this.props;
         const axiosResult = await httpClient.saveProfileData(values);
         if (axiosResult.data.errors) {
             throw new ReduxForm.SubmissionError(axiosResult.data.errors);
@@ -47,21 +46,30 @@ class ProfileEditPage extends React.Component<ProfileEditPageProps> {
         }
     }
 
+    public componentDidMount() {
+        const {profileEditLoadData} = this.props;
+        profileEditLoadData();
+    }
+
     private onFormCancel = () => {
         this.props.history.push("/");
     }
 
     public render() {
-        const { formValues } = this.props;
+        const {formValues} = this.props;
 
         return (
             <div className="page-wrapper">
                 <div className="profile-edit-page-wrapper">
                     <div className="profile-edit-view-wrapper">
+                        <ProfileView profile={formValues ? formValues.values : null}/>
                     </div>
                     <div className="profile-edit-wrapper">
-                        <ProfileEditForm onSubmit={this.handleFormSubmit} onCancel={this.onFormCancel}
-                                         initialValues={formValues}/>
+                        <ProfileEditForm
+                            onSubmit={this.handleFormSubmit}
+                            onCancel={this.onFormCancel}
+                            initialValues={formValues}
+                        />
                     </div>
                 </div>
             </div>

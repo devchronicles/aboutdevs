@@ -32,11 +32,11 @@ const UserTypeToggle: React.SFC<UserTypeToggle> = (field) => {
         <div className="button-group user-type-toggle">
             <button {...professionalButtonProps}>
                 {checkComponent}
-                <span>Sou um profissional</span>
+                <span>I'm a developer</span>
             </button>
             <button {...nonProfessionalButtonProps}>
                 {checkComponent}
-                Estou em busca de profissionais
+                I'm a recruiter
         </button>
         </div>
     );

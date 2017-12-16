@@ -14,7 +14,7 @@ const Header: React.SFC<HeaderProps> = ({loggedUser}) => {
         : <Link to="/login" className="button vibrant">Entrar</Link>;
 
     return (
-        <div className="header-wrapper">
+        <div className="main-header-wrapper">
             <header className="header">
                 <div className="header-content">
                     <Link to="/" className="logo-wrapper">

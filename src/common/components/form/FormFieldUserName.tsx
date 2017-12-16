@@ -35,13 +35,13 @@ export class FormFieldUserName extends React.Component<FormFieldUserNameProps> {
 
         return (
             <FormGroup
-                label="Nome do usuário"
+                label="User name"
                 labelFor="name"
-                help="A URL acima será publicamente visível e será listada se você for um profissional."
+                help="The above will be publicly visible."
                 error={errorMessage}
             >
                 <InputGroup
-                    addOnBefore="tazzo.com.br/@"
+                    addOnBefore="aboutdevs.com/"
                     addOnAfter={validationComponent}
                     addOnBeforeClassName="input-group-addon-before-username"
                 >

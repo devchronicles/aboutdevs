@@ -49,7 +49,19 @@ let ProfileEditForm: React.SFC<ProfileEditorFormProps> = (props) => {
         <div className="document">
             <form onSubmit={handleSubmit(onSubmit)}>
                 <DocumentSection className="flex-column flex-align-items-center">
-                    <div className="image" style={{backgroundImage: `url(${loggedUser.photoUrl})`}}/>
+                    <FormRow>
+                        <FormGroup
+                            label="User type"
+                            labelFor="displayName"
+                        >
+                            <Field
+                                name="type"
+                                component={UserTypeToggle}
+                            />
+                        </FormGroup>
+                    </FormRow>
+                </DocumentSection>
+                <DocumentSection className="flex-column flex-align-items-center">
                     <FormRow>
                         <Field
                             name="name"
@@ -59,24 +71,11 @@ let ProfileEditForm: React.SFC<ProfileEditorFormProps> = (props) => {
                     <FormRow>
                         <Field
                             name="displayName"
-                            label="Nome de exibição"
+                            label="Display name"
                             component={FormField}
                             innerComponent={TextBox}
-                            help="É assim que seu nome será exibido aos outros."
                             addOnBefore={<FaIcon icon="user"/>}
                         />
-                    </FormRow>
-                    <FormRow>
-                        <FormGroup
-                            label="Tipo de usuário"
-                            labelFor="displayName"
-                            help="Selecione 'Sou um profissional' se você tem interesse em criar um perfil público para divulgar seus serviços. Caso contrário, selecione 'Estou em busca de profissionais."
-                        >
-                            <Field
-                                name="type"
-                                component={UserTypeToggle}
-                            />
-                        </FormGroup>
                     </FormRow>
                 </DocumentSection>
                 <DocumentSection
@@ -86,11 +85,11 @@ let ProfileEditForm: React.SFC<ProfileEditorFormProps> = (props) => {
                     <FormRow>
                         <Field
                             name="profession"
-                            label="Profissão"
+                            label="Technologies"
                             component={FormField}
                             innerComponent={SelectTags}
-                            help="Escreva o que melhor descreve a sua profissão."
-                            addOnBefore={<FaIcon icon="briefcase"/>}
+                            help="Data is provided by Stackoverflow"
+                            addOnBefore={<FaIcon icon="tags"/>}
                         />
                     </FormRow>
                     <FormRow>

@@ -6,7 +6,10 @@
     width: 100%;
 
     .profile-edit-view-wrapper {
+        @extend .flex-column;
         flex: 1 0 auto;
+        overflow-y: auto;
+        height: calc(100vh - #{$header-height});
     }
 
     .profile-edit-wrapper {
@@ -28,18 +31,6 @@
                 &:not(:last-child) {
                     border-bottom: 1px solid $color-gray-light;
                 }
-            }
-
-            .image {
-                box-sizing: border-box;
-                border: 2px solid $color-white;
-                padding: $gutter-md;
-                height: 120px;
-                width: 120px;
-                border-radius: 9999px;
-                background-repeat: no-repeat;
-                background-size: 100% 100%;
-                margin-bottom: $gutter-md;
             }
 
             .button-bar {
