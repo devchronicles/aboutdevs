@@ -43,6 +43,9 @@ export interface UserProfile {
     photoUrl?: string;
     tags?: UserTag[];
     address: string;
+    colorPrimary?: string;
+    colorSecondary?: string;
+    colorNegative?: string;
 }
 
 export interface DeveloperSearchProfile {

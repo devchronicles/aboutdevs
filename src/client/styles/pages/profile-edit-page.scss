@@ -52,6 +52,7 @@
         box-sizing: border-box;
         border: 1px solid $color-gray-light;
         width: 100%;
+        border-radius: $radius-md;
         button {
             flex: 1 1 auto;
 

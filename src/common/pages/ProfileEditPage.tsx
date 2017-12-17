@@ -62,13 +62,12 @@ class ProfileEditPage extends React.Component<ProfileEditPageProps> {
             <div className="page-wrapper">
                 <div className="profile-edit-page-wrapper">
                     <div className="profile-edit-view-wrapper">
-                        <ProfileView profile={formValues ? formValues.values : null}/>
+                        <ProfileView profile={formValues}/>
                     </div>
                     <div className="profile-edit-wrapper">
                         <ProfileEditForm
                             onSubmit={this.handleFormSubmit}
                             onCancel={this.onFormCancel}
-                            initialValues={formValues}
                         />
                     </div>
                 </div>
@@ -79,7 +78,7 @@ class ProfileEditPage extends React.Component<ProfileEditPageProps> {
 
 const mapStateToProps = (state: commonTypes.ReduxState): ProfileEditPageStateProps => ({
     loggedUser: state.loggedUser,
-    formValues: state.form.profileEdit,
+    formValues: state.form.profileEdit ? state.form.profileEdit.values : null,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<commonTypes.ReduxState>): ProfileEditPageDispatchProps => ({

@@ -12,6 +12,7 @@
 @import 'components/search-display-dropdown-menu';
 @import 'components/index-search-form';
 @import 'components/index-intro';
+@import "components/color-picker";
 
 @import 'pages/search-page';
 @import 'pages/login-page';
@@ -53,7 +54,7 @@ body {
 
         ::-webkit-scrollbar {
             // sets the width of the scrollbar
-            width: 5px;
+            width: 7px;
         }
 
         ::-webkit-scrollbar-thumb {

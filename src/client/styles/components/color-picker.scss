@@ -1,0 +1,19 @@
+@import "../variables";
+
+.color-picker {
+    position: relative;
+    flex: 1;
+    .color-block {
+        display: block;
+        height: 20px;
+        cursor: pointer;
+        box-sizing: border-box;
+        border: 1px solid $color-gray-light;
+        border-radius: $radius-md;
+    }
+    .picker-wrapper {
+        position: absolute;
+        z-index: 100;
+        top: 32px;
+    }
+}

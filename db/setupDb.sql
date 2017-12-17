@@ -576,7 +576,10 @@ CREATE TABLE "user" (
     search_canonical text,
     name character varying(255) NOT NULL,
     email character varying(255) NOT NULL,
-    created_at timestamp without time zone DEFAULT timezone('utc'::text, now()) NOT NULL
+    created_at timestamp without time zone DEFAULT timezone('utc'::text, now()) NOT NULL,
+    colorprimary character varying(10),
+    colorsecondary character varying(10),
+    colornegative character varying(10)
 );
 
 

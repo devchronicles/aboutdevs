@@ -10,6 +10,7 @@ import * as ReduxForm from "redux-form";
 import * as ReactRedux from "react-redux";
 import * as commonTypes from "../typings/commonTypes";
 import { SelectTags } from "./form/SelectTags";
+import { ColorPicker } from "./form/ColorPicker";
 
 interface ProfileEditFormStateProps {
     formValues: any;
@@ -32,6 +33,7 @@ declare type ProfileEditorFormProps =
     & ProfileEditFormDispatchProps
     & ProfileEditFormOwnProps;
 
+
 let ProfileEditForm: React.SFC<ProfileEditorFormProps> = (props) => {
     const {
         formValues,
@@ -51,7 +53,6 @@ let ProfileEditForm: React.SFC<ProfileEditorFormProps> = (props) => {
                 <DocumentSection className="flex-column flex-align-items-center">
                     <FormRow>
                         <FormGroup
-                            label="User type"
                             labelFor="displayName"
                         >
                             <Field
@@ -60,8 +61,6 @@ let ProfileEditForm: React.SFC<ProfileEditorFormProps> = (props) => {
                             />
                         </FormGroup>
                     </FormRow>
-                </DocumentSection>
-                <DocumentSection className="flex-column flex-align-items-center">
                     <FormRow>
                         <Field
                             name="name"
@@ -120,9 +119,35 @@ let ProfileEditForm: React.SFC<ProfileEditorFormProps> = (props) => {
                         />
                     </FormRow>
                 </DocumentSection>
+                <DocumentSection className="flex-column flex-align-items-center">
+                    <FormRow>
+                        <Field
+                            name="colorPrimary"
+                            label="Color Primary"
+                            component={FormField}
+                            innerComponent={ColorPicker}
+                        />
+                    </FormRow>
+                    <FormRow>
+                        <Field
+                            name="colorSecondary"
+                            label="Color Secondary"
+                            component={FormField}
+                            innerComponent={ColorPicker}
+                        />
+                    </FormRow>
+                    <FormRow>
+                        <Field
+                            name="colorNegative"
+                            label="Color Negative"
+                            component={FormField}
+                            innerComponent={ColorPicker}
+                        />
+                    </FormRow>
+                </DocumentSection>
                 <DocumentSection className="flex-row-reverse button-bar">
-                    <button onClick={() => onCancel()}>Cancelar</button>
-                    <button type="submit" className="vibrant" disabled={pristine || submitting}>Salvar</button>
+                    <button onClick={() => onCancel()}>Cancel</button>
+                    <button type="submit" className="vibrant" disabled={pristine || submitting}>Save</button>
                 </DocumentSection>
             </form>
         </div>

@@ -11,6 +11,12 @@ export const PROFILE_EDIT_LOAD_ERROR = "PROFILE_EDIT_LOAD_ERROR";
  * Changes the type of the search
  */
 
+const defaultValues = {
+    colorPrimary: "#252934",
+    colorSecondary: "#4A95DF",
+    colorNegative: "#FFFFFF",
+};
+
 export const profileEditLoadData = () => {
     return async (dispatch: ReactRedux.Dispatch<clientTypes.ReduxState>) => {
         dispatch({type: PROFILE_EDIT_LOAD_STARTED});
@@ -21,7 +27,7 @@ export const profileEditLoadData = () => {
                 break;
             case 200:
                 dispatch({type: PROFILE_EDIT_LOAD_SUCCESS, payload: response.data});
-                dispatch(initialize("profileEdit", response.data));
+                dispatch(initialize("profileEdit", {...defaultValues, ...response.data}));
                 break;
             default:
                 throw Error(`profileEditLoadData error. Unexpected status code. Status code: ${response.status}`);

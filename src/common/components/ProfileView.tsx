@@ -16,8 +16,8 @@ export class ProfileView extends React.Component<ProfileViewProps, ProfileViewSt
             return null;
         }
         return (
-            <div className={"profile-view"}>
-                <div className={"header-wrapper"}>
+            <div className="profile-view">
+                <div className="header-wrapper" style={{backgroundColor: profile.colorPrimary}}>
                     <header>
                         <div className="profile-image" style={{backgroundImage: `url(${profile.photoUrl})`}}/>
                         <h1>{profile.displayName}</h1>
