@@ -66,6 +66,11 @@ export async function getUserProfileFromUser(db: serverTypes.AboutDevsDatabase, 
         address: await (user.geo_location_id ? locationService.getFormattedLocationById(db, user.geo_location_id) : null),
         bio: user.bio,
         tags: await getTagsForUser(db, user.id),
+        colorPrimary: user.color_primary,
+        colorSecondary: user.color_secondary,
+        colorNegative: user.color_negative,
+        companyName: user.company_name,
+        companyUrl: user.company_url,
     };
 }
 
@@ -98,6 +103,11 @@ export async function saveProfile(db: serverTypes.AboutDevsDatabase, userId: num
     user.title = profile.title;
     user.type = profile.type;
     user.bio = profile.bio;
+    user.color_primary = profile.colorPrimary;
+    user.color_secondary = profile.colorSecondary;
+    user.color_negative = profile.colorNegative;
+    user.company_name = profile.companyName;
+    user.company_url = profile.companyUrl;
 
     // location
     // TODO: Add location redundancy to the user type
@@ -150,7 +160,7 @@ export async function saveProfile(db: serverTypes.AboutDevsDatabase, userId: num
  */
 export async function searchDevelopers(db: serverTypes.AboutDevsDatabase, tags: string[], location: string): Promise<commonTypes.DeveloperSearchProfile[]> {
     // we need to convert the location to latitude and longitude
-    const locations = await locationService.searchLocations(db, location, true);
+    const locations = await locationService.searchLocations(db, location);
     if (!locations.results.length) {
         return [];
     }

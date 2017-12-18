@@ -46,6 +46,8 @@ export interface UserProfile {
     colorPrimary?: string;
     colorSecondary?: string;
     colorNegative?: string;
+    companyName?: string;
+    companyUrl?: string;
 }
 
 export interface DeveloperSearchProfile {

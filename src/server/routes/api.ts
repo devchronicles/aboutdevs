@@ -9,9 +9,8 @@ import * as commonTypes from "../../common/typings/commonTypes";
 const router = express.Router();
 
 router.route("/addresses").get(async (req: express.Request, res: express.Response) => {
-    const allowCities: boolean = req.query.allowcities;
     await apiHelper.sendDbConnectedPromise(res,
-        (db: dbTypes.AboutDevsDatabase) => locationService.searchLocationsFormatted(db, req.query.q as string, allowCities));
+        (db: dbTypes.AboutDevsDatabase) => locationService.searchLocationsFormatted(db, req.query.q as string));
 });
 
 router.route("/tags").get(async (req, res) => {

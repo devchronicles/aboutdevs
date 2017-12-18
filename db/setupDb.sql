@@ -579,7 +579,9 @@ CREATE TABLE "user" (
     created_at timestamp without time zone DEFAULT timezone('utc'::text, now()) NOT NULL,
     colorprimary character varying(10),
     colorsecondary character varying(10),
-    colornegative character varying(10)
+    colornegative character varying(10),
+    companynname character varying(80),
+    companyurl character varying(255)
 );
 
 

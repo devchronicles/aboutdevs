@@ -20,7 +20,7 @@
         height: calc(100vh - #{$header-height});
 
         @media (min-width: $breakpoint-lg) {
-            @include elastic-width(550px);
+            @include elastic-width(450px);
         }
 
         .document {

@@ -55,6 +55,11 @@ export interface User {
     name: string;
     geo_location_id: number;
     bio: string;
+    color_primary?: string;
+    color_secondary?: string;
+    color_negative?: string;
+    company_name?: string;
+    company_url?: string;
 }
 
 export interface UserSearchResult {

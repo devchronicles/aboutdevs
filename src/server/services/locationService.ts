@@ -103,7 +103,7 @@ export async function saveLocation(db: serverTypes.AboutDevsDatabase, formattedA
 }
 
 export async function saveAddress(db: serverTypes.AboutDevsDatabase, formattedText: string): Promise<serverTypes.GeoLocation> {
-    const locationData = await searchLocations(db, formattedText, false);
+    const locationData = await searchLocations(db, formattedText);
     if (!locationData || !locationData.results || !locationData.results.length) throw Error("could not get location");
     if (locationData.results.length > 1) throw Error("the given location is not unique");
 
@@ -135,7 +135,7 @@ export async function getFormattedLocationById(db: serverTypes.AboutDevsDatabase
     return location.formatted_address;
 }
 
-export async function searchLocations(db: serverTypes.AboutDevsDatabase, searchTerm: string, allowCities: boolean): Promise<serverTypes.GeocodeApiResult> {
+export async function searchLocations(db: serverTypes.AboutDevsDatabase, searchTerm: string): Promise<serverTypes.GeocodeApiResult> {
     const normalizedSearchTerm = stringHelper.normalizeForSearch(searchTerm);
     if (!normalizedSearchTerm) {
         return Promise.resolve<serverTypes.GeocodeApiResult>(undefined);
@@ -154,7 +154,7 @@ export async function searchLocations(db: serverTypes.AboutDevsDatabase, searchT
     return locations;
 }
 
-export async function searchLocationsFormatted(db: serverTypes.AboutDevsDatabase, searchTerm: string, allowCities: boolean): Promise<string[]> {
-    const locations = await searchLocations(db, searchTerm, allowCities);
-    return geocodeApiFormattingHelper.getFormattedLocations(locations, allowCities);
+export async function searchLocationsFormatted(db: serverTypes.AboutDevsDatabase, searchTerm: string): Promise<string[]> {
+    const locations = await searchLocations(db, searchTerm);
+    return geocodeApiFormattingHelper.getFormattedLocations(locations);
 }

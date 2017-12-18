@@ -76,6 +76,33 @@ let ProfileEditForm: React.SFC<ProfileEditorFormProps> = (props) => {
                             addOnBefore={<FaIcon icon="user"/>}
                         />
                     </FormRow>
+                    <FormRow>
+                        <Field
+                            name="title"
+                            label="Title"
+                            component={FormField}
+                            innerComponent={TextBox}
+                            addOnBefore={<FaIcon icon="briefcase"/>}
+                        />
+                    </FormRow>
+                    <FormRow>
+                        <Field
+                            name="companyName"
+                            label="Company name"
+                            component={FormField}
+                            innerComponent={TextBox}
+                            addOnBefore={<FaIcon icon="building"/>}
+                        />
+                    </FormRow>
+                    <FormRow>
+                        <Field
+                            name="companyUrl"
+                            label="Company URL"
+                            component={FormField}
+                            innerComponent={TextBox}
+                            addOnBefore={<FaIcon icon="link"/>}
+                        />
+                    </FormRow>
                 </DocumentSection>
                 <DocumentSection
                     visible={formValues ? formValues.type === commonTypes.UserProfileType.RECRUITER : true}
