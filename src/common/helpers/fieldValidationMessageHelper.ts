@@ -3,22 +3,20 @@ import * as fieldValidation from "./fieldValidationHelper";
 export function getErrorMessage(error: string) {
     switch (error) {
         case fieldValidation.REQUIRED:
-            return "Campo obrigatório.";
+            return "Required.";
         case fieldValidation.MAX_LENGTH_50:
-            return "Tamanho máximo: 50 caracteres.";
+            return "Max size: 50 characters.";
         case fieldValidation.MAX_LENGTH_60:
-            return "Tamanho máximo: 60 caracteres.";
+            return "Max size: 60 characters.";
         case fieldValidation.MAX_LENGTH_80:
-            return "Tamanho máximo: 80 caracteres.";
+            return "Max size: 80 characters.";
         case fieldValidation.MAX_LENGTH_500:
-            return "Tamanho máximo: 500 caracteres.";
-        case fieldValidation.REQUIRED_IF_DEVELOPER:
-            return "Campo obrigatório quando o usuário é um profissional.";
-        case fieldValidation.AT_LEAST_ONE_PHONE:
-            return "Pelo menos um dos telefones precisa ser preenchido.";
+            return "Max size: 500 characters.";
         case fieldValidation.USER_NAME_IS_TAKEN:
-            return "Este nome de usuário já está sendo utilizado.";
+            return "This name is taken.";
+        case fieldValidation.URL:
+            return "Invalid URL";
         default:
-            return error ? "Algo deu errado" : null;
+            return error ? "Invalid value" : null;
     }
 }

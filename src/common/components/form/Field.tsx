@@ -6,9 +6,9 @@ interface FieldProps extends BaseFieldProps {
 
 }
 
-declare type IFinalFieldProps = FieldProps & any;
+declare type FinalFieldProps = FieldProps & any;
 
-const Field: React.SFC<IFinalFieldProps> = (props) => (
+const Field: React.SFC<FinalFieldProps> = (props) => (
     <RfField {...props} validate={props.validate || fieldValidationHelper.getValidatorsForField(props.name)} />
 );
 

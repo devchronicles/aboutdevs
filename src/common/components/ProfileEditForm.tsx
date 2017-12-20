@@ -11,6 +11,7 @@ import * as ReactRedux from "react-redux";
 import * as commonTypes from "../typings/commonTypes";
 import { SelectTags } from "./form/SelectTags";
 import { ColorPicker } from "./form/ColorPicker";
+import { SocialLinks } from "./form/SocialLinks";
 
 interface ProfileEditFormStateProps {
     formValues: any;
@@ -101,6 +102,12 @@ let ProfileEditForm: React.SFC<ProfileEditorFormProps> = (props) => {
                             component={FormField}
                             innerComponent={TextBox}
                             addOnBefore={<FaIcon icon="link"/>}
+                        />
+                    </FormRow>
+                    <FormRow>
+                        <FieldArray
+                            name="socialLinks"
+                            component={SocialLinks}
                         />
                     </FormRow>
                 </DocumentSection>

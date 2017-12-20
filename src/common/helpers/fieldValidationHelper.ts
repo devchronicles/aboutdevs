@@ -1,4 +1,5 @@
 import * as commonTypes from "../typings/commonTypes";
+import { isUrl } from "./urlHelper";
 
 export const REQUIRED = "required";
 export const REQUIRED_IF_DEVELOPER = "required-if-developer";
@@ -8,6 +9,7 @@ export const MAX_LENGTH_60 = "max-length-80";
 export const MAX_LENGTH_80 = "max-length-80";
 export const MAX_LENGTH_500 = "max-length-500";
 export const USER_NAME_IS_TAKEN = "user-name-is-taken";
+export const URL = "url";
 
 export function validateRequired(value: any) {
     return (value === null || value === undefined || value === "") ? REQUIRED : undefined;
@@ -41,6 +43,13 @@ export function validateMaxLength500(value: string) {
     return value.length > 500 ? MAX_LENGTH_500 : undefined;
 }
 
+export function validateUrl(value: string) {
+    if (!value) {
+        return undefined;
+    }
+    return isUrl(value) ? URL : undefined;
+}
+
 export function validationRequiredIfDeveloper(value: any, user: commonTypes.UserProfile) {
     return (user.type === commonTypes.UserProfileType.RECRUITER && (value === null || value === undefined || value === "")) ? REQUIRED_IF_DEVELOPER : undefined;
 }
@@ -57,9 +66,17 @@ export function getValidatorsForField(fieldName: keyof commonTypes.UserProfile):
             return [validationRequiredIfDeveloper, validateMaxLength500];
         case "address":
             return [validateRequired];
-        default:
-            return [];
     }
+
+    // Social links
+    if (/.*\.website/.test(fieldName)) {
+        return [validateRequired];
+    }
+    if (/.*\.url$/.test(fieldName)) {
+        return [validateUrl, validateRequired];
+    }
+
+    return [];
 }
 
 export function validate(user: commonTypes.UserProfile) {

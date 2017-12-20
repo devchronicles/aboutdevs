@@ -20,14 +20,14 @@
         height: calc(100vh - #{$header-height});
 
         @media (min-width: $breakpoint-lg) {
-            @include elastic-width(450px);
+            @include elastic-width(550px);
         }
 
         .document {
             box-sizing: border-box;
             background: $color-gray-even-lighter;
             .document-section {
-                padding: $gutter-lg;
+                padding: $gutter-md;
                 &:not(:last-child) {
                     border-bottom: 1px solid $color-gray-light;
                 }
@@ -79,22 +79,19 @@
 
     .field-array {
         ul {
-            li {
-                display: flex;
-                flex-direction: row;
-                align-items: stretch;
+            li.multi-line {
+                @extend .flex-row;
                 margin-bottom: $gutter-sm;
-                .counter {
-                    font-weight: 500;
-                    background-color: $color-gray-light;
-                    border-radius: 17px;
-                    height: 34px;
-                    width: 34px;
-                    flex: 0 0 auto;
-                    box-sizing: border-box;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
+                border: 1px solid $color-gray-light;
+                border-radius: $radius-md;
+                padding: $gutter-sm $gutter-sm $gutter-sm 0;
+
+                div.item {
+                    flex: 1 0 auto;
+                }
+
+                div.controls {
+                    @extend .flex-column;
                 }
 
                 .form-group {
@@ -102,9 +99,6 @@
                     margin: 0 $gutter-sm;
                 }
 
-                button.delete {
-                    height: 34px;
-                }
             }
         }
         .field-array-button-bar {
