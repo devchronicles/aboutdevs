@@ -1,6 +1,7 @@
 import * as massive from "massive";
 import * as commonTypes from "../../common/typings/commonTypes";
 import * as serverTypes from "./index";
+import { SocialLinkValue } from "../../common/typings";
 
 export interface GeoLocation {
     id: number;
@@ -51,7 +52,9 @@ export interface User {
     };
     status: commonTypes.UserProfileStatus;
     type: commonTypes.UserProfileType;
-    social_links: commonTypes.SocialLinkValue[];
+    social_links: {
+        socialLinks: SocialLinkValue[];
+    };
     title: string;
     name: string;
     geo_location_id: number;

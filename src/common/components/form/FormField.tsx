@@ -7,6 +7,7 @@ import { InputGroup } from "./InputGroup";
 interface FormFieldProps extends ReduxForm.WrappedFieldProps<{}> {
     name: string;
     label: string;
+    innerComponentProps?: any;
     innerComponent: any;
     help: any;
     addOnBefore: any;
@@ -33,6 +34,7 @@ const FormField: React.SFC<FormFieldProps> = (props) => {
     const innerComponentProps = {
         input: props.input,
         meta: props.meta,
+        ...props.innerComponentProps,
     };
 
     const errorMessage = props.meta.touched ? fieldValidationMessageHelper.getErrorMessage(props.meta.error) : null;

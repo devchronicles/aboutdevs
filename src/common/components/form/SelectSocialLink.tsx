@@ -5,9 +5,14 @@ import { socialLinks } from "../../data/socialLinks";
 
 interface SelectSocialLinkProps extends ReduxForm.WrappedFieldProps<{}> {
     placeholder: string;
+    disabled?: boolean;
 }
 
 class SelectSocialLink extends React.Component<SelectSocialLinkProps, {}> {
+
+    static defaultProps = {
+        disabled: false,
+    };
 
     private handleChange = (value: { value: string, label: string }) => {
         const {onChange} = this.props.input;
@@ -15,7 +20,7 @@ class SelectSocialLink extends React.Component<SelectSocialLinkProps, {}> {
     }
 
     public render() {
-        const {input: {value, onBlur}, meta: {error, touched}, placeholder} = this.props;
+        const {input: {value, onBlur}, meta: {error, touched}, placeholder, disabled} = this.props;
         const className = error && touched ? "invalid" : "";
 
         const options = socialLinks.map((sl) => ({
@@ -37,6 +42,7 @@ class SelectSocialLink extends React.Component<SelectSocialLinkProps, {}> {
             cache: false,
             className,
             onChange: this.handleChange,
+            disabled,
             onBlur: () => onBlur(value),
         };
 

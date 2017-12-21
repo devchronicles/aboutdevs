@@ -30,6 +30,12 @@ export async function createFromLinkedInProfile(db: serverTypes.AboutDevsDatabas
                 raw: profile,
             },
         },
+        social_links: {
+            socialLinks: [{
+                website: "linkedin",
+                url: profile.publicProfileUrl,
+            }],
+        },
         photo_url: photoUrl,
     };
 

@@ -4,11 +4,17 @@ import { Field, FormField, FormGroup, TextBox } from "./index";
 import { FaIcon } from "../FaIcon";
 import { FormRow } from "./FormRow";
 import { SelectSocialLink } from "./SelectSocialLink";
+import { LINKED_IN_SOCIAL_KEY } from "../../data/socialLinks";
 
 interface SocialLinksProps extends ReduxForm.WrappedFieldArrayProps<{}> {
 }
 
 export class SocialLinks extends React.Component<SocialLinksProps> {
+
+    isLinkedIn = (index: number) => {
+        const {fields} = this.props;
+        return (fields.get(index) as any).website === LINKED_IN_SOCIAL_KEY;
+    }
 
     public render() {
         const {fields, meta: {error}} = this.props;
@@ -26,6 +32,9 @@ export class SocialLinks extends React.Component<SocialLinksProps> {
                                                 label={"Website"}
                                                 component={FormField}
                                                 innerComponent={SelectSocialLink}
+                                                innerComponentProps={{
+                                                    disabled: this.isLinkedIn(index),
+                                                }}
                                                 addOnBefore={<FaIcon icon="circle-o"/>}
                                             />
                                         </FormRow>
@@ -35,6 +44,9 @@ export class SocialLinks extends React.Component<SocialLinksProps> {
                                                 label={"URL"}
                                                 component={FormField}
                                                 innerComponent={TextBox}
+                                                innerComponentProps={{
+                                                    disabled: this.isLinkedIn(index),
+                                                }}
                                                 addOnBefore={<FaIcon icon="link"/>}
                                             />
                                         </FormRow>
@@ -59,7 +71,7 @@ export class SocialLinks extends React.Component<SocialLinksProps> {
                                             <i className="fa fa-caret-down"/>
                                         </button>
                                         <button
-                                            disabled={fields.length === 1}
+                                            disabled={fields.length === 1 || this.isLinkedIn(index)}
                                             onClick={(e) => {
                                                 fields.remove(index);
                                                 e.stopPropagation();

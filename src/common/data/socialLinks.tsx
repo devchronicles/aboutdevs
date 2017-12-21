@@ -4,7 +4,14 @@ export interface SocialLinkData {
     iconClass?: string;
 }
 
+export const LINKED_IN_SOCIAL_KEY = "linkedin";
+
 export const socialLinks: SocialLinkData[] = [
+    {
+        value: LINKED_IN_SOCIAL_KEY,
+        label: "LinkedIn",
+        iconClass: "fa fa-linkedin",
+    },
     {
         value: "twitter",
         label: "Twitter",

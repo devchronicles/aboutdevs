@@ -20,6 +20,9 @@ input[type="text"], textarea {
         padding-top: $input-padding-vertical + 1px;
         border-bottom: 1px solid $color-shining-2;
     }
+    &:disabled {
+        background-color: $color-gray-even-lighter;
+    }
 }
 
 input[type="text"] {

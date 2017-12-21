@@ -66,7 +66,9 @@ export async function getUserProfileFromUser(db: serverTypes.AboutDevsDatabase, 
         status: user.status,
         address: await (user.geo_location_id ? locationService.getFormattedLocationById(db, user.geo_location_id) : null),
         bio: user.bio,
-        socialLinks: user.social_links,
+        socialLinks: user.social_links
+            ? user.social_links.socialLinks
+            : null,
         tags: await getTagsForUser(db, user.id),
         colorPrimary: user.color_primary,
         colorSecondary: user.color_secondary,
@@ -110,7 +112,9 @@ export async function saveProfile(db: serverTypes.AboutDevsDatabase, userId: num
     user.color_negative = profile.colorNegative;
     user.company_name = profile.companyName;
     user.company_url = profile.companyUrl;
-    user.social_links = profile.socialLinks;
+    user.social_links = {
+        socialLinks: profile.socialLinks,
+    };
 
     // location
     // TODO: Add location redundancy to the user type
