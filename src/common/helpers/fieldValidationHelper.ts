@@ -3,12 +3,12 @@ import { isUrl } from "./urlHelper";
 
 export const REQUIRED = "required";
 export const REQUIRED_IF_DEVELOPER = "required-if-developer";
-export const AT_LEAST_ONE_PHONE = "at-least-one-phone";
 export const MAX_LENGTH_50 = "max-length-50";
 export const MAX_LENGTH_60 = "max-length-80";
 export const MAX_LENGTH_80 = "max-length-80";
 export const MAX_LENGTH_500 = "max-length-500";
 export const USER_NAME_IS_TAKEN = "user-name-is-taken";
+export const INCOMPLETE_SOCIAL_LINK = "incomplete-social-link";
 export const URL = "url";
 
 export function validateRequired(value: any) {
@@ -47,7 +47,7 @@ export function validateUrl(value: string) {
     if (!value) {
         return undefined;
     }
-    return isUrl(value) ? URL : undefined;
+    return isUrl(value) ? undefined : URL;
 }
 
 export function validationRequiredIfDeveloper(value: any, user: commonTypes.UserProfile) {

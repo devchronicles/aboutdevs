@@ -3,6 +3,7 @@ import * as commonTypes from "../../common/typings/commonTypes";
 import * as serverTypes from "../typings";
 import * as locationService from "../services/locationService";
 import * as stringHelper from "../../common/helpers/stringHelper";
+import { socialLinks } from "../../common/data/socialLinks";
 
 /**
  * Extracts the user name from the user's e-mail
@@ -65,6 +66,7 @@ export async function getUserProfileFromUser(db: serverTypes.AboutDevsDatabase, 
         status: user.status,
         address: await (user.geo_location_id ? locationService.getFormattedLocationById(db, user.geo_location_id) : null),
         bio: user.bio,
+        socialLinks: user.social_links,
         tags: await getTagsForUser(db, user.id),
         colorPrimary: user.color_primary,
         colorSecondary: user.color_secondary,
@@ -108,6 +110,7 @@ export async function saveProfile(db: serverTypes.AboutDevsDatabase, userId: num
     user.color_negative = profile.colorNegative;
     user.company_name = profile.companyName;
     user.company_url = profile.companyUrl;
+    user.social_links = profile.socialLinks;
 
     // location
     // TODO: Add location redundancy to the user type
@@ -201,6 +204,15 @@ export async function validateProfile(db: serverTypes.AboutDevsDatabase, profile
     };
 
     const errors = fieldValidationHelper.validate(updatedProfile);
+
+    // validate social links
+    if (profile.socialLinks) {
+        if (!(profile.socialLinks instanceof Array)
+            || profile.socialLinks.filter((psl) => socialLinks.find((sl) => sl.value === psl.website)).length) {
+            errors.socialLinks = fieldValidationHelper.INCOMPLETE_SOCIAL_LINK;
+        }
+    }
+
     const userNameTaken = (await db._aboutdevs_is_user_name_taken(updatedProfile.name, updatedProfile.id))[0];
     if (userNameTaken.exists) {
         errors.name = fieldValidationHelper.USER_NAME_IS_TAKEN;

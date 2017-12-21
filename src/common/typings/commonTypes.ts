@@ -40,6 +40,7 @@ export interface UserProfile {
     displayName: string;
     title: string;
     bio?: string;
+    socialLinks?: SocialLinkValue[];
     photoUrl?: string;
     tags?: UserTag[];
     address: string;
@@ -65,6 +66,10 @@ export interface UserTag {
     name: string;
 }
 
+export interface SocialLinkValue {
+    website: string;
+    url: string;
+}
 // SEARCH
 
 export enum SearchDisplay {

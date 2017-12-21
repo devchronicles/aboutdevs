@@ -51,6 +51,7 @@ export interface User {
     };
     status: commonTypes.UserProfileStatus;
     type: commonTypes.UserProfileType;
+    social_links: commonTypes.SocialLinkValue[];
     title: string;
     name: string;
     geo_location_id: number;

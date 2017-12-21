@@ -1,5 +1,8 @@
 import * as React from "react";
 import * as commonTypes from "../typings/commonTypes";
+import { SocialLinkValue } from "../typings";
+import { socialLinks } from "../data/socialLinks";
+
 
 interface ProfileViewProps {
     profile: commonTypes.UserProfile;
@@ -10,6 +13,28 @@ interface ProfileViewState {
 }
 
 export class ProfileView extends React.Component<ProfileViewProps, ProfileViewState> {
+
+    buildSocialLink = (socialLinkValue: SocialLinkValue, index: number) => {
+
+        if (!socialLinkValue || !socialLinkValue.url || !socialLinkValue.website) return null;
+        const socialLink = socialLinks.find((sl) => sl.value === socialLinkValue.website);
+
+        const innerComponent = socialLink.iconClass
+            ? <i className={socialLink.iconClass} aria-hidden="true"/>
+            : null;
+
+        return (
+            <a
+                key={`socialLink-${index}`}
+                href={socialLinkValue.url}
+                target="_blank"
+                className="item"
+            >
+                {innerComponent}
+            </a>
+        );
+    }
+
     render() {
         const {profile} = this.props;
         if (!profile) {
@@ -38,6 +63,11 @@ export class ProfileView extends React.Component<ProfileViewProps, ProfileViewSt
                             {profile.companyName && atElement}
                             {companyElement}
                         </p>
+                        <div className="social-button-wrapper">
+                            {
+                                profile.socialLinks && profile.socialLinks.map((sl, i) => this.buildSocialLink(sl, i))
+                            }
+                        </div>
                     </header>
                 </div>
             </div>

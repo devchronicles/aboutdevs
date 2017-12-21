@@ -39,10 +39,10 @@ class ProfileEditPage extends React.Component<ProfileEditPageProps> {
             throw new ReduxForm.SubmissionError(axiosResult.data.errors);
         } else {
             enqueueNotification({
-                message: "Seu perfil foi salvo com sucesso",
+                message: "Your profile has been saved",
                 level: "success",
             });
-            this.props.history.push("/");
+            // this.props.history.push("/");
         }
     }
 

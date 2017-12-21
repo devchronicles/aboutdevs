@@ -18,9 +18,14 @@ class SelectSocialLink extends React.Component<SelectSocialLinkProps, {}> {
         const {input: {value, onBlur}, meta: {error, touched}, placeholder} = this.props;
         const className = error && touched ? "invalid" : "";
 
+        const options = socialLinks.map((sl) => ({
+            value: sl.value,
+            label: sl.label,
+        }));
+
         const props = {
             value,
-            options: socialLinks,
+            options,
             labelKey: "label",
             valueKey: "value",
             placeholder: placeholder || "",
