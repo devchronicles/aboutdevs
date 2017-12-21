@@ -26,7 +26,7 @@ router.route("/users/check_name").get(async (req, res) => {
         async (db) => {
             const userId = apiHelper.getAndEnsureUserId(req);
             const userName = req.query.q;
-            const nameExistsResult = (await db.is_user_name_taken(userName, userId))[0];
+            const nameExistsResult = (await db._aboutdevs_is_user_name_taken(userName, userId))[0];
             return nameExistsResult.exists;
         });
 });
