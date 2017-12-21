@@ -208,7 +208,7 @@ export async function validateProfile(db: serverTypes.AboutDevsDatabase, profile
     // validate social links
     if (profile.socialLinks) {
         if (!(profile.socialLinks instanceof Array)
-            || profile.socialLinks.filter((psl) => socialLinks.find((sl) => sl.value === psl.website)).length) {
+            || profile.socialLinks.filter((psl) => !socialLinks.find((sl) => sl.value === psl.website)).length) {
             errors.socialLinks = fieldValidationHelper.INCOMPLETE_SOCIAL_LINK;
         }
     }

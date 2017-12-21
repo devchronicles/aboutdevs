@@ -90,6 +90,21 @@ $$;
 ALTER FUNCTION public._aboutdevs_cleanup_db() OWNER TO aboutdevs;
 
 --
+-- Name: _aboutdevs_is_user_name_taken(character varying, integer); Type: FUNCTION; Schema: public; Owner: aboutdevs
+--
+
+CREATE FUNCTION _aboutdevs_is_user_name_taken(_user_name character varying, _user_id integer) RETURNS boolean
+    LANGUAGE sql
+    AS $$
+SELECT exists(SELECT u.id
+              FROM "user" u
+              WHERE u.name = _user_name and u.id != _user_id)
+$$;
+
+
+ALTER FUNCTION public._aboutdevs_is_user_name_taken(_user_name character varying, _user_id integer) OWNER TO aboutdevs;
+
+--
 -- Name: _aboutdevs_select_tags_from_user(integer); Type: FUNCTION; Schema: public; Owner: aboutdevs
 --
 
