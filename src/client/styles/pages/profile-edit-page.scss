@@ -6,30 +6,48 @@
     width: 100%;
 
     .profile-edit-view-wrapper {
-        @extend .flex-column;
-        flex: 1 0 auto;
-        overflow-y: auto;
-        height: calc(100vh - #{$header-height});
+        display: none;
+        @media (min-width: $breakpoint-xl) {
+            display: flex;
+            flex-direction: column;
+            flex: 1 0 auto;
+            overflow-y: auto;
+            height: calc(100vh - #{$header-height});
+        }
     }
 
     .profile-edit-wrapper {
-        @extend .flex-column;
         flex-wrap: wrap;
         padding: 0;
         overflow-y: auto;
-        height: calc(100vh - #{$header-height});
+        width: 100%;
+        box-sizing: border-box;
 
-        @media (min-width: $breakpoint-lg) {
+        @media (min-width: $breakpoint-xl) {
             @include elastic-width(550px);
+            height: calc(100vh - #{$header-height});
         }
 
         .document {
             box-sizing: border-box;
             background: $color-gray-even-lighter;
+            @media (min-width: $breakpoint-xl) {
+                margin-bottom: 4 * $gutter-md;
+            }
             .document-section {
                 padding: $gutter-md;
                 &:not(:last-child) {
                     border-bottom: 1px solid $color-gray-light;
+                }
+                @media (min-width: $breakpoint-xl) {
+                    &:last-child {
+                        @include elastic-width(550px);
+                        background-color: $color-white;
+                        position: absolute;
+                        bottom: 0;
+                        border-top: 1px solid $color-gray-light;
+                        box-shadow: $box-shadow;
+                    }
                 }
             }
 
@@ -60,7 +78,7 @@
                 background-color: #DCDCDC;
                 .fa {
                     color: $color-secondary;
-                    display: "inline-block";
+                    display: inline-block;
                     margin-right: $gutter-sm;
                 }
             }
