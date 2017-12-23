@@ -4,6 +4,7 @@ import * as serverTypes from "../../src/server/typings";
 import linkedInSampleProfile from "./resources/linkedInProfileSample";
 import setupSession from "./setupSession";
 import * as commonTypes from "../../src/common/typings/commonTypes";
+import * as googlePlacesService from "../../src/server/services/googlePlacesService";
 import {
     createFromLinkedInProfile, findOrCreateFromLinkedInProfile,
     updateFromLinkedInProfile,
@@ -113,12 +114,15 @@ describe("userService", () => {
         });
         describe("saveProfile", () => {
             it("Basic scenario", async () => {
+                const formattedAddress = (await googlePlacesService.searchCitiesFormatted(db, "Berlin, Germany"))[0];
+
                 const user = (await db.user.insert({
                     name: "andrerpena",
                     email: "andrerpena@gmail.com",
                     display_name: "André Pena",
                     photo_url: "foo.com/image.jpeg",
                     title: "medico",
+                    formattedAddress,
                 })) as serverTypes.User;
 
                 const profile = {
@@ -128,31 +132,11 @@ describe("userService", () => {
                     bio: "Great developer",
                     address: "Rua Henrique Surerus, 28, Juiz de Fora",
                     title: "medico",
+                    formattedAddress,
                 };
 
                 await userHelper.saveProfile(db, user.id, profile);
             });
-//
-//     it("Multiple services", async () => {
-//         const user = (await db.user.insert({
-//             name: "andrerpena",
-//             email: "andrerpena@gmail.com",
-//             display_name: "André Pena",
-//             photo_url: "foo.com/image.jpeg",
-
-//         })) as serverTypes.User;
-//
-//         const profile: commonTypes.UserProfile = {
-//             name: "andrerpena",
-//             displayName: "André Pena",
-//             type: 1,
-//             bio: "Great developer",
-//             address: "Rua Henrique Surerus, 28, Juiz de Fora",
-//             title: "medico",
-//         };
-//
-//         await userHelper.saveProfile(db, user.id, profile);
-//         assert.strictEqual(await db.user_service.count({user_id: user.id}), "2");
         });
     });
 });

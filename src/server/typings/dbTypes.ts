@@ -3,36 +3,19 @@ import * as commonTypes from "../../common/typings/commonTypes";
 import * as serverTypes from "./index";
 import { SocialLinkValue } from "../../common/typings";
 
-export interface GeoLocation {
+export interface GooglePlace {
     id: number;
-    geo_location_city_id: number;
     formatted_address: string;
     longitude: number;
     latitude: number;
+    google_place_id: string;
+    google_place_details: serverTypes.GooglePlacesDetailsApiResult;
 }
 
-export interface GeoLocationCountry {
+export interface GooglePlacesTextSearchCache {
     id: number;
-    long_name: string;
-    short_name: string;
-}
-
-export interface GeoLocationState {
-    id: number;
-    long_name: string;
-    short_name: string;
-    geo_location_country_id: number;
-}
-
-export interface GeoLocationCity {
-    id: number;
-    short_name: string;
-    long_name: string;
-}
-
-export interface GeoLocationCache {
     search: string;
-    cache: serverTypes.GeocodeApiResult;
+    cache: serverTypes.GooglePlacesTextSearchApiResult;
 }
 
 export interface User {
@@ -57,7 +40,8 @@ export interface User {
     };
     title: string;
     name: string;
-    geo_location_id: number;
+    google_place_id: string;
+    google_place_formatted_address: string;
     bio: string;
     color_primary?: string;
     color_secondary?: string;
@@ -100,11 +84,8 @@ export interface AboutDevsDatabase extends massive.Database {
 
     // tables
     tag: massive.Table<Tag>;
-    geo_location_cache: massive.Table<GeoLocationCache>;
-    geo_location: massive.Table<GeoLocation>;
-    geo_location_country: massive.Table<GeoLocationCountry>;
-    geo_location_state: massive.Table<GeoLocationState>;
-    geo_location_city: massive.Table<GeoLocationCity>;
+    google_places_textsearch_cache: massive.Table<GooglePlacesTextSearchCache>;
+    google_place: massive.Table<GooglePlace>;
     user: massive.Table<User>;
     user_tag: massive.Table<UserTag>;
     stackoverflow_tags_cache: massive.Table<StackoverflowTagsCache>;

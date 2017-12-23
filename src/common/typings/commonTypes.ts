@@ -43,7 +43,7 @@ export interface UserProfile {
     socialLinks?: SocialLinkValue[];
     photoUrl?: string;
     tags?: UserTag[];
-    address: string;
+    formattedAddress: string;
     colorPrimary?: string;
     colorSecondary?: string;
     colorNegative?: string;

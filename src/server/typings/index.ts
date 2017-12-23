@@ -1,4 +1,4 @@
 export * from "./dbTypes";
-export * from "./googleGeocodeApiTypes";
+export * from "./googlePlacesSearchTypes";
 export * from "./googleOAuthTypes";
 export * from "./stackoverflowApiTagTypes";

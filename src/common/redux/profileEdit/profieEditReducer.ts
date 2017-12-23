@@ -12,7 +12,7 @@ const defaultProfileEditState: commonTypes.UserProfile = {
     bio: undefined,
     activities: undefined,
     type: commonTypes.UserProfileType.DEVELOPER,
-    address: undefined,
+    formattedAddress: undefined,
 };
 
 export function profileEditReducer(state = defaultProfileEditState, { payload, type }: { payload: commonTypes.UserProfile, type: string }) {

@@ -1,7 +1,7 @@
 import * as express from "express";
 import * as apiHelper from "../helpers/apiHelper";
 import * as tagService from "../services/tagService";
-import * as locationService from "../services/locationService";
+import * as googlePlacesService from "../services/googlePlacesService";
 import * as userService from "../services/userService";
 import * as dbTypes from "../typings/dbTypes";
 import * as commonTypes from "../../common/typings/commonTypes";
@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.route("/addresses").get(async (req: express.Request, res: express.Response) => {
     await apiHelper.sendDbConnectedPromise(res,
-        (db: dbTypes.AboutDevsDatabase) => locationService.searchLocationsFormatted(db, req.query.q as string));
+        (db: dbTypes.AboutDevsDatabase) => googlePlacesService.searchCitiesFormatted(db, req.query.q as string));
 });
 
 router.route("/tags").get(async (req, res) => {

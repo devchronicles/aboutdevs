@@ -1,7 +1,7 @@
 import * as fieldValidationHelper from "../../common/helpers/fieldValidationHelper";
 import * as commonTypes from "../../common/typings/commonTypes";
 import * as serverTypes from "../typings";
-import * as locationService from "../services/locationService";
+import * as googlePlacesService from "./googlePlacesService";
 import * as stringHelper from "../../common/helpers/stringHelper";
 import { socialLinks } from "../../common/data/socialLinks";
 
@@ -64,7 +64,7 @@ export async function getUserProfileFromUser(db: serverTypes.AboutDevsDatabase, 
         photoUrl: user.photo_url,
         type: user.type,
         status: user.status,
-        address: await (user.geo_location_id ? locationService.getFormattedLocationById(db, user.geo_location_id) : null),
+        formattedAddress: user.google_place_formatted_address,
         bio: user.bio,
         socialLinks: user.social_links
             ? user.social_links.socialLinks
@@ -98,7 +98,7 @@ export async function getUserProfileById(db: serverTypes.AboutDevsDatabase, user
  * @param professionId The title id. This is for testing only. In production, this variable cannot contain value
  * @param locationId The location id. This is for testing only. In production, this variable cannot contain value
  */
-export async function saveProfile(db: serverTypes.AboutDevsDatabase, userId: number, profile: commonTypes.UserProfile, professionId?: number, locationId?: number): Promise<commonTypes.UserProfile> {
+export async function saveProfile(db: serverTypes.AboutDevsDatabase, userId: number, profile: commonTypes.UserProfile): Promise<commonTypes.UserProfile> {
     let user = await db.user.findOne({id: userId});
     if (!user) throw Error("could not find user");
 
@@ -116,16 +116,10 @@ export async function saveProfile(db: serverTypes.AboutDevsDatabase, userId: num
         socialLinks: profile.socialLinks,
     };
 
-    // location
-    // TODO: Add location redundancy to the user type
-    if (!locationId) {
-        const location = await locationService.saveAddress(db, profile.address);
-        user.geo_location_id = location.id;
-    } else {
-        if (process.env.NODE_ENV === "production") {
-            throw Error("Passing location id is a not enabled in production");
-        }
-        user.geo_location_id = locationId;
+    const city = await googlePlacesService.getAndSaveCity(db, profile.formattedAddress);
+    if (city && city.result) {
+        user.google_place_id = city.result.place_id;
+        user.google_place_formatted_address = city.result.formatted_address;
     }
 
     // tags
@@ -167,7 +161,7 @@ export async function saveProfile(db: serverTypes.AboutDevsDatabase, userId: num
  */
 export async function searchDevelopers(db: serverTypes.AboutDevsDatabase, tags: string[], location: string): Promise<commonTypes.DeveloperSearchProfile[]> {
     // we need to convert the location to latitude and longitude
-    const locations = await locationService.searchLocations(db, location);
+    const locations = await googlePlacesService.searchCities(db, location);
     if (!locations.results.length) {
         return [];
     }

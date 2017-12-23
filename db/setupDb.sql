@@ -294,138 +294,22 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: geo_location_city; Type: TABLE; Schema: public; Owner: aboutdevs
+-- Name: google_place; Type: TABLE; Schema: public; Owner: aboutdevs
 --
 
-CREATE TABLE geo_location_city (
+CREATE TABLE google_place (
     id integer NOT NULL,
-    short_name character varying(255) NOT NULL,
-    geo_location_state_id integer NOT NULL
-);
-
-
-ALTER TABLE geo_location_city OWNER TO aboutdevs;
-
---
--- Name: geo_administrative_area_level_2_id_seq; Type: SEQUENCE; Schema: public; Owner: aboutdevs
---
-
-CREATE SEQUENCE geo_administrative_area_level_2_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE geo_administrative_area_level_2_id_seq OWNER TO aboutdevs;
-
---
--- Name: geo_administrative_area_level_2_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: aboutdevs
---
-
-ALTER SEQUENCE geo_administrative_area_level_2_id_seq OWNED BY geo_location_city.id;
-
-
---
--- Name: geo_location_state; Type: TABLE; Schema: public; Owner: aboutdevs
---
-
-CREATE TABLE geo_location_state (
-    id integer NOT NULL,
-    long_name character varying(255) NOT NULL,
-    short_name character varying(255) NOT NULL,
-    geo_location_country_id integer NOT NULL
-);
-
-
-ALTER TABLE geo_location_state OWNER TO aboutdevs;
-
---
--- Name: geo_adminstrative_area_level_1_id_seq; Type: SEQUENCE; Schema: public; Owner: aboutdevs
---
-
-CREATE SEQUENCE geo_adminstrative_area_level_1_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE geo_adminstrative_area_level_1_id_seq OWNER TO aboutdevs;
-
---
--- Name: geo_adminstrative_area_level_1_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: aboutdevs
---
-
-ALTER SEQUENCE geo_adminstrative_area_level_1_id_seq OWNED BY geo_location_state.id;
-
-
---
--- Name: geo_location; Type: TABLE; Schema: public; Owner: aboutdevs
---
-
-CREATE TABLE geo_location (
-    id integer NOT NULL,
-    geo_location_city_id integer NOT NULL,
     formatted_address character varying(255) NOT NULL,
-    sub_locality character varying(255) NOT NULL,
     geometry geometry,
     longitude double precision,
     latitude double precision,
+    google_place_id character varying(80) NOT NULL,
+    google_place_details json,
     CONSTRAINT enforce_srid CHECK ((st_srid(geometry) = 4326))
 );
 
 
-ALTER TABLE geo_location OWNER TO aboutdevs;
-
---
--- Name: geo_location_cache; Type: TABLE; Schema: public; Owner: aboutdevs
---
-
-CREATE TABLE geo_location_cache (
-    id integer NOT NULL,
-    search character varying(200) NOT NULL,
-    cache json NOT NULL
-);
-
-
-ALTER TABLE geo_location_cache OWNER TO aboutdevs;
-
---
--- Name: geo_location_country; Type: TABLE; Schema: public; Owner: aboutdevs
---
-
-CREATE TABLE geo_location_country (
-    id integer NOT NULL,
-    long_name character varying(255) NOT NULL,
-    short_name character varying(255) NOT NULL
-);
-
-
-ALTER TABLE geo_location_country OWNER TO aboutdevs;
-
---
--- Name: geo_location_country_id_seq; Type: SEQUENCE; Schema: public; Owner: aboutdevs
---
-
-CREATE SEQUENCE geo_location_country_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE geo_location_country_id_seq OWNER TO aboutdevs;
-
---
--- Name: geo_location_country_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: aboutdevs
---
-
-ALTER SEQUENCE geo_location_country_id_seq OWNED BY geo_location_country.id;
-
+ALTER TABLE google_place OWNER TO aboutdevs;
 
 --
 -- Name: geo_location_id_seq; Type: SEQUENCE; Schema: public; Owner: aboutdevs
@@ -445,8 +329,21 @@ ALTER TABLE geo_location_id_seq OWNER TO aboutdevs;
 -- Name: geo_location_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: aboutdevs
 --
 
-ALTER SEQUENCE geo_location_id_seq OWNED BY geo_location.id;
+ALTER SEQUENCE geo_location_id_seq OWNED BY google_place.id;
 
+
+--
+-- Name: google_places_textsearch_cache; Type: TABLE; Schema: public; Owner: aboutdevs
+--
+
+CREATE TABLE google_places_textsearch_cache (
+    id integer NOT NULL,
+    search character varying(200) NOT NULL,
+    cache json NOT NULL
+);
+
+
+ALTER TABLE google_places_textsearch_cache OWNER TO aboutdevs;
 
 --
 -- Name: location_cache_id_seq; Type: SEQUENCE; Schema: public; Owner: aboutdevs
@@ -466,7 +363,7 @@ ALTER TABLE location_cache_id_seq OWNER TO aboutdevs;
 -- Name: location_cache_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: aboutdevs
 --
 
-ALTER SEQUENCE location_cache_id_seq OWNED BY geo_location_cache.id;
+ALTER SEQUENCE location_cache_id_seq OWNED BY google_places_textsearch_cache.id;
 
 
 --
@@ -487,7 +384,7 @@ ALTER TABLE location_cache_search_seq OWNER TO aboutdevs;
 -- Name: location_cache_search_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: aboutdevs
 --
 
-ALTER SEQUENCE location_cache_search_seq OWNED BY geo_location_cache.search;
+ALTER SEQUENCE location_cache_search_seq OWNED BY google_places_textsearch_cache.search;
 
 
 --
@@ -586,7 +483,6 @@ CREATE TABLE "user" (
     status smallint DEFAULT 0 NOT NULL,
     type smallint DEFAULT 0 NOT NULL,
     title character varying(80),
-    geo_location_id integer,
     bio character varying(500),
     search_canonical text,
     name character varying(255) NOT NULL,
@@ -597,7 +493,9 @@ CREATE TABLE "user" (
     color_negative character varying(10),
     company_name character varying(80),
     company_url character varying(255),
-    social_links json
+    social_links json,
+    google_place_id integer,
+    google_place_formatted_address character varying(255)
 );
 
 
@@ -645,45 +543,24 @@ ALTER SEQUENCE user_tag_id_seq OWNED BY user_tag.id;
 
 
 --
--- Name: geo_location id; Type: DEFAULT; Schema: public; Owner: aboutdevs
+-- Name: google_place id; Type: DEFAULT; Schema: public; Owner: aboutdevs
 --
 
-ALTER TABLE ONLY geo_location ALTER COLUMN id SET DEFAULT nextval('geo_location_id_seq'::regclass);
-
-
---
--- Name: geo_location_cache id; Type: DEFAULT; Schema: public; Owner: aboutdevs
---
-
-ALTER TABLE ONLY geo_location_cache ALTER COLUMN id SET DEFAULT nextval('location_cache_id_seq'::regclass);
+ALTER TABLE ONLY google_place ALTER COLUMN id SET DEFAULT nextval('geo_location_id_seq'::regclass);
 
 
 --
--- Name: geo_location_cache search; Type: DEFAULT; Schema: public; Owner: aboutdevs
+-- Name: google_places_textsearch_cache id; Type: DEFAULT; Schema: public; Owner: aboutdevs
 --
 
-ALTER TABLE ONLY geo_location_cache ALTER COLUMN search SET DEFAULT nextval('location_cache_search_seq'::regclass);
-
-
---
--- Name: geo_location_city id; Type: DEFAULT; Schema: public; Owner: aboutdevs
---
-
-ALTER TABLE ONLY geo_location_city ALTER COLUMN id SET DEFAULT nextval('geo_administrative_area_level_2_id_seq'::regclass);
+ALTER TABLE ONLY google_places_textsearch_cache ALTER COLUMN id SET DEFAULT nextval('location_cache_id_seq'::regclass);
 
 
 --
--- Name: geo_location_country id; Type: DEFAULT; Schema: public; Owner: aboutdevs
+-- Name: google_places_textsearch_cache search; Type: DEFAULT; Schema: public; Owner: aboutdevs
 --
 
-ALTER TABLE ONLY geo_location_country ALTER COLUMN id SET DEFAULT nextval('geo_location_country_id_seq'::regclass);
-
-
---
--- Name: geo_location_state id; Type: DEFAULT; Schema: public; Owner: aboutdevs
---
-
-ALTER TABLE ONLY geo_location_state ALTER COLUMN id SET DEFAULT nextval('geo_adminstrative_area_level_1_id_seq'::regclass);
+ALTER TABLE ONLY google_places_textsearch_cache ALTER COLUMN search SET DEFAULT nextval('location_cache_search_seq'::regclass);
 
 
 --
@@ -708,42 +585,18 @@ ALTER TABLE ONLY user_tag ALTER COLUMN id SET DEFAULT nextval('user_tag_id_seq':
 
 
 --
--- Name: geo_location_city geo_location_city_pkey; Type: CONSTRAINT; Schema: public; Owner: aboutdevs
+-- Name: google_place geo_location_pkey; Type: CONSTRAINT; Schema: public; Owner: aboutdevs
 --
 
-ALTER TABLE ONLY geo_location_city
-    ADD CONSTRAINT geo_location_city_pkey PRIMARY KEY (id);
-
-
---
--- Name: geo_location_country geo_location_country_pkey; Type: CONSTRAINT; Schema: public; Owner: aboutdevs
---
-
-ALTER TABLE ONLY geo_location_country
-    ADD CONSTRAINT geo_location_country_pkey PRIMARY KEY (id);
-
-
---
--- Name: geo_location geo_location_pkey; Type: CONSTRAINT; Schema: public; Owner: aboutdevs
---
-
-ALTER TABLE ONLY geo_location
+ALTER TABLE ONLY google_place
     ADD CONSTRAINT geo_location_pkey PRIMARY KEY (id);
 
 
 --
--- Name: geo_location_state geo_location_state_id_pk; Type: CONSTRAINT; Schema: public; Owner: aboutdevs
+-- Name: google_places_textsearch_cache location_cache_pkey; Type: CONSTRAINT; Schema: public; Owner: aboutdevs
 --
 
-ALTER TABLE ONLY geo_location_state
-    ADD CONSTRAINT geo_location_state_id_pk PRIMARY KEY (id);
-
-
---
--- Name: geo_location_cache location_cache_pkey; Type: CONSTRAINT; Schema: public; Owner: aboutdevs
---
-
-ALTER TABLE ONLY geo_location_cache
+ALTER TABLE ONLY google_places_textsearch_cache
     ADD CONSTRAINT location_cache_pkey PRIMARY KEY (id);
 
 
@@ -780,94 +633,52 @@ ALTER TABLE ONLY user_tag
 
 
 --
--- Name: geo_location_city_id_uindex; Type: INDEX; Schema: public; Owner: aboutdevs
---
-
-CREATE UNIQUE INDEX geo_location_city_id_uindex ON geo_location_city USING btree (id);
-
-
---
--- Name: geo_location_country_id_uindex; Type: INDEX; Schema: public; Owner: aboutdevs
---
-
-CREATE UNIQUE INDEX geo_location_country_id_uindex ON geo_location_country USING btree (id);
-
-
---
--- Name: geo_location_country_name_short_uindex; Type: INDEX; Schema: public; Owner: aboutdevs
---
-
-CREATE UNIQUE INDEX geo_location_country_name_short_uindex ON geo_location_country USING btree (short_name);
-
-
---
--- Name: geo_location_country_name_uindex; Type: INDEX; Schema: public; Owner: aboutdevs
---
-
-CREATE UNIQUE INDEX geo_location_country_name_uindex ON geo_location_country USING btree (long_name);
-
-
---
 -- Name: geo_location_formatted_address_uindex; Type: INDEX; Schema: public; Owner: aboutdevs
 --
 
-CREATE UNIQUE INDEX geo_location_formatted_address_uindex ON geo_location USING btree (formatted_address);
+CREATE UNIQUE INDEX geo_location_formatted_address_uindex ON google_place USING btree (formatted_address);
 
 
 --
 -- Name: geo_location_gpx; Type: INDEX; Schema: public; Owner: aboutdevs
 --
 
-CREATE INDEX geo_location_gpx ON geo_location USING gist (geography(geometry));
+CREATE INDEX geo_location_gpx ON google_place USING gist (geography(geometry));
 
 
 --
 -- Name: geo_location_id_uindex; Type: INDEX; Schema: public; Owner: aboutdevs
 --
 
-CREATE UNIQUE INDEX geo_location_id_uindex ON geo_location USING btree (id);
+CREATE UNIQUE INDEX geo_location_id_uindex ON google_place USING btree (id);
 
 
 --
 -- Name: geo_location_spx; Type: INDEX; Schema: public; Owner: aboutdevs
 --
 
-CREATE INDEX geo_location_spx ON geo_location USING gist (geometry);
+CREATE INDEX geo_location_spx ON google_place USING gist (geometry);
 
 
 --
--- Name: geo_location_state_id_uindex; Type: INDEX; Schema: public; Owner: aboutdevs
+-- Name: google_place_google_place_id_uindex; Type: INDEX; Schema: public; Owner: aboutdevs
 --
 
-CREATE UNIQUE INDEX geo_location_state_id_uindex ON geo_location_state USING btree (id);
-
-
---
--- Name: geo_location_state_long_name_uindex; Type: INDEX; Schema: public; Owner: aboutdevs
---
-
-CREATE UNIQUE INDEX geo_location_state_long_name_uindex ON geo_location_state USING btree (long_name);
-
-
---
--- Name: geo_location_state_short_name_uindex; Type: INDEX; Schema: public; Owner: aboutdevs
---
-
-CREATE UNIQUE INDEX geo_location_state_short_name_uindex ON geo_location_state USING btree (short_name);
+CREATE UNIQUE INDEX google_place_google_place_id_uindex ON google_place USING btree (google_place_id);
 
 
 --
 -- Name: location_cache_id_uindex; Type: INDEX; Schema: public; Owner: aboutdevs
 --
 
-CREATE UNIQUE INDEX location_cache_id_uindex ON geo_location_cache USING btree (id);
+CREATE UNIQUE INDEX location_cache_id_uindex ON google_places_textsearch_cache USING btree (id);
 
 
 --
 -- Name: location_cache_search_uindex; Type: INDEX; Schema: public; Owner: aboutdevs
 --
 
-CREATE UNIQUE INDEX location_cache_search_uindex ON geo_location_cache USING btree (search);
+CREATE UNIQUE INDEX location_cache_search_uindex ON google_places_textsearch_cache USING btree (search);
 
 
 --
@@ -927,19 +738,11 @@ CREATE UNIQUE INDEX user_tag_id_uindex ON user_tag USING btree (id);
 
 
 --
--- Name: geo_location_state geo_location_state_geo_location_country_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: aboutdevs
---
-
-ALTER TABLE ONLY geo_location_state
-    ADD CONSTRAINT geo_location_state_geo_location_country_id_fk FOREIGN KEY (geo_location_country_id) REFERENCES geo_location_country(id);
-
-
---
--- Name: user user_geo_location_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: user user_google_place_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY "user"
-    ADD CONSTRAINT user_geo_location_id_fk FOREIGN KEY (geo_location_id) REFERENCES geo_location(id);
+    ADD CONSTRAINT user_google_place_id_fk FOREIGN KEY (google_place_id) REFERENCES google_place(id);
 
 
 --

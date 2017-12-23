@@ -78,7 +78,7 @@
 //                 const city = await locationService.saveCity(db, 'Juiz de Fora', state.id);
 //
 //                 const neighborhood = 'Pavuna';
-//                 const formattedAddress = `${faker.address.streetName()}, ${neighborhood}, ${faker.address.city()}`;
+//                 const formattedAddress = `${faker.address.streetName()}, ${neighborhood}, ${faker.city.city()}`;
 //
 //                 const maxLat = -21.3743555;
 //                 const minLat = -22.3248544;
