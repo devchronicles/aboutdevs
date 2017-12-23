@@ -19,7 +19,7 @@ export interface GooglePlacesTextSearchCache {
 }
 
 export interface User {
-    id: number;
+    id?: number;
     display_name: string;
     email: string;
     photo_url: string;
@@ -40,8 +40,8 @@ export interface User {
     };
     title: string;
     name: string;
-    google_place_id: number;
-    google_place_formatted_address: string;
+    google_place_id?: number;
+    google_place_formatted_address?: string;
     bio: string;
     color_primary?: string;
     color_secondary?: string;

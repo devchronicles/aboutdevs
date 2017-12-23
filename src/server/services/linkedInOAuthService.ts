@@ -3,6 +3,9 @@ import * as linkedInOAuthTypes from "../typings/linkedInOAuthTypes";
 import { safeRead } from "../../common/helpers/objectHelpers";
 import { extractUserNameFromEmail, getValidUserName } from "./userService";
 import { getGravatarImageFromEmail, GravatarSize } from "../helpers/gravatarHelper";
+import { getAndSaveCity, searchCitiesFormatted } from "./googlePlacesService";
+import { UserProfileStatus, UserProfileType } from "../../common/typings/commonTypes";
+import * as faker from "faker";
 
 /**
  * Creates a user object from an OAuth Google profile
@@ -19,7 +22,10 @@ export async function createFromLinkedInProfile(db: serverTypes.AboutDevsDatabas
 
     const userName = await getValidUserName(db, extractUserNameFromEmail(email));
 
-    const user = {
+    const user: serverTypes.User = {
+        bio: faker.lorem.sentence(3),
+        status: UserProfileStatus.PENDING_PROFILE_ACTIVATION,
+        type: UserProfileType.DEVELOPER,
         display_name: profile.formattedName,
         email,
         name: userName,
@@ -38,6 +44,17 @@ export async function createFromLinkedInProfile(db: serverTypes.AboutDevsDatabas
         },
         photo_url: photoUrl,
     };
+
+    let userLocation = profile.location.name;
+    if (userLocation) {
+        userLocation = userLocation.replace(" Area", "");
+        const citiesFormatted = await searchCitiesFormatted(db, userLocation);
+        if (citiesFormatted && citiesFormatted.length) {
+            const googlePlace = await getAndSaveCity(db, citiesFormatted[0]);
+            user.google_place_id = googlePlace.id;
+            user.google_place_formatted_address = googlePlace.formatted_address;
+        }
+    }
 
     return (await db.user.insert(user)) as serverTypes.User;
 }

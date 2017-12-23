@@ -333,6 +333,27 @@ ALTER SEQUENCE geo_location_id_seq OWNED BY google_place.id;
 
 
 --
+-- Name: google_place_id_seq; Type: SEQUENCE; Schema: public; Owner: aboutdevs
+--
+
+CREATE SEQUENCE google_place_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE google_place_id_seq OWNER TO aboutdevs;
+
+--
+-- Name: google_place_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: aboutdevs
+--
+
+ALTER SEQUENCE google_place_id_seq OWNED BY google_place.id;
+
+
+--
 -- Name: google_places_textsearch_cache; Type: TABLE; Schema: public; Owner: aboutdevs
 --
 
@@ -344,6 +365,27 @@ CREATE TABLE google_places_textsearch_cache (
 
 
 ALTER TABLE google_places_textsearch_cache OWNER TO aboutdevs;
+
+--
+-- Name: google_places_textsearch_cache_id_seq; Type: SEQUENCE; Schema: public; Owner: aboutdevs
+--
+
+CREATE SEQUENCE google_places_textsearch_cache_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE google_places_textsearch_cache_id_seq OWNER TO aboutdevs;
+
+--
+-- Name: google_places_textsearch_cache_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: aboutdevs
+--
+
+ALTER SEQUENCE google_places_textsearch_cache_id_seq OWNED BY google_places_textsearch_cache.id;
+
 
 --
 -- Name: location_cache_id_seq; Type: SEQUENCE; Schema: public; Owner: aboutdevs
@@ -392,10 +434,10 @@ ALTER SEQUENCE location_cache_search_seq OWNED BY google_places_textsearch_cache
 --
 
 CREATE TABLE stackoverflow_tags_cache (
-    id integer NOT NULL,
     search character varying(50) NOT NULL,
     cache json NOT NULL,
-    last_updated_at timestamp without time zone DEFAULT (now())::timestamp without time zone NOT NULL
+    last_updated_at timestamp without time zone DEFAULT (now())::timestamp without time zone NOT NULL,
+    id integer NOT NULL
 );
 
 
@@ -546,14 +588,14 @@ ALTER SEQUENCE user_tag_id_seq OWNED BY user_tag.id;
 -- Name: google_place id; Type: DEFAULT; Schema: public; Owner: aboutdevs
 --
 
-ALTER TABLE ONLY google_place ALTER COLUMN id SET DEFAULT nextval('geo_location_id_seq'::regclass);
+ALTER TABLE ONLY google_place ALTER COLUMN id SET DEFAULT nextval('google_place_id_seq'::regclass);
 
 
 --
 -- Name: google_places_textsearch_cache id; Type: DEFAULT; Schema: public; Owner: aboutdevs
 --
 
-ALTER TABLE ONLY google_places_textsearch_cache ALTER COLUMN id SET DEFAULT nextval('location_cache_id_seq'::regclass);
+ALTER TABLE ONLY google_places_textsearch_cache ALTER COLUMN id SET DEFAULT nextval('google_places_textsearch_cache_id_seq'::regclass);
 
 
 --
@@ -601,11 +643,11 @@ ALTER TABLE ONLY google_places_textsearch_cache
 
 
 --
--- Name: stackoverflow_tags_cache stackoverflow_tags_cache_pkey; Type: CONSTRAINT; Schema: public; Owner: aboutdevs
+-- Name: stackoverflow_tags_cache stackoverflow_tags_cache_id_pk; Type: CONSTRAINT; Schema: public; Owner: aboutdevs
 --
 
 ALTER TABLE ONLY stackoverflow_tags_cache
-    ADD CONSTRAINT stackoverflow_tags_cache_pkey PRIMARY KEY (id);
+    ADD CONSTRAINT stackoverflow_tags_cache_id_pk PRIMARY KEY (id);
 
 
 --
