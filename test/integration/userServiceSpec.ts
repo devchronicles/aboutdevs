@@ -122,7 +122,6 @@ describe("userService", () => {
                     display_name: "André Pena",
                     photo_url: "foo.com/image.jpeg",
                     title: "medico",
-                    formattedAddress,
                 })) as serverTypes.User;
 
                 const profile = {

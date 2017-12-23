@@ -28,18 +28,18 @@ async function saveCitySearchToCache(db: serverTypes.AboutDevsDatabase, searchTe
     }
 }
 
-async function saveCityDetailsToCache(db: serverTypes.AboutDevsDatabase, placeId: string, cityDetails: serverTypes.GooglePlacesDetailsApiResult): Promise<void> {
+async function saveCityDetailsToCache(db: serverTypes.AboutDevsDatabase, placeId: string, cityDetails: serverTypes.GooglePlacesDetailsApiResult): Promise<serverTypes.GooglePlace> {
     if (!db) throw Error("Argument is null or undefined. Argument: db");
     if (!placeId) throw Error("Argument is null or undefined. Argument: placeId");
     if (!cityDetails) throw Error("Argument is null or undefined. Argument: cityDetails");
     if (!cityDetails.result) throw Error("Argument is null or undefined. Argument: cityDetails.result");
 
-    const city = await getCityDetailsFromCache(db, placeId);
-    if (!city) {
+    let googlePlace = await db.google_place.findOne({google_place_id: placeId});
+    if (!googlePlace) {
         const cityData = cityDetails.result;
         const {longitude, latitude} = geocodeApiHelper.getLongitudeLatitude(cityData.geometry);
-        const googlePlace = await db.google_place.insert({
-            formatted_address: cityData.formatted_address,
+        googlePlace = await db.google_place.insert({
+            formatted_address: formatAddress(placeId, cityData.formatted_address),
             longitude,
             latitude,
             google_place_id: placeId,
@@ -47,6 +47,7 @@ async function saveCityDetailsToCache(db: serverTypes.AboutDevsDatabase, placeId
         });
         await db._aboutdevs_update_geometry(googlePlace.id, longitude, latitude);
     }
+    return googlePlace;
 }
 
 export async function searchCitiesFromCache(db: serverTypes.AboutDevsDatabase, searchTerm: string): Promise<serverTypes.GooglePlacesTextSearchApiResult> {
@@ -72,14 +73,6 @@ export async function searchCitiesFromGoogle(searchTerm: string): Promise<server
     return res.data;
 }
 
-export async function getCityDetailsFromCache(db: serverTypes.AboutDevsDatabase, placeId: string): Promise<serverTypes.GooglePlacesDetailsApiResult> {
-    if (!db) throw Error("Argument is null or undefined. Argument: db");
-    if (!placeId) throw Error("Argument is null or undefined. Argument: placeId");
-
-    const result = await db.google_place.findOne({google_place_id: placeId});
-    return result ? result.google_place_details : undefined;
-}
-
 export async function getCityDetailsFromGoogle(placeId: string): Promise<serverTypes.GooglePlacesDetailsApiResult> {
     if (!placeId) throw Error("Argument is null or undefined. Argument: searchTerm");
 
@@ -94,19 +87,20 @@ export async function getCityDetailsFromGoogle(placeId: string): Promise<serverT
     return res.data;
 }
 
-export async function getAndSaveCity(db: serverTypes.AboutDevsDatabase, formattedAddress: string): Promise<serverTypes.GooglePlacesDetailsApiResult> {
+export async function getAndSaveCity(db: serverTypes.AboutDevsDatabase, formattedAddress: string): Promise<serverTypes.GooglePlace> {
     if (!db) throw Error("Argument is null or undefined. Argument: db");
     if (!formattedAddress) throw Error("Argument is null or undefined. Argument: formattedAddress");
     if (!validateFormattedAddress(formattedAddress)) throw Error(`Address is not formatted. Address: ${formattedAddress}`);
 
     const {placeId} = getDataFromFormattedAddress(formattedAddress);
 
-    let cityDetails = await getCityDetailsFromCache(db, placeId);
-    if (!cityDetails || !cityDetails.result) {
-        cityDetails = await getCityDetailsFromGoogle(placeId);
-        await saveCityDetailsToCache(db, placeId, cityDetails);
+    let googlePlace = await db.google_place.findOne({google_place_id: placeId});
+
+    if (!googlePlace) {
+        const cityDetails = await getCityDetailsFromGoogle(placeId);
+        googlePlace = await saveCityDetailsToCache(db, placeId, cityDetails);
     }
-    return cityDetails;
+    return googlePlace;
 }
 
 export async function searchCities(db: serverTypes.AboutDevsDatabase, searchTerm: string): Promise<serverTypes.GooglePlacesTextSearchApiResult> {

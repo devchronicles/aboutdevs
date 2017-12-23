@@ -117,9 +117,9 @@ export async function saveProfile(db: serverTypes.AboutDevsDatabase, userId: num
     };
 
     const city = await googlePlacesService.getAndSaveCity(db, profile.formattedAddress);
-    if (city && city.result) {
-        user.google_place_id = city.result.place_id;
-        user.google_place_formatted_address = city.result.formatted_address;
+    if (city) {
+        user.google_place_id = city.id;
+        user.google_place_formatted_address = city.formatted_address;
     }
 
     // tags

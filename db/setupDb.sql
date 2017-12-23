@@ -129,7 +129,7 @@ CREATE FUNCTION _aboutdevs_update_geometry(_id integer, _x double precision, _y 
     LANGUAGE plpgsql
     AS $$
 BEGIN
-  UPDATE geo_location
+  UPDATE google_place
   SET geometry = ST_SetSRID(ST_MakePoint(_x,_y),4326)
   WHERE id = _id;
 END;
@@ -303,7 +303,7 @@ CREATE TABLE google_place (
     geometry geometry,
     longitude double precision,
     latitude double precision,
-    google_place_id character varying(80) NOT NULL,
+    google_place_id character varying(255) NOT NULL,
     google_place_details json,
     CONSTRAINT enforce_srid CHECK ((st_srid(geometry) = 4326))
 );

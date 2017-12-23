@@ -40,7 +40,7 @@ export interface User {
     };
     title: string;
     name: string;
-    google_place_id: string;
+    google_place_id: number;
     google_place_formatted_address: string;
     bio: string;
     color_primary?: string;
