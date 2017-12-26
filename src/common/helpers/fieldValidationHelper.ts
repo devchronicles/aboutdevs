@@ -64,7 +64,7 @@ export function getValidatorsForField(fieldName: keyof commonTypes.UserProfile):
             return [validateRequired, validateMaxLength80];
         case "bio":
             return [validationRequiredIfDeveloper, validateMaxLength500];
-        case "address":
+        case "formattedAddress":
             return [validateRequired];
     }
 
