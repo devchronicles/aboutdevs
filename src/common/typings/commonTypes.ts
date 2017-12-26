@@ -13,8 +13,8 @@ export interface CurrentUserProfile {
 }
 
 export enum UserProfileType {
-    RECRUITER = 0,
-    DEVELOPER = 1,
+    DEVELOPER = 0,
+    RECRUITER = 1,
 }
 
 export enum UserProfileLoadState {

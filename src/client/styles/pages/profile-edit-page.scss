@@ -102,7 +102,7 @@
                 margin-bottom: $gutter-sm;
                 border: 1px solid $color-gray-light;
                 border-radius: $radius-md;
-                padding: $gutter-sm $gutter-sm $gutter-sm 0;
+                padding: $gutter-sm;
 
                 div.item {
                     flex: 1 0 auto;
@@ -114,14 +114,13 @@
 
                 .form-group {
                     flex: 1 1 auto;
-                    margin: 0 $gutter-sm;
+                    margin: 0;
                 }
-
             }
         }
         .field-array-button-bar {
             display: flex;
-            flex-direction: row-reverse;
+            flex-direction: row;
         }
     }
 

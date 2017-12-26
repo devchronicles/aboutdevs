@@ -64,7 +64,7 @@ export async function searchCitiesFromGoogle(searchTerm: string): Promise<server
     const encodedLocation = encodeURIComponent(searchTerm);
     const key: string = config.google.geocodeApiKey;
     const googleApiUrl
-        = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${encodedLocation}&key=${key}&types=locality`;
+        = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${encodedLocation}&key=${key}&type=regions`;
 
     const res = await axios.get(googleApiUrl);
     if (res.data.errorMessage) {

@@ -2,6 +2,7 @@ import * as React from "react";
 import * as ReactSelect from "react-select";
 import * as ReduxForm from "redux-form";
 import * as httpClient from "../../httpClient";
+import { getDataFromFormattedAddress } from "../../helpers/googlePlacesFormatHelper";
 
 interface SelectLocationProps extends ReduxForm.WrappedFieldProps<{}> {
     allowCities: boolean;
@@ -22,13 +23,14 @@ class SelectLocation extends React.Component<SelectLocationProps, {}> {
         if (this.currentFetchTimeout) {
             clearTimeout(this.currentFetchTimeout);
         }
-        this.currentFetchTimeout = setTimeout(() => {
-            httpClient.searchLocations(inputText, allowCities)
-                .then((res) => {
-                    const options = res.data.map((i: any) => ({value: i, label: i}));
-                    callback(null, {options, complete: true});
-                })
-                .catch((error) => callback(error, undefined));
+        this.currentFetchTimeout = setTimeout(async () => {
+            try {
+                const res = await httpClient.searchLocations(inputText, allowCities);
+                const options = res.data.map((i: any) => ({value: i, label: getDataFromFormattedAddress(i).address}));
+                callback(null, {options, complete: true});
+            } catch (ex) {
+                callback(ex, undefined);
+            }
         }, 800);
     }
 
@@ -42,9 +44,10 @@ class SelectLocation extends React.Component<SelectLocationProps, {}> {
     public render() {
         const {input: {value, onBlur}, meta: {error, touched}, placeholder, strict} = this.props;
         const className = error && touched ? "invalid" : "";
+
         const adjustedValue = value ? {
             value,
-            label: value,
+            label: getDataFromFormattedAddress(value).address,
         } : null;
 
         const props = {

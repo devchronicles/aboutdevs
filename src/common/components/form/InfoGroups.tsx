@@ -1,0 +1,148 @@
+import * as React from "react";
+import * as ReduxForm from "redux-form";
+import { Field, FormField, FormGroup, TextBox } from "./index";
+import { FaIcon } from "../FaIcon";
+import { FormRow } from "./FormRow";
+import { FieldArray } from "./FieldArray";
+import { TextArea } from "./TextArea";
+import { SelectTags } from "./SelectTags";
+
+interface InfoGroupsProps extends ReduxForm.WrappedFieldArrayProps<{}> {
+}
+
+export class InfoGroups extends React.Component<InfoGroupsProps> {
+
+    renderControls = (fields: ReduxForm.FieldsProps<any>, index: number) => {
+        return (
+            <div className="controls">
+                <button
+                    disabled={index === 0}
+                    onClick={(e) => {
+                        fields.swap(index, index - 1);
+                        e.stopPropagation();
+                    }}
+                >
+                    <i className="fa fa-caret-up"/>
+                </button>
+                <button
+                    disabled={fields.length === (index + 1)}
+                    onClick={(e) => {
+                        fields.swap(index, index + 1);
+                        e.stopPropagation();
+                    }}
+                >
+                    <i className="fa fa-caret-down"/>
+                </button>
+                <button
+                    onClick={(e) => {
+                        fields.remove(index);
+                        e.stopPropagation();
+                    }}
+                >
+                    <i className="fa fa-trash"/>
+                </button>
+            </div>
+        );
+    }
+
+    renderGroup = ({fields, meta}: { fields: ReduxForm.FieldsProps<any>, meta: any }) => {
+        return (
+            <div className="field-array">
+                <ul>
+                    {
+                        fields.map((groupItem, index) => (
+                            <li className="multi-line child" key={`social-link-${index}`}>
+                                <div className="item">
+                                    <FormRow>
+                                        <Field
+                                            name={`${groupItem}.title`}
+                                            label={"Item title"}
+                                            component={FormField}
+                                            innerComponent={TextBox}
+                                            addOnBefore={<FaIcon icon="circle-o"/>}
+                                        />
+                                    </FormRow>
+                                    <FormRow>
+                                        <Field
+                                            name={`${groupItem}.url`}
+                                            label={"URL"}
+                                            component={FormField}
+                                            innerComponent={TextBox}
+                                            addOnBefore={<FaIcon icon="link"/>}
+                                        />
+                                    </FormRow>
+                                    <FormRow>
+                                        <Field
+                                            name={`${groupItem}.description`}
+                                            label={"Description"}
+                                            component={FormField}
+                                            innerComponent={TextArea}
+                                        />
+                                    </FormRow>
+                                    <FormRow>
+                                        <Field
+                                            name={`${groupItem}.tags`}
+                                            label="Tags"
+                                            component={FormField}
+                                            innerComponent={SelectTags}
+                                            help="Data provided by Stackoverflow"
+                                            addOnBefore={<FaIcon icon="tags"/>}
+                                        />
+                                    </FormRow>
+                                </div>
+                                {this.renderControls(fields, index)}
+                            </li>
+                        ))
+                    }
+                </ul>
+                <div className="field-array-button-bar">
+                    <button type="button" onClick={() => fields.push({})}>
+                        + Item
+                    </button>
+                </div>
+            </div>
+        );
+    }
+
+    renderGroups = (fields: ReduxForm.FieldsProps<any>) => {
+        return (
+            <div className="field-array">
+                <ul>
+                    {
+                        fields.map((group, index) => (
+                            <li className="multi-line" key={`social-link-${index}`}>
+                                <div className="item">
+                                    <FormRow>
+                                        <Field
+                                            name={`${group}.title`}
+                                            label={"Group title"}
+                                            component={FormField}
+                                            innerComponent={TextBox}
+                                            addOnBefore={<FaIcon icon="link"/>}
+                                        />
+                                    </FormRow>
+                                    <FieldArray name={`${group}.items`} component={this.renderGroup}/>
+                                </div>
+                                {this.renderControls(fields, index)}
+                            </li>
+                        ))
+                    }
+                </ul>
+                <div className="field-array-button-bar">
+                    <button type="button" onClick={() => fields.push({})}>
+                        + Group
+                    </button>
+                </div>
+            </div>
+        );
+    }
+
+    public render() {
+        const {fields, meta: {error}} = this.props;
+        return (
+            <FormGroup label="Info groups">
+                {this.renderGroups(fields)}
+            </FormGroup>
+        );
+    }
+}

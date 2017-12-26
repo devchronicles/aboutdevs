@@ -1,8 +1,8 @@
 import * as React from "react";
 import { FaIcon } from "./FaIcon";
 import {
-    Field, FieldArray, FormField, FormFieldUserName, FormGroup, FormRow, SelectLocation, Services, TextArea,
-    TextBox, UserTypeToggle,
+    Field, FieldArray, FormField, FormFieldUserName, FormGroup, FormRow, SelectLocation, TextArea, TextBox,
+    UserTypeToggle,
 } from "./form";
 import { DocumentSection } from "./DocumentSection";
 import asyncValidation from "../lib/redux-form/asyncValidation";
@@ -12,6 +12,7 @@ import * as commonTypes from "../typings/commonTypes";
 import { SelectTags } from "./form/SelectTags";
 import { ColorPicker } from "./form/ColorPicker";
 import { SocialLinks } from "./form/SocialLinks";
+import { InfoGroups } from "./form/InfoGroups";
 
 interface ProfileEditFormStateProps {
     formValues: any;
@@ -33,7 +34,6 @@ declare type ProfileEditorFormProps =
     ProfileEditFormStateProps
     & ProfileEditFormDispatchProps
     & ProfileEditFormOwnProps;
-
 
 let ProfileEditForm: React.SFC<ProfileEditorFormProps> = (props) => {
     const {
@@ -105,6 +105,17 @@ let ProfileEditForm: React.SFC<ProfileEditorFormProps> = (props) => {
                         />
                     </FormRow>
                     <FormRow>
+                        <Field
+                            name="formattedAddress"
+                            label="Location"
+                            component={FormField}
+                            innerComponent={SelectLocation}
+                            addOnBefore={<FaIcon icon="map-marker"/>}
+                        />
+                    </FormRow>
+                </DocumentSection>
+                <DocumentSection className="flex-column flex-align-items-center">
+                    <FormRow>
                         <FieldArray
                             name="socialLinks"
                             component={SocialLinks}
@@ -112,46 +123,33 @@ let ProfileEditForm: React.SFC<ProfileEditorFormProps> = (props) => {
                     </FormRow>
                 </DocumentSection>
                 <DocumentSection
-                    visible={formValues ? formValues.type === commonTypes.UserProfileType.RECRUITER : true}
+                    visible={formValues ? formValues.type === commonTypes.UserProfileType.DEVELOPER : true}
                     className="flex-column flex-align-items-center"
                 >
                     <FormRow>
                         <Field
-                            name="profession"
-                            label="Technologies"
+                            name="tags"
+                            label="Expertise"
                             component={FormField}
                             innerComponent={SelectTags}
-                            help="Data is provided by Stackoverflow"
+                            help="Data provided by Stackoverflow"
                             addOnBefore={<FaIcon icon="tags"/>}
                         />
                     </FormRow>
                     <FormRow>
                         <Field
                             name="bio"
-                            label="Biografia"
+                            label="Bio"
                             component={FormField}
                             innerComponent={TextArea}
-                            help="Fale um pouco sobre você, sua formação e sua carreira. Tamanho máximo: 500 caracteres."
-                        />
-                    </FormRow>
-                    <FormRow>
-                        <FieldArray
-                            name="services"
-                            component={Services}
                         />
                     </FormRow>
                 </DocumentSection>
-                <DocumentSection className="flex-column flex-align-items-center">
-                    <FormRow>
-                        <Field
-                            name="address"
-                            label="Endereço"
-                            component={FormField}
-                            innerComponent={SelectLocation}
-                            help="Seu endereço não será exibido. Este campo é usado somente para geo-localização."
-                            addOnBefore={<FaIcon icon="map-marker"/>}
-                        />
-                    </FormRow>
+                <DocumentSection
+                    visible={formValues ? formValues.type === commonTypes.UserProfileType.DEVELOPER : true}
+                    className="flex-column flex-align-items-center"
+                >
+                    <FieldArray name={"infoGroups"} component={InfoGroups}/>
                 </DocumentSection>
                 <DocumentSection className="flex-column flex-align-items-center">
                     <FormRow>

@@ -6,21 +6,11 @@ interface UserTypeToggle extends ReduxForm.WrappedFieldProps<{}> {
 }
 
 const UserTypeToggle: React.SFC<UserTypeToggle> = (field) => {
-    const { value, onChange } = field.input;
+    const {value, onChange} = field.input;
 
-    const checkComponent = <i className="fa fa-check" />;
+    const checkComponent = <i className="fa fa-check"/>;
 
-    // props for the professional button
-    const professionalButtonProps = {
-        className: value === commonTypes.UserProfileType.RECRUITER ? "pushed" : null,
-        onClick: (event: React.SyntheticEvent<any>) => {
-            event.preventDefault();
-            onChange(commonTypes.UserProfileType.RECRUITER, undefined, undefined);
-        },
-    };
-
-    // props for the non-professional button
-    const nonProfessionalButtonProps = {
+    const developerProps = {
         className: value === commonTypes.UserProfileType.DEVELOPER ? "pushed" : null,
         onClick: (event: React.SyntheticEvent<any>) => {
             event.preventDefault();
@@ -28,16 +18,25 @@ const UserTypeToggle: React.SFC<UserTypeToggle> = (field) => {
         },
     };
 
+    const recruiterProps = {
+        className: value === commonTypes.UserProfileType.RECRUITER ? "pushed" : null,
+        onClick: (event: React.SyntheticEvent<any>) => {
+            event.preventDefault();
+            onChange(commonTypes.UserProfileType.RECRUITER, undefined, undefined);
+        },
+    };
+
+
     return (
         <div className="button-group user-type-toggle">
-            <button {...professionalButtonProps}>
+            <button {...developerProps}>
                 {checkComponent}
-                <span>I'm a developer</span>
+                I'm a developer
             </button>
-            <button {...nonProfessionalButtonProps}>
+            <button {...recruiterProps}>
                 {checkComponent}
-                I'm a recruiter
-        </button>
+                <span>I'm a recruiter</span>
+            </button>
         </div>
     );
 };

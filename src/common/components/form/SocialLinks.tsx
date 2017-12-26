@@ -24,7 +24,7 @@ export class SocialLinks extends React.Component<SocialLinksProps> {
                     <ul>
                         {
                             fields.map((socialLink, index) => (
-                                <li className="multi-line" key={`service-${index}`}>
+                                <li className="multi-line" key={`social-link-${index}`}>
                                     <div className="item">
                                         <FormRow>
                                             <Field
