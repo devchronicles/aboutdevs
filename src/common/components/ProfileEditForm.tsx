@@ -1,7 +1,7 @@
 import * as React from "react";
 import { FaIcon } from "./FaIcon";
 import {
-    Field, FieldArray, FormField, FormFieldUserName, FormGroup, FormRow, SelectLocation, TextArea, TextBox,
+    Field, FieldArray, FormField, FormFieldUserName, FormRow, SelectLocation, TextArea, TextBox,
     UserTypeToggle,
 } from "./form";
 import { DocumentSection } from "./DocumentSection";
@@ -35,161 +35,202 @@ declare type ProfileEditorFormProps =
     & ProfileEditFormDispatchProps
     & ProfileEditFormOwnProps;
 
-let ProfileEditForm: React.SFC<ProfileEditorFormProps> = (props) => {
-    const {
-        formValues,
-        formSyncErrors,
-        formSubmitErrors,
-        handleSubmit,
-        pristine,
-        submitting,
-        loggedUser,
-        onSubmit,
-        onCancel,
-    } = props;
+interface ProfileEditFormState {
+    // The ids of the open sections
+    openSections: {
+        [key: string]: boolean;
+    };
+}
 
-    return (
-        <div className="document">
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <DocumentSection className="flex-column flex-align-items-center">
-                    <FormRow>
-                        <FormGroup
-                            labelFor="displayName"
-                        >
+class ProfileEditForm extends React.Component<ProfileEditorFormProps, ProfileEditFormState> {
+
+    handleToggleCollapsed = (sectionId: string) => {
+        const newState = {...this.state};
+        newState.openSections[sectionId] = this.state.openSections[sectionId] === undefined
+            ? true
+            : !this.state.openSections[sectionId];
+        this.setState(newState);
+    }
+
+    constructor(props: ProfileEditorFormProps) {
+        super(props);
+        this.state = {
+            openSections: {
+                basicInfo: true,
+            },
+        };
+    }
+
+    render() {
+        const {
+            formValues,
+            formSyncErrors,
+            formSubmitErrors,
+            handleSubmit,
+            pristine,
+            submitting,
+            loggedUser,
+            onSubmit,
+            onCancel,
+        } = this.props;
+
+        return (
+            <div className="document">
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <DocumentSection
+                        id={"basicInfo"}
+                        title={"Basic info"}
+                        onToggleCollapsed={this.handleToggleCollapsed}
+                        open={this.state.openSections && this.state.openSections.basicInfo}
+                    >
+                        <FormRow>
                             <Field
                                 name="type"
                                 component={UserTypeToggle}
                             />
-                        </FormGroup>
-                    </FormRow>
-                    <FormRow>
-                        <Field
-                            name="name"
-                            component={FormFieldUserName}
-                        />
-                    </FormRow>
-                    <FormRow>
-                        <Field
-                            name="displayName"
-                            label="Display name"
-                            component={FormField}
-                            innerComponent={TextBox}
-                            addOnBefore={<FaIcon icon="user"/>}
-                        />
-                    </FormRow>
-                    <FormRow>
-                        <Field
-                            name="title"
-                            label="Title"
-                            component={FormField}
-                            innerComponent={TextBox}
-                            addOnBefore={<FaIcon icon="briefcase"/>}
-                        />
-                    </FormRow>
-                    <FormRow>
-                        <Field
-                            name="companyName"
-                            label="Company name"
-                            component={FormField}
-                            innerComponent={TextBox}
-                            addOnBefore={<FaIcon icon="building"/>}
-                        />
-                    </FormRow>
-                    <FormRow>
-                        <Field
-                            name="companyUrl"
-                            label="Company URL"
-                            component={FormField}
-                            innerComponent={TextBox}
-                            addOnBefore={<FaIcon icon="link"/>}
-                        />
-                    </FormRow>
-                    <FormRow>
-                        <Field
-                            name="formattedAddress"
-                            label="Location"
-                            component={FormField}
-                            innerComponent={SelectLocation}
-                            addOnBefore={<FaIcon icon="map-marker"/>}
-                        />
-                    </FormRow>
-                </DocumentSection>
-                <DocumentSection className="flex-column flex-align-items-center">
-                    <FormRow>
-                        <FieldArray
-                            name="socialLinks"
-                            component={SocialLinks}
-                        />
-                    </FormRow>
-                </DocumentSection>
-                <DocumentSection
-                    visible={formValues ? formValues.type === commonTypes.UserProfileType.DEVELOPER : true}
-                    className="flex-column flex-align-items-center"
-                >
-                    <FormRow>
-                        <Field
-                            name="tags"
-                            label="Expertise"
-                            component={FormField}
-                            innerComponent={SelectTags}
-                            help="Data provided by Stackoverflow"
-                            addOnBefore={<FaIcon icon="tags"/>}
-                        />
-                    </FormRow>
-                    <FormRow>
-                        <Field
-                            name="bio"
-                            label="Bio"
-                            component={FormField}
-                            innerComponent={TextArea}
-                        />
-                    </FormRow>
-                </DocumentSection>
-                <DocumentSection
-                    visible={formValues ? formValues.type === commonTypes.UserProfileType.DEVELOPER : true}
-                    className="flex-column flex-align-items-center"
-                >
-                    <FieldArray name={"infoGroups"} component={InfoGroups}/>
-                </DocumentSection>
-                <DocumentSection className="flex-column flex-align-items-center">
-                    <FormRow>
-                        <Field
-                            name="colorPrimary"
-                            label="Color Primary"
-                            component={FormField}
-                            innerComponent={ColorPicker}
-                        />
-                    </FormRow>
-                    <FormRow>
-                        <Field
-                            name="colorSecondary"
-                            label="Color Secondary"
-                            component={FormField}
-                            innerComponent={ColorPicker}
-                        />
-                    </FormRow>
-                    <FormRow>
-                        <Field
-                            name="colorNegative"
-                            label="Color Negative"
-                            component={FormField}
-                            innerComponent={ColorPicker}
-                        />
-                    </FormRow>
-                </DocumentSection>
-                <DocumentSection className="flex-row-reverse button-bar">
-                    <button onClick={() => onCancel()}>Cancel</button>
-                    <button type="submit" className="vibrant" disabled={pristine || submitting}>Save</button>
-                </DocumentSection>
-            </form>
-        </div>
-    );
-};
+                        </FormRow>
+                        <FormRow>
+                            <Field
+                                name="name"
+                                component={FormFieldUserName}
+                            />
+                        </FormRow>
+                        <FormRow>
+                            <Field
+                                name="displayName"
+                                label="Display name"
+                                component={FormField}
+                                innerComponent={TextBox}
+                                addOnBefore={<FaIcon icon="user"/>}
+                            />
+                        </FormRow>
+                        <FormRow>
+                            <Field
+                                name="title"
+                                label="Title"
+                                component={FormField}
+                                innerComponent={TextBox}
+                                addOnBefore={<FaIcon icon="briefcase"/>}
+                            />
+                        </FormRow>
+                        <FormRow>
+                            <Field
+                                name="companyName"
+                                label="Company name"
+                                component={FormField}
+                                innerComponent={TextBox}
+                                addOnBefore={<FaIcon icon="building"/>}
+                            />
+                        </FormRow>
+                        <FormRow>
+                            <Field
+                                name="companyUrl"
+                                label="Company URL"
+                                component={FormField}
+                                innerComponent={TextBox}
+                                addOnBefore={<FaIcon icon="link"/>}
+                            />
+                        </FormRow>
+                        <FormRow>
+                            <Field
+                                name="formattedAddress"
+                                label="Location"
+                                component={FormField}
+                                innerComponent={SelectLocation}
+                                addOnBefore={<FaIcon icon="map-marker"/>}
+                            />
+                        </FormRow>
+                        <FormRow>
+                            <Field
+                                name="tags"
+                                label="Expertise"
+                                component={FormField}
+                                innerComponent={SelectTags}
+                                help="Data provided by Stackoverflow"
+                                addOnBefore={<FaIcon icon="tags"/>}
+                            />
+                        </FormRow>
+                    </DocumentSection>
+                    <DocumentSection
+                        id={"socialLinks"}
+                        title={"Social links"}
+                        onToggleCollapsed={this.handleToggleCollapsed}
+                        open={this.state.openSections && this.state.openSections.socialLinks}
+                    >
+                        <FormRow>
+                            <FieldArray
+                                name="socialLinks"
+                                component={SocialLinks}
+                            />
+                        </FormRow>
+                    </DocumentSection>
+                    <DocumentSection
+                        id={"bio"}
+                        title={"Bio"}
+                        onToggleCollapsed={this.handleToggleCollapsed}
+                        open={this.state.openSections && this.state.openSections.bio}
+                    >
+                        <FormRow>
+                            <Field
+                                name="bio"
+                                component={FormField}
+                                innerComponent={TextArea}
+                            />
+                        </FormRow>
+                    </DocumentSection>
+                    <DocumentSection
+                        id={"infoGroups"}
+                        title={"Info groups"}
+                        onToggleCollapsed={this.handleToggleCollapsed}
+                        open={this.state.openSections && this.state.openSections.infoGroups}
+                    >
+                        <FieldArray name={"infoGroups"} component={InfoGroups}/>
+                    </DocumentSection>
+                    <DocumentSection
+                        id={"colors"}
+                        title={"Colors"}
+                        onToggleCollapsed={this.handleToggleCollapsed}
+                        open={this.state.openSections && this.state.openSections.colors}
+                    >
+                        <FormRow>
+                            <Field
+                                name="colorPrimary"
+                                label="Color Primary"
+                                component={FormField}
+                                innerComponent={ColorPicker}
+                            />
+                        </FormRow>
+                        <FormRow>
+                            <Field
+                                name="colorSecondary"
+                                label="Color Secondary"
+                                component={FormField}
+                                innerComponent={ColorPicker}
+                            />
+                        </FormRow>
+                        <FormRow>
+                            <Field
+                                name="colorNegative"
+                                label="Color Negative"
+                                component={FormField}
+                                innerComponent={ColorPicker}
+                            />
+                        </FormRow>
+                    </DocumentSection>
+                    <DocumentSection id={"buttonBar"} collapsible={false} className="button-bar">
+                        <button onClick={() => onCancel()}>Cancel</button>
+                        <button type="submit" className="vibrant" disabled={pristine || submitting}>Save</button>
+                    </DocumentSection>
+                </form>
+            </div>
+        );
+    }
+}
 
 const FORM_NAME = "profileEdit";
 
 // Decorate with redux-form
-ProfileEditForm = ReduxForm.reduxForm({
+const ReduxFormProfileEditForm = ReduxForm.reduxForm({
     form: FORM_NAME, // a unique identifier for this form,
     asyncValidate: asyncValidation,
     asyncBlurFields: ["name"],
@@ -216,6 +257,6 @@ const ConnectedProfileEditForm = ReactRedux.connect<ProfileEditFormStateProps, P
     mapStateToProps,
     mapDispatchToProps,
     mergeProps,
-)(ProfileEditForm);
+)(ReduxFormProfileEditForm);
 
 export { ConnectedProfileEditForm as ProfileEditForm };

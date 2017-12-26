@@ -37,7 +37,6 @@ export class FormFieldUserName extends React.Component<FormFieldUserNameProps> {
             <FormGroup
                 label="User name"
                 labelFor="name"
-                help="The above will be publicly visible."
                 error={errorMessage}
             >
                 <InputGroup

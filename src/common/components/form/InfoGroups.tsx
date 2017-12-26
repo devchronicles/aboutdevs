@@ -140,7 +140,7 @@ export class InfoGroups extends React.Component<InfoGroupsProps> {
     public render() {
         const {fields, meta: {error}} = this.props;
         return (
-            <FormGroup label="Info groups">
+            <FormGroup>
                 {this.renderGroups(fields)}
             </FormGroup>
         );

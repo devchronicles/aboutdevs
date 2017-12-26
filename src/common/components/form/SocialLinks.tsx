@@ -19,7 +19,7 @@ export class SocialLinks extends React.Component<SocialLinksProps> {
     public render() {
         const {fields, meta: {error}} = this.props;
         return (
-            <FormGroup label="Social links">
+            <FormGroup>
                 <div className="field-array">
                     <ul>
                         {
