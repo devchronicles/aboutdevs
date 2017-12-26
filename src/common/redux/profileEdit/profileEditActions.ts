@@ -11,11 +11,7 @@ export const PROFILE_EDIT_LOAD_ERROR = "PROFILE_EDIT_LOAD_ERROR";
  * Changes the type of the search
  */
 
-const defaultValues = {
-    colorPrimary: "#252934",
-    colorSecondary: "#4A95DF",
-    colorNegative: "#FFFFFF",
-};
+const defaultValues = {};
 
 export const profileEditLoadData = () => {
     return async (dispatch: ReactRedux.Dispatch<clientTypes.ReduxState>) => {

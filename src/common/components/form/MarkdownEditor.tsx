@@ -21,7 +21,7 @@ export class MarkdownEditor extends React.Component<MarkdownEditorProps, Markdow
         const {name, value} = this.props.input;
         return (
             <ReactMde
-                textAreaProps={{id: name, name}}
+                textAreaProps={{id: name, name, rows: 20}}
                 value={value}
                 onChange={this.handleValueChange}
                 commands={ReactMdeCommands.getDefaultCommands()}

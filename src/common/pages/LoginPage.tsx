@@ -9,9 +9,7 @@ const LoginPage = () => (
                 <Logo />
             </div>
             <div className="body">
-                <SocialButton text="Entrar com o Google" url="/auth/google" faClass="google" />
-                <SocialButton text="Entrar com o Facebook" url="#" faClass="facebook" />
-                <SocialButton text="Entrar com o LinkedIn" url="/auth/linkedin" faClass="linkedin"/>
+                <SocialButton text="Sign in with LinkedIn" url="/auth/linkedin" faClass="linkedin"/>
             </div>
         </div>
     </div>

@@ -128,7 +128,7 @@ describe("userService", () => {
                     name: "andrerpena",
                     displayName: "André Pena",
                     type: commonTypes.UserProfileType.DEVELOPER,
-                    bio: "Great developer",
+                    bio: {text: "Great developer"},
                     address: "Rua Henrique Surerus, 28, Juiz de Fora",
                     title: "medico",
                     formattedAddress,

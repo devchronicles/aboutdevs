@@ -525,7 +525,7 @@ CREATE TABLE "user" (
     status smallint DEFAULT 0 NOT NULL,
     type smallint DEFAULT 0 NOT NULL,
     title character varying(80),
-    bio character varying(500),
+    bio text,
     search_canonical text,
     name character varying(255) NOT NULL,
     email character varying(255) NOT NULL,

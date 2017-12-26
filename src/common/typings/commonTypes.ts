@@ -35,6 +35,10 @@ export interface UserProfileColors {
     bodyText: string;
 }
 
+export interface UserProfileBio {
+    text: string;
+}
+
 export interface UserProfile {
     [key: string]: any;
 
@@ -46,7 +50,7 @@ export interface UserProfile {
     status?: UserProfileStatus;
     displayName: string;
     title: string;
-    bio?: string;
+    bio?: UserProfileBio;
     socialLinks?: SocialLinkValue[];
     photoUrl?: string;
     tags?: UserTag[];
@@ -75,6 +79,7 @@ export interface SocialLinkValue {
     website: string;
     url: string;
 }
+
 // SEARCH
 
 export enum SearchDisplay {
