@@ -58,20 +58,6 @@
                 .section-body {
                     padding: 0 $gutter-md $gutter-md $gutter-md;
                     width: 100%;
-
-                    opacity: 1;
-                    visibility: visible;
-                    top: 0;
-                    transition-duration: 200ms;
-                    transition-property: opacity;
-                    transition-delay: 200ms;
-
-                    &.hidden {
-                        opacity: 0;
-                        visibility: hidden;
-                        transition-duration: 200ms;
-                        transition-property: opacity;
-                    }
                 }
                 &.button-bar {
                     .section-body {
