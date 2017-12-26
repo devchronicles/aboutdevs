@@ -194,24 +194,32 @@ class ProfileEditForm extends React.Component<ProfileEditorFormProps, ProfileEdi
                     >
                         <FormRow>
                             <Field
-                                name="colorPrimary"
-                                label="Color Primary"
+                                name="colors.headerBackground"
+                                label="Header background"
                                 component={FormField}
                                 innerComponent={ColorPicker}
                             />
                         </FormRow>
                         <FormRow>
                             <Field
-                                name="colorSecondary"
-                                label="Color Secondary"
+                                name="colors.headerText"
+                                label="Header text"
                                 component={FormField}
                                 innerComponent={ColorPicker}
                             />
                         </FormRow>
                         <FormRow>
                             <Field
-                                name="colorNegative"
-                                label="Color Negative"
+                                name="colors.bodyBackground"
+                                label="Body background"
+                                component={FormField}
+                                innerComponent={ColorPicker}
+                            />
+                        </FormRow>
+                        <FormRow>
+                            <Field
+                                name="colors.bodyText"
+                                label="Body text"
                                 component={FormField}
                                 innerComponent={ColorPicker}
                             />

@@ -530,15 +530,13 @@ CREATE TABLE "user" (
     name character varying(255) NOT NULL,
     email character varying(255) NOT NULL,
     created_at timestamp without time zone DEFAULT timezone('utc'::text, now()) NOT NULL,
-    color_primary character varying(10),
-    color_secondary character varying(10),
-    color_negative character varying(10),
     company_name character varying(80),
     company_url character varying(255),
     social_links json,
     google_place_id integer,
     google_place_formatted_address character varying(255),
-    info_groups json
+    info_groups json,
+    colors json
 );
 
 

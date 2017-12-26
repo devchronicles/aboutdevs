@@ -70,9 +70,7 @@ export async function getUserProfileFromUser(db: serverTypes.AboutDevsDatabase, 
             ? user.social_links.socialLinks
             : null,
         tags: await getTagsForUser(db, user.id),
-        colorPrimary: user.color_primary,
-        colorSecondary: user.color_secondary,
-        colorNegative: user.color_negative,
+        colors: user.colors,
         companyName: user.company_name,
         companyUrl: user.company_url,
     };
@@ -107,9 +105,7 @@ export async function saveProfile(db: serverTypes.AboutDevsDatabase, userId: num
     user.title = profile.title;
     user.type = profile.type;
     user.bio = profile.bio;
-    user.color_primary = profile.colorPrimary;
-    user.color_secondary = profile.colorSecondary;
-    user.color_negative = profile.colorNegative;
+    user.colors = profile.colors;
     user.company_name = profile.companyName;
     user.company_url = profile.companyUrl;
     user.social_links = {

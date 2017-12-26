@@ -43,6 +43,12 @@ export async function createFromLinkedInProfile(db: serverTypes.AboutDevsDatabas
             }],
         },
         photo_url: photoUrl,
+        colors: {
+            headerBackground: "#252934",
+            headerText: "#FFFFFF",
+            bodyBackground: "#3275b7",
+            bodyText: "#FFFFFF",
+        },
     };
 
     let userLocation = profile.location.name;

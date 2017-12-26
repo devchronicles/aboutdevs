@@ -1,7 +1,7 @@
 import * as massive from "massive";
 import * as commonTypes from "../../common/typings/commonTypes";
 import * as serverTypes from "./index";
-import { SocialLinkValue } from "../../common/typings";
+import { SocialLinkValue, UserProfileColors } from "../../common/typings";
 
 export interface GooglePlace {
     id: number;
@@ -43,11 +43,9 @@ export interface User {
     google_place_id?: number;
     google_place_formatted_address?: string;
     bio: string;
-    color_primary?: string;
-    color_secondary?: string;
-    color_negative?: string;
     company_name?: string;
     company_url?: string;
+    colors: UserProfileColors;
 }
 
 export interface UserSearchResult {

@@ -48,13 +48,13 @@ export class ProfileView extends React.Component<ProfileViewProps, ProfileViewSt
             companyElement = <span>{profile.companyName}</span>;
             if (profile.companyUrl) {
                 companyElement = (
-                    <a href={profile.companyUrl} style={{color: profile.colorNegative}}>{companyElement}</a>);
+                    <a href={profile.companyUrl} style={{color: profile.colors.headerText}}>{companyElement}</a>);
             }
         }
 
         return (
             <div className="profile-view">
-                <div className="header-wrapper" style={{backgroundColor: profile.colorPrimary}}>
+                <div className="header-wrapper" style={{backgroundColor: profile.colors.headerBackground}}>
                     <header>
                         <div className="profile-image" style={{backgroundImage: `url(${profile.photoUrl})`}}/>
                         <h1 className="title">{profile.displayName}</h1>

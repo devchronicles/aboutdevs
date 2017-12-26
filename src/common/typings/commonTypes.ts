@@ -28,6 +28,13 @@ export enum UserProfileStatus {
     READY = 1,
 }
 
+export interface UserProfileColors {
+    headerBackground: string;
+    headerText: string;
+    bodyBackground: string;
+    bodyText: string;
+}
+
 export interface UserProfile {
     [key: string]: any;
 
@@ -44,9 +51,7 @@ export interface UserProfile {
     photoUrl?: string;
     tags?: UserTag[];
     formattedAddress: string;
-    colorPrimary?: string;
-    colorSecondary?: string;
-    colorNegative?: string;
+    colors?: UserProfileColors;
     companyName?: string;
     companyUrl?: string;
 }
