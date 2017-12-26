@@ -13,6 +13,9 @@
 @import 'components/index-search-form';
 @import 'components/index-intro';
 @import "components/color-picker";
+@import "components/react-mde";
+// Third party
+@import '~react-mde/lib/styles/scss/react-mde-all';
 
 @import 'pages/search-page';
 @import 'pages/login-page';

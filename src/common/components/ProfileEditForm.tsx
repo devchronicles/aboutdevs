@@ -1,7 +1,7 @@
 import * as React from "react";
 import { FaIcon } from "./FaIcon";
 import {
-    Field, FieldArray, FormField, FormFieldUserName, FormRow, SelectLocation, TextArea, TextBox,
+    Field, FieldArray, FormField, FormFieldUserName, FormRow, SelectLocation, TextBox,
     UserTypeToggle,
 } from "./form";
 import { DocumentSection } from "./DocumentSection";
@@ -13,6 +13,7 @@ import { SelectTags } from "./form/SelectTags";
 import { ColorPicker } from "./form/ColorPicker";
 import { SocialLinks } from "./form/SocialLinks";
 import { InfoGroups } from "./form/InfoGroups";
+import { MarkdownEditor } from "./form/MarkdownEditor";
 
 interface ProfileEditFormStateProps {
     formValues: any;
@@ -174,7 +175,7 @@ class ProfileEditForm extends React.Component<ProfileEditorFormProps, ProfileEdi
                             <Field
                                 name="bio"
                                 component={FormField}
-                                innerComponent={TextArea}
+                                innerComponent={MarkdownEditor}
                             />
                         </FormRow>
                     </DocumentSection>

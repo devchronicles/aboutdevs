@@ -12,6 +12,7 @@ require("../../node_modules/font-awesome/css/font-awesome.css");
 require("../../node_modules/react-activity/dist/react-activity.css");
 require("../client/styles/styles.scss");
 
+
 const history = createBrowserHistory();
 const store = configureStore((window as any).__PRELOADED_STATE__, history);
 

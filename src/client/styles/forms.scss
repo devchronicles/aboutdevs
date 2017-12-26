@@ -213,6 +213,9 @@ form, *.form {
     }
 }
 
+.react-mde {
+    width: 100%;
+}
 
 ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
     color: $color-placeholder;
