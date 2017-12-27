@@ -57,7 +57,7 @@ export class ProfileView extends React.Component<ProfileViewProps, ProfileViewSt
                 <div className="header-wrapper" style={{backgroundColor: profile.colors.headerBackground}}>
                     <header>
                         <div className="profile-image" style={{backgroundImage: `url(${profile.photoUrl})`}}/>
-                        <h1 className="title">{profile.displayName}</h1>
+                        <h1 className="username">{profile.displayName}</h1>
                         <p className="current-position">
                             {profile.title}
                             {profile.companyName && atElement}
