@@ -37,6 +37,7 @@ export function getValidatorsForField(fieldName: keyof commonTypes.UserProfile):
             }
         }
     }
+    return [];
 }
 
 export function validateRequired(value: any) {
