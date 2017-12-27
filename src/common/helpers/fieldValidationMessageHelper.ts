@@ -15,8 +15,8 @@ export function getErrorMessage(error: string) {
         case fieldValidation.USER_NAME_IS_TAKEN:
             return "This name is taken.";
         case fieldValidation.URL:
-            return "Invalid URL";
+            return "Invalid URL.";
         default:
-            return error ? "Invalid value" : null;
+            return error ? "Invalid value." : null;
     }
 }

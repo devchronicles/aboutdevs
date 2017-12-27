@@ -20,12 +20,12 @@ const validators: ValidationCollection = {
     "^displayName$": [validateRequired, validateMaxLength50],
     "^title$": [validateRequired, validateMaxLength80],
     "^companyName$": [validateMaxLength80],
-    "^companyUrl$": [validateMaxLength255],
+    "^companyUrl$": [validateMaxLength255, validateUrl],
     "^formattedAddress$": [validateRequired, validateMaxLength255],
     "^tags$": [validationRequiredIfDeveloper],
     "^bio$": [validationRequiredIfDeveloper, validateMaxLength500],
     ".*\.website": [validateRequired],
-    ".*\.url": [validateRequired],
+    ".*\.url": [validateRequired, validateUrl],
 };
 
 export function getValidatorsForField(fieldName: keyof commonTypes.UserProfile): Array<(value: any, user: commonTypes.UserProfile) => string> {
