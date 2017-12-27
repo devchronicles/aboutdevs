@@ -16,6 +16,8 @@ export function getErrorMessage(error: string) {
             return "This name is taken.";
         case fieldValidation.URL:
             return "Invalid URL.";
+        case fieldValidation.ALL_GROUPS_MUST_HAVE_BETWEEN_1_AND_10_ITEMS:
+            return "Every group should have between 1 and 10 items.";
         default:
             return error ? "Invalid value." : null;
     }

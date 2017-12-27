@@ -10,35 +10,67 @@ export const MAX_LENGTH_500 = "max-length-500";
 export const USER_NAME_IS_TAKEN = "user-name-is-taken";
 export const INCOMPLETE_SOCIAL_LINK = "incomplete-social-link";
 export const URL = "url";
+export const ALL_GROUPS_MUST_HAVE_BETWEEN_1_AND_10_ITEMS = "all-groups-must-have-between-1-and-10-items";
 
 interface ValidationCollection {
     [key: string]: Array<(value: any, user?: commonTypes.UserProfile) => string>;
 }
 
-const validators: ValidationCollection = {
-    "^name$": [validateRequired, validateMaxLength50],
-    "^displayName$": [validateRequired, validateMaxLength50],
-    "^title$": [validateRequired, validateMaxLength80],
-    "^companyName$": [validateMaxLength80],
-    "^companyUrl$": [validateMaxLength255, validateUrl],
-    "^formattedAddress$": [validateRequired, validateMaxLength255],
-    "^tags$": [validationRequiredIfDeveloper],
-    "^bio$": [validationRequiredIfDeveloper, validateMaxLength500],
+const exactNameValidators: ValidationCollection = {
+    name: [validateRequired, validateMaxLength50],
+    displayName: [validateRequired, validateMaxLength50],
+    title: [validateRequired, validateMaxLength80],
+    companyName: [validateMaxLength80],
+    companyUrl: [validateMaxLength255, validateUrl],
+    formattedAddress: [validateRequired, validateMaxLength255],
+    tags: [validationRequiredIfDeveloper],
+    bio: [validationRequiredIfDeveloper, validateMaxLength500],
+    infoGroups: [validateInfoGroup],
+};
+
+const regexValidators: ValidationCollection = {
     ".*\.website": [validateRequired],
     ".*\.url": [validateRequired, validateUrl],
 };
 
 export function getValidatorsForField(fieldName: keyof commonTypes.UserProfile): Array<(value: any, user: commonTypes.UserProfile) => string> {
-    for (const expression in validators) {
-        if (validators.hasOwnProperty(expression)) {
-            const regEx = new RegExp(expression);
+    const validators: Array<(value: any, user?: commonTypes.UserProfile) => string> = [];
+    if (exactNameValidators[fieldName]) {
+        validators.push(...exactNameValidators[fieldName]);
+    }
+    for (const pattern in regexValidators) {
+        if (exactNameValidators.hasOwnProperty(pattern)) {
+            const regEx = new RegExp(pattern);
             if (regEx.test(fieldName)) {
-                return validators[expression];
+                validators.push(...regexValidators[pattern]);
             }
         }
     }
-    return [];
+    return validators;
 }
+
+export function validate(user: commonTypes.UserProfile) {
+    const errors: { [key: string]: string } = {};
+    for (const key in user) {
+        if (user.hasOwnProperty(key)) {
+            const value: any = user[key];
+            const fieldValidators = getValidatorsForField(key);
+            if (fieldValidators.length) {
+                let error;
+                for (const fieldValidator of fieldValidators) {
+                    error = fieldValidator(value, user);
+                    if (error) break;
+                }
+                if (error) {
+                    errors[key] = error;
+                }
+            }
+        }
+    }
+    return errors;
+}
+
+// Validators
 
 export function validateRequired(value: any) {
     return (value === null || value === undefined || value === "") ? REQUIRED : undefined;
@@ -65,7 +97,6 @@ export function validateMaxLength255(value: string) {
     return value.length > 255 ? MAX_LENGTH_500 : undefined;
 }
 
-
 export function validateMaxLength500(value: string) {
     if (!value) {
         return undefined;
@@ -84,23 +115,14 @@ export function validationRequiredIfDeveloper(value: any, user: commonTypes.User
     return (user.type === commonTypes.UserProfileType.DEVELOPER && (value === null || value === undefined || value === "")) ? REQUIRED_IF_DEVELOPER : undefined;
 }
 
-export function validate(user: commonTypes.UserProfile) {
-    const errors: { [key: string]: string } = {};
-    for (const key in user) {
-        if (user.hasOwnProperty(key)) {
-            const value: any = user[key];
-            const fieldValidators = getValidatorsForField(key);
-            if (fieldValidators.length) {
-                let error;
-                for (const fieldValidator of fieldValidators) {
-                    error = fieldValidator(value, user);
-                    if (error) break;
-                }
-                if (error) {
-                    errors[key] = error;
-                }
-            }
+export function validateInfoGroup(value: any): string {
+    if (!value) {
+        return undefined;
+    }
+    for (const group of value) {
+        if (!group.items || !group.items.length || group.items.length > 10) {
+            return ALL_GROUPS_MUST_HAVE_BETWEEN_1_AND_10_ITEMS;
         }
     }
-    return errors;
+    return undefined;
 }
