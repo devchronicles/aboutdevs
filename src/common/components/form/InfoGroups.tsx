@@ -6,13 +6,14 @@ import { FormRow } from "./FormRow";
 import { FieldArray } from "./FieldArray";
 import { TextArea } from "./TextArea";
 import { SelectTags } from "./SelectTags";
+import * as fieldValidationMessageHelper from "../../helpers/fieldValidationMessageHelper";
 
 interface InfoGroupsProps extends ReduxForm.WrappedFieldArrayProps<{}> {
 }
 
 export class InfoGroups extends React.Component<InfoGroupsProps> {
 
-    renderControls = (fields: ReduxForm.FieldsProps<any>, index: number) => {
+    renderControls = (fields: ReduxForm.FieldsProps<any>, index: number, disableDeleteLast: boolean) => {
         return (
             <div className="controls">
                 <button
@@ -37,6 +38,7 @@ export class InfoGroups extends React.Component<InfoGroupsProps> {
                 </button>
                 <button
                     type="button"
+                    disabled={disableDeleteLast ? fields.length === 1 : false}
                     onClick={(e) => {
                         fields.remove(index);
                         e.stopPropagation();
@@ -93,7 +95,7 @@ export class InfoGroups extends React.Component<InfoGroupsProps> {
                                         />
                                     </FormRow>
                                 </div>
-                                {this.renderControls(fields, index)}
+                                {this.renderControls(fields, index, true)}
                             </li>
                         ))
                     }
@@ -126,13 +128,13 @@ export class InfoGroups extends React.Component<InfoGroupsProps> {
                                     </FormRow>
                                     <FieldArray name={`${group}.items`} component={this.renderGroup}/>
                                 </div>
-                                {this.renderControls(fields, index)}
+                                {this.renderControls(fields, index, false)}
                             </li>
                         ))
                     }
                 </ul>
                 <div className="field-array-button-bar">
-                    <button type="button" onClick={() => fields.push({})}>
+                    <button type="button" onClick={() => fields.push({items: [{}]})}>
                         + Group
                     </button>
                 </div>
@@ -145,6 +147,8 @@ export class InfoGroups extends React.Component<InfoGroupsProps> {
         return (
             <FormGroup>
                 {this.renderGroups(fields)}
+                {error &&
+                <small className="form-help error">{fieldValidationMessageHelper.getErrorMessage(error)}</small>}
             </FormGroup>
         );
     }
