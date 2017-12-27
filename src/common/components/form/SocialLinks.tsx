@@ -57,6 +57,7 @@ export class SocialLinks extends React.Component<SocialLinksProps> {
                                     </div>
                                     <div className="controls">
                                         <button
+                                            type="button"
                                             disabled={index === 0}
                                             onClick={(e) => {
                                                 fields.swap(index, index - 1);
@@ -66,6 +67,7 @@ export class SocialLinks extends React.Component<SocialLinksProps> {
                                             <i className="fa fa-caret-up"/>
                                         </button>
                                         <button
+                                            type="button"
                                             disabled={fields.length === (index + 1)}
                                             onClick={(e) => {
                                                 fields.swap(index, index + 1);
@@ -75,6 +77,7 @@ export class SocialLinks extends React.Component<SocialLinksProps> {
                                             <i className="fa fa-caret-down"/>
                                         </button>
                                         <button
+                                            type="button"
                                             disabled={fields.length === 1 || this.isLinkedIn(index)}
                                             onClick={(e) => {
                                                 fields.remove(index);

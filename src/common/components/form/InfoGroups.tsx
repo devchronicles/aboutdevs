@@ -16,6 +16,7 @@ export class InfoGroups extends React.Component<InfoGroupsProps> {
         return (
             <div className="controls">
                 <button
+                    type="button"
                     disabled={index === 0}
                     onClick={(e) => {
                         fields.swap(index, index - 1);
@@ -25,6 +26,7 @@ export class InfoGroups extends React.Component<InfoGroupsProps> {
                     <i className="fa fa-caret-up"/>
                 </button>
                 <button
+                    type="button"
                     disabled={fields.length === (index + 1)}
                     onClick={(e) => {
                         fields.swap(index, index + 1);
@@ -34,6 +36,7 @@ export class InfoGroups extends React.Component<InfoGroupsProps> {
                     <i className="fa fa-caret-down"/>
                 </button>
                 <button
+                    type="button"
                     onClick={(e) => {
                         fields.remove(index);
                         e.stopPropagation();
