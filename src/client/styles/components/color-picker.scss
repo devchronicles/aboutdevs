@@ -16,4 +16,7 @@
         z-index: 100;
         top: 32px;
     }
+    div[title="#FFFFFF"] {
+        border: 1px solid $color-gray-light;
+    }
 }

@@ -47,7 +47,7 @@ export async function createFromLinkedInProfile(db: serverTypes.AboutDevsDatabas
         colors: {
             headerBackground: "#252934",
             headerText: "#FFFFFF",
-            bodyBackground: "#3275b7",
+            bodyBackground: "#3073b5",
             bodyText: "#FFFFFF",
         },
     };

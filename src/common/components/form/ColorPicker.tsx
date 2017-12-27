@@ -69,7 +69,11 @@ export class ColorPicker extends React.Component<ColorPickerProps, ColorPickerSt
                     ref={this.setBlockRef}
                 />
                 <div className="picker-wrapper" style={{display: open ? "block" : "none"}} ref={this.setPopoverRef}>
-                    <TwitterPicker onChangeComplete={this.handleChange} color={value}/>
+                    <TwitterPicker
+                        onChangeComplete={this.handleChange}
+                        color={value}
+                        colors={["#025B12", "#3073b5", "#DF5D4A", "#637F7D", "#314238", "#171C1A", "#32343a", "#CCCCCC", "#E2E2E2", "#FFFFFF"]}
+                    />
                 </div>
             </div>
         );
