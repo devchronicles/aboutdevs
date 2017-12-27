@@ -2,6 +2,7 @@ import * as React from "react";
 import * as commonTypes from "../typings/commonTypes";
 import { SocialLinkValue } from "../typings";
 import { socialLinks } from "../data/socialLinks";
+import { getDataFromFormattedAddress } from "../helpers/googlePlacesFormatHelper";
 
 
 interface ProfileViewProps {
@@ -43,6 +44,8 @@ export class ProfileView extends React.Component<ProfileViewProps, ProfileViewSt
 
         let companyElement: React.ReactNode = null;
         let atElement: React.ReactNode = null;
+        let inElement: React.ReactNode = null;
+
         if (profile.companyName) {
             atElement = <span> at </span>;
             companyElement = <span>{profile.companyName}</span>;
@@ -50,6 +53,11 @@ export class ProfileView extends React.Component<ProfileViewProps, ProfileViewSt
                 companyElement = (
                     <a href={profile.companyUrl} style={{color: profile.colors.headerText}}>{companyElement}</a>);
             }
+        }
+
+        if (profile.formattedAddress) {
+            const {address} = getDataFromFormattedAddress(profile.formattedAddress);
+            inElement = <span> in {address} </span>;
         }
 
         return (
@@ -62,6 +70,7 @@ export class ProfileView extends React.Component<ProfileViewProps, ProfileViewSt
                             {profile.title}
                             {profile.companyName && atElement}
                             {companyElement}
+                            {profile.formattedAddress && inElement}
                         </p>
                         <div className="social-button-wrapper">
                             {
