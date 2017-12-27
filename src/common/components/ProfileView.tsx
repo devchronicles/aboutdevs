@@ -3,6 +3,7 @@ import * as commonTypes from "../typings/commonTypes";
 import { SocialLinkValue } from "../typings";
 import { socialLinks } from "../data/socialLinks";
 import { getDataFromFormattedAddress } from "../helpers/googlePlacesFormatHelper";
+import styled from "react-emotion";
 
 
 interface ProfileViewProps {
@@ -42,22 +43,46 @@ export class ProfileView extends React.Component<ProfileViewProps, ProfileViewSt
             return null;
         }
 
+        const HeaderSpan = styled("span")`
+            color: ${profile.colors.headerText}
+        `;
+
+        const HeaderA = styled("a")`
+            color: ${profile.colors.headerText}
+        `;
+
+        const HeaderASocialLink = styled(HeaderA)`
+            border: 2px solid ${profile.colors.headerText};
+            &:hover {
+                color: ${profile.colors.headerBackground};
+                background-color: ${profile.colors.headerText};
+            }
+        `;
+
+        const HeaderH1 = styled("h1")`
+            color: ${profile.colors.headerText}
+        `;
+
         let companyElement: React.ReactNode = null;
         let atElement: React.ReactNode = null;
         let inElement: React.ReactNode = null;
 
         if (profile.companyName) {
-            atElement = <span> at </span>;
-            companyElement = <span>{profile.companyName}</span>;
+            atElement = <HeaderSpan> at </HeaderSpan>;
+            companyElement = <HeaderSpan>{profile.companyName}</HeaderSpan>;
             if (profile.companyUrl) {
                 companyElement = (
-                    <a href={profile.companyUrl} style={{color: profile.colors.headerText}}>{companyElement}</a>);
+                    <HeaderA
+                        href={profile.companyUrl}
+                    >
+                        {companyElement}
+                    </HeaderA>);
             }
         }
 
         if (profile.formattedAddress) {
             const {address} = getDataFromFormattedAddress(profile.formattedAddress);
-            inElement = <span> in {address} </span>;
+            inElement = <HeaderSpan> in {address} </HeaderSpan>;
         }
 
         return (
@@ -65,16 +90,34 @@ export class ProfileView extends React.Component<ProfileViewProps, ProfileViewSt
                 <div className="header-wrapper" style={{backgroundColor: profile.colors.headerBackground}}>
                     <header>
                         <div className="profile-image" style={{backgroundImage: `url(${profile.photoUrl})`}}/>
-                        <h1 className="username">{profile.displayName}</h1>
+                        <HeaderH1 className="username">{profile.displayName}</HeaderH1>
                         <p className="current-position">
-                            {profile.title}
+                            <HeaderSpan>{profile.title}</HeaderSpan>
                             {profile.companyName && atElement}
                             {companyElement}
                             {profile.formattedAddress && inElement}
                         </p>
                         <div className="social-button-wrapper">
                             {
-                                profile.socialLinks && profile.socialLinks.map((sl, i) => this.buildSocialLink(sl, i))
+                                profile.socialLinks && profile.socialLinks.map((socialLinkValue, index) => {
+                                    if (!socialLinkValue || !socialLinkValue.url || !socialLinkValue.website) return null;
+                                    const socialLink = socialLinks.find((sl) => sl.value === socialLinkValue.website);
+
+                                    const innerComponent = socialLink.iconClass
+                                        ? <i className={socialLink.iconClass} aria-hidden="true"/>
+                                        : null;
+
+                                    return (
+                                        <HeaderASocialLink
+                                            key={`socialLink-${index}`}
+                                            href={socialLinkValue.url}
+                                            target="_blank"
+                                            className="item"
+                                        >
+                                            {innerComponent}
+                                        </HeaderASocialLink>
+                                    );
+                                })
                             }
                         </div>
                     </header>

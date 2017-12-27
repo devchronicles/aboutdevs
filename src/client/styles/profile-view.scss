@@ -55,7 +55,6 @@
                 align-items: center;
 
                 .item {
-                    border: 2px solid #fff;
                     width: 50px;
                     height: 50px;
                     border-radius: 25px;
@@ -64,16 +63,13 @@
                     flex-direction: column;
                     align-items: center;
                     justify-content: center;
-                    color: #fff;
                     font-size: 1.4em;
                     text-decoration: none;
                     box-sizing: border-box;
                     transition: all .3s ease-in-out;
 
-                    & :hover {
+                    &:hover {
                         transform: scale(1.2);
-                        background-color: #fff;
-                        color: #252934;
                     }
                 }
             }
