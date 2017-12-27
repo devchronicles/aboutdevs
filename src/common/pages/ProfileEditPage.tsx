@@ -49,7 +49,7 @@ class ProfileEditPage extends React.Component<ProfileEditPageProps> {
     private handleFormSubmitFailed = async (errors: any) => {
         const {enqueueNotification} = this.props;
         enqueueNotification({
-            message: `Cannot submit form. ${Object.keys(errors).length} fields have validation errors.`,
+            message: `Your profile was not saved due to validation errors.`,
             level: "error",
         });
     }
