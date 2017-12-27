@@ -165,6 +165,7 @@ class ProfileEditForm extends React.Component<ProfileEditorFormProps, ProfileEdi
                             <FieldArray
                                 name="socialLinks"
                                 component={SocialLinks}
+                                socialLinks={formValues ? formValues.socialLinks : undefined}
                             />
                         </FormRow>
                     </DocumentSection>
@@ -235,7 +236,8 @@ class ProfileEditForm extends React.Component<ProfileEditorFormProps, ProfileEdi
                     </DocumentSection>
                 </form>
             </div>
-        );
+        )
+            ;
     }
 }
 

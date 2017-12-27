@@ -5,8 +5,10 @@ import { FaIcon } from "../FaIcon";
 import { FormRow } from "./FormRow";
 import { SelectSocialLink } from "./SelectSocialLink";
 import { LINKED_IN_SOCIAL_KEY } from "../../data/socialLinks";
+import { SocialLinkValue } from "../../typings";
 
 interface SocialLinksProps extends ReduxForm.WrappedFieldArrayProps<{}> {
+    socialLinks: SocialLinkValue[];
 }
 
 export class SocialLinks extends React.Component<SocialLinksProps> {
@@ -17,7 +19,7 @@ export class SocialLinks extends React.Component<SocialLinksProps> {
     }
 
     public render() {
-        const {fields, meta: {error}} = this.props;
+        const {fields, socialLinks} = this.props;
         return (
             <FormGroup>
                 <div className="field-array">
@@ -34,6 +36,8 @@ export class SocialLinks extends React.Component<SocialLinksProps> {
                                                 innerComponent={SelectSocialLink}
                                                 innerComponentProps={{
                                                     disabled: this.isLinkedIn(index),
+                                                    selectedSocialLinks: socialLinks,
+                                                    index,
                                                 }}
                                                 addOnBefore={<FaIcon icon="circle-o"/>}
                                             />
