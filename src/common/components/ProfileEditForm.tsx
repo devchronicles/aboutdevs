@@ -28,7 +28,10 @@ interface ProfileEditFormDispatchProps {
 
 interface ProfileEditFormOwnProps extends ReduxForm.FormProps<any, any, any> {
     onSubmit: (formValues: any) => any;
-    onCancel: () => void;
+
+    onCancel(): void;
+
+    onSubmitFail?(errors: ReduxForm.FormErrors<FormData>): void;
 }
 
 declare type ProfileEditorFormProps =

@@ -46,6 +46,14 @@ class ProfileEditPage extends React.Component<ProfileEditPageProps> {
         }
     }
 
+    private handleFormSubmitFailed = async (errors: any) => {
+        const {enqueueNotification} = this.props;
+        enqueueNotification({
+            message: `Cannot submit form. ${Object.keys(errors).length} fields have validation errors.`,
+            level: "error",
+        });
+    }
+
     public componentDidMount() {
         const {profileEditLoadData} = this.props;
         profileEditLoadData();
@@ -67,6 +75,7 @@ class ProfileEditPage extends React.Component<ProfileEditPageProps> {
                     <div className="profile-edit-wrapper">
                         <ProfileEditForm
                             onSubmit={this.handleFormSubmit}
+                            onSubmitFail={this.handleFormSubmitFailed}
                             onCancel={this.onFormCancel}
                         />
                     </div>

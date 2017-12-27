@@ -11,6 +11,31 @@ export const USER_NAME_IS_TAKEN = "user-name-is-taken";
 export const INCOMPLETE_SOCIAL_LINK = "incomplete-social-link";
 export const URL = "url";
 
+interface ValidationCollection {
+    [key: string]: Array<(value: any, user?: commonTypes.UserProfile) => string>;
+}
+
+const validators: ValidationCollection = {
+    "^name$": [validateRequired, validateMaxLength50],
+    "^displayName$": [validateRequired, validateMaxLength50],
+    "^title$": [validateRequired, validateMaxLength80],
+    "^bio$": [validationRequiredIfDeveloper, validateMaxLength500],
+    "^formattedAddress$": [validateRequired],
+    ".*\.website": [validateRequired],
+    ".*\.url": [validateRequired],
+};
+
+export function getValidatorsForField(fieldName: keyof commonTypes.UserProfile): Array<(value: any, user: commonTypes.UserProfile) => string> {
+    for (const expression in validators) {
+        if (validators.hasOwnProperty(expression)) {
+            const regEx = new RegExp(expression);
+            if (regEx.test(fieldName)) {
+                return validators[expression];
+            }
+        }
+    }
+}
+
 export function validateRequired(value: any) {
     return (value === null || value === undefined || value === "") ? REQUIRED : undefined;
 }
@@ -51,32 +76,7 @@ export function validateUrl(value: string) {
 }
 
 export function validationRequiredIfDeveloper(value: any, user: commonTypes.UserProfile) {
-    return (user.type === commonTypes.UserProfileType.RECRUITER && (value === null || value === undefined || value === "")) ? REQUIRED_IF_DEVELOPER : undefined;
-}
-
-export function getValidatorsForField(fieldName: keyof commonTypes.UserProfile): Array<(value: any, user: commonTypes.UserProfile) => string> {
-    switch (fieldName) {
-        case "name":
-            return [validateRequired, validateMaxLength50];
-        case "displayName":
-            return [validateRequired, validateMaxLength50];
-        case "title":
-            return [validateRequired, validateMaxLength80];
-        case "bio":
-            return [validationRequiredIfDeveloper, validateMaxLength500];
-        case "formattedAddress":
-            return [validateRequired];
-    }
-
-    // Social links
-    if (/.*\.website/.test(fieldName)) {
-        return [validateRequired];
-    }
-    if (/.*\.url$/.test(fieldName)) {
-        return [validateUrl, validateRequired];
-    }
-
-    return [];
+    return (user.type === commonTypes.UserProfileType.DEVELOPER && (value === null || value === undefined || value === "")) ? REQUIRED_IF_DEVELOPER : undefined;
 }
 
 export function validate(user: commonTypes.UserProfile) {
