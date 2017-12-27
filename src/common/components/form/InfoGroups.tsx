@@ -64,7 +64,6 @@ export class InfoGroups extends React.Component<InfoGroupsProps> {
                                             label={"Item title"}
                                             component={FormField}
                                             innerComponent={TextBox}
-                                            addOnBefore={<FaIcon icon="circle-o"/>}
                                         />
                                     </FormRow>
                                     <FormRow>
@@ -123,7 +122,6 @@ export class InfoGroups extends React.Component<InfoGroupsProps> {
                                             label={"Group title"}
                                             component={FormField}
                                             innerComponent={TextBox}
-                                            addOnBefore={<FaIcon icon="link"/>}
                                         />
                                     </FormRow>
                                     <FieldArray name={`${group}.items`} component={this.renderGroup}/>
