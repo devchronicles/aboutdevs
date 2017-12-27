@@ -16,6 +16,7 @@ interface ValidationCollection {
     [key: string]: Array<(value: any, user?: commonTypes.UserProfile) => string>;
 }
 
+
 const exactNameValidators: ValidationCollection = {
     name: [validateRequired, validateMaxLength50],
     displayName: [validateRequired, validateMaxLength50],
@@ -28,22 +29,23 @@ const exactNameValidators: ValidationCollection = {
     infoGroups: [validateInfoGroup],
 };
 
-const regexValidators: ValidationCollection = {
-    ".*\.website": [validateRequired],
-    ".*\.url": [validateRequired, validateUrl],
-};
+const regexValidators: Array<{ pattern: RegExp, validators: Array<(value: any, user?: commonTypes.UserProfile) => string> }> = [
+    {pattern: /socialLinks\[\d+\]\.website/, validators: [validateRequired]},
+    {pattern: /socialLinks\[\d+\]\.url/, validators: [validateRequired, validateUrl]},
+    {pattern: /infoGroups\[\d+\]\.title/, validators: [validateRequired]},
+    {pattern: /infoGroups\[\d+\]\.items\[\d+\]\.title/, validators: [validateRequired]},
+    {pattern: /infoGroups\[\d+\]\.items\[\d+\]\.url/, validators: [validateUrl]},
+    {pattern: /infoGroups\[\d+\]\.items\[\d+\]\.description/, validators: [validateRequired]},
+];
 
 export function getValidatorsForField(fieldName: keyof commonTypes.UserProfile): Array<(value: any, user: commonTypes.UserProfile) => string> {
     const validators: Array<(value: any, user?: commonTypes.UserProfile) => string> = [];
     if (exactNameValidators[fieldName]) {
         validators.push(...exactNameValidators[fieldName]);
     }
-    for (const pattern in regexValidators) {
-        if (exactNameValidators.hasOwnProperty(pattern)) {
-            const regEx = new RegExp(pattern);
-            if (regEx.test(fieldName)) {
-                validators.push(...regexValidators[pattern]);
-            }
+    for (const rule of regexValidators) {
+        if (rule.pattern.test(fieldName)) {
+            validators.push(...rule.validators);
         }
     }
     return validators;
