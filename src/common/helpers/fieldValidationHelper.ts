@@ -4,8 +4,8 @@ import { isUrl } from "./urlHelper";
 export const REQUIRED = "required";
 export const REQUIRED_IF_DEVELOPER = "required-if-developer";
 export const MAX_LENGTH_50 = "max-length-50";
-export const MAX_LENGTH_60 = "max-length-80";
 export const MAX_LENGTH_80 = "max-length-80";
+export const MAX_LENGTH_255 = "max-length-255";
 export const MAX_LENGTH_500 = "max-length-500";
 export const USER_NAME_IS_TAKEN = "user-name-is-taken";
 export const INCOMPLETE_SOCIAL_LINK = "incomplete-social-link";
@@ -19,8 +19,11 @@ const validators: ValidationCollection = {
     "^name$": [validateRequired, validateMaxLength50],
     "^displayName$": [validateRequired, validateMaxLength50],
     "^title$": [validateRequired, validateMaxLength80],
+    "^companyName$": [validateMaxLength80],
+    "^companyUrl$": [validateMaxLength255],
+    "^formattedAddress$": [validateRequired, validateMaxLength255],
+    "^tags$": [validationRequiredIfDeveloper],
     "^bio$": [validationRequiredIfDeveloper, validateMaxLength500],
-    "^formattedAddress$": [validateRequired],
     ".*\.website": [validateRequired],
     ".*\.url": [validateRequired],
 };
@@ -47,19 +50,20 @@ export function validateMaxLength50(value: string) {
     return value.length > 50 ? MAX_LENGTH_50 : undefined;
 }
 
-export function validateMaxLength60(value: string) {
-    if (!value) {
-        return undefined;
-    }
-    return value.length > 60 ? MAX_LENGTH_60 : undefined;
-}
-
 export function validateMaxLength80(value: string) {
     if (!value) {
         return undefined;
     }
     return value.length > 80 ? MAX_LENGTH_80 : undefined;
 }
+
+export function validateMaxLength255(value: string) {
+    if (!value) {
+        return undefined;
+    }
+    return value.length > 255 ? MAX_LENGTH_500 : undefined;
+}
+
 
 export function validateMaxLength500(value: string) {
     if (!value) {
