@@ -42,6 +42,7 @@ export async function createFromLinkedInProfile(db: serverTypes.AboutDevsDatabas
                 url: profile.publicProfileUrl,
             }],
         },
+        info_groups: null,
         photo_url: photoUrl,
         colors: {
             headerBackground: "#252934",

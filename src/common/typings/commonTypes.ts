@@ -35,6 +35,18 @@ export interface UserProfileColors {
     bodyText: string;
 }
 
+export interface UserProfileInfoGroupItem {
+    title: string;
+    url: string;
+    description: string;
+    tags: string[];
+}
+
+export interface UserProfileInfoGroup {
+    title: string;
+    items: UserProfileInfoGroupItem[];
+}
+
 export interface UserProfileBio {
     text: string;
 }
@@ -52,6 +64,7 @@ export interface UserProfile {
     title: string;
     bio?: UserProfileBio;
     socialLinks?: SocialLinkValue[];
+    infoGroups?: UserProfileInfoGroup[];
     photoUrl?: string;
     tags?: UserTag[];
     formattedAddress: string;

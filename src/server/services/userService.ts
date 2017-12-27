@@ -69,6 +69,9 @@ export async function getUserProfileFromUser(db: serverTypes.AboutDevsDatabase, 
         socialLinks: user.social_links
             ? user.social_links.socialLinks
             : null,
+        infoGroups: user.info_groups
+            ? user.info_groups.infoGroups
+            : null,
         tags: await getTagsForUser(db, user.id),
         colors: user.colors,
         companyName: user.company_name,
@@ -110,6 +113,9 @@ export async function saveProfile(db: serverTypes.AboutDevsDatabase, userId: num
     user.company_url = profile.companyUrl;
     user.social_links = {
         socialLinks: profile.socialLinks,
+    };
+    user.info_groups = {
+        infoGroups: profile.infoGroups,
     };
 
     const city = await googlePlacesService.getAndSaveCity(db, profile.formattedAddress);

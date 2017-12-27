@@ -1,5 +1,6 @@
 import * as massive from "massive";
 import * as commonTypes from "../../common/typings/commonTypes";
+import { UserProfileInfoGroup } from "../../common/typings/commonTypes";
 import * as serverTypes from "./index";
 import { SocialLinkValue, UserProfileColors } from "../../common/typings";
 
@@ -37,6 +38,9 @@ export interface User {
     type: commonTypes.UserProfileType;
     social_links: {
         socialLinks: SocialLinkValue[];
+    };
+    info_groups: {
+        infoGroups: UserProfileInfoGroup[];
     };
     title: string;
     name: string;
