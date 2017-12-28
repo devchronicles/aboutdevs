@@ -2,7 +2,6 @@ import * as commonTypes from "../typings/commonTypes";
 import { isUrl } from "./urlHelper";
 
 export const REQUIRED = "required";
-export const REQUIRED_IF_DEVELOPER = "required-if-developer";
 export const MAX_LENGTH_50 = "max-length-50";
 export const MAX_LENGTH_80 = "max-length-80";
 export const MAX_LENGTH_255 = "max-length-255";
@@ -114,7 +113,10 @@ export function validateUrl(value: string) {
 }
 
 export function validationRequiredIfDeveloper(value: any, user: commonTypes.UserProfile) {
-    return (user.type === commonTypes.UserProfileType.DEVELOPER && (value === null || value === undefined || value === "")) ? REQUIRED_IF_DEVELOPER : undefined;
+    return (user.type === commonTypes.UserProfileType.DEVELOPER
+        && (value === null || value === undefined || value === "" || ((value instanceof Array) && value.length === 0)))
+        ? REQUIRED
+        : undefined;
 }
 
 export function validateInfoGroup(value: any): string {
