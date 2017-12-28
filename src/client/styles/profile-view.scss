@@ -31,12 +31,11 @@
             text-align: center;
             div.profile-image {
                 background-size: cover;
+                background-repeat: no-repeat;
+                background-position: center;
                 width: 200px;
                 height: 200px;
                 border-radius: 100px;
-                background-size: cover;
-                background-repeat: no-repeat;
-                background-position: center;
             }
             h1.username {
                 margin-top: $gutter-lg;

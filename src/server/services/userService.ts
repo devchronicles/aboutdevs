@@ -72,7 +72,7 @@ export async function getUserProfileFromUser(db: serverTypes.AboutDevsDatabase, 
         infoGroups: user.info_groups
             ? user.info_groups.infoGroups
             : null,
-        tags: await getTagsForUser(db, user.id),
+        tags: user.tags ? user.tags.split(" ") : [],
         colors: user.colors,
         companyName: user.company_name,
         companyUrl: user.company_url,
@@ -133,18 +133,37 @@ export async function saveProfile(db: serverTypes.AboutDevsDatabase, userId: num
         const addedTags =
             (profileTags && profileTags.length)
                 ? profileTags.filter((profileTag) =>
-                persistedTags.findIndex((persistedTag) => persistedTag.name === profileTag.name) === -1)
+                persistedTags.findIndex((persistedTag) => persistedTag.name === profileTag) === -1)
                 : [];
 
         for (const addedTag of addedTags) {
-            await db.user_tag.insert({name: addedTag.name});
+            // get persisted version of the tag
+            const persistedTag = await db.tag.findOne({name: addedTag});
+            if (persistedTag) {
+                const persistedUserTag = await db.user_tag.findOne({user_id: user.id, tag_id: persistedTag.id});
+                // now persistedUserTag should be null, because if the tag is being added, it shouldn't exist
+                if (!persistedUserTag) {
+                    await db.user_tag.insert({user_id: user.id, tag_id: persistedTag.id});
+                }
+            }
+            // in case persistedTag is falsy here, this means the user is probably trying to inject a tag
         }
         // remove tags that were removed
         const removedTags = persistedTags
-            .filter((dbTag) => profileTags.findIndex((profileTag) => profileTag.id === dbTag.id) === -1);
+            .filter((dbTag) => profileTags.findIndex((profileTag) => profileTag === dbTag.name) === -1);
         for (const removedTag of removedTags) {
-            await db.user_tag.destroy({id: removedTag.id});
+            const persistedUserTag = await db.user_tag.findOne({user_id: user.id, tag_id: removedTag.id});
+            if (persistedUserTag) {
+                await db.user_tag.destroy({id: persistedUserTag.id});
+            }
         }
+
+        // This is for redundance
+        user.tags = profileTags.sort((tag1: string, tag2: string) => {
+            if (tag1 < tag2) return -1;
+            if (tag1 > tag2) return 1;
+            return 0;
+        }).join(" ");
     }
 
     user = (await db.user.update(user)) as serverTypes.User;

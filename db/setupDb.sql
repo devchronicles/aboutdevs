@@ -527,7 +527,7 @@ CREATE TABLE "user" (
     title character varying(80),
     bio text,
     search_canonical text,
-    name character varying(255) NOT NULL,
+    name character varying(50) NOT NULL,
     email character varying(255) NOT NULL,
     created_at timestamp without time zone DEFAULT timezone('utc'::text, now()) NOT NULL,
     company_name character varying(80),
@@ -536,7 +536,8 @@ CREATE TABLE "user" (
     google_place_id integer,
     google_place_formatted_address character varying(255),
     info_groups json,
-    colors json
+    colors json,
+    tags text
 );
 
 

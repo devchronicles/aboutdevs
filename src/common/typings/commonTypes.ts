@@ -66,7 +66,7 @@ export interface UserProfile {
     socialLinks?: SocialLinkValue[];
     infoGroups?: UserProfileInfoGroup[];
     photoUrl?: string;
-    tags?: UserTag[];
+    tags?: string[];
     formattedAddress: string;
     colors?: UserProfileColors;
     companyName?: string;

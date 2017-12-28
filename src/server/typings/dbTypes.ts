@@ -50,6 +50,7 @@ export interface User {
     company_name?: string;
     company_url?: string;
     colors: UserProfileColors;
+    tags: string;
 }
 
 export interface UserSearchResult {

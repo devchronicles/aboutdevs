@@ -4,7 +4,7 @@ import { safeRead } from "../../common/helpers/objectHelpers";
 import { extractUserNameFromEmail, getValidUserName } from "./userService";
 import { getGravatarImageFromEmail, GravatarSize } from "../helpers/gravatarHelper";
 import { getAndSaveCity, searchCitiesFormatted } from "./googlePlacesService";
-import { UserProfileStatus, UserProfileType } from "../../common/typings/commonTypes";
+import { UserProfileStatus, UserProfileType } from "../../common/typings";
 import * as faker from "faker";
 
 /**
@@ -50,6 +50,7 @@ export async function createFromLinkedInProfile(db: serverTypes.AboutDevsDatabas
             bodyBackground: "#3073b5",
             bodyText: "#FFFFFF",
         },
+        tags: "",
     };
 
     let userLocation = profile.location.name;
