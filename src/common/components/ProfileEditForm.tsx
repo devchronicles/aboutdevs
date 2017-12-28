@@ -185,7 +185,7 @@ class ProfileEditForm extends React.Component<ProfileEditorFormProps, ProfileEdi
                     </DocumentSection>
                     <DocumentSection
                         id={"infoGroups"}
-                        title={"Info groups"}
+                        title={"Lists"}
                         onToggleCollapsed={this.handleToggleCollapsed}
                         open={this.state.openSections && this.state.openSections.infoGroups}
                     >

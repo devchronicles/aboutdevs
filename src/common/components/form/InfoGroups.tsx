@@ -119,7 +119,7 @@ export class InfoGroups extends React.Component<InfoGroupsProps> {
                                     <FormRow>
                                         <Field
                                             name={`${group}.title`}
-                                            label={"Group title"}
+                                            label={"List title"}
                                             component={FormField}
                                             innerComponent={TextBox}
                                         />
@@ -133,7 +133,7 @@ export class InfoGroups extends React.Component<InfoGroupsProps> {
                 </ul>
                 <div className="field-array-button-bar">
                     <button type="button" onClick={() => fields.push({items: [{}]})}>
-                        + Group
+                        + List
                     </button>
                 </div>
             </div>
