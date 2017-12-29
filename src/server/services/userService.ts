@@ -51,7 +51,7 @@ async function getTagsForUser(db: serverTypes.AboutDevsDatabase, userId: number)
     return db._aboutdevs_select_tags_from_user(userId);
 }
 
-export async function getUserProfileFromUser(db: serverTypes.AboutDevsDatabase, user: serverTypes.User, currentUserId: number, operation: commonTypes.Operation): Promise<commonTypes.UserProfile> {
+export async function getUserProfileFromUser(db: serverTypes.AboutDevsDatabase, user: serverTypes.User): Promise<commonTypes.UserProfile> {
     if (!db) throw Error("Argument 'db' should be truthy");
     if (!user) throw Error("Argument 'user' should be truthy");
 
@@ -86,9 +86,9 @@ export async function getUserProfileFromUser(db: serverTypes.AboutDevsDatabase, 
  * @param currentUserId
  * @param operation
  */
-export async function getUserProfileById(db: serverTypes.AboutDevsDatabase, userId: number, currentUserId: number, operation: commonTypes.Operation): Promise<commonTypes.UserProfile> {
+export async function getUserProfileById(db: serverTypes.AboutDevsDatabase, userId: number): Promise<commonTypes.UserProfile> {
     const user = await db.user.findOne({id: userId});
-    return getUserProfileFromUser(db, user, currentUserId, operation);
+    return getUserProfileFromUser(db, user);
 }
 
 /**
@@ -174,7 +174,7 @@ export async function saveProfile(db: serverTypes.AboutDevsDatabase, userId: num
         user = (await db.user.save(user)) as serverTypes.User;
     }
 
-    return getUserProfileFromUser(db, user, user.id, commonTypes.Operation.EDIT);
+    return getUserProfileFromUser(db, user);
 }
 
 /**

@@ -1,10 +1,5 @@
 import * as ReactNotificationSystem from "react-notification-system";
 
-export enum Operation {
-    VIEW = 0,
-    EDIT = 1,
-}
-
 export interface CurrentUserProfile {
     id: number;
     name: string;

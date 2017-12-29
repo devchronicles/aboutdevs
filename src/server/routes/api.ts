@@ -4,7 +4,6 @@ import * as tagService from "../services/tagService";
 import * as googlePlacesService from "../services/googlePlacesService";
 import * as userService from "../services/userService";
 import * as dbTypes from "../typings/dbTypes";
-import * as commonTypes from "../../common/typings/commonTypes";
 
 const router = express.Router();
 
@@ -35,7 +34,7 @@ router.route("/users/edit_my_profile").get(async (req, res) => {
     await apiHelper.sendDbConnectedPromise(res,
         async (db) => {
             const userId = apiHelper.getAndEnsureUserId(req);
-            return userService.getUserProfileById(db, userId, userId, commonTypes.Operation.EDIT);
+            return userService.getUserProfileById(db, userId);
         });
 });
 
@@ -75,8 +74,7 @@ router.route("/users/:user_name").get(async (req, res) => {
             if (!user) {
                 throw Error(`Could not find user. User name: ${userName}`);
             }
-            const currentUserId = apiHelper.getAndEnsureUserId(req);
-            return userService.getUserProfileFromUser(db, user, currentUserId, commonTypes.Operation.VIEW);
+            return userService.getUserProfileFromUser(db, user);
         });
 });
 
