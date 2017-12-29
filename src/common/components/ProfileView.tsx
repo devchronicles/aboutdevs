@@ -3,7 +3,8 @@ import * as commonTypes from "../typings/commonTypes";
 import { SocialLinkValue } from "../typings";
 import { socialLinks } from "../data/socialLinks";
 import { getDataFromFormattedAddress } from "../helpers/googlePlacesFormatHelper";
-import styled from "react-emotion";
+import { buildStyledComponents } from "./ProfileViewStyledComponents";
+import * as Showdown from "showdown";
 
 
 interface ProfileViewProps {
@@ -15,6 +16,13 @@ interface ProfileViewState {
 }
 
 export class ProfileView extends React.Component<ProfileViewProps, ProfileViewState> {
+
+    converter: Showdown.Converter;
+
+    constructor(props: ProfileViewProps) {
+        super(props);
+        this.converter = new Showdown.Converter();
+    }
 
     buildSocialLink = (socialLinkValue: SocialLinkValue, index: number) => {
 
@@ -43,25 +51,18 @@ export class ProfileView extends React.Component<ProfileViewProps, ProfileViewSt
             return null;
         }
 
-        const HeaderSpan = styled("span")`
-            color: ${profile.colors.headerText}
-        `;
-
-        const HeaderA = styled("a")`
-            color: ${profile.colors.headerText}
-        `;
-
-        const HeaderASocialLink = styled(HeaderA)`
-            border: 2px solid ${profile.colors.headerText};
-            &:hover {
-                color: ${profile.colors.headerBackground};
-                background-color: ${profile.colors.headerText};
-            }
-        `;
-
-        const HeaderH1 = styled("h1")`
-            color: ${profile.colors.headerText}
-        `;
+        const {
+            ProfileWrapper,
+            // Header
+            HeaderWrapper,
+            HeaderA,
+            HeaderSpan,
+            HeaderASocialLink,
+            HeaderH1,
+            // Body
+            BodyWrapper,
+            BodyTag,
+        } = buildStyledComponents(profile.colors);
 
         let companyElement: React.ReactNode = null;
         let atElement: React.ReactNode = null;
@@ -85,9 +86,13 @@ export class ProfileView extends React.Component<ProfileViewProps, ProfileViewSt
             inElement = <HeaderSpan> in {address} </HeaderSpan>;
         }
 
+        const bio = (profile.bio && profile.bio.text)
+            ? this.converter.makeHtml(profile.bio.text)
+            : "";
+
         return (
-            <div className="profile-view">
-                <div className="header-wrapper" style={{backgroundColor: profile.colors.headerBackground}}>
+            <ProfileWrapper className="profile-view">
+                <HeaderWrapper className="header-wrapper">
                     <header>
                         <div className="profile-image" style={{backgroundImage: `url(${profile.photoUrl})`}}/>
                         <HeaderH1 className="username">{profile.displayName}</HeaderH1>
@@ -121,8 +126,24 @@ export class ProfileView extends React.Component<ProfileViewProps, ProfileViewSt
                             }
                         </div>
                     </header>
-                </div>
-            </div>
+                </HeaderWrapper>
+                <BodyWrapper className="body-wrapper">
+                    <div className="body">
+                        <div className="tag-wrapper">
+                            {
+                                profile.tags && profile.tags.map((tag, index) => {
+                                    return (
+                                        <BodyTag key={`tag-${index}`} className="tag">
+                                            {tag}
+                                        </BodyTag>
+                                    );
+                                })
+                            }
+                        </div>
+                        <div className="bio-wrapper" dangerouslySetInnerHTML={{__html: bio}}/>
+                    </div>
+                </BodyWrapper>
+            </ProfileWrapper>
         );
     }
 }
