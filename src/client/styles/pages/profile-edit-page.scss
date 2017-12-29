@@ -22,7 +22,6 @@
         overflow-y: auto;
         width: 100%;
         box-sizing: border-box;
-        background-color: $color-white;
         @media (min-width: $breakpoint-xl) {
             width: 550px;
             height: calc(100vh - #{$header-height});
