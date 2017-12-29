@@ -22,7 +22,7 @@
         overflow-y: auto;
         width: 100%;
         box-sizing: border-box;
-        background-color: $color-gray-medium;
+        background-color: $color-white;
         @media (min-width: $breakpoint-xl) {
             width: 550px;
             height: calc(100vh - #{$header-height});
@@ -30,9 +30,6 @@
         .document {
             box-sizing: border-box;
             background: $color-gray-even-lighter;
-            @media (min-width: $breakpoint-xl) {
-                margin-bottom: 4 * $gutter-md;
-            }
             form {
                 @extend .flex-column;
                 justify-content: space-between;
@@ -67,16 +64,12 @@
                     @extend .flex-row-reverse;
                     flex-direction: row-reverse;
                     width: 100%;
-                    @media (min-width: $breakpoint-xl) {
-                        position: fixed;
-                        bottom: 0;
-                        width: inherit;
-                        background-color: $color-white;
-                        border-top: 1px solid $color-gray-light;
-                        box-shadow: $box-shadow;
-                        box-sizing: border-box;
-                        padding: $gutter-md;
-
+                    background-color: $color-white;
+                    border-top: 1px solid $color-gray-light;
+                    box-sizing: border-box;
+                    padding: $gutter-md;
+                    button {
+                        margin-left: $gutter-sm;
                     }
                 }
             }
