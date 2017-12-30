@@ -6,7 +6,6 @@ import { getDataFromFormattedAddress } from "../helpers/googlePlacesFormatHelper
 import { buildStyledComponents } from "./ProfileViewStyledComponents";
 import * as Showdown from "showdown";
 
-
 interface ProfileViewProps {
     profile: commonTypes.UserProfile;
 }

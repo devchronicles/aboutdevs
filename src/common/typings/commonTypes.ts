@@ -12,10 +12,11 @@ export enum UserProfileType {
     RECRUITER = 1,
 }
 
-export enum UserProfileLoadState {
-    LOADED = 0,
-    LOADING = 1,
-    ERROR = 2,
+export enum LoadState {
+    NOT_INITIATED = 0,
+    LOADED = 1,
+    LOADING = 2,
+    ERROR = 3,
 }
 
 export enum UserProfileStatus {
@@ -53,7 +54,7 @@ export interface UserProfile {
     name: string;
     email?: string;
     type: UserProfileType;
-    loadState?: UserProfileLoadState;
+    loadState?: LoadState;
     status?: UserProfileStatus;
     displayName: string;
     title: string;
@@ -114,11 +115,17 @@ export interface SearchState {
     criteria: SearchCriteria;
 }
 
+export interface ProfileState {
+    loadState: LoadState;
+    data: UserProfile;
+}
+
 export interface ReduxState {
     loggedUser: CurrentUserProfile;
     form: {
         profileEdit?: any,
     };
     search: SearchState;
+    profile: ProfileState;
     notifications: ReactNotificationSystem.Notification[];
 }
