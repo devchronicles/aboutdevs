@@ -34,7 +34,8 @@ router.route("/users/edit_my_profile").get(async (req, res) => {
     await apiHelper.sendDbConnectedPromise(res,
         async (db) => {
             const userId = apiHelper.getAndEnsureUserId(req);
-            return userService.getUserProfileById(db, userId);
+            const user = await db.user.findOne({id: userId});
+            return userService.getUserProfile(db, user);
         });
 });
 
@@ -74,7 +75,7 @@ router.route("/users/:user_name").get(async (req, res) => {
             if (!user) {
                 throw Error(`Could not find user. User name: ${userName}`);
             }
-            return userService.getUserProfileFromUser(db, user);
+            return userService.getUserProfile(db, user);
         });
 });
 

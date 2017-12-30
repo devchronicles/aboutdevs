@@ -5,13 +5,13 @@ import configureStore from "../common/redux/store";
 import { createBrowserHistory } from "history";
 import { App } from "./pages/App";
 import { LoginPage } from "./pages/LoginPage";
+import { ProfileViewPage } from "./pages/ProfileViewPage";
 import { Route, Router, Switch } from "react-router";
 
 require("../../node_modules/normalize.css/normalize.css");
 require("../../node_modules/font-awesome/css/font-awesome.css");
 require("../../node_modules/react-activity/dist/react-activity.css");
 require("../client/styles/styles.scss");
-
 
 const history = createBrowserHistory();
 const store = configureStore((window as any).__PRELOADED_STATE__, history);
@@ -25,6 +25,7 @@ ReactDOM.render(
         <Router history={history}>
             <Switch>
                 <Route exact={true} path="/login" component={LoginPage}/>
+                <Route exact={true} path="/:userName" component={ProfileViewPage}/>
                 <Route path="/" component={App}/>
             </Switch>
         </Router>

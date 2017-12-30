@@ -2,7 +2,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import * as ReactRouter from "react-router";
 import { ProfileEditForm } from "../components/ProfileEditForm";
-import * as profileEditActions from "../../common/redux/profileEdit/profileEditActions";
+import * as profileEditActions from "../redux/profileEdit/profileActions";
 import * as commonTypes from "../../common/typings";
 import * as ReduxForm from "redux-form";
 import * as httpClient from "../httpClient";

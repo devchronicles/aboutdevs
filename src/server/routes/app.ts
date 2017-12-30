@@ -5,7 +5,6 @@ const router = express.Router();
 
 /**
  * Function  that actually sends the application to the client
- * @param response
  */
 function sendApp(res: express.Response, preloadedHtml: string, preloadedState: object) {
     fs.readFile("src/common/index.html", "utf8", (error, data) => {
@@ -18,7 +17,7 @@ function sendApp(res: express.Response, preloadedHtml: string, preloadedState: o
     });
 }
 
-router.route("/s/:location/:title").get((req, res) => {
+router.route("/:user_name").get((req, res) => {
     sendApp(res, null, {
         loggedUser: req.user,
     });

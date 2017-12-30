@@ -2,8 +2,13 @@ import axios, { AxiosPromise } from "axios";
 
 import * as commonTypes from "../common/typings";
 
-export function getProfileData() {
+export function getMyProfileData() {
     return axios.get("/api/users/edit_my_profile");
+}
+
+export function getProfileData(userName: string) {
+    if (!userName) throw Error("Argument is null or undefined. Argument: userName");
+    return axios.get(`/api/users/${userName}`);
 }
 
 export function saveProfileData(profile: commonTypes.UserProfile): AxiosPromise {

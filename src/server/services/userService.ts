@@ -47,11 +47,7 @@ export function getReduxDataForLoggedUser(user: serverTypes.User): commonTypes.C
     };
 }
 
-async function getTagsForUser(db: serverTypes.AboutDevsDatabase, userId: number): Promise<commonTypes.UserTag[]> {
-    return db._aboutdevs_select_tags_from_user(userId);
-}
-
-export async function getUserProfileFromUser(db: serverTypes.AboutDevsDatabase, user: serverTypes.User): Promise<commonTypes.UserProfile> {
+export async function getUserProfile(db: serverTypes.AboutDevsDatabase, user: serverTypes.User): Promise<commonTypes.UserProfile> {
     if (!db) throw Error("Argument 'db' should be truthy");
     if (!user) throw Error("Argument 'user' should be truthy");
 
@@ -77,18 +73,6 @@ export async function getUserProfileFromUser(db: serverTypes.AboutDevsDatabase, 
         companyName: user.company_name,
         companyUrl: user.company_url,
     };
-}
-
-/**
- * Gets the profile of the given user
- * @param db The massive object
- * @param userId The id of the user
- * @param currentUserId
- * @param operation
- */
-export async function getUserProfileById(db: serverTypes.AboutDevsDatabase, userId: number): Promise<commonTypes.UserProfile> {
-    const user = await db.user.findOne({id: userId});
-    return getUserProfileFromUser(db, user);
 }
 
 /**
@@ -174,7 +158,7 @@ export async function saveProfile(db: serverTypes.AboutDevsDatabase, userId: num
         user = (await db.user.save(user)) as serverTypes.User;
     }
 
-    return getUserProfileFromUser(db, user);
+    return getUserProfile(db, user);
 }
 
 /**
