@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as ReactRedux from "react-redux";
 import * as ReactRouter from "react-router";
-import * as profileEditActions from "../redux/profileEdit/profileActions";
+import * as profileActions from "../redux/profileEdit/profileActions";
 import { ProfileView } from "../components/ProfileView";
 import { LoadState, ProfileState, ReduxState } from "../typings";
 
@@ -48,7 +48,7 @@ const mapStateToProps = (state: ReduxState): ProfileViewPageStateProps => ({
 });
 
 const mapDispatchToProps = (dispatch: ReactRedux.Dispatch<any>): ProfileViewPageDispatchProps => ({
-    profileViewLoadData: (userName: string) => dispatch(profileEditActions.profileViewLoadData(userName)),
+    profileViewLoadData: (userName: string) => dispatch(profileActions.profileViewLoadData(userName)),
 });
 
 const mergeProps = (stateProps: ProfileViewPageProps, dispatchProps: ProfileViewPageDispatchProps, ownProps: ProfileViewPageOwnProps): ProfileViewPageProps => ({
