@@ -72,10 +72,9 @@
     }
 
     .body-wrapper {
-        align-items: center;
         .body {
-            @extend .flex-column;
             padding: $gutter-md;
+            margin: 0 auto;
             max-width: 1000px;
             .tag-wrapper {
                 @extend .flex-row;
