@@ -60,7 +60,8 @@ class ProfileEditPage extends React.Component<ProfileEditPageProps> {
     }
 
     private onFormCancel = () => {
-        this.props.history.push("/");
+        const {loggedUser} = this.props;
+        this.props.history.push(`/${loggedUser.name}`);
     }
 
     public render() {

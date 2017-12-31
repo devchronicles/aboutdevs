@@ -48,6 +48,13 @@ interface ProfileEditFormState {
 
 class ProfileEditForm extends React.Component<ProfileEditorFormProps, ProfileEditFormState> {
 
+    handleCancel = (event: React.FormEvent<any>) => {
+        const {onCancel} = this.props;
+        event.preventDefault();
+
+        onCancel();
+    }
+
     handleToggleCollapsed = (sectionId: string) => {
         const newState = {...this.state};
         newState.openSections[sectionId] = this.state.openSections[sectionId] === undefined
@@ -233,7 +240,7 @@ class ProfileEditForm extends React.Component<ProfileEditorFormProps, ProfileEdi
                         </DocumentSection>
                     </div>
                     <div className="button-bar">
-                        <button onClick={() => onCancel()}>Cancel</button>
+                        <button onClick={this.handleCancel}>Discard</button>
                         <button type="submit" className="vibrant" disabled={pristine || submitting}>Save</button>
                     </div>
                 </form>

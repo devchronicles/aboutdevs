@@ -9,17 +9,18 @@ interface LoggedUserDropdownProps {
 class LoggedUserDropdown extends React.Component<LoggedUserDropdownProps> {
 
     public render() {
-        const {loggedUser: {id, displayName, photoUrl}} = this.props;
+        const {loggedUser: {displayName, photoUrl, name}} = this.props;
 
         return (
-            <Dropdown button={<img alt="@andrerpena" className="avatar" src={photoUrl}/>}>
+            <Dropdown button={<img className="avatar" src={photoUrl}/>}>
                 <DropdownHeader>
-                    Olá, <strong className="css-truncate-target">{displayName}</strong>
+                    Signed in as <strong className="css-truncate-target">{displayName}</strong>
                 </DropdownHeader>
                 <DropdownDivider/>
-                <DropdownItem linkTo={`/${id}`} text="Seu perfil"/>
-                <DropdownItem linkTo={`/config/edituserprofile`} text="Editar seu perfil"/>
-                <DropdownItem href="/auth/logout" text="Sair"/>
+                <DropdownItem linkTo={`/${name}`} text="Your profile"/>
+                <DropdownItem linkTo={`/config/edituserprofile`} text="Edit your profile"/>
+                <DropdownDivider/>
+                <DropdownItem href="/auth/logout" text="Sign out"/>
             </Dropdown>
         );
     }

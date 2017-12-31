@@ -5,7 +5,7 @@ ul.dropdown {
     z-index: 1000;
     .dropdown-menu-wrapper {
         display: none;
-        margin-top: $gutter-sm;
+        margin-top: 2px;
         box-sizing: border-box;
         position: absolute;
         right: 0;
@@ -62,7 +62,7 @@ ul.dropdown {
                 display: block;
                 height: 1px;
                 margin: $gutter-xs 0;
-                background-color: $background-color;
+                background-color: $color-gray-medium;
             }
         }
     }
