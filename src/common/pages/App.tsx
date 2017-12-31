@@ -9,6 +9,7 @@ import * as commonTypes from "../../common/typings";
 import * as ReactNotificationSystem from "react-notification-system";
 import * as notificationActions from "../../common/redux/notifications/notificationsActions";
 import { Dispatch } from "redux";
+import { ProfileViewPage } from "./ProfileViewPage";
 
 interface AppStateProps {
     loggedUser: commonTypes.CurrentUserProfile;
@@ -49,6 +50,7 @@ class App extends React.Component<AppProps> {
                     <Route exact={true} path="/search" component={SearchPage} />
                     <Route exact={true} path="/config/edituserprofile" component={ProfileEditPage} />
                     <Route path="/s/:location/:search/:display?" component={SearchPage} />
+                    <Route exact={true} path="/:userName" component={ProfileViewPage}/>
                     <Route exact={true} path="/" component={IndexPage} />
                 </Switch>
                 <ReactNotificationSystem ref={this.setNotificationSystemRef} />
