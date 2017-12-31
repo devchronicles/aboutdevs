@@ -8,9 +8,9 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        box-shadow: $box-shadow;
         position: fixed;
         z-index: 10000;
+        border-bottom: 1px solid $color-gray-dark;
 
         header.header {
             width: 100%;
@@ -28,7 +28,7 @@
                 width: 100%;
                 padding: 0 $gutter-md;
                 .logo {
-                    font-size: 26px;
+                    font-size: 20px;
                 }
                 ul.header-content-list {
                     display: flex;
