@@ -1,11 +1,8 @@
 import * as React from "react";
-import * as ReactDOM from "react-dom";
-import { Provider } from "react-redux";
+import { render } from "react-dom";
 import configureStore from "../common/redux/store";
 import { createBrowserHistory } from "history";
-import { App } from "./pages/App";
-import { LoginPage } from "./pages/LoginPage";
-import { Route, Router, Switch } from "react-router";
+import { App } from "./App";
 
 require("../../node_modules/normalize.css/normalize.css");
 require("../../node_modules/font-awesome/css/font-awesome.css");
@@ -19,14 +16,4 @@ if ((module as any).hot) {
     (module as any).hot.accept();
 }
 
-ReactDOM.render(
-    <Provider store={store}>
-        <Router history={history}>
-            <Switch>
-                <Route exact={true} path="/login" component={LoginPage}/>
-                <Route path="/" component={App}/>
-            </Switch>
-        </Router>
-    </Provider>,
-    document.getElementById("app"),
-);
+render(<App history={history} store={store}/>, document.getElementById("app"));

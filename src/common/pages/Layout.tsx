@@ -11,22 +11,22 @@ import * as notificationActions from "../../common/redux/notifications/notificat
 import { Dispatch } from "redux";
 import { ProfileViewPage } from "./ProfileViewPage";
 
-interface AppStateProps {
+interface LayoutStateProps {
     loggedUser: commonTypes.CurrentUserProfile;
     notifications: ReactNotificationSystem.Notification[];
 }
 
-interface AppDispatchProps {
+interface LayoutDispatchProps {
     dequeueNotification: () => void;
 }
 
-interface AppOwnProps extends RouteComponentProps<any> {
+interface LayoutOwnProps extends RouteComponentProps<any> {
 
 }
 
-declare type AppProps = AppStateProps & AppDispatchProps & AppOwnProps;
+declare type LayoutProps = LayoutStateProps & LayoutDispatchProps & LayoutOwnProps;
 
-class App extends React.Component<AppProps> {
+class Layout extends React.Component<LayoutProps> {
     private notificationSystem: ReactNotificationSystem.System;
 
     private setNotificationSystemRef = (ref: ReactNotificationSystem.System) => {
@@ -61,25 +61,25 @@ class App extends React.Component<AppProps> {
 
 // CONNECT
 
-const mapStateToProps = (state: commonTypes.ReduxState): AppStateProps => ({
+const mapStateToProps = (state: commonTypes.ReduxState): LayoutStateProps => ({
     loggedUser: state.loggedUser,
     notifications: state.notifications,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<commonTypes.ReduxState>): AppDispatchProps => ({
+const mapDispatchToProps = (dispatch: Dispatch<commonTypes.ReduxState>): LayoutDispatchProps => ({
     dequeueNotification: () => dispatch(notificationActions.dequeueNotification()),
 });
 
-const mergeProps = (stateProps: AppStateProps, dispatchProps: AppDispatchProps, ownProps: AppOwnProps): AppProps => ({
+const mergeProps = (stateProps: LayoutStateProps, dispatchProps: LayoutDispatchProps, ownProps: LayoutOwnProps): LayoutProps => ({
     ...stateProps,
     ...dispatchProps,
     ...ownProps,
 });
 
-const ConnectedApp = connect<AppStateProps, AppDispatchProps, AppOwnProps, AppProps>(
+const ConnectedApp = connect<LayoutStateProps, LayoutDispatchProps, LayoutOwnProps, LayoutProps>(
     mapStateToProps,
     mapDispatchToProps,
     mergeProps,
-)(App);
+)(Layout);
 
-export { ConnectedApp as App };
+export { ConnectedApp as Layout };
