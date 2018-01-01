@@ -12,7 +12,7 @@ export const AppStatic: React.SFC<AppStaticProps> = (props) => {
     const {store, location} = props;
     return (
         <Provider store={store}>
-            <StaticRouter location={location}>
+            <StaticRouter location={location} context={{}}>
                 <Routes/>
             </StaticRouter>
         </Provider>
