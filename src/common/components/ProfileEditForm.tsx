@@ -27,15 +27,17 @@ interface ProfileEditFormDispatchProps {
 
 }
 
-interface ProfileEditFormOwnProps extends ReduxForm.InjectedFormProps<UserProfile> {
-    onSubmit: (formValues: UserProfile) => any;
-    onCancel(): void;
+interface ProfileEditFormOwnProps {
+    onSubmit?: (formValues: UserProfile) => any;
+
+    onCancel?(): void;
 }
 
 declare type ProfileEditorFormProps =
     ProfileEditFormStateProps
     & ProfileEditFormDispatchProps
-    & ProfileEditFormOwnProps;
+    & ProfileEditFormOwnProps
+    & ReduxForm.InjectedFormProps<UserProfile>;
 
 interface ProfileEditFormState {
     // The ids of the open sections
@@ -260,20 +262,13 @@ const mapStateToProps = (state: commonTypes.ReduxState): ProfileEditFormStatePro
 
 const mapDispatchToProps = (dispatch: ReactRedux.Dispatch<commonTypes.ReduxState>): ProfileEditFormDispatchProps => ({});
 
-const mergeProps = (stateProps: ProfileEditFormStateProps, dispatchProps: ProfileEditFormDispatchProps, ownProps: ProfileEditFormOwnProps): ProfileEditorFormProps => ({
-    ...stateProps,
-    ...dispatchProps,
-    ...ownProps,
-});
-
 const ConnectedProfileEditForm = ReactRedux.connect<ProfileEditFormStateProps, ProfileEditFormDispatchProps, ProfileEditFormOwnProps, ProfileEditorFormProps>(
     mapStateToProps,
     mapDispatchToProps,
-    mergeProps,
 )(ProfileEditForm);
 
 // Decorate with redux-form
-const FormDecoratedProfileEditForm = ReduxForm.reduxForm({
+const FormDecoratedProfileEditForm = ReduxForm.reduxForm<UserProfile, ProfileEditFormOwnProps>({
     form: FORM_NAME, // a unique identifier for this form,
     asyncValidate: asyncValidation,
     asyncBlurFields: ["name"],
