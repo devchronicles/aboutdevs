@@ -4,8 +4,9 @@ import * as dbTypes from "../typings/dbTypes";
 
 let db: dbTypes.AboutDevsDatabase;
 
-export default function() {
+export default async function (): Promise<dbTypes.AboutDevsDatabase> {
     if (db) return Promise.resolve(db);
-    return massive(config.db.massiveConnectionObject)
-        .then((m) => { db = m as dbTypes.AboutDevsDatabase; return m as dbTypes.AboutDevsDatabase; });
+    const m = await massive(config.db.massiveConnectionObject);
+    db = m as dbTypes.AboutDevsDatabase;
+    return m as dbTypes.AboutDevsDatabase;
 }

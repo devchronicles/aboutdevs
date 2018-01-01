@@ -121,11 +121,11 @@ export interface ProfileState {
 }
 
 export interface ReduxState {
-    loggedUser: CurrentUserProfile;
-    form: {
+    loggedUser?: CurrentUserProfile;
+    form?: {
         profileEdit?: any,
     };
-    search: SearchState;
-    profile: ProfileState;
-    notifications: ReactNotificationSystem.Notification[];
+    search?: SearchState;
+    profile?: ProfileState;
+    notifications?: ReactNotificationSystem.Notification[];
 }

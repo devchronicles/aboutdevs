@@ -1,8 +1,7 @@
 import * as React from "react";
-import { LoginPage } from "./pages/LoginPage";
-import { Layout } from "./pages/Layout";
 import { Provider } from "react-redux";
-import { Route, Router, Switch } from "react-router";
+import { Router } from "react-router";
+import { Routes } from "./Routes";
 
 interface AppProps {
     store: any;
@@ -14,10 +13,7 @@ export const App: React.SFC<AppProps> = (props: AppProps) => {
     return (
         <Provider store={store}>
             <Router history={history}>
-                <Switch>
-                    <Route exact={true} path="/login" component={LoginPage}/>
-                    <Route path="/" component={Layout}/>
-                </Switch>
+                <Routes/>
             </Router>
         </Provider>
     );

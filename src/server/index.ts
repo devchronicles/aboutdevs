@@ -7,6 +7,8 @@ import setupPassport from "./passport/setupPassport";
 import apiRoute from "./routes/api";
 import appRoute from "./routes/app";
 import authRoute from "./routes/auth";
+import * as favicon from "serve-favicon";
+import * as path from "path";
 import cookieSession = require("cookie-session");
 
 const app = express();
@@ -28,6 +30,9 @@ app.use(passport.session());
 
 // delay
 app.use((req, res, next) => { setTimeout(next, 0); });
+
+// favicon
+app.use(favicon(path.join(__dirname, "..", "..", "public", "favicon.ico")));
 
 // routes
 app.use("/auth", authRoute);

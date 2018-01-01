@@ -32,6 +32,10 @@
         "ordered-imports": false,
         "space-before-function-paren": false,
         "no-empty-interface": false,
-        "no-implicit-dependencies": [true, "dev"]
+      "no-implicit-dependencies": [
+        true,
+        "dev"
+      ],
+      "no-submodule-imports": false
     }
 }

@@ -40,6 +40,7 @@
     "redux": "^3.7.2",
     "redux-form": "^7.0.0",
     "redux-thunk": "^2.2.0",
+    "serve-favicon": "^2.4.5",
     "showdown": "^1.8.6"
   },
   "devDependencies": {
@@ -66,6 +67,7 @@
     "@types/react-select": "^1.0.59",
     "@types/reactcss": "^1.2.1",
     "@types/redux-form": "^6.6.6",
+    "@types/serve-favicon": "^2.2.30",
     "@types/showdown": "^1.7.2",
     "@types/webpack": "^3.8.1",
     "awesome-typescript-loader": "^3.4.0",
