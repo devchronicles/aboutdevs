@@ -7,7 +7,7 @@ import * as fieldValidationMessageHelper from "../../../common/helpers/fieldVali
 
 const Spinner = ReactActivity.Spinner;
 
-interface FormFieldUserNameProps extends ReduxForm.WrappedFieldProps<{}> {
+interface FormFieldUserNameProps extends ReduxForm.WrappedFieldProps {
 }
 
 export class FormFieldUserName extends React.Component<FormFieldUserNameProps> {

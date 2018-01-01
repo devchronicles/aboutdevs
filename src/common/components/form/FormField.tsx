@@ -4,7 +4,7 @@ import * as fieldValidationMessageHelper from "../../../common/helpers/fieldVali
 import { FormGroup } from "./FormGroup";
 import { InputGroup } from "./InputGroup";
 
-interface FormFieldProps extends ReduxForm.WrappedFieldProps<{}> {
+interface FormFieldProps extends ReduxForm.WrappedFieldProps {
     name: string;
     label: string;
     innerComponentProps?: any;

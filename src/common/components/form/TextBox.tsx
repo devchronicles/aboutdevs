@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as ReduxForm from "redux-form";
 
-export interface TextBoxProps extends ReduxForm.WrappedFieldProps<{}> {
+export interface TextBoxProps extends ReduxForm.WrappedFieldProps {
     disabled?: boolean;
 }
 
@@ -26,4 +26,5 @@ export const TextBox: React.SFC<TextBoxProps> = (props) => {
 
 TextBox.defaultProps = {
     disabled: false,
-}
+};
+

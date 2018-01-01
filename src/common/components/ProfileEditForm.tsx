@@ -14,6 +14,7 @@ import { ColorPicker } from "./form/ColorPicker";
 import { SocialLinks } from "./form/SocialLinks";
 import { InfoGroups } from "./form/InfoGroups";
 import { MarkdownEditor } from "./form/MarkdownEditor";
+import { UserProfile } from "../typings";
 
 interface ProfileEditFormStateProps {
     formValues: any;
@@ -26,12 +27,9 @@ interface ProfileEditFormDispatchProps {
 
 }
 
-interface ProfileEditFormOwnProps extends ReduxForm.FormProps<any, any, any> {
-    onSubmit: (formValues: any) => any;
-
+interface ProfileEditFormOwnProps extends ReduxForm.InjectedFormProps<UserProfile> {
+    onSubmit: (formValues: UserProfile) => any;
     onCancel(): void;
-
-    onSubmitFail?(errors: ReduxForm.FormErrors<FormData>): void;
 }
 
 declare type ProfileEditorFormProps =
@@ -251,13 +249,6 @@ class ProfileEditForm extends React.Component<ProfileEditorFormProps, ProfileEdi
 
 const FORM_NAME = "profileEdit";
 
-// Decorate with redux-form
-const ReduxFormProfileEditForm = ReduxForm.reduxForm({
-    form: FORM_NAME, // a unique identifier for this form,
-    asyncValidate: asyncValidation,
-    asyncBlurFields: ["name"],
-})(ProfileEditForm);
-
 // Decorate with connect to read form values
 
 const mapStateToProps = (state: commonTypes.ReduxState): ProfileEditFormStateProps => ({
@@ -279,6 +270,13 @@ const ConnectedProfileEditForm = ReactRedux.connect<ProfileEditFormStateProps, P
     mapStateToProps,
     mapDispatchToProps,
     mergeProps,
-)(ReduxFormProfileEditForm);
+)(ProfileEditForm);
 
-export { ConnectedProfileEditForm as ProfileEditForm };
+// Decorate with redux-form
+const FormDecoratedProfileEditForm = ReduxForm.reduxForm({
+    form: FORM_NAME, // a unique identifier for this form,
+    asyncValidate: asyncValidation,
+    asyncBlurFields: ["name"],
+})(ConnectedProfileEditForm);
+
+export { FormDecoratedProfileEditForm as ProfileEditForm };

@@ -2,7 +2,7 @@ import * as React from "react";
 import * as ReduxForm from "redux-form";
 import { ColorResult, TwitterPicker } from "react-color";
 
-interface ColorPickerProps extends ReduxForm.WrappedFieldProps<{}> {
+interface ColorPickerProps extends ReduxForm.WrappedFieldProps {
 }
 
 interface ColorPickerState {

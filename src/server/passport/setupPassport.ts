@@ -11,7 +11,7 @@ import { findOrCreateFromLinkedInProfile } from "../services/linkedInOAuthServic
  * Setups up passport
  * @param passportInstance
  */
-export default function (passportInstance: passport.Passport) {
+export default function (passportInstance: passport.PassportStatic) {
     if (!passportInstance) throw Error("'passport' should be truthy");
 
     passportInstance.serializeUser((userId, done) => {

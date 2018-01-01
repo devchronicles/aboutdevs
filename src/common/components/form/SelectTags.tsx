@@ -3,7 +3,7 @@ import * as ReactSelect from "react-select";
 import * as ReduxForm from "redux-form";
 import * as httpClient from "../../httpClient";
 
-interface SelectTagsProps extends ReduxForm.WrappedFieldProps<{}> {
+interface SelectTagsProps extends ReduxForm.WrappedFieldProps {
     placeholder: string;
 }
 

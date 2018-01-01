@@ -4,7 +4,7 @@ import * as ReduxForm from "redux-form";
 import * as httpClient from "../../httpClient";
 import { getDataFromFormattedAddress } from "../../helpers/googlePlacesFormatHelper";
 
-interface SelectLocationProps extends ReduxForm.WrappedFieldProps<{}> {
+interface SelectLocationProps extends ReduxForm.WrappedFieldProps {
     allowCities: boolean;
     placeholder: string;
     strict: boolean;

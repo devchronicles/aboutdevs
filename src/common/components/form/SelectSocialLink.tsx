@@ -4,7 +4,7 @@ import * as ReduxForm from "redux-form";
 import { socialLinks } from "../../data/socialLinks";
 import { SocialLinkValue } from "../../typings";
 
-interface SelectSocialLinkProps extends ReduxForm.WrappedFieldProps<{}> {
+interface SelectSocialLinkProps extends ReduxForm.WrappedFieldProps {
     placeholder: string;
     disabled?: boolean;
     selectedSocialLinks?: SocialLinkValue[];

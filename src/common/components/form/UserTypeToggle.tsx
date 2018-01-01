@@ -2,7 +2,7 @@ import * as React from "react";
 import * as ReduxForm from "redux-form";
 import * as commonTypes from "../../typings/commonTypes";
 
-interface UserTypeToggle extends ReduxForm.WrappedFieldProps<{}> {
+interface UserTypeToggle extends ReduxForm.WrappedFieldProps {
 }
 
 const UserTypeToggle: React.SFC<UserTypeToggle> = (field) => {
@@ -14,7 +14,7 @@ const UserTypeToggle: React.SFC<UserTypeToggle> = (field) => {
         className: value === commonTypes.UserProfileType.DEVELOPER ? "pushed" : null,
         onClick: (event: React.SyntheticEvent<any>) => {
             event.preventDefault();
-            onChange(commonTypes.UserProfileType.DEVELOPER, undefined, undefined);
+            onChange(commonTypes.UserProfileType.DEVELOPER);
         },
     };
 
@@ -22,10 +22,9 @@ const UserTypeToggle: React.SFC<UserTypeToggle> = (field) => {
         className: value === commonTypes.UserProfileType.RECRUITER ? "pushed" : null,
         onClick: (event: React.SyntheticEvent<any>) => {
             event.preventDefault();
-            onChange(commonTypes.UserProfileType.RECRUITER, undefined, undefined);
+            onChange(commonTypes.UserProfileType.RECRUITER);
         },
     };
-
 
     return (
         <div className="button-group user-type-toggle">
