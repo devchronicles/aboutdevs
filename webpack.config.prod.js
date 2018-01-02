@@ -1,6 +1,6 @@
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
 
@@ -30,10 +30,20 @@ module.exports = {
                 },
                 exclude: /node_modules/,
             },
-            {test: /\.css/, use: ExtractTextPlugin.extract({use: "css-loader"})},
+            {
+                test: /\.css/, use: ExtractTextPlugin.extract({
+                    use: [
+                        {loader: "css-loader", options: {minimize: true}}]
+                })
+            },
             {
                 test: /\.scss/,
-                use: ExtractTextPlugin.extract({use: ["css-loader", "sass-loader"]})
+                use: ExtractTextPlugin.extract({
+                    use: [
+                        {loader: "css-loader", options: {minimize: true}},
+                        {loader: "sass-loader"},
+                    ]
+                }),
             },
             {test: /\.jpe?g$|\.gif$|\.png$|\.ico$/, use: 'file-loader?name=[name].[ext]'},
             {test: /\.eot|\.ttf|\.svg|\.woff2?/, use: 'file-loader?name=[name].[ext]'},
@@ -42,5 +52,6 @@ module.exports = {
 
     plugins: [
         new ExtractTextPlugin("bundle.css"),
+        new UglifyJsPlugin(),
     ]
 };
