@@ -1,64 +1,46 @@
-const webpack = require('webpack');
+const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+
 
 module.exports = {
 
     entry: [
-        'babel-polyfill',
-        './src/client/index.js'
+        './src/common/index.tsx'
     ],
 
     output: {
-        filename: 'bundle.js',
-        path: './dist/',
+        filename: 'bundle-prod.js',
+        path: path.resolve(__dirname, 'dist/public'),
         publicPath: '/'
     },
 
-    externals: undefined,
-
-    devtool: 'source-map',
-
     resolve: {
-        extensions: ['.js', '.jsx', '.json']
+        extensions: ['.ts', '.tsx', '.js', '.jsx', '.css', '.scss', '.json']
     },
 
     module: {
-        loaders: [
-            { test: /\.js|\.jsx/, use: ['babel-loader'], exclude: /node_modules/ },
-            // Css
+        rules: [
             {
-                test: /\.css$/,
-                loader: ExtractTextPlugin.extract({
-                    fallbackLoader: "style-loader",
-                    loader: "css-loader"
-                })
+                test: /\.ts(x?)/,
+                use: {
+                    loader: 'awesome-typescript-loader',
+                    options: {
+                        configFileName: "tsconfig.prod.json"
+                    },
+                },
+                exclude: /node_modules/,
             },
-            // Sass
+            {test: /\.css/, use: ExtractTextPlugin.extract({use: "css-loader"})},
             {
-                test: /\.scss$/,
-                loader: ExtractTextPlugin.extract({
-                    fallbackLoader: 'style-loader',
-                    loader: [
-                        { loader: 'css-loader', query: { sourceMap: true } },
-                        { loader: 'sass-loader', query: { outputStyle: 'compressed' } }
-                    ]
-                })
+                test: /\.scss/,
+                use: ExtractTextPlugin.extract({use: ["css-loader", "sass-loader"]})
             },
-            { test: /\.jpe?g$|\.gif$|\.png$|\.ico$/, use: ['file-loader?name=[name].[ext]'] },
-            { test: /\.eot|\.ttf|\.svg|\.woff2?/, use: ['file-loader?name=[name].[ext]'] }
+            {test: /\.jpe?g$|\.gif$|\.png$|\.ico$/, use: 'file-loader?name=[name].[ext]'},
+            {test: /\.eot|\.ttf|\.svg|\.woff2?/, use: 'file-loader?name=[name].[ext]'},
         ]
     },
 
     plugins: [
-        new ExtractTextPlugin({
-            filename: '[name].css',
-            allChunks: true
-        }),
-        new webpack.DefinePlugin({
-            'process.env': {
-                APP_ENV: JSON.stringify('browser')
-            }
-        })
+        new ExtractTextPlugin("bundle.css"),
     ]
-
 };

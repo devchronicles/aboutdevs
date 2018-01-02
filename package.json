@@ -78,7 +78,11 @@
     "faker": "^4.1.0",
     "file-loader": "^1.1.6",
     "fs-extra-promise": "^1.0.1",
+    "gulp": "^3.9.1",
+    "gulp-sass": "^3.1.0",
+    "gulp-typescript": "^3.2.3",
     "json-loader": "^0.5.7",
+    "merge2": "^1.2.0",
     "mocha": "^4.1.0",
     "node-sass": "^4.7.2",
     "nodemon": "^1.14.7",
@@ -93,9 +97,11 @@
     "tslint": "^5.8.0",
     "tslint-react": "^3.3.3",
     "typescript": "^2.6.2",
+    "uglifyjs-webpack-plugin": "^1.1.5",
     "underscore": "^1.8.3",
     "webpack": "^3.10.0",
-    "webpack-dev-server": "^2.9.7"
+    "webpack-dev-server": "^2.9.7",
+    "webpack-stream": "^4.0.0"
   },
   "homepage": "https://github.com/andrerpena/radiscope#readme",
   "license": "MIT",
@@ -106,6 +112,7 @@
   },
   "scripts": {
     "build:ts": "tsc",
+    "build:client": "webpack --config ./webpack.config.prod.js",
     "db:drop": "cross-env COMMAND=drop_dev_dbs PGPASSWORD=pgadmin ts-node ./tools/db-manager.ts",
     "db:generate": "cross-env COMMAND=generate_scripts PGPASSWORD=pgadmin ts-node ./tools/db-manager.ts",
     "db:install": "cross-env COMMAND=create_dev_dbs PGPASSWORD=pgadmin ts-node ./tools/db-manager.ts",

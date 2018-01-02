@@ -22,11 +22,7 @@
     ]
   },
   "include": [
-    "./config/**/*.ts",
-    "./db/**/*.ts",
     "./src/**/*.ts",
-    "./src/**/*.tsx",
-    "./test/**/*.ts",
-    "./tools/**/*.ts"
+    "./src/**/*.tsx"
   ]
 }
