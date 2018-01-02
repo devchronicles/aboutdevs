@@ -16,10 +16,10 @@ const router = express.Router();
 function sendApp(res: express.Response, preloadedHtml: string, preloadedState: object) {
     fs.readFile("src/common/index.html", "utf8", (error, data) => {
         let result = data;
-        result = result.replace(/\$\{css\}/g, "");
-        result = result.replace(/\$\{js\}/g, "http://localhost:8080/bundle.js");
-        result = result.replace(/\$\{preloadedState\}/g, JSON.stringify(preloadedState).replace(/</g, "\\u003c"));
-        result = result.replace(/\$\{html\}/g, preloadedHtml || "");
+        result = result.replace(/\{css\}/g, () => "");
+        result = result.replace(/\{js\}/g, () => "http://localhost:8080/bundle.js");
+        result = result.replace(/\{preloadedState\}/g, () => JSON.stringify(preloadedState));
+        result = result.replace(/\{html\}/g, () => preloadedHtml || "");
         res.status(200).send(result);
     });
 }

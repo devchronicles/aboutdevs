@@ -81,11 +81,8 @@ export class ProfileView extends React.Component<ProfileViewProps, ProfileViewSt
         }
 
         if (profile.formattedAddress) {
-            const addressObject = getDataFromFormattedAddress(profile.formattedAddress);
-            if (addressObject) {
-                const {address} = addressObject;
-                inElement = <HeaderSpan> in {address} </HeaderSpan>;
-            }
+            const {address} = getDataFromFormattedAddress(profile.formattedAddress);
+            inElement = <HeaderSpan> in {address} </HeaderSpan>;
         }
 
         const bio = (profile.bio && profile.bio.text)

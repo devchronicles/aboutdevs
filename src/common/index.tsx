@@ -1,5 +1,5 @@
 import * as React from "react";
-import { render } from "react-dom";
+import { hydrate, render } from "react-dom";
 import { configureStore } from "./redux/store";
 import { createBrowserHistory } from "history";
 import { App } from "./App";
@@ -16,4 +16,11 @@ if ((module as any).hot) {
     (module as any).hot.accept();
 }
 
-render(<App history={history} store={store}/>, document.getElementById("app"));
+const appElement = document.getElementById("app");
+const app = <App history={history} store={store}/>;
+
+if (appElement.childNodes.length) {
+    hydrate(app, appElement);
+} else {
+    render(app, appElement);
+}
