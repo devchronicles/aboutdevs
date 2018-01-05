@@ -4,6 +4,7 @@ import buildDb from "../src/server/db/buildDb";
 
 import * as userService from "../src/server/services/userService";
 import * as serverTypes from "../src/server/typings";
+import * as tagService from "../src/server/services/tagService";
 import * as stringHelper from "../src/common/helpers/stringHelper";
 import { UserProfileStatus, UserProfileType } from "../src/common/typings";
 import { getAndSaveCity, searchCitiesFormatted } from "../src/server/services/googlePlacesService";
@@ -120,7 +121,12 @@ buildDb()
 
 
                 const userProfile = await userService.getUserProfile(db, insertedUser);
-                userProfile.tags = [getRandomArrayItem(randomTags), getRandomArrayItem(randomTags), getRandomArrayItem(randomTags)];
+
+                const tagSearchResult1 = await tagService.searchTagsFormatted(db, getRandomArrayItem(randomTags));
+                const tagSearchResult2 = await tagService.searchTagsFormatted(db, getRandomArrayItem(randomTags));
+                const tagSearchResult3 = await tagService.searchTagsFormatted(db, getRandomArrayItem(randomTags));
+
+                userProfile.tags = [getRandomArrayItem(tagSearchResult1), getRandomArrayItem(tagSearchResult2), getRandomArrayItem(tagSearchResult3)];
 
                 await userService.saveProfile(db, insertedUser.id, userProfile);
             }
