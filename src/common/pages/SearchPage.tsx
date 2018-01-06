@@ -6,7 +6,7 @@ import * as commonTypes from "../typings/commonTypes";
 import * as gisHelper from "../helpers/gisHelper";
 import * as urlHelper from "../helpers/urlHelper";
 
-import { SearchForm } from "../components/SearchForm";
+import { SearchForm } from "../components/IndexSearchForm";
 import { SearchResult } from "../components/SearchResult";
 import { Dispatch } from "redux";
 

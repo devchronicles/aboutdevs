@@ -4,7 +4,7 @@ import * as ReactRouter from "react-router";
 import * as clientTypes from "../typings";
 import * as urlHelper from "../../common/helpers/urlHelper";
 import * as gisHelper from "../helpers/gisHelper";
-import { IndexIntro } from "../components/IndexIntro";
+import { IndexSearchFormWrapper } from "../components/IndexSearchFormWrapper";
 
 interface IndexPageStateProps {
 
@@ -42,8 +42,7 @@ class IndexPage extends React.Component<IndexPageProps> {
         return (
             <div className="page-wrapper">
                 <div className="index-page-wrapper">
-                    <IndexIntro/>
-                    {/*<IndexSearchForm handleSearchSubmit={this.handleSearchSubmit}/>*/}
+                    <IndexSearchFormWrapper handleSearchSubmit={this.handleSearchSubmit}/>
                 </div>
             </div>);
     }
