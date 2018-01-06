@@ -149,6 +149,7 @@ class ProfileEditForm extends React.Component<ProfileEditorFormProps, ProfileEdi
                                     label="Location"
                                     component={FormField}
                                     innerComponent={SelectLocation}
+                                    help="Data by Google Places"
                                     addOnBefore={<FaIcon icon="map-marker"/>}
                                 />
                             </FormRow>
@@ -158,7 +159,7 @@ class ProfileEditForm extends React.Component<ProfileEditorFormProps, ProfileEdi
                                     label="Expertise"
                                     component={FormField}
                                     innerComponent={SelectTags}
-                                    help="Data provided by Stackoverflow"
+                                    help="Data by StackOverflow"
                                     addOnBefore={<FaIcon icon="tags"/>}
                                 />
                             </FormRow>

@@ -8,6 +8,7 @@
     justify-content: center;
     position: relative;
     padding: $gutter-md;
+    margin-top: $header-height;
 
     .fa {
         margin-right: $gutter-sm;
@@ -32,16 +33,19 @@
 
             .logo {
                 color: $color-white;
-                font-size: 60px;
+                font-size: 40px;
                 margin: $gutter-md 0;
 
                 @media (min-width: $breakpoint-md) {
-                    font-size: 40px;
                     flex-direction: row;
                     align-items: baseline;
                 }
             }
         }
+    }
+
+    .form-help {
+        color: $color-gray-dark;
     }
 
     button.search {
@@ -50,16 +54,33 @@
 
     .register-wrapper {
         margin-top: 2 * $gutter-md;
-        padding: $gutter-sm;
+        padding: $gutter-md;
         border-radius: $radius-md;
-        border: 1px solid $color-gray-dark;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        .text {
-            margin-left: $gutter-sm;
-            color: $color-gray-dark;
+        border: 1px solid darken($color-gray-dark, 30%);
+        color: $color-gray-dark;
+        .title {
+            margin: 0 0 $gutter-sm 0;
+            font-weight: 700;
+            text-align: center;
+        }
+        ul {
+            li {
+                opacity: 0.8;
+                margin: $gutter-xs 0 $gutter-xs $gutter-lg;
+                &:before {
+                    content: '\f00c';
+                    font-family: 'FontAwesome';
+                    float: left;
+                    margin-left: -$gutter-lg;
+                    color: $color-shining-5;
+                }
+            }
+        }
+        button {
+            display: block;
+            margin-top: $gutter-sm;
+            box-sizing: border-box;
+            width: 100%;
         }
     }
 }

@@ -24,11 +24,23 @@ export class IndexSearchFormWrapper extends React.Component<IndexSearchFormWrapp
                 </div>
                 <SearchForm onSubmit={handleSearchSubmit}/>
                 <div className="register-wrapper">
-                            <span className="text">
-                                Você é um(a) profissional?
-                </span>
+                    <p className="title">Are you a Software Developer?</p>
+                    <ul>
+                        <ul>
+                            <li>
+                                Create a free professional profile;
+                                Link all your relevant social media;
+                                Upload your CV;
+                                Showcase your skills and portfolio.
+                            </li>
+                            <li>
+                                Optionally, improve your visibility
+                                and get discoverable by companies and recruiters all over the world.
+                            </li>
+                        </ul>
+                    </ul>
                     <button className="faded">
-                        junte-se a nós!
+                        Create your free profile
                     </button>
                 </div>
             </div>

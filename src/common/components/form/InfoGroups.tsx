@@ -89,7 +89,7 @@ export class InfoGroups extends React.Component<InfoGroupsProps> {
                                             label="Tags"
                                             component={FormField}
                                             innerComponent={SelectTags}
-                                            help="Data provided by Stackoverflow"
+                                            help="Data by Stackoverflow"
                                             addOnBefore={<FaIcon icon="tags"/>}
                                         />
                                     </FormRow>

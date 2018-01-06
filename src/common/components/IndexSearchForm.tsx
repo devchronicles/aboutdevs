@@ -1,6 +1,7 @@
 import * as React from "react";
-import { Field, FormGroup, FormRow, SelectLocation } from "./form";
+import { Field, FormField, FormGroup, FormRow, SelectLocation } from "./form";
 import * as ReduxForm from "redux-form";
+import { SelectTags } from "./form/SelectTags";
 
 interface IndexSearchFormProps extends ReduxForm.InjectedFormProps {
     onSubmit: (formValues: any) => void;
@@ -16,27 +17,31 @@ const IndexSearchForm: React.SFC<IndexSearchFormProps> = (props) => {
             <FormRow>
                 <FormGroup>
                     <Field
-                        name="search"
-                        component="input"
-                        type="text"
-                        className="form-control"
-                        placeholder="Profissional ou serviço"
+                        name="tags"
+                        component={FormField}
+                        innerComponent={SelectTags}
+                        innerComponentProps={{
+                            placeholder: "Technologies",
+                        }}
                     />
                 </FormGroup>
             </FormRow>
             <FormRow>
                 <FormGroup>
                     <Field
-                        name="location"
-                        component={SelectLocation}
-                        allowCities={true}
-                        placeholder="Localizado próximo a..."
+                        name="formattedAddress"
+                        placeholder="Located at"
+                        component={FormField}
+                        innerComponent={SelectLocation}
+                        innerComponentProps={{
+                            placeholder: "Located at or near...",
+                        }}
                     />
                 </FormGroup>
             </FormRow>
             <button type="submit" className="search vibrant">
                 <i className="fa fa-search" aria-hidden="true"/>
-                <span>Encontrar profissionais</span>
+                <span>Discover Developers</span>
             </button>
         </form>
     );
