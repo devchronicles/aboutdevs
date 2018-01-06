@@ -10,18 +10,26 @@ import { AppStatic } from "../../common/AppStatic";
 
 const router = express.Router();
 
+// These are the first level paths (e.g, /something) that don't have SSR
+const firstLevelNonSsrPaths = ["login", "search"];
+
 /**
  * Function  that actually sends the application to the client
  */
-function sendApp(res: express.Response, preloadedHtml: string, preloadedState: object) {
+function sendApp(req: express.Request, res: express.Response, preloadedHtml: string = null, preloadedState: object = null) {
+    const composedState = {...preloadedState, ...{loggedUser: req.user}};
     fs.readFile("src/common/index.html", "utf8", (error, data) => {
         let result = data;
         result = result.replace(/\{css\}/g, () => "");
         result = result.replace(/\{js\}/g, () => "http://localhost:8080/bundle.js");
-        result = result.replace(/\{preloadedState\}/g, () => JSON.stringify(preloadedState));
+        result = result.replace(/\{preloadedState\}/g, () => JSON.stringify(composedState));
         result = result.replace(/\{html\}/g, () => preloadedHtml || "");
         res.status(200).send(result);
     });
+}
+
+for (const path of firstLevelNonSsrPaths) {
+    router.route(`/${path}`).get((req, res) => sendApp(req, res));
 }
 
 router.route("/:userName").get(async (req, res) => {
@@ -38,16 +46,12 @@ router.route("/:userName").get(async (req, res) => {
     };
     const store = configureStore(reduxState);
     const preloadedHtml = renderToString(<AppStatic location={req.originalUrl} store={store}/>);
-    sendApp(res, preloadedHtml, reduxState);
+    sendApp(req, res, preloadedHtml, reduxState);
 });
 
 /**
  * Wild-card route
  */
-router.route("*").get((req, res) => {
-    sendApp(res, null, {
-        loggedUser: req.user,
-    });
-});
+router.route("*").get((req, res) => sendApp(req, res));
 
 export default router;
