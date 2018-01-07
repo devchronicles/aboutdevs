@@ -28,14 +28,9 @@ export class IndexSearchFormWrapper extends React.Component<IndexSearchFormWrapp
                     <ul>
                         <ul>
                             <li>
-                                Create a free professional profile;
+                                Create a professional profile;
                                 Link all your relevant social media;
-                                Upload your CV;
-                                Showcase your skills and portfolio.
-                            </li>
-                            <li>
-                                Optionally, improve your visibility
-                                and get discoverable by companies and recruiters all over the world.
+                                Upload your CV and showcase your skills and portfolio.
                             </li>
                         </ul>
                     </ul>
