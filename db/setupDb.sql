@@ -105,6 +105,23 @@ $$;
 ALTER FUNCTION public._aboutdevs_is_user_name_taken(_user_name character varying, _user_id integer) OWNER TO aboutdevs;
 
 --
+-- Name: _aboutdevs_place_update_geometry(integer, double precision, double precision); Type: FUNCTION; Schema: public; Owner: aboutdevs
+--
+
+CREATE FUNCTION _aboutdevs_place_update_geometry(_id integer, _x double precision, _y double precision) RETURNS void
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+  UPDATE google_place
+  SET geometry = ST_SetSRID(ST_MakePoint(_x,_y),4326)
+  WHERE id = _id;
+END;
+$$;
+
+
+ALTER FUNCTION public._aboutdevs_place_update_geometry(_id integer, _x double precision, _y double precision) OWNER TO aboutdevs;
+
+--
 -- Name: _aboutdevs_select_tags_from_user(integer); Type: FUNCTION; Schema: public; Owner: aboutdevs
 --
 
@@ -122,23 +139,6 @@ $$;
 ALTER FUNCTION public._aboutdevs_select_tags_from_user(_user_id integer) OWNER TO aboutdevs;
 
 --
--- Name: _aboutdevs_update_geometry(integer, double precision, double precision); Type: FUNCTION; Schema: public; Owner: aboutdevs
---
-
-CREATE FUNCTION _aboutdevs_update_geometry(_id integer, _x double precision, _y double precision) RETURNS void
-    LANGUAGE plpgsql
-    AS $$
-BEGIN
-  UPDATE google_place
-  SET geometry = ST_SetSRID(ST_MakePoint(_x,_y),4326)
-  WHERE id = _id;
-END;
-$$;
-
-
-ALTER FUNCTION public._aboutdevs_update_geometry(_id integer, _x double precision, _y double precision) OWNER TO aboutdevs;
-
---
 -- Name: _aboutdevs_update_tag(character varying, integer); Type: FUNCTION; Schema: public; Owner: aboutdevs
 --
 
@@ -154,6 +154,23 @@ $$;
 
 
 ALTER FUNCTION public._aboutdevs_update_tag(_name character varying, _relevance integer) OWNER TO aboutdevs;
+
+--
+-- Name: _aboutdevs_user_update_geometry(integer, double precision, double precision); Type: FUNCTION; Schema: public; Owner: aboutdevs
+--
+
+CREATE FUNCTION _aboutdevs_user_update_geometry(_id integer, _x double precision, _y double precision) RETURNS void
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+  UPDATE "user"
+  SET geometry = ST_SetSRID(ST_MakePoint(_x,_y),4326)
+  WHERE id = _id;
+END;
+$$;
+
+
+ALTER FUNCTION public._aboutdevs_user_update_geometry(_id integer, _x double precision, _y double precision) OWNER TO aboutdevs;
 
 --
 -- Name: ptu; Type: TEXT SEARCH CONFIGURATION; Schema: public; Owner: postgres
@@ -537,7 +554,9 @@ CREATE TABLE "user" (
     google_place_formatted_address character varying(255),
     info_groups json,
     colors json,
-    tags text
+    tags text,
+    geometry geometry,
+    CONSTRAINT enforce_srid CHECK ((st_srid(geometry) = 4326))
 );
 
 
@@ -763,6 +782,20 @@ CREATE UNIQUE INDEX tag_name_uindex ON tag USING btree (name);
 --
 
 CREATE UNIQUE INDEX user_email_uindex ON "user" USING btree (email);
+
+
+--
+-- Name: user_geometry_gpx; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX user_geometry_gpx ON "user" USING gist (geography(geometry));
+
+
+--
+-- Name: user_geometry_spx; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX user_geometry_spx ON "user" USING gist (geometry);
 
 
 --
