@@ -556,6 +556,8 @@ CREATE TABLE "user" (
     colors json,
     tags text,
     geometry geometry,
+    latitude double precision,
+    longitude double precision,
     CONSTRAINT enforce_srid CHECK ((st_srid(geometry) = 4326))
 );
 

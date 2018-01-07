@@ -51,6 +51,8 @@ export interface User {
     company_url?: string;
     colors: UserProfileColors;
     tags: string;
+    latitude?: number;
+    longitude?: number;
 }
 
 export interface UserSearchResult {
@@ -100,6 +102,7 @@ export interface AboutDevsDatabase extends massive.Database {
 
     _aboutdevs_cleanup_db: () => void;
     _aboutdevs_is_user_name_taken: (userName: string, userId: number) => Promise<Array<{ exists: boolean }>>;
-    _aboutdevs_update_geometry: (geoLocationId: number, longitude: number, latitude: number) => void;
+    _aboutdevs_place_update_geometry: (placeId: number, longitude: number, latitude: number) => void;
+    _aboutdevs_user_update_geometry: (userId: number, longitude: number, latitude: number) => void;
     _aboutdevs_search_developers: (tags: string[], longitude: number, latitude: number) => Promise<UserSearchResult[]>;
 }

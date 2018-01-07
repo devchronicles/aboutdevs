@@ -106,49 +106,49 @@ export async function saveProfile(db: serverTypes.AboutDevsDatabase, userId: num
     if (city) {
         user.google_place_id = city.id;
         user.google_place_formatted_address = city.formatted_address;
+        user.latitude = city.latitude;
+        user.longitude = city.longitude;
     }
 
     // tags
-    if (profile.type === commonTypes.UserProfileType.DEVELOPER) {
-        const profileTags = profile.tags;
-        const persistedTags = await db._aboutdevs_select_tags_from_user(userId);
-        // add tags that were added
+    const profileTags = profile.tags;
+    const persistedTags = await db._aboutdevs_select_tags_from_user(userId);
+    // add tags that were added
 
-        const addedTags =
-            (profileTags && profileTags.length)
-                ? profileTags.filter((profileTag) =>
-                persistedTags.findIndex((persistedTag) => persistedTag.name === profileTag) === -1)
-                : [];
+    const addedTags =
+        (profileTags && profileTags.length)
+            ? profileTags.filter((profileTag) =>
+            persistedTags.findIndex((persistedTag) => persistedTag.name === profileTag) === -1)
+            : [];
 
-        for (const addedTag of addedTags) {
-            // get persisted version of the tag
-            const persistedTag = await db.tag.findOne({name: addedTag});
-            if (persistedTag) {
-                const persistedUserTag = await db.user_tag.findOne({user_id: user.id, tag_id: persistedTag.id});
-                // now persistedUserTag should be null, because if the tag is being added, it shouldn't exist
-                if (!persistedUserTag) {
-                    await db.user_tag.insert({user_id: user.id, tag_id: persistedTag.id});
-                }
-            }
-            // in case persistedTag is falsy here, this means the user is probably trying to inject a tag
-        }
-        // remove tags that were removed
-        const removedTags = persistedTags
-            .filter((dbTag) => profileTags.findIndex((profileTag) => profileTag === dbTag.name) === -1);
-        for (const removedTag of removedTags) {
-            const persistedUserTag = await db.user_tag.findOne({user_id: user.id, tag_id: removedTag.id});
-            if (persistedUserTag) {
-                await db.user_tag.destroy({id: persistedUserTag.id});
+    for (const addedTag of addedTags) {
+        // get persisted version of the tag
+        const persistedTag = await db.tag.findOne({name: addedTag});
+        if (persistedTag) {
+            const persistedUserTag = await db.user_tag.findOne({user_id: user.id, tag_id: persistedTag.id});
+            // now persistedUserTag should be null, because if the tag is being added, it shouldn't exist
+            if (!persistedUserTag) {
+                await db.user_tag.insert({user_id: user.id, tag_id: persistedTag.id});
             }
         }
-
-        // This is for redundance
-        user.tags = profileTags.sort((tag1: string, tag2: string) => {
-            if (tag1 < tag2) return -1;
-            if (tag1 > tag2) return 1;
-            return 0;
-        }).join(" ");
+        // in case persistedTag is falsy here, this means the user is probably trying to inject a tag
     }
+    // remove tags that were removed
+    const removedTags = persistedTags
+        .filter((dbTag) => profileTags.findIndex((profileTag) => profileTag === dbTag.name) === -1);
+    for (const removedTag of removedTags) {
+        const persistedUserTag = await db.user_tag.findOne({user_id: user.id, tag_id: removedTag.id});
+        if (persistedUserTag) {
+            await db.user_tag.destroy({id: persistedUserTag.id});
+        }
+    }
+
+    // This is for redundance
+    user.tags = profileTags.sort((tag1: string, tag2: string) => {
+        if (tag1 < tag2) return -1;
+        if (tag1 > tag2) return 1;
+        return 0;
+    }).join(" ");
 
     user = (await db.user.update(user)) as serverTypes.User;
 
@@ -156,6 +156,11 @@ export async function saveProfile(db: serverTypes.AboutDevsDatabase, userId: num
     if (user.status === commonTypes.UserProfileStatus.PENDING_PROFILE_ACTIVATION) {
         user.status = commonTypes.UserProfileStatus.READY;
         user = (await db.user.save(user)) as serverTypes.User;
+    }
+
+    // update geometry
+    if (city) {
+        await db._aboutdevs_user_update_geometry(user.id, user.longitude, user.latitude);
     }
 
     return getUserProfile(db, user);

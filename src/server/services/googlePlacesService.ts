@@ -45,7 +45,7 @@ async function saveCityDetailsToCache(db: serverTypes.AboutDevsDatabase, placeId
             google_place_id: placeId,
             google_place_details: cityData,
         });
-        await db._aboutdevs_update_geometry(googlePlace.id, longitude, latitude);
+        await db._aboutdevs_place_update_geometry(googlePlace.id, longitude, latitude);
     }
     return googlePlace;
 }
