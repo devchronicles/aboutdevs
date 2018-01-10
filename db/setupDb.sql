@@ -122,6 +122,30 @@ $$;
 ALTER FUNCTION public._aboutdevs_place_update_geometry(_id integer, _x double precision, _y double precision) OWNER TO aboutdevs;
 
 --
+-- Name: _aboutdevs_search_developers(character varying, double precision, double precision, integer); Type: FUNCTION; Schema: public; Owner: aboutdevs
+--
+
+CREATE FUNCTION _aboutdevs_search_developers(tags_query character varying, longitude double precision, latitude double precision, page integer) RETURNS TABLE(name character varying, display_name character varying, title character varying, company_name character varying, google_place_formatted_address character varying, tags character varying, distance double precision)
+    LANGUAGE sql
+    AS $$
+SELECT
+  u.name,
+  u.display_name,
+  u.title,
+  u.company_name,
+  u.google_place_formatted_address,
+  u.tags,
+  ST_Distance(u.geometry :: GEOGRAPHY, ST_SetSRID(ST_MakePoint(longitude, latitude), 4326) :: GEOGRAPHY) AS distance
+FROM "user" u
+WHERE u.tags_normalized @@ to_tsquery('simple', tags_query)
+ORDER BY distance, created_at DESC
+LIMIT 40 * page
+$$;
+
+
+ALTER FUNCTION public._aboutdevs_search_developers(tags_query character varying, longitude double precision, latitude double precision, page integer) OWNER TO aboutdevs;
+
+--
 -- Name: _aboutdevs_select_tags_from_user(integer); Type: FUNCTION; Schema: public; Owner: aboutdevs
 --
 
@@ -543,10 +567,8 @@ CREATE TABLE "user" (
     type smallint DEFAULT 0 NOT NULL,
     title character varying(80),
     bio text,
-    search_canonical text,
     name character varying(50) NOT NULL,
     email character varying(255) NOT NULL,
-    created_at timestamp without time zone DEFAULT timezone('utc'::text, now()) NOT NULL,
     company_name character varying(80),
     company_url character varying(255),
     social_links json,
@@ -558,6 +580,9 @@ CREATE TABLE "user" (
     geometry geometry,
     latitude double precision,
     longitude double precision,
+    created_at timestamp without time zone DEFAULT timezone('utc'::text, now()) NOT NULL,
+    last_updated_at timestamp without time zone DEFAULT timezone('utc'::text, now()) NOT NULL,
+    tags_normalized text,
     CONSTRAINT enforce_srid CHECK ((st_srid(geometry) = 4326))
 );
 
@@ -745,13 +770,6 @@ CREATE UNIQUE INDEX location_cache_search_uindex ON google_places_textsearch_cac
 
 
 --
--- Name: search_canonical_idx; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE INDEX search_canonical_idx ON "user" USING gin (to_tsvector('ptu'::regconfig, search_canonical));
-
-
---
 -- Name: stackoverflow_tags_cache_id_uindex; Type: INDEX; Schema: public; Owner: aboutdevs
 --
 
@@ -812,6 +830,13 @@ CREATE UNIQUE INDEX user_name_uindex ON "user" USING btree (name);
 --
 
 CREATE UNIQUE INDEX user_tag_id_uindex ON user_tag USING btree (id);
+
+
+--
+-- Name: user_tags_normalized_idx; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX user_tags_normalized_idx ON "user" USING btree (to_tsvector('simple'::regconfig, tags_normalized));
 
 
 --
