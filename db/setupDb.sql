@@ -798,6 +798,13 @@ CREATE UNIQUE INDEX tag_name_uindex ON tag USING btree (name);
 
 
 --
+-- Name: user_created_at_index; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX user_created_at_index ON "user" USING btree (created_at DESC);
+
+
+--
 -- Name: user_email_uindex; Type: INDEX; Schema: public; Owner: postgres
 --
 

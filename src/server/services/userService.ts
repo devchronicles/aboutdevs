@@ -81,8 +81,6 @@ export async function getUserProfile(db: serverTypes.AboutDevsDatabase, user: se
  * @param db The massive object
  * @param userId The user id. This id must really exist
  * @param profile The user profile
- * @param professionId The title id. This is for testing only. In production, this variable cannot contain value
- * @param locationId The location id. This is for testing only. In production, this variable cannot contain value
  */
 export async function saveProfile(db: serverTypes.AboutDevsDatabase, userId: number, profile: commonTypes.UserProfile): Promise<commonTypes.UserProfile> {
     let user = await db.user.findOne({id: userId});

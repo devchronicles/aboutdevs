@@ -252,3 +252,8 @@ export function capitalizeFirstLetter(str: string): string {
 export function decapitalizeFirstLetter(str: string): string {
     return str.charAt(0).toLowerCase() + str.slice(1);
 }
+
+export function replaceAll(original: string, search: string, replacement: string): string {
+    if (!original) return original;
+    return original.split(search).join(replacement);
+}
