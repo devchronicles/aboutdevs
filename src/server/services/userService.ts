@@ -4,6 +4,7 @@ import * as serverTypes from "../typings";
 import * as googlePlacesService from "./googlePlacesService";
 import * as stringHelper from "../../common/helpers/stringHelper";
 import { socialLinks } from "../../common/data/socialLinks";
+import { processTagsForSearch } from "../helpers/tagHelper";
 
 /**
  * Extracts the user name from the user's e-mail
@@ -87,6 +88,7 @@ export async function saveProfile(db: serverTypes.AboutDevsDatabase, userId: num
     let user = await db.user.findOne({id: userId});
     if (!user) throw Error("could not find user");
 
+    user.last_updated_at = new Date();
     user.name = profile.name;
     user.display_name = profile.displayName;
     user.title = profile.title;
@@ -111,7 +113,7 @@ export async function saveProfile(db: serverTypes.AboutDevsDatabase, userId: num
     }
 
     // tags
-    const profileTags = profile.tags;
+    const profileTags = profile.tags || [];
     const persistedTags = await db._aboutdevs_select_tags_from_user(userId);
     // add tags that were added
 
@@ -144,11 +146,8 @@ export async function saveProfile(db: serverTypes.AboutDevsDatabase, userId: num
     }
 
     // This is for redundance
-    user.tags = profileTags.sort((tag1: string, tag2: string) => {
-        if (tag1 < tag2) return -1;
-        if (tag1 > tag2) return 1;
-        return 0;
-    }).join(" ");
+    user.tags = profileTags.join(" ");
+    user.tags_normalized = processTagsForSearch(profileTags);
 
     user = (await db.user.update(user)) as serverTypes.User;
 

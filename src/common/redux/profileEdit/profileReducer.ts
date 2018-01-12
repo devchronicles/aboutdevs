@@ -16,7 +16,7 @@ export function profileReducer(state = defaultProfileState, {payload, type}: { p
             return profileState;
         case profileActions.PROFILE_LOAD_SUCCESS:
             profileState = {...state};
-            profileState.loadState = LoadState.LOADED
+            profileState.loadState = LoadState.LOADED;
             profileState.data = payload;
             return profileState;
         case profileActions.PROFILE_LOAD_ERROR:

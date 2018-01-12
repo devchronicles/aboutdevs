@@ -51,6 +51,7 @@ export async function createFromLinkedInProfile(db: serverTypes.AboutDevsDatabas
             bodyText: "#FFFFFF",
         },
         tags: "",
+        tags_normalized: "",
     };
 
     let userLocation = profile.location.name;

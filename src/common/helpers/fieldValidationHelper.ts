@@ -15,7 +15,6 @@ interface ValidationCollection {
     [key: string]: Array<(value: any, user?: commonTypes.UserProfile) => string>;
 }
 
-
 const exactNameValidators: ValidationCollection = {
     name: [validateRequired, validateMaxLength50],
     displayName: [validateRequired, validateMaxLength50],

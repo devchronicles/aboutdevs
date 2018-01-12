@@ -103,6 +103,7 @@ buildDb()
                         bodyText: "#FFFFFF",
                     },
                     tags: "",
+                    tags_normalized: "",
                 };
 
                 // Location

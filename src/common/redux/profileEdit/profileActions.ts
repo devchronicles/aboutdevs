@@ -50,4 +50,3 @@ export const profileViewLoadData = (userName: string) => {
         }
     };
 };
-
