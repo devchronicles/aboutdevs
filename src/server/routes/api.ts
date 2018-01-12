@@ -4,6 +4,7 @@ import * as tagService from "../services/tagService";
 import * as googlePlacesService from "../services/googlePlacesService";
 import * as userService from "../services/userService";
 import * as dbTypes from "../typings/dbTypes";
+import { processTagsForSearch } from "../helpers/tagHelper";
 
 const router = express.Router();
 
@@ -92,6 +93,24 @@ router.route("/users/:id").get(async (req, res) => {
                 return user;
             }
             throw Error("could not find user");
+        });
+});
+
+router.route("/s/t/:tags/l/:googlePlaceId/:placeString").get(async (req, res) => {
+    await apiHelper.sendDbConnectedPromise(res,
+        async (db) => {
+            const tags = req.params.tags;
+            const googlePlaceId = req.params.googlePlaceId;
+            let page = parseInt(req.query.page || "1", 10);
+            page = page > 10 ? 10 : page;
+            // find the place
+            const place = await db.google_place.findOne({google_place_id: googlePlaceId});
+            if (!place) {
+                throw Error(`Place not found. Place id: ${googlePlaceId}`);
+            }
+            const {longitude, latitude} = place;
+            const tagsNormalized = processTagsForSearch(tags);
+            return db._aboutdevs_search_developers(tagsNormalized, longitude, latitude, page);
         });
 });
 

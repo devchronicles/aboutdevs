@@ -4,7 +4,7 @@ import * as serverTypes from "../typings";
 import * as googlePlacesService from "./googlePlacesService";
 import * as stringHelper from "../../common/helpers/stringHelper";
 import { socialLinks } from "../../common/data/socialLinks";
-import { processTagsForSearch } from "../helpers/tagHelper";
+import { normalizeAllTags } from "../helpers/tagHelper";
 
 /**
  * Extracts the user name from the user's e-mail
@@ -145,7 +145,7 @@ export async function saveProfile(db: serverTypes.AboutDevsDatabase, userId: num
 
     // This is for redundance
     user.tags = profileTags.join(" ");
-    user.tags_normalized = processTagsForSearch(profileTags);
+    user.tags_normalized = normalizeAllTags(profileTags);
 
     user = (await db.user.update(user)) as serverTypes.User;
 
@@ -175,7 +175,7 @@ export async function searchDevelopers(db: serverTypes.AboutDevsDatabase, tags: 
     const googleApiResult = locations.results[0];
     const {lat, lng} = googleApiResult.geometry.location;
     const result: commonTypes.DeveloperSearchProfile[] = [];
-    const dbDevelopers = await db._aboutdevs_search_developers(tags, lng, lat);
+    const dbDevelopers = await db._aboutdevs_search_developers(tags, lng, lat, 1);
 
     for (const dbDeveloper of dbDevelopers) {
         const user: commonTypes.DeveloperSearchProfile = {

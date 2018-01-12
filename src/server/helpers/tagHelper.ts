@@ -15,8 +15,17 @@ export function normalizeTagName(tag: string): string {
     return normalizedTagName;
 }
 
-export function processTagsForSearch(tags: string[]): string {
+export function normalizeAllTags(tags: string[]): string {
     if (!tags || !tags.length) return "";
-
     return tags.map((t) => normalizeTagName(t)).join(" ");
+}
+
+/**
+ * Expects something like asp.net&c# and should return something line "aspnet & c"
+ * @param {string} tags
+ * @returns {string}
+ */
+export function processTagsForSearch(tags: string): string {
+    if (!tags) return tags;
+    return tags.split("&").map(normalizeTagName).join(" & ");
 }

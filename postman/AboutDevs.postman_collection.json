@@ -7,7 +7,7 @@
   },
   "item": [
     {
-      "name": "Search tags",
+      "name": "Search Tags",
       "request": {
         "method": "GET",
         "header": [
@@ -40,7 +40,7 @@
       "response": []
     },
     {
-      "name": "Search addresses",
+      "name": "Search Addresses",
       "request": {
         "method": "GET",
         "header": [
@@ -67,6 +67,30 @@
               "equals": true
             }
           ]
+        },
+        "description": ""
+      },
+      "response": []
+    },
+    {
+      "name": "Search Developers",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {},
+        "url": {
+          "raw": "localhost:4000/api/s/t/asp.net&c#/l/ChIJOfBn8mFuQUYRmh4j019gkn4/Oslo,Norway",
+          "host": [
+            "localhost"
+          ],
+          "port": "4000",
+          "path": [
+            "api",
+            "s",
+            "t",
+            "asp.net&c"
+          ],
+          "hash": "/l/ChIJOfBn8mFuQUYRmh4j019gkn4/Oslo,Norway"
         },
         "description": ""
       },

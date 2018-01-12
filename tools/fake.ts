@@ -84,7 +84,7 @@ buildDb()
                     title: faker.name.jobTitle(),
                     oauth_profiles: {
                         linkedin: {
-                            id: "1",
+                            id: `${i + 1}`,
                             raw: {},
                         },
                     },
