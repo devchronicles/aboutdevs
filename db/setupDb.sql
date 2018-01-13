@@ -125,22 +125,23 @@ ALTER FUNCTION public._aboutdevs_place_update_geometry(_id integer, _x double pr
 -- Name: _aboutdevs_search_developers(character varying, double precision, double precision, integer); Type: FUNCTION; Schema: public; Owner: aboutdevs
 --
 
-CREATE FUNCTION _aboutdevs_search_developers(tags_query character varying, longitude double precision, latitude double precision, page integer) RETURNS TABLE(name character varying, display_name character varying, title character varying, company_name character varying, google_place_formatted_address character varying, tags character varying, distance double precision)
+CREATE FUNCTION _aboutdevs_search_developers(tags_query character varying, longitude double precision, latitude double precision, page integer) RETURNS TABLE(name character varying, display_name character varying, photo_url character varying, title character varying, company_name character varying, google_place_formatted_address character varying, tags character varying, distance double precision)
     LANGUAGE sql
-    AS $$
+    AS $_$
 SELECT
   u.name,
   u.display_name,
+  u.photo_url,
   u.title,
   u.company_name,
   u.google_place_formatted_address,
   u.tags,
-  ST_Distance(u.geometry :: GEOGRAPHY, ST_SetSRID(ST_MakePoint(longitude, latitude), 4326) :: GEOGRAPHY) AS distance
+  ST_Distance(u.geometry :: GEOGRAPHY, ST_SetSRID(ST_MakePoint($2, $3), 4326) :: GEOGRAPHY) AS distance
 FROM "user" u
 WHERE u.tags_normalized @@ to_tsquery('simple', tags_query)
 ORDER BY distance, created_at DESC
 LIMIT 40 * page
-$$;
+$_$;
 
 
 ALTER FUNCTION public._aboutdevs_search_developers(tags_query character varying, longitude double precision, latitude double precision, page integer) OWNER TO aboutdevs;

@@ -4,7 +4,7 @@ import * as serverTypes from "../typings";
 import * as googlePlacesService from "./googlePlacesService";
 import * as stringHelper from "../../common/helpers/stringHelper";
 import { socialLinks } from "../../common/data/socialLinks";
-import { normalizeAllTags } from "../helpers/tagHelper";
+import { normalizeAllTags, processTagsForSearch } from "../helpers/tagHelper";
 
 /**
  * Extracts the user name from the user's e-mail
@@ -166,30 +166,26 @@ export async function saveProfile(db: serverTypes.AboutDevsDatabase, userId: num
 /**
  * Searches developers
  */
-export async function searchDevelopers(db: serverTypes.AboutDevsDatabase, tags: string[], location: string): Promise<commonTypes.DeveloperSearchProfile[]> {
-    // we need to convert the location to latitude and longitude
-    const locations = await googlePlacesService.searchCities(db, location);
-    if (!locations.results.length) {
-        return [];
+export async function searchDevelopers(db: serverTypes.AboutDevsDatabase, tags: string, googlePlaceId: string, page: number): Promise<commonTypes.DeveloperSearchProfile[]> {
+    page = page > 10 ? 10 : page;
+    // find the place
+    const place = await db.google_place.findOne({google_place_id: googlePlaceId});
+    if (!place) {
+        throw Error(`Place not found. Place id: ${googlePlaceId}`);
     }
-    const googleApiResult = locations.results[0];
-    const {lat, lng} = googleApiResult.geometry.location;
-    const result: commonTypes.DeveloperSearchProfile[] = [];
-    const dbDevelopers = await db._aboutdevs_search_developers(tags, lng, lat, 1);
-
-    for (const dbDeveloper of dbDevelopers) {
-        const user: commonTypes.DeveloperSearchProfile = {
-            id: dbDeveloper.id,
-            name: dbDeveloper.name,
-            displayName: dbDeveloper.display_name,
-            photoUrl: dbDeveloper.photo_url,
-            distance: dbDeveloper.distance,
-            title: dbDeveloper.profession_other,
-            tags: await db._aboutdevs_select_tags_from_user(dbDeveloper.id),
-        };
-        result.push(user);
-    }
-    return result;
+    const {longitude, latitude} = place;
+    const tagsNormalized = processTagsForSearch(tags);
+    const searchResult = await db._aboutdevs_search_developers(tagsNormalized, longitude, latitude, page);
+    return searchResult.map((d) => ({
+        name: d.name,
+        displayName: d.display_name,
+        photoUrl: d.photo_url,
+        title: d.title,
+        companyName: d.company_name,
+        formattedAddress: d.google_place_formatted_address,
+        distance: d.distance,
+        tags: d.tags ? d.tags.split(" ") : [],
+    }));
 }
 
 /**

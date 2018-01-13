@@ -69,21 +69,6 @@ export interface UserProfile {
     companyUrl?: string;
 }
 
-export interface DeveloperSearchProfile {
-    id: number;
-    displayName: string;
-    photoUrl: string;
-    name: string;
-    distance: number;
-    title: string;
-    tags: UserTag[];
-}
-
-export interface UserTag {
-    id?: number;
-    name: string;
-}
-
 export interface SocialLinkValue {
     website: string;
     url: string;
@@ -102,6 +87,17 @@ export interface SearchCriteria {
     search: string;
     location: string;
     loading: boolean;
+}
+
+export interface DeveloperSearchProfile {
+    name: string;
+    displayName: string;
+    photoUrl: string;
+    title: string;
+    companyName: string;
+    formattedAddress: string;
+    distance: number;
+    tags: string[];
 }
 
 export interface SearchResult {

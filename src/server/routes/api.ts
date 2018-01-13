@@ -4,7 +4,6 @@ import * as tagService from "../services/tagService";
 import * as googlePlacesService from "../services/googlePlacesService";
 import * as userService from "../services/userService";
 import * as dbTypes from "../typings/dbTypes";
-import { processTagsForSearch } from "../helpers/tagHelper";
 
 const router = express.Router();
 
@@ -54,19 +53,6 @@ router.route("/users/edit_my_profile").post(async (req, res) => {
         });
 });
 
-router.route("/users").get(async (req, res) => {
-    if (!req.body) throw Error("profile was not submitted");
-    await apiHelper.sendDbConnectedPromise(res,
-        async (db) => {
-            const search = req.query.q;
-            const location = req.query.l;
-            if (!search || !location) {
-                throw Error("Parameters q and l are expected");
-            }
-            return userService.searchDevelopers(db, search, location);
-        });
-});
-
 router.route("/users/:user_name").get(async (req, res) => {
     if (!req.body) throw Error("profile was not submitted");
     await apiHelper.sendDbConnectedPromise(res,
@@ -101,16 +87,8 @@ router.route("/s/t/:tags/l/:googlePlaceId/:placeString").get(async (req, res) =>
         async (db) => {
             const tags = req.params.tags;
             const googlePlaceId = req.params.googlePlaceId;
-            let page = parseInt(req.query.page || "1", 10);
-            page = page > 10 ? 10 : page;
-            // find the place
-            const place = await db.google_place.findOne({google_place_id: googlePlaceId});
-            if (!place) {
-                throw Error(`Place not found. Place id: ${googlePlaceId}`);
-            }
-            const {longitude, latitude} = place;
-            const tagsNormalized = processTagsForSearch(tags);
-            return db._aboutdevs_search_developers(tagsNormalized, longitude, latitude, page);
+            const page = parseInt(req.query.page || "1", 10);
+            return userService.searchDevelopers(db, tags, googlePlaceId, page);
         });
 });
 

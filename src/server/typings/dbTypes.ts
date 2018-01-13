@@ -57,18 +57,6 @@ export interface User {
     last_updated_at?: Date;
 }
 
-export interface UserSearchResult {
-    id: number;
-    display_name: string;
-    email: string;
-    photo_url: string;
-    name: string;
-    bio: string;
-    profession_other: string;
-    profession_id: number;
-    distance: number;
-}
-
 export interface StackoverflowTagsCache {
     id: number;
     search: string;
@@ -84,6 +72,17 @@ export interface UserTag {
     id: number;
     user_id: number;
     tag_id: number;
+}
+
+export interface DeveloperSearchResult {
+    name: string;
+    display_name: string;
+    photo_url: string;
+    title: string;
+    company_name: string;
+    google_place_formatted_address: string;
+    tags: string;
+    distance: number;
 }
 
 export interface AboutDevsDatabase extends massive.Database {
@@ -106,5 +105,5 @@ export interface AboutDevsDatabase extends massive.Database {
     _aboutdevs_is_user_name_taken: (userName: string, userId: number) => Promise<Array<{ exists: boolean }>>;
     _aboutdevs_place_update_geometry: (placeId: number, longitude: number, latitude: number) => void;
     _aboutdevs_user_update_geometry: (userId: number, longitude: number, latitude: number) => void;
-    _aboutdevs_search_developers: (tags: string, longitude: number, latitude: number, page: number) => Promise<UserSearchResult[]>;
+    _aboutdevs_search_developers: (tags: string, longitude: number, latitude: number, page: number) => Promise<DeveloperSearchResult[]>;
 }
