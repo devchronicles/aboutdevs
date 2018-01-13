@@ -74,6 +74,7 @@
             font-weight: 700;
             text-align: center;
         }
+
         ul {
             li {
                 opacity: 0.8;
@@ -87,11 +88,17 @@
                 }
             }
         }
-        button {
-            display: block;
-            margin-top: $gutter-sm;
-            box-sizing: border-box;
-            width: 100%;
+
+        a {
+            color: white;
+            text-decoration: underline;
+            &.sign-in {
+                text-decoration: none;
+                display: block;
+                margin-top: $gutter-sm;
+                box-sizing: border-box;
+                text-align: center;
+            }
         }
     }
 }

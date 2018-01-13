@@ -11,7 +11,7 @@ interface HeaderProps {
 const Header: React.SFC<HeaderProps> = ({loggedUser}) => {
     const rightComponent = loggedUser.id
         ? <LoggedUserDropdown loggedUser={loggedUser}/>
-        : <Link to="/login" className="button vibrant">Sign in</Link>;
+        : <a href="/auth/linkedin" className="button vibrant">Sign in</a>;
 
     return (
         <div className="main-header-wrapper">

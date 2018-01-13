@@ -11,7 +11,7 @@ import { AppStatic } from "../../common/AppStatic";
 const router = express.Router();
 
 // These are the first level paths (e.g, /something) that don't have SSR
-const firstLevelNonSsrPaths = ["login", "search"];
+const firstLevelNonSsrPaths = ["search"];
 
 /**
  * Function  that actually sends the application to the client

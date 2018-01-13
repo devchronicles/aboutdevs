@@ -21,7 +21,7 @@ const IndexSearchForm: React.SFC<IndexSearchFormProps> = (props) => {
                         component={FormField}
                         innerComponent={SelectTags}
                         innerComponentProps={{
-                            placeholder: "Technologies",
+                            placeholder: "Developers with this expertise...",
                         }}
                     />
                 </FormGroup>
