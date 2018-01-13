@@ -130,7 +130,7 @@ export function validationRequiredIfDeveloper(value: any, user: commonTypes.User
 // Specific validators
 
 export function validateSearchTags(value: any): string {
-    return (value === null || value === undefined || value === "") ? REQUIRED_SEARCH_TAGS : undefined;
+    return (value === null || value === undefined || value === "" || value.length === 0) ? REQUIRED_SEARCH_TAGS : undefined;
 }
 
 export function validateSearchLocation(value: any): string {

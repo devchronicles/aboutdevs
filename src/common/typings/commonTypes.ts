@@ -74,10 +74,9 @@ export interface SocialLinkValue {
     url: string;
 }
 
-export interface SearchCriteria {
-    search: string;
-    location: string;
-    loading: boolean;
+export interface SearchFormModel {
+    searchTags: string[];
+    searchFormattedAddress: string;
 }
 
 export interface DeveloperSearchProfile {
@@ -90,14 +89,9 @@ export interface DeveloperSearchProfile {
     tags: string[];
 }
 
-export interface SearchResult {
+export interface SearchState {
     profiles: DeveloperSearchProfile[];
     loading: boolean;
-}
-
-export interface SearchState {
-    result: SearchResult;
-    criteria: SearchCriteria;
 }
 
 export interface ProfileState {
@@ -108,7 +102,8 @@ export interface ProfileState {
 export interface ReduxState {
     loggedUser?: CurrentUserProfile;
     form?: {
-        profileEdit?: any,
+        profileEdit?: any;
+        search?: any;
     };
     search?: SearchState;
     profile?: ProfileState;

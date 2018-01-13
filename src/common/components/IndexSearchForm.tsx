@@ -50,6 +50,8 @@ const IndexSearchForm: React.SFC<IndexSearchFormProps> = (props) => {
 // Decorate with redux-form
 const FormDecoratedSearchForm = ReduxForm.reduxForm({
     form: "search", // a unique identifier for this form,
+    destroyOnUnmount: false,
+    enableReinitialize: true,
 })(IndexSearchForm);
 
 export { FormDecoratedSearchForm as SearchForm };

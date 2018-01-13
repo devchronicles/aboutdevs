@@ -22,8 +22,8 @@ declare type IndexPageProps = IndexPageStateProps & IndexPageDispatchProps & Ind
 class IndexPage extends React.Component<IndexPageProps> {
 
     public handleSearchSubmit = (formValues: any) => {
-        const {tags, formattedAddress} = formValues;
-        this.props.history.push(getDeveloperSearchUrl(tags, formattedAddress));
+        const {searchTags, searchFormattedAddress} = formValues;
+        this.props.history.push(getDeveloperSearchUrl(searchTags, searchFormattedAddress));
     }
 
     public render() {
