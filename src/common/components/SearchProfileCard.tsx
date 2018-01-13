@@ -1,37 +1,23 @@
 import * as React from "react";
 import * as commonTypes from "../../common/typings";
+import { getDataFromFormattedAddress } from "../helpers/googlePlacesFormatHelper";
 
 interface SearchProfileCardProps {
     profile: commonTypes.DeveloperSearchProfile;
 }
 
-const ProfileCard: React.SFC<SearchProfileCardProps> = ({ profile }) => (
-    <li className="profile-card">
-        <div className="star-wrapper">
-            <i className="fa fa-star-o" />
-        </div>
-        <a className="card-body" href="#">
-            <div className="image" style={{ backgroundImage: `url(${profile.photoUrl})` }} />
-            <p className="display-name"> {profile.displayName} </p>
-            <p className="profession"> {profile.title} </p>
-            <p className="bio"> {profile.tags.map((s) => s).join("; ")} </p>
-        </a>
-        <div className="card-footer">
-            <span className="recomendations">
-                <span className="recomendation-count">
-                    <span className="number">4</span>
-                    <i className="fa fa-star" aria-hidden="true" />
-                </span>
-                <span className="recomendation-count">
-                    <span className="number">3</span>
-                    <i className="fa fa-comment" aria-hidden="true" />
-                </span>
-            </span>
-            <button>
-                Conectar
-            </button>
-        </div>
-    </li>
-);
+export const SearchProfileCard: React.SFC<SearchProfileCardProps> = ({profile}) => {
+    const {address} = getDataFromFormattedAddress(profile.formattedAddress);
 
-export { ProfileCard };
+    const companyName = profile.companyName ? `at ${profile.companyName}` : "";
+    return (
+        <li className="profile-card">
+            <a className="card-body" href={`/${profile.name}`}>
+                <div className="image" style={{backgroundImage: `url(${profile.photoUrl})`}}/>
+                <p className="display-name"> {profile.displayName} </p>
+                <p className="title"> {profile.title} {companyName}</p>
+                <p className="location"><i className="fa fa-map-marker" aria-hidden="true"/>{address}</p>
+            </a>
+        </li>
+    );
+}

@@ -4,6 +4,7 @@ import * as ReactRedux from "react-redux";
 import { ProfileList } from "./ProfileList";
 import * as searchActions from "../redux/search/searchActions";
 import { distillTagsParameter } from "../../server/helpers/tagHelper";
+import { getDataFromFormattedAddress } from "../helpers/googlePlacesFormatHelper";
 
 interface SearchResultStateProps {
     searchResultProfiles: commonTypes.DeveloperSearchProfile[];
@@ -41,13 +42,21 @@ class SearchResult extends React.Component <SearchResultProps> {
 
     public render() {
         const {searchResultProfiles, formattedAddress, tags} = this.props;
-        const tagsText = distillTagsParameter(tags).join(", ");
+        const {address} = getDataFromFormattedAddress(formattedAddress);
+
+        const tagComponents = distillTagsParameter(tags).map((tagName, i) => (
+            <span
+                className="tag"
+                key={`tag-i`}
+            >
+                #{tagName}
+            </span>
+        ));
+
         return (
             <ul className="search-result">
                 <div className="search-result-header">
-                    <span className="display">
-                        {tagsText} developers in {formattedAddress}
-                    </span>
+                    {tagComponents} developers in <span className="location">{address}</span>
                 </div>
                 <ProfileList profiles={searchResultProfiles}/>
             </ul>

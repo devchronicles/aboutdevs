@@ -1,6 +1,6 @@
 import * as React from "react";
 import { DeveloperSearchProfile } from "../typings/commonTypes";
-import { ProfileCard } from "./SearchProfileCard";
+import { SearchProfileCard } from "./SearchProfileCard";
 
 interface ProfileListProps {
     profiles: DeveloperSearchProfile[];
@@ -8,6 +8,6 @@ interface ProfileListProps {
 
 export const ProfileList: React.SFC<ProfileListProps> = ({profiles}) => (
     <div className="profile-list">
-        {profiles && profiles.map((p, i) => <ProfileCard key={i} profile={p}/>)}
+        {profiles && profiles.map((p, i) => <SearchProfileCard key={i} profile={p}/>)}
     </div>
 );

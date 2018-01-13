@@ -45,24 +45,6 @@
         }
     }
 
-    .form-help {
-        color: $color-white;
-        &:before {
-            content: '\f00d';
-            font-family: 'FontAwesome';
-            margin-right: $gutter-sm;
-            color: $color-shining-2;
-        }
-    }
-
-    .Select.invalid .Select-placeholder, .Select.invalid .Select-value {
-        border-bottom: 0;
-    }
-
-    button.search {
-        font-size: 1.2em;
-    }
-
     .register-wrapper {
         margin-top: 2 * $gutter-md;
         padding: $gutter-md;

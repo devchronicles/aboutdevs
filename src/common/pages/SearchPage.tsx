@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import * as ReactRouter from "react-router";
 import * as commonTypes from "../typings/commonTypes";
 
-import { SearchForm } from "../components/IndexSearchForm";
+import { SearchForm } from "../components/SearchForm";
 import { SearchResult } from "../components/SearchResult";
 import { Dispatch } from "redux";
 import { getDeveloperSearchUrl } from "../../server/helpers/routeHelper";

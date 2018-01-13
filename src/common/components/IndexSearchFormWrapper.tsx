@@ -1,5 +1,5 @@
 import * as React from "react";
-import { SearchForm } from "./IndexSearchForm";
+import { SearchForm } from "./SearchForm";
 import { Logo } from "./Logo";
 
 interface IndexSearchFormWrapperProps {
@@ -22,7 +22,9 @@ export class IndexSearchFormWrapper extends React.Component<IndexSearchFormWrapp
                                 </div>
                             </span>
                 </div>
-                <SearchForm onSubmit={handleSearchSubmit}/>
+                <div className="search-criteria">
+                    <SearchForm onSubmit={handleSearchSubmit}/>
+                </div>
                 <div className="register-wrapper">
                     <p className="title">Are you a Software Developer?</p>
                     <ul>

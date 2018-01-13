@@ -1,0 +1,28 @@
+.search-criteria {
+    max-width: 500px + 2 * $gutter-sm;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    form {
+        box-sizing: border-box;
+        width: 100%;
+        button.vibrant {
+            .fa {
+                margin-right: $gutter-sm;
+            }
+        }
+        .form-help {
+            color: $color-white;
+            &:before {
+                content: '\f00d';
+                font-family: 'FontAwesome';
+                margin-right: $gutter-sm;
+                color: $color-shining-2;
+            }
+        }
+        .Select.invalid .Select-placeholder, .Select.invalid .Select-value {
+            border-bottom: 0;
+        }
+    }
+}
