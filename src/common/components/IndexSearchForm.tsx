@@ -17,7 +17,7 @@ const IndexSearchForm: React.SFC<IndexSearchFormProps> = (props) => {
             <FormRow>
                 <FormGroup>
                     <Field
-                        name="tags"
+                        name="searchTags"
                         component={FormField}
                         innerComponent={SelectTags}
                         innerComponentProps={{
@@ -29,7 +29,7 @@ const IndexSearchForm: React.SFC<IndexSearchFormProps> = (props) => {
             <FormRow>
                 <FormGroup>
                     <Field
-                        name="formattedAddress"
+                        name="searchFormattedAddress"
                         placeholder="Located at"
                         component={FormField}
                         innerComponent={SelectLocation}

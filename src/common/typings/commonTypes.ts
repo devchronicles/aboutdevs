@@ -74,15 +74,6 @@ export interface SocialLinkValue {
     url: string;
 }
 
-// SEARCH
-
-export enum SearchDisplay {
-    ORDER_BY_DISTANCE = 0,
-    BEST_PROFESSIONAIS_IN_2_KM = 1,
-    BEST_PROFESSIONAIS_IN_5_KM = 2,
-    BEST_PROFESSIONAIS_IN_10_KM = 3,
-}
-
 export interface SearchCriteria {
     search: string;
     location: string;
@@ -100,7 +91,6 @@ export interface DeveloperSearchProfile {
 }
 
 export interface SearchResult {
-    display: SearchDisplay;
     profiles: DeveloperSearchProfile[];
     loading: boolean;
 }

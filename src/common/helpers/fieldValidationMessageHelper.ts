@@ -2,6 +2,7 @@ import * as fieldValidation from "./fieldValidationHelper";
 
 export function getErrorMessage(error: string) {
     switch (error) {
+        // Generic
         case fieldValidation.REQUIRED:
             return "Required.";
         case fieldValidation.MAX_LENGTH_50:
@@ -16,6 +17,11 @@ export function getErrorMessage(error: string) {
             return "This name is taken.";
         case fieldValidation.URL:
             return "Invalid URL.";
+        // Specific
+        case fieldValidation.REQUIRED_SEARCH_TAGS:
+            return "Please specify the technologies";
+        case fieldValidation.REQUIRED_SEARCH_LOCATION:
+            return "Please specify the location";
         case fieldValidation.ALL_GROUPS_MUST_HAVE_BETWEEN_1_AND_10_ITEMS:
             return "Every group should have between 1 and 10 items.";
         default:

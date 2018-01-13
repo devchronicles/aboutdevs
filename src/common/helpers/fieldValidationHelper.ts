@@ -1,6 +1,7 @@
 import * as commonTypes from "../typings/commonTypes";
 import { isUrl } from "./urlHelper";
 
+// Generic
 export const REQUIRED = "required";
 export const MAX_LENGTH_50 = "max-length-50";
 export const MAX_LENGTH_80 = "max-length-80";
@@ -9,6 +10,10 @@ export const MAX_LENGTH_500 = "max-length-500";
 export const USER_NAME_IS_TAKEN = "user-name-is-taken";
 export const INCOMPLETE_SOCIAL_LINK = "incomplete-social-link";
 export const URL = "url";
+
+// Specific
+export const REQUIRED_SEARCH_TAGS = "required-search-tags";
+export const REQUIRED_SEARCH_LOCATION = "required-search-location";
 export const ALL_GROUPS_MUST_HAVE_BETWEEN_1_AND_10_ITEMS = "all-groups-must-have-between-1-and-10-items";
 
 interface ValidationCollection {
@@ -16,6 +21,10 @@ interface ValidationCollection {
 }
 
 const exactNameValidators: ValidationCollection = {
+    // search
+    searchTags: [validateSearchTags],
+    searchFormattedAddress: [validateSearchLocation],
+    // profile edit
     name: [validateRequired, validateMaxLength50],
     displayName: [validateRequired, validateMaxLength50],
     title: [validateRequired, validateMaxLength80],
@@ -70,7 +79,7 @@ export function validate(user: commonTypes.UserProfile) {
     return errors;
 }
 
-// Validators
+// Generic validators
 
 export function validateRequired(value: any) {
     return (value === null || value === undefined || value === "") ? REQUIRED : undefined;
@@ -116,6 +125,16 @@ export function validationRequiredIfDeveloper(value: any, user: commonTypes.User
         && (value === null || value === undefined || value === "" || ((value instanceof Array) && value.length === 0)))
         ? REQUIRED
         : undefined;
+}
+
+// Specific validators
+
+export function validateSearchTags(value: any): string {
+    return (value === null || value === undefined || value === "") ? REQUIRED_SEARCH_TAGS : undefined;
+}
+
+export function validateSearchLocation(value: any): string {
+    return (value === null || value === undefined || value === "") ? REQUIRED_SEARCH_LOCATION : undefined;
 }
 
 export function validateInfoGroup(value: any): string {

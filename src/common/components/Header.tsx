@@ -11,7 +11,7 @@ interface HeaderProps {
 const Header: React.SFC<HeaderProps> = ({loggedUser}) => {
     const rightComponent = loggedUser.id
         ? <LoggedUserDropdown loggedUser={loggedUser}/>
-        : <Link to="/login" className="button vibrant">Entrar</Link>;
+        : <Link to="/login" className="button vibrant">Sign in</Link>;
 
     return (
         <div className="main-header-wrapper">
@@ -22,16 +22,13 @@ const Header: React.SFC<HeaderProps> = ({loggedUser}) => {
                     </Link>
                     <ul className="header-content-list">
                         <li>
-                            <a href="#">Quanto custa?</a>
+                            <a href="#">About</a>
                         </li>
                         <li>
-                            <a href="#">Como funciona?</a>
+                            <a href="#">Pricing</a>
                         </li>
                         <li>
-                            <a href="#">Blog</a>
-                        </li>
-                        <li>
-                            <a href="#">Contato</a>
+                            <a href="#">Community</a>
                         </li>
                         <li className="important-item">
                             {rightComponent}

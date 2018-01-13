@@ -11,17 +11,17 @@ export const SEARCH_LOAD_ERROR = "SEARCH_LOAD_ERROR";
 
 /**
  * Loads the criteria of the search
- * @param {string} search
+ * @param {string} tags
  * @param {string} location
  * @returns {(dispatch: Dispatch<ReduxState>) => Promise<any>}
  */
-export const searchCriteriaLoad = (search: string, location: string) => {
-    if (!search) throw Error("search should be truthy");
+export const searchCriteriaLoad = (tags: string, location: string) => {
+    if (!tags) throw Error("search should be truthy");
     if (!location) throw Error("location should be truthy");
 
     return async (dispatch: ReactRedux.Dispatch<commonTypes.ReduxState>) => {
         dispatch({type: SEARCH_CRITERIA_LOAD_STARTED});
-        const locations = await httpClient.searchLocations(location, true);
+        const locations = await httpClient.searchLocations(location);
         const locationsData = locations.data
             ? locations.data as string[]
             : null;
@@ -30,26 +30,26 @@ export const searchCriteriaLoad = (search: string, location: string) => {
             : null;
 
         if (firstMatchingLocation) {
-            dispatch({type: SEARCH_CRITERIA_LOAD_SUCCESS, payload: {search, location: firstMatchingLocation}});
+            dispatch({type: SEARCH_CRITERIA_LOAD_SUCCESS, payload: {search: tags, location: firstMatchingLocation}});
         } else {
-            dispatch({type: SEARCH_CRITERIA_LOAD_ERROR, payload: {search, location}});
+            dispatch({type: SEARCH_CRITERIA_LOAD_ERROR, payload: {search: tags, location}});
         }
     };
 };
 
 /**
  * Loads the criteria of the search
- * @param {string} search
- * @param {string} location
+ * @param {string} tags
+ * @param {string} formattedAddress
  * @returns {(dispatch: Dispatch<ReduxState>) => Promise<any>}
  */
-export const searchLoad = (search: string, location: string, display: commonTypes.SearchDisplay) => {
-    if (!search) throw Error("search should be truthy");
-    if (!location) throw Error("location should be truthy");
+export const searchLoad = (tags: string[], formattedAddress: string) => {
+    if (!tags) throw Error("search should be truthy");
+    if (!formattedAddress) throw Error("location should be truthy");
 
     return async (dispatch: ReactRedux.Dispatch<commonTypes.ReduxState>) => {
         dispatch({type: SEARCH_LOAD_STARTED});
-        const searchResult = await httpClient.searchDevelopers(search, location);
+        const searchResult = await httpClient.searchDevelopers(tags, formattedAddress);
         dispatch({type: SEARCH_LOAD_SUCCESS, payload: searchResult.data});
     };
 };

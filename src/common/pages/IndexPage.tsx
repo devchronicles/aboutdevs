@@ -2,9 +2,8 @@ import * as React from "react";
 import { connect, Dispatch } from "react-redux";
 import * as ReactRouter from "react-router";
 import * as clientTypes from "../typings";
-import * as urlHelper from "../../common/helpers/urlHelper";
-import * as gisHelper from "../helpers/gisHelper";
 import { IndexSearchFormWrapper } from "../components/IndexSearchFormWrapper";
+import { getDeveloperSearchUrl } from "../../server/helpers/routeHelper";
 
 interface IndexPageStateProps {
 
@@ -23,19 +22,8 @@ declare type IndexPageProps = IndexPageStateProps & IndexPageDispatchProps & Ind
 class IndexPage extends React.Component<IndexPageProps> {
 
     public handleSearchSubmit = (formValues: any) => {
-        const {search, location} = formValues;
-
-        // let's try to see if the entered location is a latitude longitude pair
-        const geoLocation = gisHelper.extractLocationFromText(location);
-
-        const normalizedLocation = geoLocation
-            ? gisHelper.buildUrlParameterFromLocation(geoLocation)
-            : urlHelper.normalizeUrlParameter(location);
-        const normalizedSearch = urlHelper.normalizeUrlParameter(search);
-
-        if (search && location) {
-            this.props.history.push(`/s/${normalizedLocation}/${normalizedSearch}`);
-        }
+        const {tags, formattedAddress} = formValues;
+        this.props.history.push(getDeveloperSearchUrl(tags, formattedAddress));
     }
 
     public render() {

@@ -9,6 +9,7 @@
     position: relative;
     padding: $gutter-md;
     margin-top: $header-height;
+    min-height: 500px;
 
     .fa {
         margin-right: $gutter-sm;
@@ -24,7 +25,7 @@
             align-items: center;
             flex-direction: column;
             width: 100%;
-            justify-content: space-between;
+            justify-content: center;
 
             @media (min-width: $breakpoint-md) {
                 flex-direction: row;
@@ -45,7 +46,17 @@
     }
 
     .form-help {
-        color: $color-gray-dark;
+        color: $color-white;
+        &:before {
+            content: '\f00d';
+            font-family: 'FontAwesome';
+            margin-right: $gutter-sm;
+            color: $color-shining-2;
+        }
+    }
+
+    .Select.invalid .Select-placeholder, .Select.invalid .Select-value {
+        border-bottom: 0;
     }
 
     button.search {

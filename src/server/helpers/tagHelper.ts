@@ -29,3 +29,12 @@ export function processTagsForSearch(tags: string): string {
     if (!tags) return tags;
     return tags.split("&").map(normalizeTagName).join(" & ");
 }
+
+export function createTagsParameter(tags: string[]): string {
+    return tags ? tags.join("&") : "";
+}
+
+export function distillTagsParameter(tagsParameter: string): string[] {
+    if (!tagsParameter) return [];
+    return tagsParameter.split("&").map((t) => t.trim());
+}
