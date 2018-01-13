@@ -15,7 +15,6 @@ router.route("/addresses").get(async (req: express.Request, res: express.Respons
 router.route("/tags").get(async (req, res) => {
     await apiHelper.sendDbConnectedPromise(res,
         async (db: dbTypes.AboutDevsDatabase) => {
-            apiHelper.getAndEnsureUserId(req);
             return tagService.searchTagsFormatted(db, req.query.q as string);
         });
 });
