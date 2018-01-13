@@ -136,9 +136,9 @@ SELECT
   u.company_name,
   u.google_place_formatted_address,
   u.tags,
-  ST_Distance(u.geometry :: GEOGRAPHY, ST_SetSRID(ST_MakePoint($2, $3), 4326) :: GEOGRAPHY) AS distance
+  ST_Distance(u.geometry :: GEOGRAPHY, ST_SetSRID(ST_MakePoint($2, $3), 4326) :: GEOGRAPHY) / 1000 AS distance
 FROM "user" u
-WHERE u.tags_normalized @@ to_tsquery('simple', tags_query)
+WHERE u.tags_normalized @@ to_tsquery('simple', $1)
 ORDER BY distance, created_at DESC
 LIMIT 40 * page
 $_$;
