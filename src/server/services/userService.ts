@@ -183,7 +183,6 @@ export async function searchDevelopers(db: serverTypes.AboutDevsDatabase, tags: 
         title: d.title,
         companyName: d.company_name,
         formattedAddress: d.google_place_formatted_address,
-        distance: d.distance,
         tags: d.tags ? d.tags.split(" ") : [],
     }));
 }

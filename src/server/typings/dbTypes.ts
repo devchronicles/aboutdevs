@@ -82,7 +82,6 @@ export interface DeveloperSearchResult {
     company_name: string;
     google_place_formatted_address: string;
     tags: string;
-    distance: number;
 }
 
 export interface AboutDevsDatabase extends massive.Database {

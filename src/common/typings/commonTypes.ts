@@ -96,7 +96,6 @@ export interface DeveloperSearchProfile {
     title: string;
     companyName: string;
     formattedAddress: string;
-    distance: number;
     tags: string[];
 }
 
