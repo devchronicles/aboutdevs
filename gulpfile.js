@@ -4,6 +4,7 @@ const ts = require('gulp-typescript');
 const sass = require('gulp-sass');
 const merge = require('merge2');
 const webpack = require('webpack-stream');
+const fs = require('fs');
 const tsProject = ts.createProject('./tsconfig.build.json');
 
 gulp.task('build_styles', function () {
@@ -42,6 +43,19 @@ gulp.task('build-demo', ['copy-index'], function () {
     return gulp.src('demo/client.ts')
         .pipe(webpack(require('./webpack.config.demo.prod.js')))
         .pipe(gulp.dest('docs/'));
+});
+
+gulp.task('build-docs', function () {
+    fs.readFile("src/common/docs/docs.md", "utf8", (error, docsData) => {
+        const finalDocsData = docsData.replace(/\`/g, () => '\\`');
+        fs.readFile("src/common/docs/docsMarkdownTemplate.ts", "utf8", (error, templateData) => {
+            let result = templateData;
+            result = result.replace(/\{markdown\}/g, () => finalDocsData);
+            fs.writeFile("src/common/docs/docsMarkdown.ts", result, (error) => {
+
+            });
+        });
+    });
 });
 
 // all

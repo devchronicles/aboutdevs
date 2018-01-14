@@ -10,6 +10,7 @@ import * as ReactNotificationSystem from "react-notification-system";
 import * as notificationActions from "../../common/redux/notifications/notificationsActions";
 import { Dispatch } from "redux";
 import { ProfileViewPage } from "./ProfileViewPage";
+import { DocsPage } from "./DocsPage";
 
 interface LayoutStateProps {
     loggedUser: commonTypes.CurrentUserProfile;
@@ -47,6 +48,7 @@ class Layout extends React.Component<LayoutProps> {
             <div className="container">
                 <Header loggedUser={loggedUser} />
                 <Switch>
+                    <Route exact={true} path="/d/docs" component={DocsPage}/>
                     <Route exact={true} path="/search" component={SearchPage} />
                     <Route exact={true} path="/config/edituserprofile" component={ProfileEditPage} />
                     <Route path="/s/t/:tags/l/:googlePlaceId/:placeString" component={SearchPage}/>

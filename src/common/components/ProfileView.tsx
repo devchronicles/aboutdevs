@@ -1,10 +1,9 @@
 import * as React from "react";
 import * as commonTypes from "../typings/commonTypes";
-import { SocialLinkValue } from "../typings";
 import { socialLinks } from "../data/socialLinks";
 import { getDataFromFormattedAddress } from "../helpers/googlePlacesFormatHelper";
 import { buildStyledComponents } from "./ProfileViewStyledComponents";
-import * as Showdown from "showdown";
+import { Markdown } from "./Markdown";
 
 interface ProfileViewProps {
     profile: commonTypes.UserProfile;
@@ -15,34 +14,6 @@ interface ProfileViewState {
 }
 
 export class ProfileView extends React.Component<ProfileViewProps, ProfileViewState> {
-
-    converter: Showdown.Converter;
-
-    constructor(props: ProfileViewProps) {
-        super(props);
-        this.converter = new Showdown.Converter();
-    }
-
-    buildSocialLink = (socialLinkValue: SocialLinkValue, index: number) => {
-
-        if (!socialLinkValue || !socialLinkValue.url || !socialLinkValue.website) return null;
-        const socialLink = socialLinks.find((sl) => sl.value === socialLinkValue.website);
-
-        const innerComponent = socialLink.iconClass
-            ? <i className={socialLink.iconClass} aria-hidden="true"/>
-            : null;
-
-        return (
-            <a
-                key={`socialLink-${index}`}
-                href={socialLinkValue.url}
-                target="_blank"
-                className="item"
-            >
-                {innerComponent}
-            </a>
-        );
-    }
 
     render() {
         const {profile} = this.props;
@@ -84,10 +55,6 @@ export class ProfileView extends React.Component<ProfileViewProps, ProfileViewSt
             const {address} = getDataFromFormattedAddress(profile.formattedAddress);
             inElement = <HeaderSpan> in {address} </HeaderSpan>;
         }
-
-        const bio = (profile.bio && profile.bio.text)
-            ? this.converter.makeHtml(profile.bio.text)
-            : "";
 
         return (
             <ProfileWrapper className="profile-view">
@@ -139,7 +106,9 @@ export class ProfileView extends React.Component<ProfileViewProps, ProfileViewSt
                                 })
                             }
                         </div>
-                        <div className="bio-wrapper" dangerouslySetInnerHTML={{__html: bio}}/>
+                        <div className="bio-wrapper">
+                            <Markdown markdown={profile.bio ? profile.bio.text : ""}/>
+                        </div>
                     </div>
                 </BodyWrapper>
             </ProfileWrapper>
