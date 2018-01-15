@@ -7,6 +7,7 @@ import { getUserProfile } from "../services/userService";
 import { renderToString } from "react-dom/server";
 import { configureStore } from "../../common/redux/store";
 import { AppStatic } from "../../common/AppStatic";
+import packageJson from "../../../package.json";
 
 const router = express.Router();
 
@@ -28,8 +29,8 @@ function sendApp(req: express.Request, res: express.Response, preloadedHtml: str
             cssPath = "";
             jsPath = "http://localhost:8080/bundle.js";
         } else {
-            cssPath = "/static/bundle.css";
-            jsPath = "/static/bundle.js";
+            cssPath = `/static/bundle.${packageJson.version}.css`;
+            jsPath = `/static/bundle.${packageJson.version}.js`;
         }
 
         result = result.replace(/\{css\}/g, () => cssPath);

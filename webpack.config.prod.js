@@ -2,7 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-//const CopyWebpackPlugin = require('copy-webpack-plugin');
+const packageJson = require("./package.json");
 
 module.exports = {
 
@@ -11,7 +11,7 @@ module.exports = {
     ],
 
     output: {
-        filename: 'bundle.js',
+        filename: `bundle.${packageJson.version}.js`,
         path: path.resolve(__dirname, 'dist/static'),
         publicPath: ''
     },
@@ -53,15 +53,12 @@ module.exports = {
     },
 
     plugins: [
-        new ExtractTextPlugin("bundle.css"),
+        new ExtractTextPlugin(`bundle.${packageJson.version}.css`),
         new UglifyJsPlugin(),
         new webpack.DefinePlugin({
             'process.env': {
                 'NODE_ENV': JSON.stringify('production')
             }
         })
-        // new CopyWebpackPlugin([
-        //     { from: 'src/common/index.html', to: '../src/server/index.html' }
-        // ]),
     ]
 };
