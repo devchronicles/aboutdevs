@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const POSTGRES_USER = "aboutdevs";
-const POSTGRES_PASSWORD = "aboutdevs";
-const POSTGRES_DATABASE = "aboutdevs";
-const POSTGRES_HOST = "localhost";
+const POSTGRES_USER = "u5d920rm4fdp1o";
+const POSTGRES_PASSWORD = "p8a89fb693fc4abc90615ea0bbc87643947503e68a264e16aef495434a464ff72";
+const POSTGRES_DATABASE = "d68m1ulv3r8dpn";
+const POSTGRES_HOST = "ec2-35-168-121-0.compute-1.amazonaws.com";
 const POSTGRES_PORT = 5432;
 const config = {
     db: {
@@ -14,6 +14,7 @@ const config = {
             database: POSTGRES_DATABASE,
             user: POSTGRES_USER,
             password: POSTGRES_PASSWORD,
+            ssl: true,
         },
     },
     google: {

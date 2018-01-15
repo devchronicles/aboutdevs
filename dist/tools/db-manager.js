@@ -35,6 +35,18 @@ switch (selectedCommand) {
         pg_dump --schema-only -W -w -f db/setupDb.sql -p 5432 -U ${userName} ${dbName}
         `;
         break;
+    case "dump_db":
+        commands = `
+        echo ===Dumping ${dbName}===
+        pg_dump --no-acl --no-owner -h localhost -U aboutdevs ${dbName} > ${dbName}.dump
+        `;
+        break;
+    case "restore_db":
+        commands = `
+        echo ===Restoring ${dbName}===
+        createdb -E UTF8 --lc-collate C --lc-ctype C -U ${userName} -T template0 ${dbName}
+        pg_restore -U ${userName} -d ${dbName} ${dbName}.dump
+        `;
 }
 commands.split('\n').forEach((command) => {
     const processedCommand = command.trim();
