@@ -11,6 +11,7 @@
 
     font-size: 18px;
     box-sizing: border-box;
+    min-height: calc(100vh - #{$header-height});
 
     .header-wrapper {
         display: flex;

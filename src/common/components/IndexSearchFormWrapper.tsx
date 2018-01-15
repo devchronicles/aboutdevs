@@ -4,6 +4,7 @@ import { Logo } from "./Logo";
 
 interface IndexSearchFormWrapperProps {
     handleSearchSubmit: (formValues: any) => void;
+    displayRegisterWrapper: boolean;
 }
 
 interface IndexSearchFormState {
@@ -12,7 +13,7 @@ interface IndexSearchFormState {
 export class IndexSearchFormWrapper extends React.Component<IndexSearchFormWrapperProps, IndexSearchFormState> {
 
     render() {
-        const {handleSearchSubmit} = this.props;
+        const {handleSearchSubmit, displayRegisterWrapper} = this.props;
         return (
             <div className="index-search-form">
                 <div className="logo-wrapper">
@@ -25,7 +26,7 @@ export class IndexSearchFormWrapper extends React.Component<IndexSearchFormWrapp
                 <div className="search-criteria">
                     <SearchForm onSubmit={handleSearchSubmit}/>
                 </div>
-                <div className="register-wrapper">
+                {displayRegisterWrapper && <div className="register-wrapper">
                     <p className="title">Are you a Software Developer?</p>
                     <ul>
                         <ul>
@@ -37,7 +38,7 @@ export class IndexSearchFormWrapper extends React.Component<IndexSearchFormWrapp
                         </ul>
                     </ul>
                     <a href="/auth/linkedin" className="button sign-in faded">Create your free developer profile</a>
-                </div>
+                </div>}
             </div>
         );
     }
