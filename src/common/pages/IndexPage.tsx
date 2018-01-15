@@ -4,10 +4,9 @@ import * as ReactRouter from "react-router";
 import * as clientTypes from "../typings";
 import { IndexSearchFormWrapper } from "../components/IndexSearchFormWrapper";
 import { getDeveloperSearchUrl } from "../../server/helpers/routeHelper";
-import { CurrentUserProfile } from "../typings/commonTypes";
 
 interface IndexPageStateProps {
-    loggedUser: CurrentUserProfile;
+    loggedUser: clientTypes.CurrentUserProfile;
 }
 
 interface IndexPageDispatchProps {
@@ -34,7 +33,7 @@ class IndexPage extends React.Component<IndexPageProps> {
                 <div className="index-page-wrapper background-page-wrapper">
                     <IndexSearchFormWrapper
                         handleSearchSubmit={this.handleSearchSubmit}
-                        displayRegisterWrapper={!loggedUser}
+                        displayRegisterWrapper={!loggedUser.id}
                     />
                 </div>
             </div>);
