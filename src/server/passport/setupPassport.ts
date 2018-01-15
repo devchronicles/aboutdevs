@@ -7,6 +7,8 @@ import * as googleOAuthTypes from "../typings/googleOAuthTypes";
 import { findOrCreateFromGoogleProfile } from "../services/googleOAuthService";
 import { findOrCreateFromLinkedInProfile } from "../services/linkedInOAuthService";
 
+const baseUrl = process.env.NODE_ENV === "production" ? "https://aboutdevs.com" : "http://127.0.0.1:4000";
+
 /**
  * Setups up passport
  * @param passportInstance
@@ -32,7 +34,7 @@ export default function (passportInstance: passport.PassportStatic) {
         {
             clientID: "856145944225-c4eivelu0ktapnnt2d1qlms737kv9v0k.apps.googleusercontent.com",
             clientSecret: "0RSivJavPFZIkPlPIWMTSLzO",
-            callbackURL: "http://127.0.0.1:4000/auth/google/callback",
+            callbackURL: `${baseUrl}/auth/google/callback`,
         },
         async (accessToken, refreshToken, profile: googleOAuthTypes.GoogleOAuthProfile, done) => {
             try {
@@ -50,7 +52,7 @@ export default function (passportInstance: passport.PassportStatic) {
         {
             clientID: "78noh1ykaqsz15",
             clientSecret: "4eBPrUndcmjO12xE",
-            callbackURL: "http://127.0.0.1:4000/auth/linkedin/callback",
+            callbackURL: `${baseUrl}/auth/linkedin/callback`,
             scope: ["r_emailaddress", "r_basicprofile"],
         },
         async (accessToken, refreshToken, profile: any, done) => {

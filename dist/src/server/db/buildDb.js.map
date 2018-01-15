@@ -1,1 +1,0 @@
-{"version":3,"file":"buildDb.js","sourceRoot":"","sources":["../../../../src/server/db/buildDb.ts"],"names":[],"mappings":";;;;;;;;;;AAAA,mCAAmC;AACnC,mDAA4C;AAG5C,IAAI,EAAsC,CAAC;AAE3C;;QACI,EAAE,CAAC,CAAC,EAAE,CAAC;YAAC,MAAM,CAAC,EAAE,CAAC;QAClB,EAAE,GAAG,OAAO,CAAC,gBAAM,CAAC,EAAE,CAAC,uBAAuB,CAAuC,CAAC;QACtF,MAAM,CAAC,EAAE,CAAC;IACd,CAAC;CAAA;AAJD,4BAIC"}

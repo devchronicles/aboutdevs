@@ -136,6 +136,7 @@
     "tools:doctoc": "doctoc --notitle ./src/common/docs/docs.md",
     "tslint": "tslint --project ./tslint.json",
     "tslint:fix": "tslint --project ./tslint.json --fix",
-    "gulp:build-docs": "gulp build-docs"
+    "gulp:build-docs": "gulp build-docs",
+    "postinstall": "tsc && webpack --config ./webpack.config.prod.js"
   }
 }
