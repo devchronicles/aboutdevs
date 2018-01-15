@@ -584,6 +584,7 @@ CREATE TABLE "user" (
     created_at timestamp without time zone DEFAULT timezone('utc'::text, now()) NOT NULL,
     last_updated_at timestamp without time zone DEFAULT timezone('utc'::text, now()) NOT NULL,
     tags_normalized text,
+    cv_url character varying(255),
     CONSTRAINT enforce_srid CHECK ((st_srid(geometry) = 4326))
 );
 
