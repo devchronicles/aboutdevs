@@ -6,7 +6,7 @@ export function getDocsMarkdown() {
 - [About](#about)
   - [What is AboutDevs?](#what-is-aboutdevs)
   - [Inspiration](#inspiration)
-  - [Stack](#stack)
+  - [Technology stack and credits](#technology-stack-and-credits)
   - [The team](#the-team)
 - [FAQ](#faq)
   - [How much does AboutDevs cost?](#how-much-does-aboutdevs-cost)
@@ -38,20 +38,22 @@ looking for a job, or are willing to relocate, or maybe are open for contract jo
 
 The 2 main sources of inspiration where:
 
-1. [About.me](https://about.me/) for the profile builder
+1. [About.me](https://about.me/) for the profile builder.
 2. [Shubheksha Jalan](https://www.shubheksha.com/)'s website for the profile.
 
-## Stack
+## Technology stack and credits
 
 - **Database**: [Postgres](https://www.postgresql.org) with [PostGIS](https://postgis.net/), [pg-promise](https://github.com/vitaly-t/pg-promise) and [Massive.js](https://github.com/dmfay/massive-js).
 - **Server**: [Node.js](https://nodejs.org/en/) and [Express](https://nodejs.org/en/).
 - **Client**: [React](https://reactjs.org/), [Redux](https://redux.js.org/), [Redux-Forms](https://redux-form.com), [React-Router](https://github.com/ReactTraining/react-router), [React-Select](https://github.com/JedWatson/react-select), [React-mde](https://github.com/andrerpena/react-mde), [Showdown](https://github.com/showdownjs/showdown) and [Emotion](https://github.com/emotion-js/emotion).
-- **Building**: [Webpack](https://webpack.js.org/) and [Gulp](https://gulpjs.com/).
-- **Testing**: [Mocha](https://mochajs.org/). 
+- **Building**: [Webpack](https://webpack.js.org/), [Gulp](https://gulpjs.com/) and [doctoc](https://github.com/thlorenz/doctoc).
+- **Testing**: [Mocha](https://mochajs.org/) and [Chai](http://chaijs.com/). 
 - **External APIs**: [Stackoverflow](https://api.stackexchange.com/docs) for tags and [Google Places](https://developers.google.com/places/) for geo-location.
 - **Languages**: [TypeScript](https://www.typescriptlang.org/) and [SASS](http://sass-lang.com/).
 - **Deployment and hosting**: [Heroku](https://www.heroku.com/).
   
+The [stock background image](https://www.pexels.com/photo/adult-brainstorming-business-chair-515167/) was freely provided by [Pexels](https://www.pexels.com).
+
 
 ## The team
 
@@ -64,10 +66,8 @@ It would have taken longer otherwise. Thank you [JetBrains](https://www.jetbrain
 
 ## How much does AboutDevs cost?
 
-AboutDevs is free both for developers and recruiters and I plan to keep it that way forever. In the event AboutDevs 
-ever becomes really popular, there's a big chance it will be monetized through job postings. Something like jobs.aboutdevs.com.
-But for the time being, the focus is making it to serve it's purpose, in the best way possible, both for 
-developers and recruiters.
+AboutDevs is **free** both for developers and recruiters. Even though premium features might be added
+in the future, AboutDevs as you know it will remain free forever.
 
 ## How does the search work?
 

@@ -20,8 +20,20 @@ function sendApp(req: express.Request, res: express.Response, preloadedHtml: str
     const composedState = {...preloadedState, ...{loggedUser: req.user}};
     fs.readFile("src/common/index.html", "utf8", (error, data) => {
         let result = data;
-        result = result.replace(/\{css\}/g, () => "");
-        result = result.replace(/\{js\}/g, () => "http://localhost:8080/bundle.js");
+
+        let cssPath: string;
+        let jsPath: string;
+        const nodeEnv = process.env.NODE_ENV || "development";
+        if (nodeEnv === "development") {
+            cssPath = "";
+            jsPath = "http://localhost:8080/bundle.js";
+        } else {
+            cssPath = "/static/bundle.css";
+            jsPath = "/static/bundle.js";
+        }
+
+        result = result.replace(/\{css\}/g, () => cssPath);
+        result = result.replace(/\{js\}/g, () => jsPath);
         result = result.replace(/\{preloadedState\}/g, () => JSON.stringify(composedState));
         result = result.replace(/\{html\}/g, () => preloadedHtml || "");
         res.status(200).send(result);

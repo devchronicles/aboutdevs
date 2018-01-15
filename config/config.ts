@@ -1,5 +1,4 @@
 import devConfig from "./config.dev";
-import devSecretConfig from "./config.dev.secret";
 import prodConfig from "./config.prod";
 import testConfig from "./config.test";
 import { Config } from "./typings";
@@ -7,10 +6,10 @@ import { Config } from "./typings";
 let config: Config;
 switch (process.env.NODE_ENV) {
     case "development":
-        config = {...devConfig, ...devSecretConfig};
+        config = devConfig;
         break;
     case "test":
-        config = {...testConfig, ...devSecretConfig};
+        config = testConfig;
         break;
     default:
         config = prodConfig;

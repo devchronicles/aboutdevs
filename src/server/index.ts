@@ -8,8 +8,10 @@ import apiRoute from "./routes/api";
 import appRoute from "./routes/app";
 import authRoute from "./routes/auth";
 import * as favicon from "serve-favicon";
-import * as path from "path";
 import cookieSession = require("cookie-session");
+
+const nodeEnv = process.env.NODE_ENV || "development";
+const isDev = nodeEnv === "development";
 
 const app = express();
 
@@ -29,12 +31,17 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // delay
-app.use((req, res, next) => { setTimeout(next, 0); });
+app.use((req, res, next) => {
+    setTimeout(next, 0);
+});
 
 // favicon
-app.use(favicon(path.join(__dirname, "..", "..", "public", "favicon.ico")));
+app.use(favicon("public/favicon.ico"));
 
 // routes
+if (!isDev) {
+    app.use("/static", express.static("dist/static"));
+}
 app.use("/auth", authRoute);
 app.use("/api", apiRoute);
 app.use("", appRoute);

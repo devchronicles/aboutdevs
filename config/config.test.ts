@@ -1,4 +1,3 @@
-// Postgres settings
 import { Config } from "./typings";
 
 const POSTGRES_USER = "aboutdevs";
@@ -17,6 +16,12 @@ const config: Config = {
             user: POSTGRES_USER,
             password: POSTGRES_PASSWORD,
         },
+    },
+    google: {
+        geocodeApiKey: "AIzaSyAWW8gOlj0-P0iT6ISsL1WFX27tNNPZ7_4",
+    },
+    stackoverflow: {
+        key: "2uK67ob8t)Fv)FN*9ZtLqw((",
     },
 };
 
