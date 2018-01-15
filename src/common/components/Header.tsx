@@ -22,13 +22,13 @@ const Header: React.SFC<HeaderProps> = ({loggedUser}) => {
                     </Link>
                     <ul className="header-content-list">
                         <li>
-                            <a href="#">About</a>
+                            <Link to="/d/docs">About</Link>
                         </li>
                         <li>
-                            <a href="#">Pricing</a>
+                            <a href="/d/docs#how-much-does-aboutdevs-cost">Pricing</a>
                         </li>
                         <li>
-                            <a href="#">Community</a>
+                            <a href="/d/docs#community">Community</a>
                         </li>
                         <li className="important-item">
                             {rightComponent}

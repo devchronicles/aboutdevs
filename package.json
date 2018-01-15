@@ -113,6 +113,7 @@
   "scripts": {
     "build": "cross-env NODE_ENV=production tsc && webpack --config ./webpack.config.prod.js",
     "build:ts": "cross-env NODE_ENV=production tsc",
+    "build:docs": "gulp build-docs && doctoc --notitle ./src/common/docs/docs.md",
     "build:client": "cross-env NODE_ENV=production webpack --config ./webpack.config.prod.js",
     "db:drop": "cross-env COMMAND=drop_dev_dbs PGPASSWORD=pgadmin ts-node ./tools/db-manager.ts",
     "db:generate": "cross-env COMMAND=generate_scripts PGPASSWORD=pgadmin ts-node ./tools/db-manager.ts",
@@ -129,6 +130,7 @@
     "tools:massive-repl": "massive -c postgres://aboutdevs:aboutdevs@localhost:5432/indiejobs",
     "tools:print-config": "ts-node ./tools/print-config.ts",
     "tools:fake": "cross-env NODE_ENV=development ts-node ./tools/fake.ts",
+    "tools:doctoc": "doctoc --notitle ./src/common/docs/docs.md",
     "tslint": "tslint --project ./tslint.json",
     "tslint:fix": "tslint --project ./tslint.json --fix",
     "gulp:build-docs": "gulp build-docs"

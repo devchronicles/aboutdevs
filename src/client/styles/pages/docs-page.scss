@@ -1,3 +1,44 @@
-.docs-page-wrapper {
+@import "../variables";
+@import "../mixins";
 
+.docs-page-wrapper {
+    margin: ($header-height + $gutter-lg) auto;
+    padding: 0 $gutter-md;
+    box-sizing: border-box;
+    @include elastic-width($max-container-width + 2 * $gutter-md);
+    color: $color-white;
+
+    a {
+        color: $color-white;
+        text-decoration: underline;
+    }
+
+    .logo {
+        color: $color-white;
+        font-size: 40px;
+        margin: $gutter-md 0;
+
+        @media (min-width: $breakpoint-md) {
+            flex-direction: row;
+            align-items: baseline;
+        }
+    }
+
+    .markdown-body {
+        margin-top: $gutter-md;
+        border-top: 1px solid #4d739a;
+        padding-top: $gutter-md;
+
+        h1 {
+            padding-top: ($header-height + $gutter-md * 3);
+            margin-top: -($header-height);
+        }
+        h2 {
+            padding-top: ($header-height + $gutter-sm);
+            margin-top: -($header-height + $gutter-sm);
+        }
+        h1, h2, h3, h4, h5, h6 {
+            border-bottom: 1px solid #4d739a;
+        }
+    }
 }

@@ -1,3 +1,43 @@
-.markdown {
+@import "../variables";
 
+.markdown-body {
+
+    ul {
+        list-style-type: disc;
+    }
+    *:last-child {
+        margin-bottom: 0 !important;
+    }
+    *:first-child {
+        margin-top: 0 !important;
+    }
+    ol, ul {
+        padding-left: 2em;
+    }
+    ol {
+        li {
+            list-style: decimal;
+        }
+    }
+    ul {
+        li {
+            list-style: disc;
+        }
+    }
+    li + li {
+        margin-top: 0.25em;
+    }
+    p, blockquote, ul, ol, dl, table, pre {
+        margin-bottom: $gutter-md;
+    }
+    h1, h2, h3, h4, h5, h6 {
+        margin-top: $gutter-lg;
+        margin-bottom: $gutter-md;
+    }
+    h1, h2 {
+        padding-bottom: 0.3em;
+    }
+    strong {
+        font-weight: 700;
+    }
 }

@@ -29,7 +29,7 @@ class IndexPage extends React.Component<IndexPageProps> {
     public render() {
         return (
             <div className="page-wrapper">
-                <div className="index-page-wrapper">
+                <div className="index-page-wrapper background-page-wrapper">
                     <IndexSearchFormWrapper handleSearchSubmit={this.handleSearchSubmit}/>
                 </div>
             </div>);

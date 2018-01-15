@@ -1,18 +1,19 @@
 @import "../variables";
 @import "../mixins";
 
-
 .index-page-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
 
+.background-page-wrapper {
     background: linear-gradient(rgba(16, 102, 150, 0.97), rgba(35, 60, 64, 0.9)), url('images/bg-1.jpeg');
-
-  background-size: cover;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  width: 100%;
-  margin-top: -$header-height;
-
+    background-size: cover;
+    min-height: 100%;
+    width: 100%;
+    margin-top: -$header-height;
+    box-sizing: border-box;
+    background-attachment: fixed
 }
