@@ -12,6 +12,7 @@ import cookieSession = require("cookie-session");
 
 const nodeEnv = process.env.NODE_ENV || "development";
 const isDev = nodeEnv === "development";
+const port = process.env.PORT || 4000;
 
 const app = express();
 
@@ -46,8 +47,8 @@ app.use("/auth", authRoute);
 app.use("/api", apiRoute);
 app.use("", appRoute);
 
-app.listen(4000, "0.0.0.0", () => {
+app.listen(port, () => {
     /* tslint:disable */
-    console.log(colors.green(`AboutDevs started at http://localhost:4000/. NODE_ENV: ${process.env.NODE_ENV}`));
+    console.log(colors.green(`AboutDevs started. Port: ${port}. NODE_ENV: ${process.env.NODE_ENV}`));
     /* tslint-enable */
 });
