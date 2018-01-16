@@ -18,7 +18,7 @@ export class MarkdownEditor extends React.Component<MarkdownEditorProps, Markdow
     }
 
     render() {
-        const {name, value} = this.props.input;
+        const {meta: {invalid, touched}, input: {name, value}} = this.props;
         return (
             <ReactMde
                 textAreaProps={{id: name, name, rows: 20}}

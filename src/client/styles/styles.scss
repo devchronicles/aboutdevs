@@ -47,6 +47,7 @@ body {
         flex-direction: column;
         align-items: stretch;
         box-sizing: border-box;
+        min-height: 100vh;
 
         ::-webkit-scrollbar-track {
             // sets the background of the tracker
