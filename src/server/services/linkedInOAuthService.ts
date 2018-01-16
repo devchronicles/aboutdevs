@@ -75,6 +75,8 @@ export async function createFromLinkedInProfile(db: serverTypes.AboutDevsDatabas
  * @param profile
  */
 export async function updateFromLinkedInProfile(db: serverTypes.AboutDevsDatabase, existingUser: serverTypes.User, profile: linkedInOAuthTypes.LinkedInOAuthProfile): Promise<serverTypes.User> {
+    console.log(JSON.stringify(profile, null, 4));
+
     if (!db) throw Error("'db' should be truthy");
     if (!existingUser) throw Error("'existingUser' should be truthy");
     if (!profile) throw Error("'profile' should be truthy");
@@ -112,6 +114,8 @@ export async function updateFromLinkedInProfile(db: serverTypes.AboutDevsDatabas
 export async function findOrCreateFromLinkedInProfile(db: serverTypes.AboutDevsDatabase, profile: linkedInOAuthTypes.LinkedInOAuthProfile): Promise<serverTypes.User> {
     if (!db) throw Error("'db' should be truthy");
     if (!profile) throw Error("'profile' should be truthy");
+
+    console.log(JSON.stringify(profile, null, 4));
 
     const user = await db.user.findOne({email: profile.emailAddress});
 

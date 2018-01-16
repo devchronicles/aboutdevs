@@ -32,9 +32,18 @@ export default function (passportInstance: passport.PassportStatic) {
             clientID: "78noh1ykaqsz15",
             clientSecret: "4eBPrUndcmjO12xE",
             callbackURL: `${baseUrl}/auth/linkedin/callback`,
-            scope: ["r_emailaddress", "r_basicprofile"],
+            profileFields: [
+                "formatted-name",
+                "headline",
+                "id",
+                "public-profile-url",
+                "email-address",
+                "location",
+            ],
+            scope: ["r_basicprofile", "r_emailaddress"],
         },
         async (accessToken, refreshToken, profile: any, done) => {
+
             try {
                 const db = await buildDb();
                 const user = await findOrCreateFromLinkedInProfile(db, profile._json);

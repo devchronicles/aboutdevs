@@ -7,7 +7,8 @@ declare module "passport-linkedin-oauth2" {
         clientID: string;
         clientSecret: string;
         callbackURL: string;
-        scope: string[];
+        scope?: string[];
+        profileFields?: string[];
         state?: boolean;
     }
 

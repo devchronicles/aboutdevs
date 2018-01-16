@@ -9,7 +9,7 @@ const router = express.Router();
 
 // PUBLIC
 // Used by the SelectLocation component
-router.route("/addresses").get(async (req: express.Request, res: express.Response) => {
+router.route("/l").get(async (req: express.Request, res: express.Response) => {
     const location = req.query.q;
     if (!location) {
         apiHelper.sendOk(res, []);
@@ -20,7 +20,7 @@ router.route("/addresses").get(async (req: express.Request, res: express.Respons
 });
 
 // PUBLIC
-router.route("/tags").get(async (req, res) => {
+router.route("/t").get(async (req, res) => {
     const tag = req.query.q;
     if (!tag) {
         apiHelper.sendOk(res, []);
@@ -32,25 +32,7 @@ router.route("/tags").get(async (req, res) => {
         });
 });
 
-// PUBLIC
-router.route("/users/:user_name").get(async (req, res) => {
-    const userName = req.params.user_name;
-    if (!userName) {
-        apiHelper.sendError(res, "User name should not be empty");
-        return;
-    }
-    await apiHelper.sendDbConnectedPromise(res,
-        async (db) => {
-            const user = await db.user.findOne({name: userName});
-            if (!user) {
-                apiHelper.sendError(res, `Could not find user. User name: ${userName}`);
-                return;
-            }
-            return userService.getUserProfile(db, user);
-        });
-});
-
-router.route("/users/check_name").get(async (req, res) => {
+router.route("/u/check_name").get(async (req, res) => {
     const userId = apiHelper.getUserId(req);
     if (!userId) {
         apiHelper.sendNoUserLoggedInError(res);
@@ -68,7 +50,7 @@ router.route("/users/check_name").get(async (req, res) => {
         });
 });
 
-router.route("/users/edit_my_profile").get(async (req, res) => {
+router.route("/u/edit_my_profile").get(async (req, res) => {
     const userId = apiHelper.getUserId(req);
     if (!userId) {
         apiHelper.sendNoUserLoggedInError(res);
@@ -81,7 +63,7 @@ router.route("/users/edit_my_profile").get(async (req, res) => {
         });
 });
 
-router.route("/users/edit_my_profile").post(async (req, res) => {
+router.route("/u/edit_my_profile").post(async (req, res) => {
     const userId = apiHelper.getUserId(req);
     if (!userId) {
         apiHelper.sendNoUserLoggedInError(res);
@@ -96,6 +78,24 @@ router.route("/users/edit_my_profile").post(async (req, res) => {
                 return {errors};
             }
             return userService.saveProfile(db, userId, profile);
+        });
+});
+
+// PUBLIC
+router.route("/u/:user_name").get(async (req, res) => {
+    const userName = req.params.user_name;
+    if (!userName) {
+        apiHelper.sendError(res, "User name should not be empty");
+        return;
+    }
+    await apiHelper.sendDbConnectedPromise(res,
+        async (db) => {
+            const user = await db.user.findOne({name: userName});
+            if (!user) {
+                apiHelper.sendError(res, `Could not find user. User name: ${userName}`);
+                return;
+            }
+            return userService.getUserProfile(db, user);
         });
 });
 

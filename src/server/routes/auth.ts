@@ -9,11 +9,9 @@ router.route("/linkedin").get(passport.authenticate("linkedin", {}));
 
 router.route("/linkedin/callback").get(
     (req, res, next) => {
-        if (req.query.error) {
+        if (req.query.error)
             redirectToHome(res);
-        } else {
-            next();
-        }
+        next();
     },
     passport.authenticate("linkedin", {
         failureRedirect: "/error",
