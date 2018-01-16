@@ -5,23 +5,23 @@ import { getDataFromFormattedAddress } from "./helpers/googlePlacesFormatHelper"
 import { createTagsParameter } from "../server/helpers/tagHelper";
 
 export function getMyProfileData() {
-    return axios.get("/api/users/edit_my_profile");
+    return axios.get("/api/u/edit_my_profile");
 }
 
 export function getProfileData(userName: string) {
     if (!userName) throw Error("Argument is null or undefined. Argument: userName");
-    return axios.get(`/api/users/${userName}`);
+    return axios.get(`/api/u/${userName}`);
 }
 
 export function saveProfileData(profile: commonTypes.UserProfile): AxiosPromise {
     if (!profile) throw Error("Argument 'profile' should be truthy");
-    return axios.post("/api/users/edit_my_profile", profile);
+    return axios.post("/api/u/edit_my_profile", profile);
 }
 
 export function checkUserName(userName: string): AxiosPromise {
     if (!userName) throw Error("Argument 'userName' should be truthy");
     const queryString = `q=${userName}`;
-    return axios.get(`/api/users/check_name?${queryString}`);
+    return axios.get(`/api/u/check_name?${queryString}`);
 }
 
 // SEARCH
@@ -36,10 +36,10 @@ export function searchDevelopers(tags: string[], formattedAddress: string): Axio
 
 export function searchLocations(search: string): AxiosPromise {
     const queryString = `q=${search}`;
-    return axios.get(`/api/addresses?${queryString}`);
+    return axios.get(`/api/l?${queryString}`);
 }
 
 export function searchTags(search: string): AxiosPromise {
     const queryString = `q=${search}`;
-    return axios.get(`/api/tags?${queryString}`);
+    return axios.get(`/api/t?${queryString}`);
 }

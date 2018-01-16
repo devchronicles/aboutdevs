@@ -9,17 +9,7 @@ export function getUserId(req: express.Request): number {
     if (userId === null && process.env.NODE_ENV !== "production") {
         userId = req.header("user-id");
     }
-    if (!userId) return null;
-}
-
-/**
- * Returns a function that catches an exception in Promises
- * @param {*} res The Express res object
- */
-export function apiExceptionCatcher(res: express.Response): (ex: Error) => any {
-    if (!res) throw Error("Argument 'res' should be truthy");
-
-    return (ex: Error) => res.status(500).send({error: ex.message});
+    return userId || null;
 }
 
 /**
