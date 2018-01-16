@@ -22,7 +22,7 @@ const Header: React.SFC<HeaderProps> = ({loggedUser}) => {
                         <Logo/>
                     </Link>
                     <ul className="header-content-list">
-                        <li>
+                        <li className="important-item">
                             <Link to="/d/docs">Docs</Link>
                         </li>
                         <li>

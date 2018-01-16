@@ -32,8 +32,8 @@ export class IndexSearchFormWrapper extends React.Component<IndexSearchFormWrapp
                         <ul>
                             <li>
                                 Create a professional profile;
-                                Link your social media;
-                                Upload your CV and showcase your skills and portfolio. <a href="/d/about">Learn more</a>.
+                                Link your social media and showcase your skills and portfolio. <a href="/d/docs">Learn
+                                more</a>.
                             </li>
                         </ul>
                     </ul>
