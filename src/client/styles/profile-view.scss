@@ -11,13 +11,13 @@
 
     font-size: 18px;
     box-sizing: border-box;
-    min-height: calc(100vh - #{$header-height});
+    padding-bottom: $gutter-lg;
 
     .header-wrapper {
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding: 60px 0;
+        padding: 60px $gutter-md;
         header {
             color: #fff;
             width: 100%;

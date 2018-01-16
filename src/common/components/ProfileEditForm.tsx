@@ -1,9 +1,6 @@
 import * as React from "react";
 import { FaIcon } from "./FaIcon";
-import {
-    Field, FieldArray, FormField, FormFieldUserName, FormRow, SelectLocation, TextBox,
-    UserTypeToggle,
-} from "./form";
+import { Field, FieldArray, FormField, FormFieldUserName, FormRow, SelectLocation, TextBox, } from "./form";
 import { DocumentSection } from "./DocumentSection";
 import asyncValidation from "../lib/redux-form/asyncValidation";
 import * as ReduxForm from "redux-form";
@@ -15,6 +12,7 @@ import { SocialLinks } from "./form/SocialLinks";
 import { InfoGroups } from "./form/InfoGroups";
 import { MarkdownEditor } from "./form/MarkdownEditor";
 import { UserProfile } from "../typings";
+import { ProfilePictureComponent } from "./ProfilePictureComponent";
 
 interface ProfileEditFormStateProps {
     formValues: any;
@@ -98,7 +96,8 @@ class ProfileEditForm extends React.Component<ProfileEditorFormProps, ProfileEdi
                             <FormRow>
                                 <Field
                                     name="type"
-                                    component={UserTypeToggle}
+                                    label={"Profile Picture"}
+                                    component={ProfilePictureComponent}
                                 />
                             </FormRow>
                             <FormRow>
