@@ -2,15 +2,14 @@ import * as express from "express";
 import buildDb from "../db/buildDb";
 import * as dbTypes from "../typings/dbTypes";
 
-export function getAndEnsureUserId(req: express.Request): number {
+export function getUserId(req: express.Request): number {
     if (!req) throw Error("Argument 'req' should be truthy");
 
     let userId = req.user ? req.user.id : null;
     if (userId === null && process.env.NODE_ENV !== "production") {
         userId = req.header("user-id");
     }
-    if (!userId) throw Error("No user is logged in");
-    return userId;
+    if (!userId) return null;
 }
 
 /**
@@ -25,8 +24,6 @@ export function apiExceptionCatcher(res: express.Response): (ex: Error) => any {
 
 /**
  * Sends an error to the client
- * @param {*} res The express res object
- * @param {*} error Either an error string or an Error object
  */
 export function sendError(res: express.Response, error: Error | string, status = 500): express.Response {
     if (!res) throw Error("Argument 'res' should be truthy");
@@ -35,6 +32,10 @@ export function sendError(res: express.Response, error: Error | string, status =
     const resultError = error instanceof Error ? error.message : error;
     const finalError = process.env.NODE_ENV !== "production" ? resultError : "Something went wrong in the server";
     return res.status(status).send({error: finalError});
+}
+
+export function sendNoUserLoggedInError(res: express.Response) {
+    sendError(res, "No user is logged in");
 }
 
 /**
