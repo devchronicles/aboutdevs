@@ -49,9 +49,20 @@ button, a.button {
         text-decoration: none !important;
     }
 
+    &.non-uppercase {
+        text-transform: none;
+        font-weight: normal;
+    }
+
     &:disabled {
         opacity: 0.4;
         cursor: no-drop;
+    }
+
+    &.gray {
+        color: $color-white;
+        border: 0;
+        background-color: $color-gray-dark;
     }
 
     &.vibrant {

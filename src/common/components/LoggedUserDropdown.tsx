@@ -17,10 +17,10 @@ class LoggedUserDropdown extends React.Component<LoggedUserDropdownProps> {
                     Signed in as <strong className="css-truncate-target">{displayName}</strong>
                 </DropdownHeader>
                 <DropdownDivider/>
-                <DropdownItem linkTo={`/${name}`} text="Your profile"/>
-                <DropdownItem linkTo={`/config/edituserprofile`} text="Edit your profile"/>
+                <DropdownItem linkTo={`/${name}`} content="Your profile"/>
+                <DropdownItem linkTo={`/config/edituserprofile`} content="Edit your profile"/>
                 <DropdownDivider/>
-                <DropdownItem href="/auth/logout" text="Sign out"/>
+                <DropdownItem href="/auth/logout" content="Sign out"/>
             </Dropdown>
         );
     }

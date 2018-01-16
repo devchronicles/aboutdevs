@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import * as commonTypes from "../../common/typings";
 import { LoggedUserDropdown } from "./LoggedUserDropdown";
 import { Logo } from "./Logo";
+import { CommunityDropdown } from "./CommunityDropdown";
 
 interface HeaderProps {
     loggedUser: commonTypes.CurrentUserProfile;
@@ -22,13 +23,10 @@ const Header: React.SFC<HeaderProps> = ({loggedUser}) => {
                     </Link>
                     <ul className="header-content-list">
                         <li>
-                            <Link to="/d/docs">About</Link>
+                            <Link to="/d/docs">Docs</Link>
                         </li>
                         <li>
-                            <a href="/d/docs#how-much-does-aboutdevs-cost">Pricing</a>
-                        </li>
-                        <li>
-                            <a href="/d/docs#community">Community</a>
+                            <CommunityDropdown/>
                         </li>
                         <li className="important-item">
                             {rightComponent}

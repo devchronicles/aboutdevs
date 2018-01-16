@@ -35,7 +35,7 @@ class Layout extends React.Component<LayoutProps> {
     }
 
     public componentDidUpdate() {
-        const { dequeueNotification, notifications } = this.props;
+        const {dequeueNotification, notifications} = this.props;
         if (notifications && notifications.length) {
             this.notificationSystem.addNotification(notifications[0]);
             dequeueNotification();
@@ -43,19 +43,29 @@ class Layout extends React.Component<LayoutProps> {
     }
 
     public render() {
-        const { loggedUser } = this.props;
+        const {loggedUser} = this.props;
+
+        const notificationStyles = {
+            NotificationItem: { // Override the notification item
+                DefaultStyle: { // Applied to every notification, regardless of the notification level
+                    fontSize: "16px",
+                    padding: "16px",
+                },
+            },
+        };
+
         return (
             <div className="container">
-                <Header loggedUser={loggedUser} />
+                <Header loggedUser={loggedUser}/>
                 <Switch>
                     <Route exact={true} path="/d/docs" component={DocsPage}/>
-                    <Route exact={true} path="/search" component={SearchPage} />
-                    <Route exact={true} path="/config/edituserprofile" component={ProfileEditPage} />
+                    <Route exact={true} path="/search" component={SearchPage}/>
+                    <Route exact={true} path="/config/edituserprofile" component={ProfileEditPage}/>
                     <Route path="/s/t/:tags/l/:googlePlaceId/:placeString" component={SearchPage}/>
                     <Route exact={true} path="/:userName" component={ProfileViewPage}/>
-                    <Route exact={true} path="/" component={IndexPage} />
+                    <Route exact={true} path="/" component={IndexPage}/>
                 </Switch>
-                <ReactNotificationSystem ref={this.setNotificationSystemRef} />
+                <ReactNotificationSystem ref={this.setNotificationSystemRef} style={notificationStyles}/>
             </div>
         );
     }

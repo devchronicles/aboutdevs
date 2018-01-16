@@ -17,7 +17,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding: 60px $gutter-md;
+        padding: 50px $gutter-md;
         header {
             color: #fff;
             width: 100%;
@@ -41,7 +41,8 @@
                 line-height: 1em;
             }
             p.current-position {
-                margin-bottom: $gutter-sm;
+                line-height: 1.2em;
+                margin-md: $gutter-sm 0;
                 a {
                     text-decoration: underline;
                 }
@@ -74,7 +75,7 @@
 
     .body-wrapper {
         .body {
-            padding: $gutter-md;
+            padding: $gutter-md $gutter-md 2*$gutter-lg $gutter-md;
             margin: 0 auto;
             max-width: 1000px;
             .tag-wrapper {

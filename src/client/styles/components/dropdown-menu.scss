@@ -56,6 +56,9 @@ ul.dropdown {
                         background-color: $color-gray-light;
                     }
                 }
+                .fa {
+                    margin-right: $gutter-sm;
+                }
             }
 
             div.dropdown-divider {

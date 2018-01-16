@@ -11,16 +11,16 @@ export const DropdownDivider: React.SFC<{}> = () => {
     return <div className="dropdown-divider"/>;
 };
 
-export const DropdownItem: React.SFC<{ linkTo?: string; href?: string; text: string, visible?: boolean; }> = (props) => {
-    const {linkTo, href, text, visible} = props;
+export const DropdownItem: React.SFC<{ linkTo?: string; href?: string; content: React.ReactNode, visible?: boolean; target?: string; }> = (props) => {
+    const {linkTo, href, content, visible, target} = props;
     if (visible === false) {
         return null;
     }
     let linkComponent;
     if (linkTo) {
-        linkComponent = <Link to={linkTo}>{text}</Link>;
+        linkComponent = <Link to={linkTo}>{content}</Link>;
     } else if (href) {
-        linkComponent = <a href={href}>{text}</a>;
+        linkComponent = <a href={href} target={`${target || "_self"}`}>{content}</a>;
     } else {
         throw Error("Either linkTo or href should be provided to DropdownItem");
     }
@@ -43,6 +43,7 @@ export const DropdownHeader: React.SFC<{}> = (props) => {
 interface DropdownProps {
     size?: DropdownMenuSize;
     button: React.ReactNode;
+    outerButtonClasses?: string;
     className?: string;
 }
 
@@ -106,14 +107,14 @@ export class Dropdown extends React.Component<DropdownProps, DropdownState> {
     }
 
     public render() {
-        const {button, children, className, size} = this.props;
+        const {button, outerButtonClasses, children, className, size} = this.props;
         const dropdownClass = this.state.open ? "visible" : "";
 
         const finalClassName = `dropdown ${className ? className : ""}`;
 
         return (
             <ul className={finalClassName} ref={this.setWrapperRef}>
-                <button className="dropdown-menu-button" onClick={this.handleOpen}>
+                <button className={`dropdown-menu-button ${outerButtonClasses || ""}`} onClick={this.handleOpen}>
                     <span className="dropdown-menu-button-content">
                         {button}
                     </span>

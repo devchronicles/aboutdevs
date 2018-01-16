@@ -240,8 +240,8 @@ class ProfileEditForm extends React.Component<ProfileEditorFormProps, ProfileEdi
                         </DocumentSection>
                     </div>
                     <div className="button-bar">
-                        <button onClick={this.handleCancel}>Discard</button>
-                        <button type="submit" className="vibrant" disabled={pristine || submitting}>Save</button>
+                        <button onClick={this.handleCancel}>Close</button>
+                        <button type="submit" className="vibrant" disabled={submitting}>Save</button>
                     </div>
                 </form>
             </div>
