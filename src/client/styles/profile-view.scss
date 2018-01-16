@@ -12,6 +12,7 @@
     font-size: 18px;
     box-sizing: border-box;
     padding-bottom: $gutter-lg;
+    overflow-y: auto;
     min-height: calc(100vh - #{$header-height});
 
     .header-wrapper {

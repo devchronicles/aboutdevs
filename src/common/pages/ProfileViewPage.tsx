@@ -33,9 +33,7 @@ class ProfileViewPage extends React.Component<ProfileViewPageProps> {
         }
         return (
             <div className="page-wrapper">
-                <div className="profile-view-wrapper">
-                    <ProfileView profile={profileState.data}/>
-                </div>
+                <ProfileView profile={profileState.data}/>
             </div>
         );
     }
