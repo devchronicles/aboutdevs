@@ -28,7 +28,7 @@
     "@types/react-router": "^4.0.20",
     "@types/react-router-dom": "^4.2.3",
     "@types/react-select": "^1.1.0",
-    "@types/redux-form": "^7.0.10",
+    "@types/redux-form": "^7.0.12",
     "@types/serve-favicon": "^2.2.30",
     "@types/showdown": "^1.7.2",
     "@types/throng": "^4.0.2",

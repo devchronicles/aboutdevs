@@ -1,10 +1,7 @@
 import * as passport from "passport";
-import { OAuth2Strategy as GoogleStrategy } from "passport-google-oauth";
 import { OAuth2Strategy as LinkedInStrategy } from "passport-linkedin-oauth2";
 import buildDb from "../db/buildDb";
 import * as userHelper from "../services/userService";
-import * as googleOAuthTypes from "../typings/googleOAuthTypes";
-import { findOrCreateFromGoogleProfile } from "../services/googleOAuthService";
 import { findOrCreateFromLinkedInProfile } from "../services/linkedInOAuthService";
 
 const baseUrl = process.env.NODE_ENV === "production" ? "https://aboutdevs.com" : "http://127.0.0.1:4000";
@@ -28,24 +25,6 @@ export default function (passportInstance: passport.PassportStatic) {
                 .catch(done),
             );
     });
-
-    // sets up passport for Google
-    passportInstance.use(new GoogleStrategy(
-        {
-            clientID: "856145944225-c4eivelu0ktapnnt2d1qlms737kv9v0k.apps.googleusercontent.com",
-            clientSecret: "0RSivJavPFZIkPlPIWMTSLzO",
-            callbackURL: `${baseUrl}/auth/google/callback`,
-        },
-        async (accessToken, refreshToken, profile: googleOAuthTypes.GoogleOAuthProfile, done) => {
-            try {
-                const db = await buildDb();
-                const user = await findOrCreateFromGoogleProfile(db, profile);
-                done(null, user.id);
-            } catch (ex) {
-                done(ex);
-            }
-        },
-    ));
 
     // sets up passport for LinkedIn
     passportInstance.use(new LinkedInStrategy(

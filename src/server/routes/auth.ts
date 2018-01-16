@@ -5,31 +5,24 @@ import { redirectToHome, redirectToProfileEdit } from "../helpers/urlHelper";
 
 const router = express.Router();
 
-router.route("/google").get(passport.authenticate("google", {
-    scope: ["https://www.googleapis.com/auth/userinfo.profile",
-        "https://www.googleapis.com/auth/userinfo.email"],
-}));
+router.route("/linkedin").get(passport.authenticate("linkedin", {}));
 
-router.route("/google/callback").get(passport.authenticate("google", {
-    failureRedirect: "/error",
-}), (req, res) => {
-    // this is a hack, I'm storing this value just so I can obtain it back
-    // in my own connect-middleware on every request
-    req.session.userId = req.user;
-    res.redirect("/auth/verifyuserprofile");
-});
-
-router.route("/linkedin").get(passport.authenticate("linkedin", {
-}));
-
-router.route("/linkedin/callback").get(passport.authenticate("linkedin", {
-    failureRedirect: "/error",
-}), (req, res) => {
-    // this is a hack, I'm storing this value just so I can obtain it back
-    // in my own connect-middleware on every request
-    req.session.userId = req.user;
-    res.redirect("/auth/verifyuserprofile");
-});
+router.route("/linkedin/callback").get(
+    (req, res, next) => {
+        if (req.query.error) {
+            redirectToHome(res);
+        } else {
+            next();
+        }
+    },
+    passport.authenticate("linkedin", {
+        failureRedirect: "/error",
+    }), (req, res) => {
+        // this is a hack, I'm storing this value just so I can obtain it back
+        // in my own connect-middleware on every request
+        req.session.userId = req.user;
+        res.redirect("/auth/verifyuserprofile");
+    });
 
 /**
  * Called after a successful authentication.
