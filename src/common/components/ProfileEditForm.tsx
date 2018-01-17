@@ -13,6 +13,7 @@ import { InfoGroups } from "./form/InfoGroups";
 import { MarkdownEditor } from "./form/MarkdownEditor";
 import { UserProfile } from "../typings";
 import { ProfilePictureComponent } from "./ProfilePictureComponent";
+import { Toggle } from "./form/Toggle";
 
 interface ProfileEditFormStateProps {
     formValues: any;
@@ -235,6 +236,32 @@ class ProfileEditForm extends React.Component<ProfileEditorFormProps, ProfileEdi
                                     label="Body text"
                                     component={FormField}
                                     innerComponent={ColorPicker}
+                                />
+                            </FormRow>
+                        </DocumentSection>
+                        <DocumentSection
+                            id={"settings"}
+                            title={"Settings"}
+                            onToggleCollapsed={this.handleToggleCollapsed}
+                            open={this.state.openSections && this.state.openSections.settings}
+                        >
+                            <FormRow>
+                                <Field
+                                    name="settingsEnabled"
+                                    label="Profile"
+                                    component={FormField}
+                                    innerComponent={Toggle}
+                                    help={"Disabled profiles will not searchable or visible for other users."}
+                                />
+
+                            </FormRow>
+                            <FormRow>
+                                <Field
+                                    name="settingsSearchable"
+                                    label="Profile search"
+                                    component={FormField}
+                                    innerComponent={Toggle}
+                                    help={"Disabling search will make your profile not visible in searches inside AboutDevs but it does not affect search engines like Google."}
                                 />
                             </FormRow>
                         </DocumentSection>

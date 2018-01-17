@@ -90,7 +90,8 @@ router.route("/u/:user_name").get(async (req, res) => {
     }
     await apiHelper.sendDbConnectedPromise(res,
         async (db) => {
-            const user = await db.user.findOne({name: userName});
+            const currentUserId = apiHelper.getUserId(req);
+            const user = await userService.getUserByName(db, userName, currentUserId);
             if (!user) {
                 apiHelper.sendError(res, `Could not find user. User name: ${userName}`);
                 return;

@@ -3,6 +3,7 @@ import { isUrl } from "./urlHelper";
 
 // Generic
 export const REQUIRED = "required";
+export const MIN_LENGTH_4 = "min-length-4";
 export const MAX_LENGTH_50 = "max-length-50";
 export const MAX_LENGTH_80 = "max-length-80";
 export const MAX_LENGTH_255 = "max-length-255";
@@ -25,7 +26,7 @@ const exactNameValidators: ValidationCollection = {
     searchTags: [validateSearchTags],
     searchFormattedAddress: [validateSearchLocation],
     // profile edit
-    name: [validateRequired, validateMaxLength50],
+    name: [validateRequired, validateUserName, validateMaxLength50],
     displayName: [validateRequired, validateMaxLength50],
     title: [validateRequired, validateMaxLength80],
     companyName: [validateMaxLength80],
@@ -153,5 +154,13 @@ export function validateInfoGroup(value: any): string {
 export function validateBio(value: any): string {
     if (!value || !value.text) return REQUIRED;
     if (value.text.length > 5000) return MAX_LENGTH_5000;
+    return undefined;
+}
+
+export function validateUserName(value: any): string {
+    if (!value) {
+        return undefined;
+    }
+    if (value.length < 4) return MIN_LENGTH_4;
     return undefined;
 }

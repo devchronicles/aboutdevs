@@ -5,6 +5,8 @@ export function getErrorMessage(error: string) {
         // Generic
         case fieldValidation.REQUIRED:
             return "Required.";
+        case fieldValidation.MIN_LENGTH_4:
+            return "Min size: 4 characters";
         case fieldValidation.MAX_LENGTH_50:
             return "Max size: 50 characters.";
         case fieldValidation.MAX_LENGTH_80:

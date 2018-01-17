@@ -5,6 +5,7 @@ import * as googlePlacesService from "./googlePlacesService";
 import * as stringHelper from "../../common/helpers/stringHelper";
 import { socialLinks } from "../../common/data/socialLinks";
 import { normalizeAllTags, processTagsForSearch } from "../helpers/tagHelper";
+import { UserProfileStatus } from "../../common/typings";
 
 /**
  * Extracts the user name from the user's e-mail
@@ -73,6 +74,8 @@ export async function getUserProfile(db: serverTypes.AboutDevsDatabase, user: se
         colors: user.colors,
         companyName: user.company_name,
         companyUrl: user.company_url,
+        settingsEnabled: user.settings_enabled,
+        settingsSearchable: user.settings_searchable,
     };
 }
 
@@ -95,6 +98,8 @@ export async function saveProfile(db: serverTypes.AboutDevsDatabase, userId: num
     user.colors = profile.colors;
     user.company_name = profile.companyName;
     user.company_url = profile.companyUrl;
+    user.settings_enabled = profile.settingsEnabled;
+    user.settings_searchable = profile.settingsSearchable;
     user.social_links = {
         socialLinks: profile.socialLinks,
     };
@@ -168,6 +173,10 @@ export async function saveProfile(db: serverTypes.AboutDevsDatabase, userId: num
  */
 export async function searchDevelopers(db: serverTypes.AboutDevsDatabase, tags: string, googlePlaceId: string, page: number): Promise<commonTypes.DeveloperSearchProfile[]> {
     page = page > 10 ? 10 : page;
+
+    // This is a temporary hack. Search results will bring 80 developers until paging is properly sorted
+    const staticPage = 2;
+
     // find the place
     const place = await db.google_place.findOne({google_place_id: googlePlaceId});
     if (!place) {
@@ -175,7 +184,7 @@ export async function searchDevelopers(db: serverTypes.AboutDevsDatabase, tags: 
     }
     const {longitude, latitude} = place;
     const tagsNormalized = processTagsForSearch(tags);
-    const searchResult = await db._aboutdevs_search_developers(tagsNormalized, longitude, latitude, page);
+    const searchResult = await db._aboutdevs_search_developers(tagsNormalized, longitude, latitude, staticPage);
     return searchResult.map((d) => ({
         name: d.name,
         displayName: d.display_name,
@@ -217,4 +226,14 @@ export async function validateProfile(db: serverTypes.AboutDevsDatabase, profile
         errors.name = fieldValidationHelper.USER_NAME_IS_TAKEN;
     }
     return errors;
+}
+
+export async function getUserByName(db: serverTypes.AboutDevsDatabase, userName: string, loggedUserId: number) {
+    const user = await db.user.findOne({name: userName});
+    if (!user) return null;
+    const loggedUserIsUserBeingAsked = loggedUserId ? user.id === loggedUserId : false;
+    if (!loggedUserIsUserBeingAsked) {
+        return (user.status === UserProfileStatus.READY && user.settings_enabled) ? user : null;
+    }
+    return user;
 }

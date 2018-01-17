@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Dropdown, DropdownDivider, DropdownHeader, DropdownItem } from "./Dropdown";
 import * as commonTypes from "../typings/commonTypes";
+import { getEditMyProfileUrl, getLogoutUrl, getUserProfileUrl } from "../../server/helpers/routeHelper";
 
 interface LoggedUserDropdownProps {
     loggedUser: commonTypes.CurrentUserProfile;
@@ -17,10 +18,10 @@ class LoggedUserDropdown extends React.Component<LoggedUserDropdownProps> {
                     Signed in as <strong className="css-truncate-target">{displayName}</strong>
                 </DropdownHeader>
                 <DropdownDivider/>
-                <DropdownItem linkTo={`/${name}`} content="Your profile"/>
-                <DropdownItem linkTo={`/config/edituserprofile`} content="Edit your profile"/>
+                <DropdownItem linkTo={getUserProfileUrl(name)} content="Your profile"/>
+                <DropdownItem linkTo={getEditMyProfileUrl()} content="Edit your profile"/>
                 <DropdownDivider/>
-                <DropdownItem href="/auth/logout" content="Sign out"/>
+                <DropdownItem href={getLogoutUrl()} content="Sign out"/>
             </Dropdown>
         );
     }

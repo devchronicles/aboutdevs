@@ -55,6 +55,8 @@ export interface User {
     longitude?: number;
     created_at?: Date;
     last_updated_at?: Date;
+    settings_enabled?: boolean;
+    settings_searchable?: boolean;
 }
 
 export interface StackoverflowTagsCache {

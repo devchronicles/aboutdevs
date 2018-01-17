@@ -67,6 +67,8 @@ export interface UserProfile {
     colors?: UserProfileColors;
     companyName?: string;
     companyUrl?: string;
+    settingsEnabled?: boolean;
+    settingsSearchable?: boolean;
 }
 
 export interface SocialLinkValue {

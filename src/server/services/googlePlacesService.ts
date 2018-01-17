@@ -4,7 +4,8 @@ import * as serverTypes from "../../server/typings";
 import * as geocodeApiHelper from "../helpers/geocodeApiHelper";
 import * as stringHelper from "../../common/helpers/stringHelper";
 import {
-    formatAddress, getDataFromFormattedAddress,
+    formatAddress,
+    getDataFromFormattedAddress,
     validateFormattedAddress,
 } from "../../common/helpers/googlePlacesFormatHelper";
 
@@ -25,6 +26,10 @@ async function saveCitySearchToCache(db: serverTypes.AboutDevsDatabase, searchTe
             search: searchTerm,
             cache: citySearchCache,
         });
+    }
+    // save each individual place
+    for (const city of cities.results) {
+        await getAndSaveCity(db, city.formatted_address);
     }
 }
 

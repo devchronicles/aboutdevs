@@ -7,3 +7,15 @@ export function getDeveloperSearchUrl(tags: string[], formattedAddress: string):
     const tagParameter = createTagsParameter(tags);
     return `/s/t/${normalizeParameter(tagParameter)}/l/${normalizeParameter(placeId)}/${normalizeParameter(address)}`;
 }
+
+export function getEditMyProfileUrl() {
+    return `/config/edituserprofile`;
+}
+
+export function getUserProfileUrl(userName: string) {
+    return `/${userName}`;
+}
+
+export function getLogoutUrl() {
+    return `/auth/logout`;
+}

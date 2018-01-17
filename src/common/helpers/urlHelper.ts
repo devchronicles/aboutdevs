@@ -3,12 +3,13 @@ export function normalizeParameter(denormalizedParameter: string): string {
     return encodeURIComponent(denormalizedParameter);
 }
 
-export function isUrl(str: string): boolean {
-    const pattern = new RegExp("^(https?:\\/\\/)?" + // protocol
-        "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|" + // domain name
+export function isUrl(str: string) {
+    const pattern = new RegExp("^(https?:\\/\\/)" + // protocol
+        "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name and extension
         "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
-        "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
-        "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
+        "(\\:\\d+)?" + // port
+        "(\\/[-a-z\\d%@_.~+&:]*)*" + // path
+        "(\\?[;&a-z\\d%@_.,~+&:=-]*)?" + // query string
         "(\\#[-a-z\\d_]*)?$", "i"); // fragment locator
     return pattern.test(str);
 }
