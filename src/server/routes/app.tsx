@@ -8,11 +8,12 @@ import { renderToString } from "react-dom/server";
 import { configureStore } from "../../common/redux/store";
 import { AppStatic } from "../../common/AppStatic";
 import * as packageJson from "../../../package.json";
+import { getNotFoundUrl } from "../helpers/routeHelper";
 
 const router = express.Router();
 
 // These are the first level paths (e.g, /something) that don't have SSR
-const firstLevelNonSsrPaths = ["search"];
+const firstLevelNonSsrPaths = ["404"];
 
 /**
  * Function  that actually sends the application to the client
@@ -49,7 +50,13 @@ router.route("/:userName").get(async (req, res) => {
     const db = await buildDb();
     const userName = req.params.userName;
     const user = await db.user.findOne({name: userName});
+    if (!user) {
+        res.redirect(getNotFoundUrl());
+        return;
+    }
+
     const userProfile = await getUserProfile(db, user);
+
     const reduxState: ReduxState = {
         loggedUser: req.user,
         profile: {

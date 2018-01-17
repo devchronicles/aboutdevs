@@ -172,15 +172,13 @@ export async function saveProfile(db: serverTypes.AboutDevsDatabase, userId: num
  * Searches developers
  */
 export async function searchDevelopers(db: serverTypes.AboutDevsDatabase, tags: string, googlePlaceId: string, page: number): Promise<commonTypes.DeveloperSearchProfile[]> {
-    page = page > 10 ? 10 : page;
-
     // This is a temporary hack. Search results will bring 80 developers until paging is properly sorted
     const staticPage = 2;
 
     // find the place
     const place = await db.google_place.findOne({google_place_id: googlePlaceId});
-    if (!place) {
-        throw Error(`Place not found. Place id: ${googlePlaceId}`);
+    if (!place || !tags) {
+        return Promise.resolve([]);
     }
     const {longitude, latitude} = place;
     const tagsNormalized = processTagsForSearch(tags);

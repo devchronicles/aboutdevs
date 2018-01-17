@@ -1,7 +1,7 @@
 import * as express from "express";
 import * as passport from "passport";
 import buildDb from "../db/buildDb";
-import { redirectToHome, redirectToProfileEdit } from "../helpers/urlHelper";
+import { getEditMyProfileUrl, getHomeUrl } from "../helpers/routeHelper";
 
 const router = express.Router();
 
@@ -10,7 +10,7 @@ router.route("/linkedin").get(passport.authenticate("linkedin", {}));
 router.route("/linkedin/callback").get(
     (req, res, next) => {
         if (req.query.error)
-            redirectToHome(res);
+            res.redirect(getHomeUrl());
         next();
     },
     passport.authenticate("linkedin", {
@@ -29,7 +29,7 @@ router.route("/verifyuserprofile").get((req, res) => {
     const user = req.user ? req.user : null;
 
     if (!user || !user.id) {
-        redirectToHome(res);
+        res.redirect(getHomeUrl());
     } else {
         buildDb()
             .then((db) =>
@@ -38,13 +38,13 @@ router.route("/verifyuserprofile").get((req, res) => {
                         if (u) {
                             if (u.status === 0) {
                                 // the user needs to update their profile
-                                redirectToProfileEdit(res);
+                                res.redirect(getEditMyProfileUrl());
                             } else {
-                                redirectToHome(res);
+                                res.redirect(getHomeUrl());
                             }
                         } else {
                             // todo: Log error here
-                            redirectToHome(res);
+                            res.redirect(getHomeUrl());
                         }
                     }),
             );
@@ -53,7 +53,7 @@ router.route("/verifyuserprofile").get((req, res) => {
 
 router.get("/logout", (req, res) => {
     req.logout();
-    redirectToHome(res);
+    res.redirect(getHomeUrl());
 });
 
 export default router;
