@@ -56,7 +56,8 @@ class SearchResult extends React.Component <SearchResultProps> {
         return (
             <ul className="search-result">
                 <div className="search-result-header">
-                    {tagComponents} developers in <span className="location">{address}</span>
+                    {tagComponents}<span className="developers-near">developers near</span><i
+                    className={"fa fa-map-marker"}/><span className="location">{address}</span>
                 </div>
                 <ProfileList profiles={searchResultProfiles}/>
             </ul>
