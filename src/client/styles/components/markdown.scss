@@ -40,4 +40,16 @@
     strong {
         font-weight: 700;
     }
+    blockquote {
+        margin: 0;
+        padding: 0 1em;
+        //font-family: monospace, monospace;
+        font-style: italic;
+        border-left: 0.25em solid #dfe2e5;
+        border-left: 2px solid;
+    }
+    a {
+        text-decoration: underline;
+        color: inherit;
+    }
 }

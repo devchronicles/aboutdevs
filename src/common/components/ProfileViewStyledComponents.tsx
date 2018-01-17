@@ -36,5 +36,13 @@ export function buildStyledComponents(colors: UserProfileColors) {
             border-color: ${colors.bodyText};
             color: ${colors.bodyText};
         `,
+        BioWrapper: styled("div")`
+            blockquote {
+                border-color: ${colors.bodyText};
+            }
+            a {
+                color: ${colors.bodyText} !important;
+            }
+        `,
     };
 }
