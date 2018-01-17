@@ -7,7 +7,7 @@ import * as serverTypes from "../src/server/typings";
 import * as tagService from "../src/server/services/tagService";
 import * as stringHelper from "../src/common/helpers/stringHelper";
 import { UserProfileStatus, UserProfileType } from "../src/common/typings";
-import { getAndSaveCity, searchCitiesFormatted } from "../src/server/services/googlePlacesService";
+import { getAndSaveCity, searchLocationsFormatted } from "../src/server/services/locationService";
 
 const randomTags = [
     // .NET
@@ -110,7 +110,7 @@ buildDb()
                 let userLocation = getRandomArrayItem(randomCities);
                 if (userLocation) {
                     userLocation = userLocation.replace(" Area", "");
-                    const citiesFormatted = await searchCitiesFormatted(db, userLocation);
+                    const citiesFormatted = await searchLocationsFormatted(db, userLocation);
                     if (citiesFormatted && citiesFormatted.length) {
                         const googlePlace = await getAndSaveCity(db, citiesFormatted[0]);
                         user.google_place_id = googlePlace.id;

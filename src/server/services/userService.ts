@@ -1,7 +1,7 @@
 import * as fieldValidationHelper from "../../common/helpers/fieldValidationHelper";
 import * as commonTypes from "../../common/typings/commonTypes";
 import * as serverTypes from "../typings";
-import * as googlePlacesService from "./googlePlacesService";
+import * as googlePlacesService from "./locationService";
 import * as stringHelper from "../../common/helpers/stringHelper";
 import { socialLinks } from "../../common/data/socialLinks";
 import { normalizeAllTags, processTagsForSearch } from "../helpers/tagHelper";

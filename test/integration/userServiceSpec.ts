@@ -4,9 +4,10 @@ import * as serverTypes from "../../src/server/typings";
 import linkedInSampleProfile from "./resources/linkedInProfileSample";
 import setupSession from "./setupSession";
 import * as commonTypes from "../../src/common/typings/commonTypes";
-import * as googlePlacesService from "../../src/server/services/googlePlacesService";
+import * as googlePlacesService from "../../src/server/services/locationService";
 import {
-    createFromLinkedInProfile, findOrCreateFromLinkedInProfile,
+    createFromLinkedInProfile,
+    findOrCreateFromLinkedInProfile,
     updateFromLinkedInProfile,
 } from "../../src/server/services/linkedInOAuthService";
 
@@ -114,7 +115,7 @@ describe("userService", () => {
         });
         describe("saveProfile", () => {
             it("Basic scenario", async () => {
-                const formattedAddress = (await googlePlacesService.searchCitiesFormatted(db, "Berlin, Germany"))[0];
+                const formattedAddress = (await googlePlacesService.searchLocationsFormatted(db, "Berlin, Germany"))[0];
 
                 const user = (await db.user.insert({
                     name: "andrerpena",

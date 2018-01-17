@@ -3,7 +3,7 @@ import * as linkedInOAuthTypes from "../typings/linkedInOAuthTypes";
 import { safeRead } from "../../common/helpers/objectHelpers";
 import { extractUserNameFromEmail, getValidUserName } from "./userService";
 import { getGravatarImageFromEmail, GravatarSize } from "../helpers/gravatarHelper";
-import { getAndSaveCity, searchCitiesFormatted } from "./googlePlacesService";
+import { getAndSaveCity, searchLocationsFormatted } from "./locationService";
 import { UserProfileStatus, UserProfileType } from "../../common/typings";
 import * as faker from "faker";
 
@@ -57,7 +57,7 @@ export async function createFromLinkedInProfile(db: serverTypes.AboutDevsDatabas
     let userLocation = profile.location.name;
     if (userLocation) {
         userLocation = userLocation.replace(" Area", "");
-        const citiesFormatted = await searchCitiesFormatted(db, userLocation);
+        const citiesFormatted = await searchLocationsFormatted(db, userLocation);
         if (citiesFormatted && citiesFormatted.length) {
             const googlePlace = await getAndSaveCity(db, citiesFormatted[0]);
             user.google_place_id = googlePlace.id;

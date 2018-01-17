@@ -15,25 +15,24 @@ import {
  * @param {object} citySearchCache The location to be saved in the cache
  * @param {object} db The db object
  */
-async function saveCitySearchToCache(db: serverTypes.AboutDevsDatabase, searchTerm: string, citySearchCache: serverTypes.GooglePlacesTextSearchApiResult): Promise<void> {
+async function saveCitySearch(db: serverTypes.AboutDevsDatabase, searchTerm: string, citySearchCache: serverTypes.GooglePlacesTextSearchApiResult): Promise<void> {
     if (searchTerm === null || searchTerm === undefined) throw Error("Argument 'search' should be null or undefined");
     if (citySearchCache === null || citySearchCache === undefined) throw Error("Argument 'location' should be null or undefined");
-
     // this should be a in a transaction
-    const cities = await searchCitiesFromCache(db, searchTerm);
+    const cities = await searchCitiesFromDatabase(db, searchTerm);
     if (!cities) {
         await db.google_places_textsearch_cache.insert({
             search: searchTerm,
             cache: citySearchCache,
         });
-    }
-    // save each individual place
-    for (const city of cities.results) {
-        await getAndSaveCity(db, city.formatted_address);
+        // save each individual place
+        for (const city of citySearchCache.results) {
+            await getAndSaveCity(db, formatAddress(city.place_id, city.formatted_address));
+        }
     }
 }
 
-async function saveCityDetailsToCache(db: serverTypes.AboutDevsDatabase, placeId: string, cityDetails: serverTypes.GooglePlacesDetailsApiResult): Promise<serverTypes.GooglePlace> {
+async function saveCityDetails(db: serverTypes.AboutDevsDatabase, placeId: string, cityDetails: serverTypes.GooglePlacesDetailsApiResult): Promise<serverTypes.GooglePlace> {
     if (!db) throw Error("Argument is null or undefined. Argument: db");
     if (!placeId) throw Error("Argument is null or undefined. Argument: placeId");
     if (!cityDetails) throw Error("Argument is null or undefined. Argument: cityDetails");
@@ -55,7 +54,7 @@ async function saveCityDetailsToCache(db: serverTypes.AboutDevsDatabase, placeId
     return googlePlace;
 }
 
-export async function searchCitiesFromCache(db: serverTypes.AboutDevsDatabase, searchTerm: string): Promise<serverTypes.GooglePlacesTextSearchApiResult> {
+async function searchCitiesFromDatabase(db: serverTypes.AboutDevsDatabase, searchTerm: string): Promise<serverTypes.GooglePlacesTextSearchApiResult> {
     if (!db) throw Error("Argument is null or undefined. Argument: db");
     if (!searchTerm) throw Error("Argument is null or undefined. Argument: searchTerm");
 
@@ -63,7 +62,7 @@ export async function searchCitiesFromCache(db: serverTypes.AboutDevsDatabase, s
     return result ? result.cache : undefined;
 }
 
-export async function searchCitiesFromGoogle(searchTerm: string): Promise<serverTypes.GooglePlacesTextSearchApiResult> {
+async function searchCitiesFromGoogle(searchTerm: string): Promise<serverTypes.GooglePlacesTextSearchApiResult> {
     if (!searchTerm) throw Error("Argument is null or undefined. Argument: searchTerm");
 
     const encodedLocation = encodeURIComponent(searchTerm);
@@ -78,7 +77,7 @@ export async function searchCitiesFromGoogle(searchTerm: string): Promise<server
     return res.data;
 }
 
-export async function getCityDetailsFromGoogle(placeId: string): Promise<serverTypes.GooglePlacesDetailsApiResult> {
+async function getCityDetailsFromGoogle(placeId: string): Promise<serverTypes.GooglePlacesDetailsApiResult> {
     if (!placeId) throw Error("Argument is null or undefined. Argument: searchTerm");
 
     const key: string = config.google.geocodeApiKey;
@@ -92,6 +91,22 @@ export async function getCityDetailsFromGoogle(placeId: string): Promise<serverT
     return res.data;
 }
 
+async function searchCitiesAndSave(db: serverTypes.AboutDevsDatabase, searchTerm: string): Promise<serverTypes.GooglePlacesTextSearchApiResult> {
+    const normalizedSearchTerm = stringHelper.normalizeForSearch(searchTerm);
+    if (!normalizedSearchTerm) {
+        return Promise.resolve<serverTypes.GooglePlacesTextSearchApiResult>(undefined);
+    }
+
+    let cities = await searchCitiesFromDatabase(db, normalizedSearchTerm);
+    if (cities) {
+        return cities;
+    }
+    cities = await searchCitiesFromGoogle(normalizedSearchTerm);
+    await saveCitySearch(db, normalizedSearchTerm, cities);
+
+    return cities;
+}
+
 export async function getAndSaveCity(db: serverTypes.AboutDevsDatabase, formattedAddress: string): Promise<serverTypes.GooglePlace> {
     if (!db) throw Error("Argument is null or undefined. Argument: db");
     if (!formattedAddress) throw Error("Argument is null or undefined. Argument: formattedAddress");
@@ -103,33 +118,18 @@ export async function getAndSaveCity(db: serverTypes.AboutDevsDatabase, formatte
 
     if (!googlePlace) {
         const cityDetails = await getCityDetailsFromGoogle(placeId);
-        googlePlace = await saveCityDetailsToCache(db, placeId, cityDetails);
+        googlePlace = await saveCityDetails(db, placeId, cityDetails);
     }
     return googlePlace;
 }
 
-export async function searchCities(db: serverTypes.AboutDevsDatabase, searchTerm: string): Promise<serverTypes.GooglePlacesTextSearchApiResult> {
-    const normalizedSearchTerm = stringHelper.normalizeForSearch(searchTerm);
-    if (!normalizedSearchTerm) {
-        return Promise.resolve<serverTypes.GooglePlacesTextSearchApiResult>(undefined);
-    }
-
-    let cities = await searchCitiesFromCache(db, normalizedSearchTerm);
-    if (cities) {
-        return cities;
-    }
-    cities = await searchCitiesFromGoogle(normalizedSearchTerm);
-    await saveCitySearchToCache(db, normalizedSearchTerm, cities);
-
-    return cities;
-}
-
-export async function searchCitiesFormatted(db: serverTypes.AboutDevsDatabase, searchTerm: string): Promise<string[]> {
+// Used by the SelectLocation
+export async function searchLocationsFormatted(db: serverTypes.AboutDevsDatabase, searchTerm: string): Promise<string[]> {
     if (!db) throw Error("Argument is null or undefined. Argument: db");
 
     const defaultResult = Promise.resolve([]);
     if (!searchTerm) return defaultResult;
-    const apiResult = await searchCities(db, searchTerm);
+    const apiResult = await searchCitiesAndSave(db, searchTerm);
     if (searchTerm && apiResult && apiResult.results && apiResult.results.length) {
         return apiResult.results.map((r) => formatAddress(r.place_id, r.formatted_address));
     }
