@@ -23,12 +23,12 @@ export function getDocsMarkdown() {
 
 ## What is AboutDevs?
 
-AboutDevs is a place where:
+AboutDevs is a platform where:
 
 1. Developers can create a professional website, get discoverable and grow their audience. The profile allows linking social
-media, uploading CVs and showcasing skills and portfolio. AboutDevs profile URLs are like *aboutdevs.com/[your-user-name]* 
-but supporting custom domains is intended for the near future. The profile builder was designed with 2 main things in mind: 1) Make it as straightforward 
-as possible. 2) Use a layout that looks professional and advertises the most important information about the developer first.
+media, uploading CVs and showcasing skills and portfolio. AboutDevs profile URLs are like *aboutdevs.com/[your-user-name]*.
+The profile builder was designed with 2 main things in mind: 1) Make it as straightforward as possible. 2) Use a layout 
+that looks professional and advertises the most important information about the developer first.
 
 2. Companies and recruiters can find developers with the exact skillset they need, near the desired location. 
 Currently, it's only possible to search developers by technology and location, but that will soon be extended to allow searching by: 1) Name. 2) Full-text. 3) Developers that are specifically 
@@ -90,18 +90,24 @@ creation as straightforward as possible.
 
 Additional sign in possibilities might be added in the future.
 
-# Roadmap
+# Upcoming features
 
-This is just a list of what has been thought of already. Please use the community to let us know what is important to you.
+AboutDevs is still in Beta.
+
+## Technical
+
+- Add server rendering for all pages (Today only profile pages have server rendering enabled).
+- Fix some page titles.
+- Improve performance.
 
 ## For developers
 
-- Add support for custom domains.
-- Add more customization features.
+- CV uploading
+- Improve the profile builder UX.
 
 ## For companies and recruiters
 
-- Add more search options. Like searching by: 1) Name. 2) Full-text. 3) Developers that are specifically looking for a 
+- Add the ability to search by: 1) Name. 2) Full-text. 3) Developers that are specifically looking for a 
 job, or are willing to relocate, or maybe are open for contract jobs.  
 - Add recruiters and companies profiles.
 - Allow for recruiters to bookmark, ignore and flag fake developers.

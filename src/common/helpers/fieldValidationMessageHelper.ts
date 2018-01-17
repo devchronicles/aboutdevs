@@ -11,8 +11,8 @@ export function getErrorMessage(error: string) {
             return "Max size: 80 characters.";
         case fieldValidation.MAX_LENGTH_255:
             return "Max size: 255 characters.";
-        case fieldValidation.MAX_LENGTH_500:
-            return "Max size: 500 characters.";
+        case fieldValidation.MAX_LENGTH_5000:
+            return "Max size: 5000 characters.";
         case fieldValidation.USER_NAME_IS_TAKEN:
             return "This name is taken.";
         case fieldValidation.URL:

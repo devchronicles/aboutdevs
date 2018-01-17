@@ -1,0 +1,12 @@
+@import "../variables";
+
+.markdown-editor {
+    width: 100%;
+    box-sizing: border-box;
+    &.invalid {
+        textarea {
+            padding-top: $input-padding-vertical + 1px;
+            border-bottom: 1px solid $color-shining-2;
+        }
+    }
+}

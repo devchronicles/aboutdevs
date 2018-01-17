@@ -20,13 +20,15 @@ export class MarkdownEditor extends React.Component<MarkdownEditorProps, Markdow
     render() {
         const {meta: {invalid, touched}, input: {name, value}} = this.props;
         return (
-            <ReactMde
-                textAreaProps={{id: name, name, rows: 20}}
-                value={value}
-                onChange={this.handleValueChange}
-                commands={ReactMdeCommands.getDefaultCommands()}
-                visibility={{preview: false}}
-            />
+            <div className={`markdown-editor ${invalid ? "invalid" : ""}`}>
+                <ReactMde
+                    textAreaProps={{id: name, name, rows: 20}}
+                    value={value}
+                    onChange={this.handleValueChange}
+                    commands={ReactMdeCommands.getDefaultCommands()}
+                    visibility={{preview: false}}
+                />
+            </div>
         );
     }
 }

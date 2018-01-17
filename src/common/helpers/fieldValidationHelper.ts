@@ -6,7 +6,7 @@ export const REQUIRED = "required";
 export const MAX_LENGTH_50 = "max-length-50";
 export const MAX_LENGTH_80 = "max-length-80";
 export const MAX_LENGTH_255 = "max-length-255";
-export const MAX_LENGTH_500 = "max-length-500";
+export const MAX_LENGTH_5000 = "max-length-5000";
 export const USER_NAME_IS_TAKEN = "user-name-is-taken";
 export const INCOMPLETE_SOCIAL_LINK = "incomplete-social-link";
 export const URL = "url";
@@ -32,8 +32,8 @@ const exactNameValidators: ValidationCollection = {
     companyUrl: [validateMaxLength255, validateUrl],
     formattedAddress: [validateRequired, validateMaxLength255],
     tags: [validationRequiredIfDeveloper],
-    bio: [validationRequiredIfDeveloper, validateMaxLength500],
     infoGroups: [validateInfoGroup],
+    bio: [validateBio],
 };
 
 const regexValidators: Array<{ pattern: RegExp, validators: Array<(value: any, user?: commonTypes.UserProfile) => string> }> = [
@@ -43,6 +43,7 @@ const regexValidators: Array<{ pattern: RegExp, validators: Array<(value: any, u
     {pattern: /infoGroups\[\d+\]\.items\[\d+\]\.title/, validators: [validateRequired]},
     {pattern: /infoGroups\[\d+\]\.items\[\d+\]\.url/, validators: [validateUrl]},
     {pattern: /infoGroups\[\d+\]\.items\[\d+\]\.description/, validators: [validateRequired]},
+
 ];
 
 export function getValidatorsForField(fieldName: keyof commonTypes.UserProfile): Array<(value: any, user: commonTypes.UserProfile) => string> {
@@ -103,14 +104,14 @@ export function validateMaxLength255(value: string) {
     if (!value) {
         return undefined;
     }
-    return value.length > 255 ? MAX_LENGTH_500 : undefined;
+    return value.length > 255 ? MAX_LENGTH_255 : undefined;
 }
 
-export function validateMaxLength500(value: string) {
+export function validateMaxLength5000(value: string) {
     if (!value) {
         return undefined;
     }
-    return value.length > 500 ? MAX_LENGTH_500 : undefined;
+    return value.length > 5000 ? MAX_LENGTH_5000 : undefined;
 }
 
 export function validateUrl(value: string) {
@@ -146,5 +147,11 @@ export function validateInfoGroup(value: any): string {
             return ALL_GROUPS_MUST_HAVE_BETWEEN_1_AND_10_ITEMS;
         }
     }
+    return undefined;
+}
+
+export function validateBio(value: any): string {
+    if (!value || !value.text) return REQUIRED;
+    if (value.text.length > 5000) return MAX_LENGTH_5000;
     return undefined;
 }
