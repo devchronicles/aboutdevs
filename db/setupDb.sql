@@ -585,6 +585,8 @@ CREATE TABLE "user" (
     last_updated_at timestamp without time zone DEFAULT timezone('utc'::text, now()) NOT NULL,
     tags_normalized text,
     cv_url character varying(255),
+    settings_enabled boolean DEFAULT true NOT NULL,
+    settings_searchable boolean DEFAULT true NOT NULL,
     CONSTRAINT enforce_srid CHECK ((st_srid(geometry) = 4326))
 );
 
@@ -832,6 +834,27 @@ CREATE INDEX user_geometry_spx ON "user" USING gist (geometry);
 --
 
 CREATE UNIQUE INDEX user_name_uindex ON "user" USING btree (name);
+
+
+--
+-- Name: user_settings_enabled_index; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX user_settings_enabled_index ON "user" USING btree (settings_enabled);
+
+
+--
+-- Name: user_settings_searchable_index; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX user_settings_searchable_index ON "user" USING btree (settings_searchable);
+
+
+--
+-- Name: user_status_index; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX user_status_index ON "user" USING btree (status);
 
 
 --
