@@ -37,7 +37,7 @@ export class IndexSearchFormWrapper extends React.Component<IndexSearchFormWrapp
                             </li>
                         </ul>
                     </ul>
-                    <a href="/auth/linkedin" className="button sign-in faded">Create your free developer profile</a>
+                    <a href="/a/linkedin" className="button sign-in faded">Create your free developer profile</a>
                 </div>}
             </div>
         );

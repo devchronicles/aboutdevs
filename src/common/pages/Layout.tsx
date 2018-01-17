@@ -59,7 +59,7 @@ class Layout extends React.Component<LayoutProps> {
                 <Header loggedUser={loggedUser}/>
                 <Switch>
                     <Route exact={true} path="/d/docs" component={DocsPage}/>
-                    <Route exact={true} path="/config/edituserprofile" component={ProfileEditPage}/>
+                    <Route exact={true} path="/c/edituserprofile" component={ProfileEditPage}/>
                     <Route path="/s/t/:tags/l/:googlePlaceId/:placeString" component={SearchPage}/>
                     <Route exact={true} path="/:userName" component={ProfileViewPage}/>
                     <Route exact={true} path="/" component={IndexPage}/>

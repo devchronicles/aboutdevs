@@ -31,7 +31,7 @@ export default function (passportInstance: passport.PassportStatic) {
         {
             clientID: "78noh1ykaqsz15",
             clientSecret: "4eBPrUndcmjO12xE",
-            callbackURL: `${baseUrl}/auth/linkedin/callback`,
+            callbackURL: `${baseUrl}/a/linkedin/callback`,
             profileFields: [
                 "formatted-name",
                 "headline",

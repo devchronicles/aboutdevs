@@ -48,7 +48,7 @@ function startServer() {
         app.use("/static", express.static("dist/static"));
     }
 
-    app.use("/auth", authRoute);
+    app.use("/a", authRoute);
     app.use("/api", apiRoute);
     app.use("", appRoute);
 

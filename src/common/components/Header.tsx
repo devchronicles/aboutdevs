@@ -4,6 +4,7 @@ import * as commonTypes from "../../common/typings";
 import { LoggedUserDropdown } from "./LoggedUserDropdown";
 import { Logo } from "./Logo";
 import { CommunityDropdown } from "./CommunityDropdown";
+import { getLoginUrl } from "../../server/helpers/routeHelper";
 
 interface HeaderProps {
     loggedUser: commonTypes.CurrentUserProfile;
@@ -12,7 +13,7 @@ interface HeaderProps {
 const Header: React.SFC<HeaderProps> = ({loggedUser}) => {
     const rightComponent = loggedUser.id
         ? <LoggedUserDropdown loggedUser={loggedUser}/>
-        : <a href="/auth/linkedin" className="button vibrant">Sign in</a>;
+        : <a href={getLoginUrl()} className="button vibrant">Sign in</a>;
 
     return (
         <div className="main-header-wrapper">

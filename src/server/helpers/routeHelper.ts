@@ -9,7 +9,7 @@ export function getDeveloperSearchUrl(tags: string[], formattedAddress: string):
 }
 
 export function getEditMyProfileUrl() {
-    return `/config/edituserprofile`;
+    return `/c/edituserprofile`;
 }
 
 export function getUserProfileUrl(userName: string) {
@@ -17,5 +17,9 @@ export function getUserProfileUrl(userName: string) {
 }
 
 export function getLogoutUrl() {
-    return `/auth/logout`;
+    return `/a/logout`;
+}
+
+export function getLoginUrl() {
+    return `/a/linkedin`;
 }

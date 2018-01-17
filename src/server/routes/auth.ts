@@ -19,7 +19,7 @@ router.route("/linkedin/callback").get(
         // this is a hack, I'm storing this value just so I can obtain it back
         // in my own connect-middleware on every request
         req.session.userId = req.user;
-        res.redirect("/auth/verifyuserprofile");
+        res.redirect("/a/verifyuserprofile");
     });
 
 /**
