@@ -22,7 +22,6 @@ export class ProfileView extends React.Component<ProfileViewProps, ProfileViewSt
         }
 
         const {
-            ProfileWrapper,
             // Header
             HeaderWrapper,
             HeaderA,
@@ -57,7 +56,7 @@ export class ProfileView extends React.Component<ProfileViewProps, ProfileViewSt
         }
 
         return (
-            <ProfileWrapper className="profile-view">
+            <div className="profile-view" style={{backgroundColor: profile.colors.bodyBackground}}>
                 <HeaderWrapper className="header-wrapper">
                     <header>
                         <div className="profile-image" style={{backgroundImage: `url(${profile.photoUrl})`}}/>
@@ -111,7 +110,7 @@ export class ProfileView extends React.Component<ProfileViewProps, ProfileViewSt
                         </div>
                     </div>
                 </BodyWrapper>
-            </ProfileWrapper>
+            </div>
         );
     }
 }

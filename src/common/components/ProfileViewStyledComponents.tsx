@@ -3,10 +3,6 @@ import styled from "react-emotion";
 
 export function buildStyledComponents(colors: UserProfileColors) {
     return {
-        // WRAPPER
-        ProfileWrapper: styled("div")`
-            background-color: ${colors.bodyBackground}
-        `,
         // HEADER
         HeaderWrapper: styled("div")`
             background-color: ${colors.headerBackground}
