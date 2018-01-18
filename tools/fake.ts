@@ -129,7 +129,7 @@ buildDb()
 
                 userProfile.tags = [getRandomArrayItem(tagSearchResult1), getRandomArrayItem(tagSearchResult2), getRandomArrayItem(tagSearchResult3)];
 
-                await userService.saveProfile(db, insertedUser.id, userProfile);
+                await userService.saveProfile(db, insertedUser.id, userProfile, null);
             }
             catch (ex) {
                 console.log("error");

@@ -6,6 +6,7 @@ import * as stringHelper from "../../common/helpers/stringHelper";
 import { socialLinks } from "../../common/data/socialLinks";
 import { normalizeAllTags, processTagsForSearch } from "../helpers/tagHelper";
 import { UserProfileStatus } from "../../common/typings";
+import { deleteFile, getCvFileKeyForUser, uploadFile } from "./s3Service";
 
 /**
  * Extracts the user name from the user's e-mail
@@ -46,6 +47,7 @@ export function getReduxDataForLoggedUser(user: serverTypes.User): commonTypes.C
         name: user.name,
         displayName: user.display_name,
         photoUrl: user.photo_url,
+        activated: user.status === UserProfileStatus.READY,
     };
 }
 
@@ -76,16 +78,17 @@ export async function getUserProfile(db: serverTypes.AboutDevsDatabase, user: se
         companyUrl: user.company_url,
         settingsEnabled: user.settings_enabled,
         settingsSearchable: user.settings_searchable,
+        cv: {
+            fileName: user.cv_file_name,
+            url: user.cv_url,
+        },
     };
 }
 
 /**
  * Saves the profile of the given user
- * @param db The massive object
- * @param userId The user id. This id must really exist
- * @param profile The user profile
  */
-export async function saveProfile(db: serverTypes.AboutDevsDatabase, userId: number, profile: commonTypes.UserProfile): Promise<commonTypes.UserProfile> {
+export async function saveProfile(db: serverTypes.AboutDevsDatabase, userId: number, profile: commonTypes.UserProfile, cv: Express.Multer.File): Promise<commonTypes.UserProfile> {
     let user = await db.user.findOne({id: userId});
     if (!user) throw Error("could not find user");
 
@@ -163,6 +166,27 @@ export async function saveProfile(db: serverTypes.AboutDevsDatabase, userId: num
     // update geometry
     if (city) {
         await db._aboutdevs_user_update_geometry(user.id, user.longitude, user.latitude);
+    }
+
+    try {
+        // save CV to S3
+        if (cv && cv.size <= 500000) {
+            // cv will be truthy if it has to be updated
+            const s3FileKey = getCvFileKeyForUser(user.id);
+            const s3SaveResult = await uploadFile(s3FileKey, cv.buffer);
+            user.cv_file_name = profile.cv.fileName;
+            user.cv_url = s3SaveResult.Location;
+            await await db.user.save(user);
+        } else if (!profile.cv.fileName && user.cv_file_name) {
+            // in this case the user removing the file
+            const s3FileKey = getCvFileKeyForUser(user.id);
+            user.cv_file_name = null;
+            user.cv_url = null;
+            await await db.user.save(user);
+            await deleteFile(s3FileKey);
+        }
+    } catch (ex) {
+        // log this
     }
 
     return getUserProfile(db, user);

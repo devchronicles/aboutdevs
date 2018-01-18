@@ -14,6 +14,7 @@ import { MarkdownEditor } from "./form/MarkdownEditor";
 import { UserProfile } from "../typings";
 import { ProfilePictureComponent } from "./ProfilePictureComponent";
 import { Toggle } from "./form/Toggle";
+import { DropzoneInput } from "./form/DropzoneInput";
 
 interface ProfileEditFormStateProps {
     formValues: any;
@@ -65,9 +66,7 @@ class ProfileEditForm extends React.Component<ProfileEditorFormProps, ProfileEdi
     constructor(props: ProfileEditorFormProps) {
         super(props);
         this.state = {
-            openSections: {
-                basicInfo: true,
-            },
+            openSections: {},
         };
     }
 
@@ -153,16 +152,6 @@ class ProfileEditForm extends React.Component<ProfileEditorFormProps, ProfileEdi
                                     addOnBefore={<FaIcon icon="map-marker"/>}
                                 />
                             </FormRow>
-                            <FormRow>
-                                <Field
-                                    name="tags"
-                                    label="Expertise"
-                                    component={FormField}
-                                    innerComponent={SelectTags}
-                                    help="Data by StackOverflow"
-                                    addOnBefore={<FaIcon icon="tags"/>}
-                                />
-                            </FormRow>
                         </DocumentSection>
                         <DocumentSection
                             id={"socialLinks"}
@@ -175,6 +164,37 @@ class ProfileEditForm extends React.Component<ProfileEditorFormProps, ProfileEdi
                                     name="socialLinks"
                                     component={SocialLinks}
                                     socialLinks={formValues ? formValues.socialLinks : undefined}
+                                />
+                            </FormRow>
+                        </DocumentSection>
+                        <DocumentSection
+                            id={"cv"}
+                            title={"Curriculum Vitae"}
+                            onToggleCollapsed={this.handleToggleCollapsed}
+                            open={this.state.openSections && this.state.openSections.cv}
+                        >
+                            <FormRow>
+                                <Field
+                                    name="cv"
+                                    component={FormField}
+                                    innerComponent={DropzoneInput}
+                                    help={"Only PDF files are supported. Max size: 500KB. The CV download button will not appear in your profile in real-time. You have to save the profile and reload the page."}
+                                />
+                            </FormRow>
+                        </DocumentSection>
+                        <DocumentSection
+                            id={"expertise"}
+                            title={"Expertise"}
+                            onToggleCollapsed={this.handleToggleCollapsed}
+                            open={this.state.openSections && this.state.openSections.expertise}
+                        >
+                            <FormRow>
+                                <Field
+                                    name="tags"
+                                    component={FormField}
+                                    innerComponent={SelectTags}
+                                    help="Data by StackOverflow"
+                                    addOnBefore={<FaIcon icon="tags"/>}
                                 />
                             </FormRow>
                         </DocumentSection>
@@ -201,10 +221,10 @@ class ProfileEditForm extends React.Component<ProfileEditorFormProps, ProfileEdi
                             <FieldArray name={"infoGroups"} component={InfoGroups}/>
                         </DocumentSection>
                         <DocumentSection
-                            id={"colors"}
-                            title={"Colors"}
+                            id={"settings"}
+                            title={"Settings"}
                             onToggleCollapsed={this.handleToggleCollapsed}
-                            open={this.state.openSections && this.state.openSections.colors}
+                            open={this.state.openSections && this.state.openSections.settings}
                         >
                             <FormRow>
                                 <Field
@@ -238,17 +258,10 @@ class ProfileEditForm extends React.Component<ProfileEditorFormProps, ProfileEdi
                                     innerComponent={ColorPicker}
                                 />
                             </FormRow>
-                        </DocumentSection>
-                        <DocumentSection
-                            id={"settings"}
-                            title={"Settings"}
-                            onToggleCollapsed={this.handleToggleCollapsed}
-                            open={this.state.openSections && this.state.openSections.settings}
-                        >
                             <FormRow>
                                 <Field
                                     name="settingsEnabled"
-                                    label="Profile"
+                                    label="Profile visibility"
                                     component={FormField}
                                     innerComponent={Toggle}
                                     help={"Disabled profiles will not searchable or visible for other users."}
@@ -258,7 +271,7 @@ class ProfileEditForm extends React.Component<ProfileEditorFormProps, ProfileEdi
                             <FormRow>
                                 <Field
                                     name="settingsSearchable"
-                                    label="Profile search"
+                                    label="Profile search visibility"
                                     component={FormField}
                                     innerComponent={Toggle}
                                     help={"Disabling search will make your profile not visible in searches inside AboutDevs but it does not affect search engines like Google."}
@@ -276,29 +289,38 @@ class ProfileEditForm extends React.Component<ProfileEditorFormProps, ProfileEdi
     }
 }
 
-const FORM_NAME = "profileEdit";
+const
+    FORM_NAME = "profileEdit";
 
 // Decorate with connect to read form values
 
-const mapStateToProps = (state: commonTypes.ReduxState): ProfileEditFormStateProps => ({
-    formValues: ReduxForm.getFormValues(FORM_NAME)(state),
-    formSyncErrors: ReduxForm.getFormSyncErrors(FORM_NAME)(state),
-    formSubmitErrors: ReduxForm.getFormSubmitErrors(FORM_NAME)(state),
-    loggedUser: state.loggedUser,
-});
+const
+    mapStateToProps = (state: commonTypes.ReduxState): ProfileEditFormStateProps => ({
+        formValues: ReduxForm.getFormValues(FORM_NAME)(state),
+        formSyncErrors: ReduxForm.getFormSyncErrors(FORM_NAME)(state),
+        formSubmitErrors: ReduxForm.getFormSubmitErrors(FORM_NAME)(state),
+        loggedUser: state.loggedUser,
+    });
 
-const mapDispatchToProps = (dispatch: ReactRedux.Dispatch<commonTypes.ReduxState>): ProfileEditFormDispatchProps => ({});
+const
+    mapDispatchToProps = (dispatch: ReactRedux.Dispatch<commonTypes.ReduxState>): ProfileEditFormDispatchProps => ({});
 
-const ConnectedProfileEditForm = ReactRedux.connect<ProfileEditFormStateProps, ProfileEditFormDispatchProps, ProfileEditFormOwnProps, ProfileEditorFormProps>(
-    mapStateToProps,
-    mapDispatchToProps,
-)(ProfileEditForm);
+const
+    ConnectedProfileEditForm = ReactRedux.connect<ProfileEditFormStateProps, ProfileEditFormDispatchProps, ProfileEditFormOwnProps, ProfileEditorFormProps>(
+        mapStateToProps,
+        mapDispatchToProps,
+    )(ProfileEditForm);
 
 // Decorate with redux-form
-const FormDecoratedProfileEditForm = ReduxForm.reduxForm<UserProfile, ProfileEditFormOwnProps>({
-    form: FORM_NAME, // a unique identifier for this form,
-    asyncValidate: asyncValidation,
-    asyncBlurFields: ["name"],
-})(ConnectedProfileEditForm);
+const
+    FormDecoratedProfileEditForm = ReduxForm.reduxForm<UserProfile, ProfileEditFormOwnProps>({
+        form: FORM_NAME, // a unique identifier for this form,
+        asyncValidate: asyncValidation,
+        asyncBlurFields: ["name"],
+    })(ConnectedProfileEditForm);
 
-export { FormDecoratedProfileEditForm as ProfileEditForm };
+export {
+    FormDecoratedProfileEditForm
+        as
+            ProfileEditForm,
+};

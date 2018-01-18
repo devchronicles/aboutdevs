@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import * as ReactRouter from "react-router";
 import { ProfileEditForm } from "../components/ProfileEditForm";
 import * as profileEditActions from "../redux/profileEdit/profileActions";
+import * as loggedUserActions from "../redux/loggedUser/loggedUserActions";
 import * as commonTypes from "../../common/typings";
 import * as ReduxForm from "redux-form";
 import * as httpClient from "../httpClient";
@@ -10,6 +11,7 @@ import * as ReactNotificationSystem from "react-notification-system";
 import * as notificationActions from "../../common/redux/notifications/notificationsActions";
 import { Dispatch } from "redux";
 import { ProfileView } from "../components/ProfileView";
+import { getHomeUrl } from "../../server/helpers/routeHelper";
 
 interface ProfileEditPageStateOwnProps extends ReactRouter.RouteComponentProps<any> {
     loggedUser: commonTypes.CurrentUserProfile;
@@ -18,6 +20,7 @@ interface ProfileEditPageStateOwnProps extends ReactRouter.RouteComponentProps<a
 
 interface ProfileEditPageDispatchProps {
     profileEditLoadData: () => void;
+    activateLoggedUser: () => void;
     enqueueNotification: (notification: ReactNotificationSystem.Notification) => void;
 }
 
@@ -33,7 +36,11 @@ declare type ProfileEditPageProps =
 class ProfileEditPage extends React.Component<ProfileEditPageProps> {
 
     private handleFormSubmit = async (values: any) => {
-        const {enqueueNotification} = this.props;
+        const {enqueueNotification, activateLoggedUser, loggedUser} = this.props;
+        enqueueNotification({
+            message: "Saving your profile...",
+            level: "info",
+        });
         const axiosResult = await httpClient.saveProfileData(values);
         if (axiosResult.data.errors) {
             throw new ReduxForm.SubmissionError(axiosResult.data.errors);
@@ -42,7 +49,9 @@ class ProfileEditPage extends React.Component<ProfileEditPageProps> {
                 message: "Your profile has been saved",
                 level: "success",
             });
-            // this.props.history.push("/");
+            if (loggedUser.activated === false) {
+                activateLoggedUser();
+            }
         }
     }
 
@@ -55,7 +64,11 @@ class ProfileEditPage extends React.Component<ProfileEditPageProps> {
     }
 
     public componentDidMount() {
-        const {profileEditLoadData} = this.props;
+        const {profileEditLoadData, loggedUser, history} = this.props;
+        if (!loggedUser || !loggedUser.id) {
+            history.push(getHomeUrl());
+            return;
+        }
         profileEditLoadData();
     }
 
@@ -93,6 +106,7 @@ const mapStateToProps = (state: commonTypes.ReduxState): ProfileEditPageStatePro
 
 const mapDispatchToProps = (dispatch: Dispatch<commonTypes.ReduxState>): ProfileEditPageDispatchProps => ({
     profileEditLoadData: () => dispatch(profileEditActions.profileEditLoadData()),
+    activateLoggedUser: () => dispatch(loggedUserActions.activateLoggedUser()),
     enqueueNotification: (notification: ReactNotificationSystem.Notification) => dispatch(notificationActions.enqueueNotification(notification)),
 });
 

@@ -10,6 +10,7 @@ import {
     findOrCreateFromLinkedInProfile,
     updateFromLinkedInProfile,
 } from "../../src/server/services/linkedInOAuthService";
+import { UserCv } from "../../src/common/typings";
 
 describe("userService", () => {
     let db: serverTypes.AboutDevsDatabase = null;
@@ -133,9 +134,10 @@ describe("userService", () => {
                     address: "Rua Henrique Surerus, 28, Juiz de Fora",
                     title: "medico",
                     formattedAddress,
+                    cv: null as UserCv,
                 };
 
-                await userHelper.saveProfile(db, user.id, profile);
+                await userHelper.saveProfile(db, user.id, profile, null);
             });
         });
     });

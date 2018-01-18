@@ -1,4 +1,3 @@
-
 declare module "react-activity" {
     import * as React from "react";
 

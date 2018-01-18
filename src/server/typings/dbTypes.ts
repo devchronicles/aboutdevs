@@ -57,6 +57,8 @@ export interface User {
     last_updated_at?: Date;
     settings_enabled?: boolean;
     settings_searchable?: boolean;
+    cv_file_name?: string;
+    cv_url?: string;
 }
 
 export interface StackoverflowTagsCache {

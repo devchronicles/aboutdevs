@@ -5,6 +5,7 @@ export interface CurrentUserProfile {
     name: string;
     displayName: string;
     photoUrl: string;
+    activated: boolean;
 }
 
 export enum UserProfileType {
@@ -47,6 +48,12 @@ export interface UserProfileBio {
     text: string;
 }
 
+export interface UserCv {
+    fileName: string;
+    url?: string;
+    file?: any;
+}
+
 export interface UserProfile {
     [key: string]: any;
 
@@ -69,6 +76,7 @@ export interface UserProfile {
     companyUrl?: string;
     settingsEnabled?: boolean;
     settingsSearchable?: boolean;
+    cv: UserCv;
 }
 
 export interface SocialLinkValue {

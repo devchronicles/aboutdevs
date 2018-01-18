@@ -44,7 +44,7 @@
             }
             p.current-position {
                 line-height: 1.2em;
-                margin-md: $gutter-sm 0;
+                margin: $gutter-sm 0;
                 a {
                     text-decoration: underline;
                 }
@@ -70,6 +70,16 @@
                     &:hover {
                         transform: scale(1.2);
                     }
+                }
+            }
+            div.cv-wrapper {
+                margin-top: $gutter-md;
+
+                a {
+                    .fa {
+                        margin-right: $gutter-sm;
+                    }
+                    text-decoration: underline;
                 }
             }
         }

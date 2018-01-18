@@ -90,6 +90,15 @@ export class ProfileView extends React.Component<ProfileViewProps, ProfileViewSt
                                 })
                             }
                         </div>
+                        {
+                            profile.cv && profile.cv.url && (
+                                <div className="cv-wrapper">
+                                    <HeaderA href={profile.cv.url} download={true}>
+                                        <i className="fa fa-arrow-down" aria-hidden="true"/><span>Download my CV</span>
+                                    </HeaderA>
+                                </div>
+                            )
+                        }
                     </header>
                 </HeaderWrapper>
                 <BodyWrapper className="body-wrapper">

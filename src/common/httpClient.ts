@@ -15,7 +15,18 @@ export function getProfileData(userName: string) {
 
 export function saveProfileData(profile: commonTypes.UserProfile): AxiosPromise {
     if (!profile) throw Error("Argument 'profile' should be truthy");
-    return axios.post("/api/u/edit_my_profile", profile);
+    const data = new FormData();
+    if (profile.cv.file) {
+        data.append("cv", profile.cv.file, profile.cv.file.name);
+    }
+    // this copy is to eliminate the profile.cv.file without altering the original
+    const profileCopy = {...profile, ...{cv: {file: null, fileName: profile.cv.fileName, url: profile.cv.url}}};
+    data.append("profile", JSON.stringify(profileCopy));
+    return axios.post("/api/u/edit_my_profile", data, {
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
+    });
 }
 
 export function checkUserName(userName: string): AxiosPromise {

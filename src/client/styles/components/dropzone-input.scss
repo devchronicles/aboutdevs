@@ -1,0 +1,23 @@
+@import "../variables";
+
+.dropzone-input-wrapper {
+    width: 100%;
+    cursor: pointer;
+    .dropzone-input {
+        text-align: center;
+        border: 1px dashed gray;
+        padding: $gutter-sm;
+        box-sizing: border-box;
+        &.dropzone-active {
+            border: 2px dashed gray;
+        }
+    }
+    .remove-wrapper {
+        cursor: pointer;
+        color: red;
+        margin: $gutter-sm 0 0 0;
+        .fa {
+            margin-right: $gutter-xs;
+        }
+    }
+}

@@ -23,7 +23,7 @@ export async function createFromLinkedInProfile(db: serverTypes.AboutDevsDatabas
     const userName = await getValidUserName(db, extractUserNameFromEmail(email));
 
     const user: serverTypes.User = {
-        bio: faker.lorem.paragraphs(3, "\n\n"),
+        bio: faker.lorem.paragraphs(5, "\n\n"),
         status: UserProfileStatus.PENDING_PROFILE_ACTIVATION,
         type: UserProfileType.DEVELOPER,
         display_name: profile.formattedName,

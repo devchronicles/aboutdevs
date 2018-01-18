@@ -1,11 +1,14 @@
 import * as express from "express";
 import * as apiHelper from "../helpers/apiHelper";
+import { sendError } from "../helpers/apiHelper";
 import * as tagService from "../services/tagService";
 import * as googlePlacesService from "../services/locationService";
 import * as userService from "../services/userService";
 import * as dbTypes from "../typings/dbTypes";
+import * as multer from "multer";
 
 const router = express.Router();
+const upload = multer();
 
 // PUBLIC
 // Used by the SelectLocation component
@@ -63,7 +66,7 @@ router.route("/u/edit_my_profile").get(async (req, res) => {
         });
 });
 
-router.route("/u/edit_my_profile").post(async (req, res) => {
+router.route("/u/edit_my_profile").post(upload.single("cv"), async (req, res) => {
     const userId = apiHelper.getUserId(req);
     if (!userId) {
         apiHelper.sendNoUserLoggedInError(res);
@@ -71,13 +74,17 @@ router.route("/u/edit_my_profile").post(async (req, res) => {
     }
     await apiHelper.sendDbConnectedPromise(res,
         async (db) => {
-            if (!req.body) throw Error("profile was not submitted");
-            const profile = req.body;
+            if (!req.body) {
+                sendError(res, "profile was not submitted");
+                return;
+            }
+            const cv = req.file;
+            const profile = JSON.parse(req.body.profile);
             const errors = await userService.validateProfile(db, profile);
             if (Object.keys(errors).length) {
                 return {errors};
             }
-            return userService.saveProfile(db, userId, profile);
+            return userService.saveProfile(db, userId, profile, cv);
         });
 });
 
