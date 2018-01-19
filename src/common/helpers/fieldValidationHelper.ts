@@ -13,6 +13,7 @@ export const INCOMPLETE_SOCIAL_LINK = "incomplete-social-link";
 export const URL = "url";
 
 // Specific
+export const TOO_MANY_TAGS = "The maximum number of tags is 10";
 export const REQUIRED_SEARCH_TAGS = "required-search-tags";
 export const REQUIRED_SEARCH_LOCATION = "required-search-location";
 export const ALL_GROUPS_MUST_HAVE_BETWEEN_1_AND_10_ITEMS = "all-groups-must-have-between-1-and-10-items";
@@ -22,29 +23,29 @@ interface ValidationCollection {
 }
 
 const exactNameValidators: ValidationCollection = {
-    // search
-    searchTags: [validateSearchTags],
-    searchFormattedAddress: [validateSearchLocation],
     // profile edit
     name: [validateRequired, validateUserName, validateMaxLength50],
     displayName: [validateRequired, validateMaxLength50],
     title: [validateRequired, validateMaxLength80],
     companyName: [validateMaxLength80],
-    companyUrl: [validateMaxLength255, validateUrl],
+    companyUrl: [validateUrl, validateMaxLength255],
     formattedAddress: [validateRequired, validateMaxLength255],
-    tags: [validationRequiredIfDeveloper],
+    tags: [validateRequired, validateTags],
     infoGroups: [validateInfoGroup],
     bio: [validateBio],
+    // search
+    searchTags: [validateSearchTags],
+    searchFormattedAddress: [validateSearchLocation],
 };
 
 const regexValidators: Array<{ pattern: RegExp, validators: Array<(value: any, user?: commonTypes.UserProfile) => string> }> = [
-    {pattern: /socialLinks\[\d+\]\.website/, validators: [validateRequired]},
-    {pattern: /socialLinks\[\d+\]\.url/, validators: [validateRequired, validateUrl]},
+    {pattern: /socialLinks\[\d+\]\.website/, validators: [validateRequired, validateMaxLength255]},
+    {pattern: /socialLinks\[\d+\]\.url/, validators: [validateRequired, validateUrl, validateMaxLength255]},
     {pattern: /infoGroups\[\d+\]\.title/, validators: [validateRequired]},
-    {pattern: /infoGroups\[\d+\]\.items\[\d+\]\.title/, validators: [validateRequired]},
-    {pattern: /infoGroups\[\d+\]\.items\[\d+\]\.url/, validators: [validateUrl]},
-    {pattern: /infoGroups\[\d+\]\.items\[\d+\]\.description/, validators: [validateRequired]},
-
+    {pattern: /infoGroups\[\d+\]\.items\[\d+\]\.title/, validators: [validateRequired, validateMaxLength80]},
+    {pattern: /infoGroups\[\d+\]\.items\[\d+\]\.url/, validators: [validateUrl, validateMaxLength255]},
+    {pattern: /infoGroups\[\d+\]\.items\[\d+\]\.tags/, validators: [validateTags]},
+    {pattern: /infoGroups\[\d+\]\.items\[\d+\]\.description/, validators: [validateRequired, validateMaxLength5000]},
 ];
 
 export function getValidatorsForField(fieldName: keyof commonTypes.UserProfile): Array<(value: any, user: commonTypes.UserProfile) => string> {
@@ -122,13 +123,6 @@ export function validateUrl(value: string) {
     return isUrl(value) ? undefined : URL;
 }
 
-export function validationRequiredIfDeveloper(value: any, user: commonTypes.UserProfile) {
-    return (user.type === commonTypes.UserProfileType.DEVELOPER
-        && (value === null || value === undefined || value === "" || ((value instanceof Array) && value.length === 0)))
-        ? REQUIRED
-        : undefined;
-}
-
 // Specific validators
 
 export function validateSearchTags(value: any): string {
@@ -137,6 +131,10 @@ export function validateSearchTags(value: any): string {
 
 export function validateSearchLocation(value: any): string {
     return (value === null || value === undefined || value === "") ? REQUIRED_SEARCH_LOCATION : undefined;
+}
+
+export function validateTags(value: any): string {
+    return (value && value.length > 12) ? TOO_MANY_TAGS : undefined;
 }
 
 export function validateInfoGroup(value: any): string {

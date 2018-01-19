@@ -215,14 +215,25 @@ form, *.form {
     }
 }
 
-.form-help {
+.form-help-base {
     display: block;
-    padding-top: $gutter-sm;
     line-height: 1.2em;
     &.error {
         color: $color-shining-2;
     }
 }
+
+.form-help {
+    @extend .form-help-base;
+    padding-top: $gutter-sm;
+}
+
+.form-help-top {
+    @extend .form-help-base;
+    padding-bottom: $gutter-sm;
+}
+
+
 
 .react-mde {
     width: 100%;

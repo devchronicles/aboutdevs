@@ -193,7 +193,7 @@ class ProfileEditForm extends React.Component<ProfileEditorFormProps, ProfileEdi
                                     name="tags"
                                     component={FormField}
                                     innerComponent={SelectTags}
-                                    help="Data by StackOverflow"
+                                    help="Data by StackOverflow. You can pick up to 12 tags."
                                     addOnBefore={<FaIcon icon="tags"/>}
                                 />
                             </FormRow>
@@ -218,6 +218,11 @@ class ProfileEditForm extends React.Component<ProfileEditorFormProps, ProfileEdi
                             onToggleCollapsed={this.handleToggleCollapsed}
                             open={this.state.openSections && this.state.openSections.infoGroups}
                         >
+                            <small className="form-help-top">
+                                Create lists for your education, professional experience, certifications, open-source
+                                projects, books... The sky is the limit.
+                                Tags added to list items are not associated with your profile, search-wise.
+                            </small>
                             <FieldArray name={"infoGroups"} component={InfoGroups}/>
                         </DocumentSection>
                         <DocumentSection

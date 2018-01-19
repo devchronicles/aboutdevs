@@ -4,6 +4,7 @@ import * as ReactRouter from "react-router";
 import * as clientTypes from "../typings";
 import { IndexSearchFormWrapper } from "../components/IndexSearchFormWrapper";
 import { getDeveloperSearchUrl } from "../../server/helpers/routeHelper";
+import { Footer } from "../components/form/Footer";
 
 interface IndexPageStateProps {
     loggedUser: clientTypes.CurrentUserProfile;
@@ -35,6 +36,7 @@ class IndexPage extends React.Component<IndexPageProps> {
                         handleSearchSubmit={this.handleSearchSubmit}
                         displayRegisterWrapper={!loggedUser.id}
                     />
+                    <Footer/>
                 </div>
             </div>);
     }

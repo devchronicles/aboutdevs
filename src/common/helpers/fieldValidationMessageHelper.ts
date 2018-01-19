@@ -26,6 +26,8 @@ export function getErrorMessage(error: string) {
             return "Please specify the location";
         case fieldValidation.ALL_GROUPS_MUST_HAVE_BETWEEN_1_AND_10_ITEMS:
             return "Every list must have at least 1 item and no more than 10.";
+        case fieldValidation.TOO_MANY_TAGS:
+            return "You can't select more than 8 tags";
         default:
             return error ? "Invalid value." : null;
     }

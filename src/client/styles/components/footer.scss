@@ -1,7 +1,19 @@
 @import "../variables";
 
-.footer-wrapper {
-    .footer {
-
+.footer {
+    position: fixed;
+    bottom: $gutter-sm;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    color: $color-gray-darker;
+    align-items: center;
+    * {
+        color: $color-gray-darker;
+        margin-right: $gutter-xs;
+    }
+    a {
+        color: $color-gray-darker;
     }
 }

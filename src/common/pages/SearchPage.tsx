@@ -11,6 +11,7 @@ import { SearchRouteType } from "../typings/routeTypes";
 import { distillTagsParameter } from "../../server/helpers/tagHelper";
 import { formatAddress } from "../helpers/googlePlacesFormatHelper";
 import { SearchFormModel } from "../typings";
+import { Footer } from "../components/form/Footer";
 
 interface SearchPageStateProps {
 }
@@ -50,13 +51,13 @@ class SearchPage extends React.Component<SearchPageProps> {
                     </div>
                 </div>
                 <SearchResult tags={tagsDecoded} formattedAddress={formattedAddress}/>
+                <Footer/>
             </div>
         );
     }
 }
 
 // CONNECT
-
 const mapStateToProps = (state: commonTypes.ReduxState): SearchPageStateProps => ({
 });
 

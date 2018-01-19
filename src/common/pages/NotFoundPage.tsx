@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Footer } from "../components/form/Footer";
 
 interface NotFoundPageProps {
 
@@ -21,6 +22,7 @@ export class NotFoundPage extends React.Component<NotFoundPageProps, NotFoundPag
                         of the heart, you'll know when you find it. And, like any great relationship,
                         it just gets better and better as the years roll on." <br/> - Steve Jobs
                     </p>
+                    <Footer/>
                 </div>
             </div>
         );
