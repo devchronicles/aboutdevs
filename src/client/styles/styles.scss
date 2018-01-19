@@ -48,7 +48,6 @@ body {
     .page-wrapper {
         padding-top: $header-height;
         box-sizing: border-box;
-        min-height: 100vh;
 
         ::-webkit-scrollbar-track {
             // sets the background of the tracker
