@@ -15,7 +15,8 @@ interface ListsViewerState {
 export class ListsViewer extends React.Component<ListsViewerProps, ListsViewerState> {
     render() {
         const {lists, colors} = this.props;
-
+        if (!lists || !lists.length)
+            return null;
         return (
             <div className="lists-viewer">
                 {lists && lists.map((list, index) => <List key={`list-${index}`} list={list} colors={colors}/>)}
