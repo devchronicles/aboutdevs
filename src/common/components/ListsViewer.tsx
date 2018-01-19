@@ -19,7 +19,7 @@ export class ListsViewer extends React.Component<ListsViewerProps, ListsViewerSt
             return null;
         return (
             <div className="lists-viewer">
-                {lists && lists.map((list, index) => <List key={`list-${index}`} list={list} colors={colors}/>)}
+                {lists.map((list, index) => <List key={`list-${index}`} list={list} colors={colors}/>)}
             </div>
         );
     }
