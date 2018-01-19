@@ -4,6 +4,7 @@ import { socialLinks } from "../data/socialLinks";
 import { getDataFromFormattedAddress } from "../helpers/googlePlacesFormatHelper";
 import { buildStyledComponents } from "./ProfileViewStyledComponents";
 import { Markdown } from "./Markdown";
+import { ListsViewer } from "./ListsViewer";
 
 interface ProfileViewProps {
     profile: commonTypes.UserProfile;
@@ -117,6 +118,8 @@ export class ProfileView extends React.Component<ProfileViewProps, ProfileViewSt
                         <div className="bio-wrapper">
                             <Markdown markdown={profile.bio ? profile.bio.text : ""}/>
                         </div>
+                        {profile.infoGroups && profile.infoGroups.length &&
+                        <ListsViewer lists={profile.infoGroups} colors={profile.colors}/>}
                     </div>
                 </BodyWrapper>
             </div>

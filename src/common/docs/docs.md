@@ -94,16 +94,11 @@ Additional sign in possibilities might be added in the future.
 
 AboutDevs is still in Beta.
 
-## Technical
-
-- Add server rendering for all pages (Today only profile pages have server rendering enabled).
-- Fix some page titles.
-- Improve performance.
-
 ## For developers
 
-- CV uploading
 - Improve the profile builder UX.
+- Add settings for determining what developers are looking for, professionally. Examples: Whether they are
+looking for a job, remote work or contract jobs. 
 
 ## For companies and recruiters
 
@@ -112,6 +107,12 @@ job, or are willing to relocate, or maybe are open for contract jobs.
 - Add recruiters and companies profiles.
 - Allow for recruiters to bookmark, ignore and flag fake developers.
 - Allow recruiters to directly contact developers from within AboutDevs.
+
+## Technical
+
+- Add server rendering for all pages (Today only profile pages have server rendering enabled).
+- Fix some page titles.
+- Improve performance.
 
 # Community
 

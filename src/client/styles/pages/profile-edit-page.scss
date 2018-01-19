@@ -10,7 +10,7 @@
         @media (min-width: $breakpoint-xl) {
             display: flex;
             flex-direction: column;
-            flex: 1 0 auto;
+            flex: 1 1 auto;
             height: calc(100vh - #{$header-height});
         }
     }

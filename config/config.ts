@@ -5,10 +5,9 @@ const POSTGRES_PASSWORD = process.env.POSTGRES_PASSWORD || "aboutdevs";
 const POSTGRES_DATABASE = process.env.POSTGRES_DATABASE || "aboutdevs";
 const POSTGRES_HOST = process.env.POSTGRES_HOST || "localhost";
 const POSTGRES_PORT = (process.env.POSTGRES_PORT ? parseInt(process.env.POSTGRES_PORT, 10) : null) || 5432;
-const POSTGRES_SSL = process.env.NODE_ENV === "production";
+const POSTGRES_SSL = process.env.POSTGRES_SSL ? (process.env.POSTGRES_SSL === "true") : (process.env.NODE_ENV === "production");
 const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY || "AIzaSyAWW8gOlj0-P0iT6ISsL1WFX27tNNPZ7_4";
 const STACKOVERFLOW_KEY = process.env.STACKOVERFLOW_KEY || "2uK67ob8t)Fv)FN*9ZtLqw((";
-
 
 const config: Config = {
     db: {

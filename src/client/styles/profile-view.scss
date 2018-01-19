@@ -5,7 +5,6 @@
 
     h1, h2, h3, h4, h5, h6 {
         font-family: Montserrat, Helvetica Neue, Helvetica, Arial, sans-serif;
-        text-transform: uppercase;
         font-weight: 700;
     }
 
@@ -37,6 +36,7 @@
                 border-radius: 100px;
             }
             h1.username {
+                text-transform: uppercase;
                 margin-top: $gutter-lg;
                 margin-bottom: 0;
                 font-size: $font-size-h1;
@@ -74,12 +74,13 @@
             }
             div.cv-wrapper {
                 margin-top: $gutter-md;
-
                 a {
                     .fa {
                         margin-right: $gutter-sm;
                     }
-                    text-decoration: underline;
+                    &:hover {
+                        text-decoration: underline;
+                    }
                 }
             }
         }
@@ -92,6 +93,7 @@
             max-width: 1000px;
             .tag-wrapper {
                 @extend .flex-row;
+                flex-wrap: wrap;
                 justify-content: center;
                 .tag {
                     padding: $gutter-sm $gutter-sm * 1.5;
@@ -105,7 +107,7 @@
                 line-height: 1.2em;
 
                 .markdown-body {
-                    h1, h2 {
+                    h1, h2, h3, h4, h5, h6 {
                         margin-top: $gutter-md;
                         margin-bottom: $gutter-sm;
                     }
@@ -113,6 +115,9 @@
                         font-size: 26px;
                     }
                     h2 {
+                        font-size: 22px;
+                    }
+                    h3, h4, h5, h6 {
                         font-size: 20px;
                     }
                 }

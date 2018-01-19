@@ -14,7 +14,7 @@ class CommunityDropdown extends React.Component<CommunityDropdownProps> {
         return (
             <Dropdown
                 button={"Community"}
-                outerButtonClasses={"non-uppercase"}
+                outerButtonClasses={"discrete"}
             >
                 <DropdownItem
                     href="https://www.reddit.com/r/AboutDevs/"

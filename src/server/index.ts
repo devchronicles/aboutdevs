@@ -59,7 +59,11 @@ function startServer() {
     });
 }
 
-throng({
-    workers: WORKERS,
-    start: startServer,
-});
+if (WORKERS > 1) {
+    throng({
+        workers: WORKERS,
+        start: startServer,
+    });
+}
+
+startServer();

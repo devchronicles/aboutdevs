@@ -2,7 +2,7 @@ import * as React from "react";
 import * as ReduxForm from "redux-form";
 import * as fieldValidationMessageHelper from "../../../common/helpers/fieldValidationMessageHelper";
 import { FormGroup } from "./FormGroup";
-import { InputGroup } from "./InputGroup";
+import { InputGroup } from "./ListsEditor";
 
 interface FormFieldProps extends ReduxForm.WrappedFieldProps {
     name: string;

@@ -32,6 +32,9 @@ export function buildStyledComponents(colors: UserProfileColors) {
             border-color: ${colors.bodyText};
             color: ${colors.bodyText};
         `,
+        BodyHr: styled("hr")`
+            background: ${colors.bodyText};
+        `,
         BioWrapper: styled("div")`
             blockquote {
                 border-color: ${colors.bodyText};

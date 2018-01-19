@@ -25,7 +25,7 @@ export function getErrorMessage(error: string) {
         case fieldValidation.REQUIRED_SEARCH_LOCATION:
             return "Please specify the location";
         case fieldValidation.ALL_GROUPS_MUST_HAVE_BETWEEN_1_AND_10_ITEMS:
-            return "Every group should have between 1 and 10 items.";
+            return "Every list must have at least 1 item and no more than 10.";
         default:
             return error ? "Invalid value." : null;
     }

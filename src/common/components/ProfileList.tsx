@@ -8,7 +8,6 @@ interface ProfileListProps {
 }
 
 export const ProfileList: React.SFC<ProfileListProps> = ({profiles}) => {
-
     let content: React.ReactNode;
     if (profiles && profiles.length) {
         content = profiles.map((p, i) => <SearchProfileCard key={i} profile={p}/>);
@@ -22,4 +21,3 @@ export const ProfileList: React.SFC<ProfileListProps> = ({profiles}) => {
         </div>
     );
 }
-

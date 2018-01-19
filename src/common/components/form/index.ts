@@ -3,7 +3,7 @@ export * from "./FormField";
 export * from "./FormFieldUserName";
 export * from "./FormGroup";
 export * from "./FormRow";
-export * from "./InputGroup";
+export * from "./ListsEditor";
 export * from "./TextBox";
 export * from "./TextArea";
 export * from "./SelectLocation";

@@ -178,7 +178,7 @@ class ProfileEditForm extends React.Component<ProfileEditorFormProps, ProfileEdi
                                     name="cv"
                                     component={FormField}
                                     innerComponent={DropzoneInput}
-                                    help={"Only PDF files are supported. Max size: 500KB. The CV download button will not appear in your profile in real-time. You have to save the profile and reload the page."}
+                                    help={"Only PDF files are supported. Max size: 500KB. The CV download button might not appear in your profile preview."}
                                 />
                             </FormRow>
                         </DocumentSection>

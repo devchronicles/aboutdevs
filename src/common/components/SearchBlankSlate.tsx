@@ -33,7 +33,7 @@ export class SearchBlankSlate extends React.Component<SearchBlankSlateProps, Sea
             <div className="search-blank-slate">
                 <i className="icon fa fa-meh-o" aria-hidden="true"/>
                 <p className="ask-help">
-                    <strong>Dude, where are my developers?</strong><br/>
+                    <strong>We couldn't find any developer</strong><br/>
                     Oops! But that doesn't mean they don't exist.
                     They just don't know about AboutDevs yet. We're just starting.
                     Want to help? Spread word!

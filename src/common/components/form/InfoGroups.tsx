@@ -132,7 +132,7 @@ export class InfoGroups extends React.Component<InfoGroupsProps> {
                     }
                 </ul>
                 <div className="field-array-button-bar">
-                    <button type="button" onClick={() => fields.push({items: [{}]})}>
+                    <button type="button" onClick={() => fields.push({items: []})}>
                         + List
                     </button>
                 </div>
