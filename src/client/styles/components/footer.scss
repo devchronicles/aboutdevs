@@ -1,7 +1,7 @@
 @import "../variables";
 
 .footer {
-    position: fixed;
+    position: absolute;
     bottom: $gutter-sm;
     width: 100%;
     display: flex;

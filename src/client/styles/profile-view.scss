@@ -52,6 +52,9 @@
             div.social-button-wrapper {
                 @extend .flex-row;
                 align-items: center;
+                justify-items: center;
+                flex-wrap: wrap;
+                padding: 0 $gutter-lg;
 
                 .item {
                     width: 50px;
