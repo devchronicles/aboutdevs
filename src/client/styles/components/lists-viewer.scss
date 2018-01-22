@@ -26,14 +26,13 @@
                     display: flex;
                     flex-direction: row;
                     flex-wrap: wrap;
+                    margin-left: $gutter-sm;
                     .list-item-tag {
                         padding: $gutter-sm $gutter-sm * 1.5;
                         margin: $gutter-sm;
                         border-radius: $radius-md;
                         border: 1px solid;
-                        &:first-child {
-                            margin-left: 0;
-                        }
+                        font-size: 0.8em;
                     }
                 }
             }
