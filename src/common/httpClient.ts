@@ -10,7 +10,7 @@ export function getMyProfileData() {
 
 export function getProfileData(userName: string) {
     if (!userName) throw Error("Argument is null or undefined. Argument: userName");
-    return axios.get(`/api/u/${userName}`);
+    return axios.get(`/api/u/${encodeURIComponent(userName)}`);
 }
 
 export function saveProfileData(profile: commonTypes.UserProfile): AxiosPromise {
@@ -32,7 +32,7 @@ export function saveProfileData(profile: commonTypes.UserProfile): AxiosPromise 
 export function checkUserName(userName: string): AxiosPromise {
     if (!userName) throw Error("Argument 'userName' should be truthy");
     const queryString = `q=${userName}`;
-    return axios.get(`/api/u/check_name?${queryString}`);
+    return axios.get(`/api/u/check_name?${encodeURIComponent(queryString)}`);
 }
 
 // SEARCH
@@ -42,15 +42,13 @@ export function searchDevelopers(tags: string[], formattedAddress: string): Axio
     if (!formattedAddress) throw Error("location should be truthy");
     const {placeId, address} = getDataFromFormattedAddress(formattedAddress);
     const tagsParameter = createTagsParameter(tags);
-    return axios.get(`/api/s/t/${tagsParameter}/l/${placeId}/${address}`);
+    return axios.get(`/api/s/t/${encodeURIComponent(tagsParameter)}/l/${encodeURIComponent(placeId)}/${encodeURIComponent(address)}`);
 }
 
 export function searchLocations(search: string): AxiosPromise {
-    const queryString = `q=${search}`;
-    return axios.get(`/api/l?${queryString}`);
+    return axios.get(`/api/l?q=${encodeURIComponent(search)}`);
 }
 
 export function searchTags(search: string): AxiosPromise {
-    const queryString = `q=${search}`;
-    return axios.get(`/api/t?${queryString}`);
+    return axios.get(`/api/t?q=${encodeURIComponent(search)}`);
 }
