@@ -46,6 +46,8 @@ body {
     margin: 0;
 
     .page-wrapper {
+        @extend .flex-column;
+        min-height: calc(100vh);
         padding-top: $header-height;
         box-sizing: border-box;
 
@@ -66,7 +68,7 @@ body {
         }
     }
 
-    .container {
+    #app {
     }
 }
 

@@ -22,7 +22,7 @@ $cardsPerRowXl: 4;
         width: calc((100% - (#{$cardsPerRowMd * 2} * #{$gutter-md / 2})) / #{$cardsPerRowMd});
     }
 
-    // medium
+    // large
     @media (min-width: $breakpoint-lg) {
         width: calc((100% - (#{$cardsPerRowLg * 2} * #{$gutter-md / 2})) / #{$cardsPerRowLg});
     }

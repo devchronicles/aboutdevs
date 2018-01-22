@@ -56,19 +56,21 @@ class Layout extends React.Component<LayoutProps> {
         };
 
         return (
-            <div className="container">
+            <>
                 <Header loggedUser={loggedUser}/>
-                <Switch>
-                    <Route exact={true} path="/404" component={NotFoundPage}/>
-                    <Route exact={true} path="/d/docs" component={DocsPage}/>
-                    <Route exact={true} path="/c/edituserprofile" component={ProfileEditPage}/>
-                    <Route exact={true} path="/" component={IndexPage}/>
-                    <Route path="/s/t/:tags/l/:googlePlaceId/:placeString" component={SearchPage}/>
-                    <Route exact={true} path="/:userName" component={ProfileViewPage}/>
-                    <Route component={NotFoundPage}/>
-                </Switch>
-                <ReactNotificationSystem ref={this.setNotificationSystemRef} style={notificationStyles}/>
-            </div>
+                <div className="page-body">
+                    <Switch>
+                        <Route exact={true} path="/404" component={NotFoundPage}/>
+                        <Route exact={true} path="/d/docs" component={DocsPage}/>
+                        <Route exact={true} path="/c/edituserprofile" component={ProfileEditPage}/>
+                        <Route exact={true} path="/" component={IndexPage}/>
+                        <Route path="/s/t/:tags/l/:googlePlaceId/:placeString" component={SearchPage}/>
+                        <Route exact={true} path="/:userName" component={ProfileViewPage}/>
+                        <Route component={NotFoundPage}/>
+                    </Switch>
+                    <ReactNotificationSystem ref={this.setNotificationSystemRef} style={notificationStyles}/>
+                </div>
+            </>
         );
     }
 }

@@ -17,6 +17,8 @@
 .search-result {
     margin: 0 auto;
     width: 100%;
+    flex-grow: 1;
+    flex-shrink: 0;
     .search-result-header {
         line-height: 1.2em;
         padding: $gutter-md;

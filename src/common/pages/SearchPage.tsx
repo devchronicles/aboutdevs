@@ -51,7 +51,7 @@ class SearchPage extends React.Component<SearchPageProps> {
                     </div>
                 </div>
                 <SearchResult tags={tagsDecoded} formattedAddress={formattedAddress}/>
-                <Footer/>
+                <Footer position={"bottom"}/>
             </div>
         );
     }

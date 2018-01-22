@@ -1,55 +1,53 @@
 @import '_variables';
 @import '_mixins';
 
-.container {
-    .main-header-wrapper {
-        background-color: $color-white;
+.main-header-wrapper {
+    background-color: $color-white;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    z-index: 10000;
+    border-bottom: 1px solid $color-gray-dark;
+
+    header.header {
         width: 100%;
         display: flex;
-        flex-direction: column;
         align-items: center;
-        position: fixed;
-        z-index: 10000;
-        border-bottom: 1px solid $color-gray-dark;
-
-        header.header {
-            width: 100%;
+        justify-content: space-between;
+        height: $header-height;
+        position: relative;
+        flex-direction: row;
+        .header-content {
             display: flex;
+            flex-direction: row;
             align-items: center;
             justify-content: space-between;
-            height: $header-height;
-            position: relative;
-            flex-direction: row;
-            .header-content {
+            width: 100%;
+            padding: 0 $gutter-md;
+            .logo {
+                font-size: 20px;
+            }
+            ul.header-content-list {
                 display: flex;
                 flex-direction: row;
+                flex: 1 1 auto;
                 align-items: center;
-                justify-content: space-between;
-                width: 100%;
-                padding: 0 $gutter-md;
-                .logo {
-                    font-size: 20px;
-                }
-                ul.header-content-list {
-                    display: flex;
-                    flex-direction: row;
-                    flex: 1 1 auto;
-                    align-items: center;
-                    justify-content: flex-end;
-                    > li {
-                        padding-left: $gutter-md;
-                        display: none;
-                        justify-content: center;
-                        @media (min-width: $breakpoint-lg) {
-                            display: flex;
-                        }
-                        &.important-item {
-                            display: flex;
-                        }
-                        a {
-                            &:hover {
-                                text-decoration: underline;
-                            }
+                justify-content: flex-end;
+                > li {
+                    padding-left: $gutter-md;
+                    display: none;
+                    justify-content: center;
+                    @media (min-width: $breakpoint-lg) {
+                        display: flex;
+                    }
+                    &.important-item {
+                        display: flex;
+                    }
+                    a {
+                        &:hover {
+                            text-decoration: underline;
                         }
                     }
                 }

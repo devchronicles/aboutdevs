@@ -36,7 +36,7 @@ class IndexPage extends React.Component<IndexPageProps> {
                         handleSearchSubmit={this.handleSearchSubmit}
                         displayRegisterWrapper={!loggedUser.id}
                     />
-                    <Footer/>
+                    <Footer position={"static"}/>
                 </div>
             </div>);
     }

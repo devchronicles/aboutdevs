@@ -10,6 +10,8 @@
     padding: $gutter-md;
     margin-top: $header-height;
     min-height: 500px;
+    flex-grow: 1;
+    flex-shrink: 0;
 
     .fa {
         margin-right: $gutter-sm;
