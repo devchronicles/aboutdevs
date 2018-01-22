@@ -12,6 +12,7 @@ import { distillTagsParameter } from "../../server/helpers/tagHelper";
 import { formatAddress } from "../helpers/googlePlacesFormatHelper";
 import { SearchFormModel } from "../typings";
 import { Footer } from "../components/form/Footer";
+import { getPageTitleSearch } from "../helpers/pageTitleHelper";
 
 interface SearchPageStateProps {
 }
@@ -30,6 +31,12 @@ class SearchPage extends React.Component<SearchPageProps> {
     private handleFormSubmit = (formValues: any) => {
         const {searchTags, searchFormattedAddress} = formValues;
         this.props.history.push(getDeveloperSearchUrl(searchTags, searchFormattedAddress));
+    }
+
+    componentDidMount() {
+        if (typeof document !== "undefined") {
+            document.title = getPageTitleSearch();
+        }
     }
 
     public render() {
@@ -58,11 +65,9 @@ class SearchPage extends React.Component<SearchPageProps> {
 }
 
 // CONNECT
-const mapStateToProps = (state: commonTypes.ReduxState): SearchPageStateProps => ({
-});
+const mapStateToProps = (state: commonTypes.ReduxState): SearchPageStateProps => ({});
 
-const mapDispatchToProps = (dispatch: Dispatch<commonTypes.ReduxState>): SearchPageDispatchProps => ({
-});
+const mapDispatchToProps = (dispatch: Dispatch<commonTypes.ReduxState>): SearchPageDispatchProps => ({});
 
 const mergeProps = (stateProps: SearchPageStateProps, dispatchProps: SearchPageDispatchProps, ownProps: SearchPageOwnProps): SearchPageProps => ({
     ...stateProps,

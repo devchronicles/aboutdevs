@@ -4,6 +4,7 @@ import * as ReactRouter from "react-router";
 import * as profileActions from "../redux/profileEdit/profileActions";
 import { ProfileView } from "../components/ProfileView";
 import { LoadState, ProfileState, ReduxState } from "../typings";
+import { getPageTitleDefault, getPageTitleForProfile } from "../helpers/pageTitleHelper";
 
 interface ProfileViewPageStateProps {
     profileState: ProfileState;
@@ -23,6 +24,16 @@ class ProfileViewPage extends React.Component<ProfileViewPageProps> {
     public componentDidMount() {
         const {profileViewLoadData, match: {params: {userName}}} = this.props;
         profileViewLoadData(userName);
+        if (typeof document !== "undefined") {
+            document.title = getPageTitleDefault();
+        }
+    }
+
+    public componentDidUpdate() {
+        const {profileState} = this.props;
+        if (typeof document !== "undefined" && profileState && profileState.data && profileState.data.displayName) {
+            document.title = getPageTitleForProfile(profileState.data.displayName);
+        }
     }
 
     render() {

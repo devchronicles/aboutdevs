@@ -12,6 +12,7 @@ import * as notificationActions from "../../common/redux/notifications/notificat
 import { Dispatch } from "redux";
 import { ProfileView } from "../components/ProfileView";
 import { getHomeUrl } from "../../server/helpers/routeHelper";
+import { getPageTitleDefault } from "../helpers/pageTitleHelper";
 
 interface ProfileEditPageStateOwnProps extends ReactRouter.RouteComponentProps<any> {
     loggedUser: commonTypes.CurrentUserProfile;
@@ -64,12 +65,19 @@ class ProfileEditPage extends React.Component<ProfileEditPageProps> {
     }
 
     public componentDidMount() {
-        const {profileEditLoadData, loggedUser, history} = this.props;
+        const {profileEditLoadData, enqueueNotification, loggedUser, history} = this.props;
         if (!loggedUser || !loggedUser.id) {
             history.push(getHomeUrl());
             return;
         }
         profileEditLoadData();
+        enqueueNotification({
+            message: "Don't forget to save your changes.",
+            level: "info",
+        });
+        if (typeof document !== "undefined") {
+            document.title = getPageTitleDefault();
+        }
     }
 
     private onFormCancel = () => {

@@ -4,7 +4,7 @@
     @extend .flex-column;
     background: linear-gradient(rgba(16, 102, 150, 0.97), rgba(35, 60, 64, 0.5)), url('images/bg-not-found.jpeg') fixed;
     background-size: cover;
-    min-height: 100%;
+    min-height: 100vh;
     width: 100%;
     margin-top: -$header-height;
     box-sizing: border-box;

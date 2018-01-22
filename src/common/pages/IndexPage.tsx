@@ -5,6 +5,7 @@ import * as clientTypes from "../typings";
 import { IndexSearchFormWrapper } from "../components/IndexSearchFormWrapper";
 import { getDeveloperSearchUrl } from "../../server/helpers/routeHelper";
 import { Footer } from "../components/form/Footer";
+import { getPageTitleDefault } from "../helpers/pageTitleHelper";
 
 interface IndexPageStateProps {
     loggedUser: clientTypes.CurrentUserProfile;
@@ -25,6 +26,12 @@ class IndexPage extends React.Component<IndexPageProps> {
     public handleSearchSubmit = (formValues: any) => {
         const {searchTags, searchFormattedAddress} = formValues;
         this.props.history.push(getDeveloperSearchUrl(searchTags, searchFormattedAddress));
+    }
+
+    componentDidMount() {
+        if (typeof document !== "undefined") {
+            document.title = getPageTitleDefault();
+        }
     }
 
     public render() {

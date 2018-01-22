@@ -9,6 +9,7 @@ import { configureStore } from "../../common/redux/store";
 import { AppStatic } from "../../common/AppStatic";
 import * as packageJson from "../../../package.json";
 import { getNotFoundUrl } from "../helpers/routeHelper";
+import { getPageTitleDefault, getPageTitleForProfile } from "../../common/helpers/pageTitleHelper";
 
 const router = express.Router();
 
@@ -18,7 +19,7 @@ const firstLevelNonSsrPaths = ["404"];
 /**
  * Function  that actually sends the application to the client
  */
-function sendApp(req: express.Request, res: express.Response, preloadedHtml: string = null, preloadedState: object = null) {
+function sendApp(req: express.Request, res: express.Response, preloadedHtml: string = null, preloadedState: object = null, pageTitle: string = null) {
     const composedState = {...preloadedState, ...{loggedUser: req.user}};
     fs.readFile("src/common/index.html", "utf8", (error, data) => {
         let result = data;
@@ -34,6 +35,7 @@ function sendApp(req: express.Request, res: express.Response, preloadedHtml: str
             jsPath = `/static/bundle.${(packageJson as any).version}.js`;
         }
 
+        result = result.replace(/\{title\}/g, () => pageTitle || getPageTitleDefault());
         result = result.replace(/\{css\}/g, () => cssPath);
         result = result.replace(/\{js\}/g, () => jsPath);
         result = result.replace(/\{preloadedState\}/g, () => JSON.stringify(composedState));
@@ -66,7 +68,7 @@ router.route("/:userName").get(async (req, res) => {
     };
     const store = configureStore(reduxState);
     const preloadedHtml = renderToString(<AppStatic location={req.originalUrl} store={store}/>);
-    sendApp(req, res, preloadedHtml, reduxState);
+    sendApp(req, res, preloadedHtml, reduxState, getPageTitleForProfile(user.display_name));
 });
 
 /**
