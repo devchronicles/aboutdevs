@@ -18,3 +18,10 @@
         color: $color-gray-darker;
     }
 }
+
+.footer-static {
+    display: none;
+    @media (min-width: $breakpoint-lg) {
+        display: flex;
+    }
+}
