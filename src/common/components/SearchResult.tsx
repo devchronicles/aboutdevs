@@ -49,7 +49,7 @@ class SearchResult extends React.Component <SearchResultProps> {
                 className="tag"
                 key={`tag-i`}
             >
-                #{tagName}
+                {tagName}
             </span>
         ));
 

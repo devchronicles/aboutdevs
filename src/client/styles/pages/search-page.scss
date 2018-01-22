@@ -20,15 +20,20 @@
     flex-grow: 1;
     flex-shrink: 0;
     .search-result-header {
-        line-height: 1.2em;
+        line-height: 1.5em;
         padding: $gutter-md;
         box-sizing: border-box;
         text-align: center;
         border-bottom: 1px solid $color-gray-medium;
         font-size: $font-size-h6;
         .tag {
-            font-weight: 700;
-            margin-right: $gutter-sm;
+            margin: $gutter-xs;
+            padding: 3px $gutter-sm;
+            border: 1px solid $color-gray-light;
+            border-radius: $radius-md;
+            &:first-child {
+                margin-left: 0;
+            }
         }
         .developers-near {
 
