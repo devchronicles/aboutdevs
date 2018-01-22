@@ -1,32 +1,40 @@
 @import "../variables";
 
 .not-found-background-page-wrapper {
-    background: linear-gradient(rgba(16, 102, 150, 0.97), rgba(35, 60, 64, 0.5)), url('images/bg-not-found.jpeg');
+    @extend .flex-column;
+    background: linear-gradient(rgba(16, 102, 150, 0.97), rgba(35, 60, 64, 0.5)), url('images/bg-not-found.jpeg') fixed;
     background-size: cover;
     min-height: 100%;
     width: 100%;
     margin-top: -$header-height;
     box-sizing: border-box;
-    background-attachment: fixed;
-    display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    .not-found {
-        color: darken(rgba(16, 102, 150, 0.3), 15%);
-        font-size: 100px;
-        font-weight: 500;
-        margin: 0;
-        padding: $gutter-lg;
+    .not-found-content {
+        flex-grow: 1;
+        flex-shrink: 0;
+        @extend .flex-column;
+        align-items: center;
+        justify-content: center;
+        .not-found {
+            color: darken(rgba(16, 102, 150, 0.3), 15%);
+            font-size: 100px;
+            font-weight: 500;
+            margin: 0;
+            padding: $gutter-lg;
+        }
+        .not-found-quote {
+            padding: $gutter-md;
+            font-size: 26px;
+            font-style: italic;
+            color: darken(rgba(16, 102, 150, 0.6), 15%);
+            line-height: 1.2em;
+            text-align: center;
+            max-width: 500px;
+            box-sizing: border-box;
+        }
     }
-    .not-found-quote {
-        padding: $gutter-md;
-        font-size: 26px;
-        font-style: italic;
-        color: darken(rgba(16, 102, 150, 0.6), 15%);
-        line-height: 1.2em;
-        text-align: center;
-        max-width: 500px;
-        box-sizing: border-box;
+    .footer {
+        border-top: none;
     }
 }

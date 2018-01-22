@@ -14,14 +14,16 @@ export class NotFoundPage extends React.Component<NotFoundPageProps, NotFoundPag
         return (
             <div className="page-wrapper">
                 <div className="not-found-background-page-wrapper">
-                    <p className="not-found">
-                        404
-                    </p>
-                    <p className="not-found-quote">
-                        "If you haven't found it yet, keep looking. Don't settle. As with all matters
-                        of the heart, you'll know when you find it. And, like any great relationship,
-                        it just gets better and better as the years roll on." <br/> - Steve Jobs
-                    </p>
+                    <div className="not-found-content">
+                        <p className="not-found">
+                            404
+                        </p>
+                        <p className="not-found-quote">
+                            "If you haven't found it yet, keep looking. Don't settle. As with all matters
+                            of the heart, you'll know when you find it. And, like any great relationship,
+                            it just gets better and better as the years roll on." <br/> - Steve Jobs
+                        </p>
+                    </div>
                     <Footer position={"static"}/>
                 </div>
             </div>
