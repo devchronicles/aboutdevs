@@ -11,11 +11,13 @@
     align-items: center;
     justify-content: center;
     .not-found-content {
+        @extend .flex-column;
         flex-grow: 1;
         flex-shrink: 0;
-        @extend .flex-column;
         align-items: center;
         justify-content: center;
+        box-sizing: border-box;
+        padding-top: $header-height;
         .not-found {
             color: darken(rgba(16, 102, 150, 0.3), 15%);
             font-size: 100px;
