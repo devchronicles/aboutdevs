@@ -15,9 +15,6 @@
     margin-top: -$header-height;
     box-sizing: border-box;
     min-height: 100%;
-    @media (min-width: $breakpoint-md) {
-        min-height: calc(100vh);
-    }
     .footer {
         border-top: 1px solid #3d5f6e;
     }
