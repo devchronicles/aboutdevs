@@ -66,7 +66,14 @@ class ProfileEditForm extends React.Component<ProfileEditorFormProps, ProfileEdi
     constructor(props: ProfileEditorFormProps) {
         super(props);
         this.state = {
-            openSections: {},
+            openSections: {
+                basicInfo: true,
+                socialLinks: true,
+                cv: true,
+                expertise: true,
+                bio: true,
+                infoGroups: true,
+            },
         };
     }
 

@@ -55,19 +55,19 @@ The 2 main sources of inspiration where:
 - **Testing**: [Mocha](https://mochajs.org/) and [Chai](http://chaijs.com/). 
 - **External APIs**: [Stackoverflow](https://api.stackexchange.com/docs) for tags and [Google Places](https://developers.google.com/places/) for geo-location.
 - **Languages**: [TypeScript](https://www.typescriptlang.org/) and [SASS](http://sass-lang.com/).
-- **Deployment and hosting**: [Heroku](https://www.heroku.com/).
-  
-The [stock background image](https://www.pexels.com/photo/adult-brainstorming-business-chair-515167/) was freely provided by [Pexels](https://www.pexels.com).
-
+- **Cloud services**: [Heroku](https://www.heroku.com/), [AWS S3](https://aws.amazon.com/s3/) and [CloudFlare](http://cloudflare.com/).
 
 ## The team
 
 Currently the AboutDevs team is only me: [André Pena](https://aboutdevs.com/andrerpena). Be sure to follow me on [Twitter](https://twitter.com/andrerpena)
-and on [Medium](https://medium.com/@andrerpena)! If you like trivia, AboutDevs took me around 450 hours to complete, from zero to deployment,
-and it was my first big side-project. I'm a huge fan of [VSCode](https://code.visualstudio.com/) but I've built AboutDevs using [WebStorm](https://www.jetbrains.com/webstorm/).
-It would have taken longer otherwise. Thank you [JetBrains](https://www.jetbrains.com/)!
+and on [Medium](https://medium.com/@andrerpena)!
 
 # FAQ
+
+## I have signed in and I can see a preview of my profile. Why can't I find myself in the search?
+
+Most likely because you did not edit and save your profile. Your profile will only become active after you save it 
+for the first time. This ensures that all required fields are set.
 
 ## How much does AboutDevs cost?
 
@@ -76,24 +76,27 @@ in the future, AboutDevs as you know it will remain free forever.
 
 ## How does the search work?
 
-Currently AboutDevs only support 1 way of searching: By technologies (or tags) provided by Stackoverflow and by location
+Currently AboutDevs only support one way of searching: By technologies (or tags), provided by Stackoverflow, and by location,
 provided by the Google Places API. The location currently only allows what Google calls a "region". That includes cities,
-counties, states and countries. The search currently displays developers that match all the specified tags sorted by: 1)
-The distance to the center of the given location. If you use a city as location, developers are sorted the distance to
-the latitude and longitude of the center of that city. The same is true for any type of location. 2) By the time the 
+counties, states and countries. The search currently displays developers that match all the specified tags sorted by: 1º)
+The distance to the center of the given location. If you use a city as location, for example, developers are sorted by the distance 
+the center of that city. The same is true for any type of location. 2º) By the time the 
 developer created his/her account, descending. Meaning that newer accounts will tend to be displayed at the top.
 
-## Why only LinkedIn is supported for signing in?
+## Are there plans to support other sign in options, besides LinkedIn?
 
-1. To minimize the occurrence of fake accounts or at least making them easily identifiable.
+Additional sign in possibilities might be added in the future. LinkedIn was selected for the MVP because:
+
+1. It makes it harder to create fake profiles, or at least make them easily identifiable.
 2. LinkedIn provides a fair amount of professional information that is or will be used in the future to make the profile
 creation as straightforward as possible. 
 
-Additional sign in possibilities might be added in the future.
 
-# Upcoming features
 
-AboutDevs is still in Beta.
+# Roadmap feature candidates:
+
+AboutDevs is still in Beta and you're more than invited to go to the [AboutDevs subreddit](https://www.reddit.com/r/AboutDevs/)
+and tell us what is important to you. Bellow is our own wish list:
 
 ## Technical
 
@@ -103,16 +106,18 @@ AboutDevs is still in Beta.
 
 ## For developers
 
-- CV uploading
 - Improve the profile builder UX.
+- Add settings for determining what developers are looking for, professionally. Examples: Whether they are
+looking for a job, remote work or contract jobs. 
 
-## For companies and recruiters
+## For recruiters
 
 - Add the ability to search by: 1) Name. 2) Full-text. 3) Developers that are specifically looking for a 
 job, or are willing to relocate, or maybe are open for contract jobs.  
 - Add recruiters and companies profiles.
 - Allow for recruiters to bookmark, ignore and flag fake developers.
 - Allow recruiters to directly contact developers from within AboutDevs.
+
 
 # Community
 
