@@ -40,8 +40,11 @@
                 text-transform: uppercase;
                 margin-top: $gutter-lg;
                 margin-bottom: 0;
-                font-size: $font-size-h1;
-                line-height: 1em;
+                font-size: $font-size-h2;
+                @media (min-width: $breakpoint-md) {
+                    font-size: $font-size-h1;
+                }
+                line-height: 1.2em;
             }
             p.current-position {
                 line-height: 1.2em;
