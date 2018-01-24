@@ -35,6 +35,15 @@ router.route("/t").get(async (req, res) => {
         });
 });
 
+router.route("/u/my_user").get(async (req, res) => {
+    const myUserInfo = req.user || null;
+    if (myUserInfo) {
+        apiHelper.sendOk(res, myUserInfo);
+    } else {
+        apiHelper.sendNoUserLoggedInError(res);
+    }
+});
+
 router.route("/u/check_name").get(async (req, res) => {
     const userId = apiHelper.getUserId(req);
     if (!userId) {

@@ -21,7 +21,7 @@ interface ProfileEditPageStateOwnProps extends ReactRouter.RouteComponentProps<a
 
 interface ProfileEditPageDispatchProps {
     profileEditLoadData: () => void;
-    activateLoggedUser: () => void;
+    reloadLoggedUser: () => void;
     enqueueNotification: (notification: ReactNotificationSystem.Notification) => void;
 }
 
@@ -37,7 +37,7 @@ declare type ProfileEditPageProps =
 class ProfileEditPage extends React.Component<ProfileEditPageProps> {
 
     private handleFormSubmit = async (values: any) => {
-        const {enqueueNotification, activateLoggedUser, loggedUser} = this.props;
+        const {enqueueNotification, reloadLoggedUser, loggedUser} = this.props;
         enqueueNotification({
             message: "Saving your profile...",
             level: "info",
@@ -50,9 +50,7 @@ class ProfileEditPage extends React.Component<ProfileEditPageProps> {
                 message: "Your profile has been saved",
                 level: "success",
             });
-            if (loggedUser.activated === false) {
-                activateLoggedUser();
-            }
+            await reloadLoggedUser();
         }
     }
 
@@ -114,7 +112,7 @@ const mapStateToProps = (state: commonTypes.ReduxState): ProfileEditPageStatePro
 
 const mapDispatchToProps = (dispatch: Dispatch<commonTypes.ReduxState>): ProfileEditPageDispatchProps => ({
     profileEditLoadData: () => dispatch(profileEditActions.profileEditLoadData()),
-    activateLoggedUser: () => dispatch(loggedUserActions.activateLoggedUser()),
+    reloadLoggedUser: () => dispatch(loggedUserActions.reloadLoggedUser()),
     enqueueNotification: (notification: ReactNotificationSystem.Notification) => dispatch(notificationActions.enqueueNotification(notification)),
 });
 

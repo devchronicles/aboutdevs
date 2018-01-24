@@ -4,6 +4,10 @@ import * as commonTypes from "../common/typings";
 import { getDataFromFormattedAddress } from "./helpers/googlePlacesFormatHelper";
 import { createTagsParameter } from "../server/helpers/tagHelper";
 
+export function getLoggedUserData() {
+    return axios.get("/api/u/my_user");
+}
+
 export function getMyProfileData() {
     return axios.get("/api/u/edit_my_profile");
 }

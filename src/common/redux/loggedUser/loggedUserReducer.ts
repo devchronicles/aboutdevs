@@ -1,5 +1,5 @@
 import * as commonTypes from "../../typings";
-import { ACTIVATE_LOGGED_USER } from "./loggedUserActions";
+import { LOGGED_USER_LOAD_ERROR, LOGGED_USER_LOAD_STARTED, LOGGED_USER_LOAD_SUCCESS, } from "./loggedUserActions";
 
 const defaultLoggedUserState: commonTypes.CurrentUserProfile = {
     id: undefined,
@@ -9,13 +9,15 @@ const defaultLoggedUserState: commonTypes.CurrentUserProfile = {
     activated: false,
 };
 
-export function loggedUserReducer(state = defaultLoggedUserState, {type}: { type: string }) {
-    let newState: commonTypes.CurrentUserProfile;
+export function loggedUserReducer(state = defaultLoggedUserState, {payload, type}: { payload: commonTypes.CurrentUserProfile, type: string }) {
     switch (type) {
-        case ACTIVATE_LOGGED_USER:
-            newState = {...state};
-            newState.activated = true;
-            return newState;
+        case LOGGED_USER_LOAD_STARTED:
+            return state;
+        case LOGGED_USER_LOAD_SUCCESS:
+            return payload;
+        case LOGGED_USER_LOAD_ERROR:
+            // todo: Add error treatment
+            return state;
         default:
             return state;
     }
