@@ -31,8 +31,7 @@ export function saveProfileData(profile: commonTypes.UserProfile): AxiosPromise 
 
 export function checkUserName(userName: string): AxiosPromise {
     if (!userName) throw Error("Argument 'userName' should be truthy");
-    const queryString = `q=${userName}`;
-    return axios.get(`/api/u/check_name?${encodeURIComponent(queryString)}`);
+    return axios.get(`/api/u/check_name?q=${encodeURIComponent(userName)}`);
 }
 
 // SEARCH
