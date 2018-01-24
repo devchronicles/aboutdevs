@@ -103,7 +103,7 @@ class ProfileEditForm extends React.Component<ProfileEditorFormProps, ProfileEdi
                             <FormRow>
                                 <Field
                                     name="type"
-                                    label={"Profile Picture"}
+                                    label={"Profile picture"}
                                     component={FormField}
                                     innerComponent={ProfilePictureComponent}
                                     addOnBefore={<FaIcon icon="camera"/>}
