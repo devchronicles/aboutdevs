@@ -51,7 +51,8 @@ for (const path of firstLevelNonSsrPaths) {
 router.route("/:userName").get(async (req, res) => {
     const db = await buildDb();
     const userName = req.params.userName;
-    const user = await db.user.findOne({name: userName});
+    const lowerCaseUserName = userName.toLowerCase();
+    const user = await db.user.findOne({name: lowerCaseUserName});
     if (!user) {
         res.redirect(getNotFoundUrl());
         return;

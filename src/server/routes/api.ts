@@ -57,7 +57,8 @@ router.route("/u/check_name").get(async (req, res) => {
     }
     await apiHelper.sendDbConnectedPromise(res,
         async (db) => {
-            const nameExistsResult = (await db._aboutdevs_is_user_name_taken(userName, userId))[0];
+            const lowercaseUserName = userName.toLowerCase();
+            const nameExistsResult = (await db._aboutdevs_is_user_name_taken(lowercaseUserName, userId))[0];
             return nameExistsResult.exists;
         });
 });
@@ -104,12 +105,13 @@ router.route("/u/:user_name").get(async (req, res) => {
         apiHelper.sendError(res, "User name should not be empty");
         return;
     }
+    const lowecaseUserName = userName.toLowerCase();
     await apiHelper.sendDbConnectedPromise(res,
         async (db) => {
             const currentUserId = apiHelper.getUserId(req);
-            const user = await userService.getUserByName(db, userName, currentUserId);
+            const user = await userService.getUserByName(db, lowecaseUserName, currentUserId);
             if (!user) {
-                apiHelper.sendError(res, `Could not find user. User name: ${userName}`);
+                apiHelper.sendError(res, `Could not find user. User name: ${lowecaseUserName}`);
                 return;
             }
             return userService.getUserProfile(db, user);

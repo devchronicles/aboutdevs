@@ -93,7 +93,7 @@ export async function saveProfile(db: serverTypes.AboutDevsDatabase, userId: num
     if (!user) throw Error("could not find user");
 
     user.last_updated_at = new Date();
-    user.name = profile.name;
+    user.name = profile.name ? profile.name.toLowerCase() : profile.name;
     user.display_name = profile.displayName;
     user.title = profile.title;
     user.type = profile.type;
@@ -251,7 +251,9 @@ export async function validateProfile(db: serverTypes.AboutDevsDatabase, profile
 }
 
 export async function getUserByName(db: serverTypes.AboutDevsDatabase, userName: string, loggedUserId: number) {
-    const user = await db.user.findOne({name: userName});
+    if (!userName) return null;
+    const lowercaseUserName = userName.toLowerCase();
+    const user = await db.user.findOne({name: lowercaseUserName});
     if (!user) return null;
     const loggedUserIsUserBeingAsked = loggedUserId ? user.id === loggedUserId : false;
     if (!loggedUserIsUserBeingAsked) {
