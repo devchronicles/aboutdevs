@@ -11,10 +11,11 @@ export function searchReducer(state = defaultSearchState, {payload, type}: { pay
     switch (type) {
         case searchActions.SEARCH_LOAD_STARTED:
             searchState = {...state};
-            searchState.loading = false;
+            searchState.loading = true;
             return searchState;
         case searchActions.SEARCH_LOAD_SUCCESS:
             searchState = {...state};
+            searchState.loading = false;
             searchState.profiles = payload;
             return searchState;
         default:
