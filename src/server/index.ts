@@ -36,9 +36,11 @@ function startServer() {
     app.use(passport.session());
 
     // delay
-    app.use((req, res, next) => {
-        setTimeout(next, 0);
-    });
+    if (isDev) {
+        app.use((req, res, next) => {
+            setTimeout(next, process.env.RESPONSE_DELAY || 0);
+        });
+    }
 
     // favicon
     app.use(favicon("public/favicon.ico"));
