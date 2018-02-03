@@ -1,6 +1,6 @@
 import axios, { AxiosPromise } from "axios";
 
-import * as commonTypes from "../common/typings";
+import * as commonTypes from "../common/typings/commonTypes";
 import { getDataFromFormattedAddress } from "./helpers/googlePlacesFormatHelper";
 import { createTagsParameter } from "../server/helpers/tagHelper";
 

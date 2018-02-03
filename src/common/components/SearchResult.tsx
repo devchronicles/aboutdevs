@@ -5,9 +5,10 @@ import { ProfileList } from "./ProfileList";
 import * as searchActions from "../redux/search/searchActions";
 import { distillTagsParameter } from "../../server/helpers/tagHelper";
 import { getDataFromFormattedAddress } from "../helpers/googlePlacesFormatHelper";
+import { SearchState } from "../typings";
 
 interface SearchResultStateProps {
-    searchResultProfiles: commonTypes.DeveloperSearchProfile[];
+    searchState: SearchState;
 }
 
 interface SearchResultDispatchProps {
@@ -41,13 +42,13 @@ class SearchResult extends React.Component <SearchResultProps> {
     }
 
     public render() {
-        const {searchResultProfiles, formattedAddress, tags} = this.props;
+        const {searchState, formattedAddress, tags} = this.props;
         const {address} = getDataFromFormattedAddress(formattedAddress);
 
         const tagComponents = distillTagsParameter(tags).map((tagName, i) => (
             <span
                 className="tag"
-                key={`tag-i`}
+                key={`tag-${i}`}
             >
                 {tagName}
             </span>
@@ -56,17 +57,19 @@ class SearchResult extends React.Component <SearchResultProps> {
         return (
             <ul className="search-result">
                 <div className="search-result-header">
-                    {tagComponents}<span className="developers-near">developers near</span><i
-                    className={"fa fa-map-marker"}/><span className="location">{address}</span>
+                    {tagComponents}
+                    <span className="developers-near">developers near</span>
+                    <i className={"fa fa-map-marker"}/>
+                    <span className="location">{address}</span>
                 </div>
-                <ProfileList profiles={searchResultProfiles}/>
+                <ProfileList searchState={searchState}/>
             </ul>
         );
     }
 }
 
 const mapStateToProps = (state: commonTypes.ReduxState): SearchResultStateProps => ({
-    searchResultProfiles: state.search.profiles,
+    searchState: state.search,
 });
 
 const mapDispatchToProps = (dispatch: ReactRedux.Dispatch<commonTypes.ReduxState>): SearchResultDispatchProps => ({

@@ -21,4 +21,4 @@ export const SearchProfileCard: React.SFC<SearchProfileCardProps> = ({profile}) 
             </a>
         </li>
     );
-}
+};

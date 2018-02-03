@@ -1,5 +1,6 @@
 @import '../variables';
 @import '../mixins';
+@import '../flex';
 
 .search-criteria-wrapper {
     width: 100%;
@@ -44,20 +45,18 @@
         }
     }
     .profile-list {
-        display: flex;
-        flex-direction: row;
+        @extend .flex-row;
+        @include elastic-width($max-container-width + 2 * $gutter-md);
         flex-wrap: wrap;
         padding: $gutter-sm $gutter-sm 2 * $gutter-sm $gutter-sm;
-        @include elastic-width($max-container-width + 2 * $gutter-md);
         box-sizing: border-box;
         margin: 0 auto;
 
         .search-blank-slate {
+            @extend .flex-column;
             @include elastic-width(500px);
             box-sizing: border-box;
             padding: 0 $gutter-md;
-            display: flex;
-            flex-direction: column;
             align-items: center;
             margin: 2 * $gutter-lg auto;
             .icon {
@@ -74,6 +73,21 @@
                     margin: 0 $gutter-xs;
                     cursor: pointer;
                 }
+            }
+        }
+
+        .search-loading {
+            @extend .flex-column;
+            @include elastic-width(500px);
+            box-sizing: border-box;
+            padding: 0 $gutter-md;
+            align-items: center;
+            margin: 2 * $gutter-lg auto;
+            .activity {
+
+            }
+            .text {
+                margin-top: $gutter-sm;
             }
         }
     }

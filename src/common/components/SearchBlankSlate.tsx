@@ -22,12 +22,13 @@ interface SearchBlankSlateState {
 
 }
 
-
 export class SearchBlankSlate extends React.Component<SearchBlankSlateProps, SearchBlankSlateState> {
     render() {
 
         const url = "https://aboutdevs.com";
-        const title = "Check out AboutDevs!";
+        const title = "Check out AboutDevs.";
+        const description = "A website builder made specifically for developers with an integrated search engine for IT recruiters.";
+        const fullTitle = `${title} ${description}`;
 
         return (
             <div className="search-blank-slate">
@@ -39,25 +40,25 @@ export class SearchBlankSlate extends React.Component<SearchBlankSlateProps, Sea
                     Want to help? Spread word!
                 </p>
                 <div className="share-button-row">
-                    <TwitterShareButton url={title} title={title}>
+                    <TwitterShareButton url={url} title={fullTitle}>
                         <TwitterIcon
                             size={32}
                             round={true}
                         />
                     </TwitterShareButton>
-                    <LinkedinShareButton url={title} title={title}>
+                    <LinkedinShareButton url={url} title={title} description={description}>
                         <LinkedInIcon
                             size={32}
                             round={true}
                         />
                     </LinkedinShareButton>
-                    <RedditShareButton url={title} title={title}>
+                    <RedditShareButton url={url} title={fullTitle}>
                         <RedditIcon
                             size={32}
                             round={true}
                         />
                     </RedditShareButton>
-                    <FacebookShareButton url={title} title={title}>
+                    <FacebookShareButton url={url} quote={fullTitle}>
                         <FacebookIcon
                             size={32}
                             round={true}
