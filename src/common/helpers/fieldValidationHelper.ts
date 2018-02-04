@@ -32,7 +32,7 @@ const exactNameValidators: ValidationCollection = {
     formattedAddress: [validateRequired, validateMaxLength255],
     tags: [validateRequired, validateTags],
     infoGroups: [validateInfoGroup],
-    bio: [validateBio],
+    bio: [validateRequired, validateMaxLength5000],
     // search
     searchTags: [validateSearchTags],
     searchFormattedAddress: [validateSearchLocation],
@@ -146,12 +146,6 @@ export function validateInfoGroup(value: any): string {
             return ALL_GROUPS_MUST_HAVE_BETWEEN_1_AND_10_ITEMS;
         }
     }
-    return undefined;
-}
-
-export function validateBio(value: any): string {
-    if (!value || !value.text) return REQUIRED;
-    if (value.text.length > 5000) return MAX_LENGTH_5000;
     return undefined;
 }
 
