@@ -65,7 +65,7 @@ export async function getUserProfile(db: serverTypes.AboutDevsDatabase, user: se
         type: user.type,
         status: user.status,
         formattedAddress: user.google_place_formatted_address,
-        bio: {text: user.bio},
+        bio: user.bio,
         socialLinks: user.social_links
             ? user.social_links.socialLinks
             : null,
@@ -97,7 +97,7 @@ export async function saveProfile(db: serverTypes.AboutDevsDatabase, userId: num
     user.display_name = profile.displayName;
     user.title = profile.title;
     user.type = profile.type;
-    user.bio = profile.bio ? profile.bio.text : "";
+    user.bio = profile.bio || "";
     user.colors = profile.colors;
     user.company_name = profile.companyName;
     user.company_url = profile.companyUrl;
@@ -229,7 +229,7 @@ export async function validateProfile(db: serverTypes.AboutDevsDatabase, profile
         type: 0,
         displayName: "",
         title: "",
-        bio: {text: ""},
+        bio: "",
         address: "",
         ...profile,
     };

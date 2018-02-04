@@ -65,7 +65,7 @@ export interface UserProfile {
     status?: UserProfileStatus;
     displayName: string;
     title: string;
-    bio?: UserProfileBio;
+    bio?: string;
     socialLinks?: SocialLinkValue[];
     infoGroups?: UserProfileInfoGroup[];
     photoUrl?: string;

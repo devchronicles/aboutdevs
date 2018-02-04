@@ -1,6 +1,6 @@
 import * as React from "react";
 import { FaIcon } from "./FaIcon";
-import { Field, FieldArray, FormField, FormFieldUserName, FormRow, SelectLocation, TextBox, } from "./form";
+import { Field, FieldArray, FormField, FormFieldUserName, FormRow, SelectLocation, TextBox } from "./form";
 import { DocumentSection } from "./DocumentSection";
 import asyncValidation from "../lib/redux-form/asyncValidation";
 import * as ReduxForm from "redux-form";
@@ -10,11 +10,11 @@ import { SelectTags } from "./form/SelectTags";
 import { ColorPicker } from "./form/ColorPicker";
 import { SocialLinks } from "./form/SocialLinks";
 import { InfoGroups } from "./form/InfoGroups";
-import { MarkdownEditor } from "./form/MarkdownEditor";
 import { UserProfile } from "../typings";
 import { ProfilePictureComponent } from "./ProfilePictureComponent";
 import { Toggle } from "./form/Toggle";
 import { DropzoneInput } from "./form/DropzoneInput";
+import { TextArea } from "./form/TextArea";
 
 interface ProfileEditFormStateProps {
     formValues: any;
@@ -217,7 +217,11 @@ class ProfileEditForm extends React.Component<ProfileEditorFormProps, ProfileEdi
                                 <Field
                                     name="bio"
                                     component={FormField}
-                                    innerComponent={MarkdownEditor}
+                                    innerComponent={TextArea}
+                                    innerComponentProps={{
+                                        rows: 40,
+                                    }}
+                                    help={"Markdown supported. Don't forget to use absolute URLs in links. Example: like https://foo.com"}
                                 />
                             </FormRow>
                         </DocumentSection>

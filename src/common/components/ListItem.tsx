@@ -1,5 +1,6 @@
 import * as React from "react";
 import { UserProfileInfoGroupItem } from "../typings";
+import { Markdown } from "./Markdown";
 
 interface ListItemProps {
     item: UserProfileInfoGroupItem;
@@ -16,7 +17,9 @@ export class ListItem extends React.Component<ListItemProps, ListItemState> {
         return (
             <div className="list-item">
                 <h3 className="list-item-title">{titleComponent}</h3>
-                <p className="list-item-description">{description}</p>
+                <p className="list-item-description">
+                    <Markdown markdown={description}/>
+                </p>
                 {tags && tags.length && <div className="list-items-tag-wrapper">
                     {tags.map((tag, index) => <span key={`list-item-${index}`} className="list-item-tag">{tag}</span>)}
                 </div>}

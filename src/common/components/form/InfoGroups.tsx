@@ -81,6 +81,7 @@ export class InfoGroups extends React.Component<InfoGroupsProps> {
                                             label={"Description"}
                                             component={FormField}
                                             innerComponent={TextArea}
+                                            help={"Markdown supported. Don't forget to use absolute URLs in links. Example: like https://foo.com"}
                                         />
                                     </FormRow>
                                     <FormRow>

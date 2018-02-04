@@ -116,7 +116,7 @@ export class ProfileView extends React.Component<ProfileViewProps, ProfileViewSt
                             }
                         </div>
                         <div className="bio-wrapper">
-                            <Markdown markdown={profile.bio ? profile.bio.text : ""}/>
+                            <Markdown markdown={profile.bio ? profile.bio : ""}/>
                         </div>
                         <ListsViewer lists={profile.infoGroups} colors={profile.colors}/>
                     </div>
