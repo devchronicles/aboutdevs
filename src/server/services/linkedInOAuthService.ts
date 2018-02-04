@@ -5,7 +5,6 @@ import { extractUserNameFromEmail, getValidUserName } from "./userService";
 import { getGravatarImageFromEmail, GravatarSize } from "../helpers/gravatarHelper";
 import { getAndSaveCity, searchLocationsFormatted } from "./locationService";
 import { UserProfileStatus, UserProfileType } from "../../common/typings";
-import * as faker from "faker";
 
 /**
  * Creates a user object from an OAuth Google profile
@@ -23,7 +22,7 @@ export async function createFromLinkedInProfile(db: serverTypes.AboutDevsDatabas
     const userName = await getValidUserName(db, extractUserNameFromEmail(email));
 
     const user: serverTypes.User = {
-        bio: faker.lorem.paragraphs(5, "\n\n"),
+        bio: "",
         status: UserProfileStatus.PENDING_PROFILE_ACTIVATION,
         type: UserProfileType.DEVELOPER,
         display_name: profile.formattedName,

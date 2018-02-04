@@ -13,13 +13,13 @@ const upload = multer();
 // PUBLIC
 // Used by the SelectLocation component
 router.route("/l").get(async (req: express.Request, res: express.Response) => {
-    const location = req.query.q;
+    const location: string = req.query.q;
     if (!location) {
         apiHelper.sendOk(res, []);
         return;
     }
     await apiHelper.sendDbConnectedPromise(res,
-        (db: dbTypes.AboutDevsDatabase) => googlePlacesService.searchLocationsFormatted(db, req.query.q as string));
+        (db: dbTypes.AboutDevsDatabase) => googlePlacesService.searchLocationsFormatted(db, location));
 });
 
 // PUBLIC

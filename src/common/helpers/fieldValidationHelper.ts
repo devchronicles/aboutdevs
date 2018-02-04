@@ -85,7 +85,7 @@ export function validate(user: commonTypes.UserProfile) {
 // Generic validators
 
 export function validateRequired(value: any) {
-    return (value === null || value === undefined || value === "") ? REQUIRED : undefined;
+    return value === null || value === undefined || value === "" || (value instanceof Array && value.length === 0) ? REQUIRED : undefined;
 }
 
 export function validateMaxLength50(value: string) {
