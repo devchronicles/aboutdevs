@@ -95,6 +95,29 @@
         "description": ""
       },
       "response": []
+    },
+    {
+      "name": "Search Developers Everywhere",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {},
+        "url": {
+          "raw": "localhost:4000/api/s/t/asp.net",
+          "host": [
+            "localhost"
+          ],
+          "port": "4000",
+          "path": [
+            "api",
+            "s",
+            "t",
+            "asp.net"
+          ]
+        },
+        "description": ""
+      },
+      "response": []
     }
   ]
 }

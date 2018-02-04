@@ -1,0 +1,53 @@
+{
+  "info": {
+    "name": "Google Places",
+    "_postman_id": "45ade000-0f39-a49d-0efb-ab0ff598ed2b",
+    "description": "",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Search Locations",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {},
+        "url": {
+          "raw": "https://maps.googleapis.com/maps/api/place/textsearch/json?query=Juiz de Fora&key=AIzaSyAWW8gOlj0-P0iT6ISsL1WFX27tNNPZ7_4&type=regions",
+          "protocol": "https",
+          "host": [
+            "maps",
+            "googleapis",
+            "com"
+          ],
+          "path": [
+            "maps",
+            "api",
+            "place",
+            "textsearch",
+            "json"
+          ],
+          "query": [
+            {
+              "key": "query",
+              "value": "Juiz de Fora",
+              "equals": true
+            },
+            {
+              "key": "key",
+              "value": "AIzaSyAWW8gOlj0-P0iT6ISsL1WFX27tNNPZ7_4",
+              "equals": true
+            },
+            {
+              "key": "type",
+              "value": "regions",
+              "equals": true
+            }
+          ]
+        },
+        "description": ""
+      },
+      "response": []
+    }
+  ]
+}
