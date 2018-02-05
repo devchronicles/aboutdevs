@@ -147,6 +147,35 @@ $_$;
 ALTER FUNCTION public._aboutdevs_search_developers(tags_query character varying, longitude double precision, latitude double precision, page integer) OWNER TO aboutdevs;
 
 --
+-- Name: _aboutdevs_search_developers_anywhere(character varying, integer); Type: FUNCTION; Schema: public; Owner: aboutdevs
+--
+
+CREATE FUNCTION _aboutdevs_search_developers_anywhere(tags_query character varying, page integer) RETURNS TABLE(name character varying, display_name character varying, photo_url character varying, title character varying, company_name character varying, google_place_formatted_address character varying, tags character varying, distance double precision)
+    LANGUAGE sql
+    AS $_$
+SELECT
+  u.name,
+  u.display_name,
+  u.photo_url,
+  u.title,
+  u.company_name,
+  u.google_place_formatted_address,
+  u.tags,
+  0::DOUBLE PRECISION AS distance
+FROM "user" u
+WHERE
+  u.status = 1
+  and u.settings_enabled = true
+  and u.settings_searchable = true
+  and u.tags_normalized @@ to_tsquery('simple', $1)
+ORDER BY created_at DESC
+LIMIT 40 * page
+$_$;
+
+
+ALTER FUNCTION public._aboutdevs_search_developers_anywhere(tags_query character varying, page integer) OWNER TO aboutdevs;
+
+--
 -- Name: _aboutdevs_select_tags_from_user(integer); Type: FUNCTION; Schema: public; Owner: aboutdevs
 --
 
