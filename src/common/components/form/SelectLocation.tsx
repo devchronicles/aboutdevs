@@ -2,7 +2,7 @@ import * as React from "react";
 import * as ReactSelect from "react-select";
 import * as ReduxForm from "redux-form";
 import * as httpClient from "../../httpClient";
-import { getDataFromFormattedAddress } from "../../helpers/googlePlacesFormatHelper";
+import { getDataFromFormattedAddress } from "../../helpers/locationFormatHelper";
 
 interface SelectLocationProps extends ReduxForm.WrappedFieldProps {
     placeholder: string;

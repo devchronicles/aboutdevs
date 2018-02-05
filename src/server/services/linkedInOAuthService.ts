@@ -3,8 +3,9 @@ import * as linkedInOAuthTypes from "../typings/linkedInOAuthTypes";
 import { safeRead } from "../../common/helpers/objectHelpers";
 import { extractUserNameFromEmail, getValidUserName } from "./userService";
 import { getGravatarImageFromEmail, GravatarSize } from "../helpers/gravatarHelper";
-import { getAndSaveCity, searchLocationsFormatted } from "./locationService";
+import { searchLocationsFormatted } from "./locationService";
 import { UserProfileStatus, UserProfileType } from "../../common/typings";
+import { getDataFromFormattedAddress } from "../../common/helpers/locationFormatHelper";
 
 /**
  * Creates a user object from an OAuth Google profile
@@ -57,10 +58,11 @@ export async function createFromLinkedInProfile(db: serverTypes.AboutDevsDatabas
     if (userLocation) {
         userLocation = userLocation.replace(" Area", "");
         const citiesFormatted = await searchLocationsFormatted(db, userLocation);
+        const {placeId} = getDataFromFormattedAddress(citiesFormatted[0]);
+        const location = await db.google_place.findOne({google_place_id: placeId});
         if (citiesFormatted && citiesFormatted.length) {
-            const googlePlace = await getAndSaveCity(db, citiesFormatted[0]);
-            user.google_place_id = googlePlace.id;
-            user.google_place_formatted_address = googlePlace.formatted_address;
+            user.google_place_id = location.id;
+            user.google_place_formatted_address = location.formatted_address;
         }
     }
 

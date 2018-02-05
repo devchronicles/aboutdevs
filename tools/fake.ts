@@ -7,7 +7,8 @@ import * as serverTypes from "../src/server/typings";
 import * as tagService from "../src/server/services/tagService";
 import * as stringHelper from "../src/common/helpers/stringHelper";
 import { UserProfileStatus, UserProfileType } from "../src/common/typings";
-import { getAndSaveCity, searchLocationsFormatted } from "../src/server/services/locationService";
+import { searchLocationsFormatted } from "../src/server/services/locationService";
+import { getDataFromFormattedAddress } from "../src/common/helpers/locationFormatHelper";
 
 const randomTags = [
     // .NET
@@ -110,11 +111,16 @@ buildDb()
                 let userLocation = getRandomArrayItem(randomCities);
                 if (userLocation) {
                     userLocation = userLocation.replace(" Area", "");
-                    const citiesFormatted = await searchLocationsFormatted(db, userLocation);
-                    if (citiesFormatted && citiesFormatted.length) {
-                        const googlePlace = await getAndSaveCity(db, citiesFormatted[0]);
-                        user.google_place_id = googlePlace.id;
-                        user.google_place_formatted_address = googlePlace.formatted_address;
+                    try {
+                        const citiesFormatted = await searchLocationsFormatted(db, userLocation);
+                        const {placeId} = getDataFromFormattedAddress(citiesFormatted[0]);
+                        const location = await db.google_place.findOne({google_place_id: placeId});
+                        if (citiesFormatted && citiesFormatted.length) {
+                            user.google_place_id = location.id;
+                            user.google_place_formatted_address = location.formatted_address;
+                        }
+                    } catch (ex) {
+                        throw Error(`Could not save location ${userLocation}`);
                     }
                 }
 

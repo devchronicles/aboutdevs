@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as commonTypes from "../../common/typings";
-import { getDataFromFormattedAddress } from "../helpers/googlePlacesFormatHelper";
+import { getDataFromFormattedAddress } from "../helpers/locationFormatHelper";
 import { getUserProfileUrl } from "../../server/helpers/routeHelper";
 
 interface SearchProfileCardProps {

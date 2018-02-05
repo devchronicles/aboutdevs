@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as commonTypes from "../typings/commonTypes";
 import { socialLinks } from "../data/socialLinks";
-import { getDataFromFormattedAddress } from "../helpers/googlePlacesFormatHelper";
+import { getDataFromFormattedAddress } from "../helpers/locationFormatHelper";
 import { buildStyledComponents } from "./ProfileViewStyledComponents";
 import { Markdown } from "./Markdown";
 import { ListsViewer } from "./ListsViewer";

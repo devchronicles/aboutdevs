@@ -9,7 +9,7 @@ import { Dispatch } from "redux";
 import { getDeveloperSearchUrl } from "../../server/helpers/routeHelper";
 import { SearchRouteType } from "../typings/routeTypes";
 import { distillTagsParameter } from "../../server/helpers/tagHelper";
-import { formatAddress } from "../helpers/googlePlacesFormatHelper";
+import { formatAddress } from "../helpers/locationFormatHelper";
 import { SearchFormModel } from "../typings";
 import { Footer } from "../components/form/Footer";
 import { getPageTitleSearch } from "../helpers/pageTitleHelper";
@@ -43,7 +43,7 @@ class SearchPage extends React.Component<SearchPageProps> {
         const {tags, googlePlaceId, placeString} = this.props.match.params;
         const tagsDecoded = decodeURIComponent(tags);
         const tagsDistilled = distillTagsParameter(tagsDecoded);
-        const formattedAddress = formatAddress(googlePlaceId, decodeURIComponent(placeString));
+        const formattedAddress = googlePlaceId ? formatAddress(googlePlaceId, decodeURIComponent(placeString)) : "";
 
         const initialValues: SearchFormModel = {
             searchTags: tagsDistilled,

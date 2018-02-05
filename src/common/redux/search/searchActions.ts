@@ -14,7 +14,6 @@ export const SEARCH_LOAD_ERROR = "SEARCH_LOAD_ERROR";
  */
 export const searchLoad = (tags: string[], formattedAddress: string) => {
     if (!tags) throw Error("search should be truthy");
-    if (!formattedAddress) throw Error("location should be truthy");
 
     return async (dispatch: ReactRedux.Dispatch<commonTypes.ReduxState>) => {
         dispatch({type: SEARCH_LOAD_STARTED});

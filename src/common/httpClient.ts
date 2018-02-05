@@ -1,7 +1,7 @@
 import axios, { AxiosPromise } from "axios";
 
 import * as commonTypes from "../common/typings/commonTypes";
-import { getDataFromFormattedAddress } from "./helpers/googlePlacesFormatHelper";
+import { getDataFromFormattedAddress } from "./helpers/locationFormatHelper";
 import { createTagsParameter } from "../server/helpers/tagHelper";
 
 export function getLoggedUserData() {
@@ -42,10 +42,12 @@ export function checkUserName(userName: string): AxiosPromise {
 
 export function searchDevelopers(tags: string[], formattedAddress: string): AxiosPromise {
     if (!tags) throw Error("search should be truthy");
-    if (!formattedAddress) throw Error("location should be truthy");
-    const {placeId, address} = getDataFromFormattedAddress(formattedAddress);
     const tagsParameter = createTagsParameter(tags);
-    return axios.get(`/api/s/t/${encodeURIComponent(tagsParameter)}/l/${encodeURIComponent(placeId)}/${encodeURIComponent(address)}`);
+    if (formattedAddress) {
+        const {placeId, address} = getDataFromFormattedAddress(formattedAddress);
+        return axios.get(`/api/s/t/${encodeURIComponent(tagsParameter)}/l/${encodeURIComponent(placeId)}/${encodeURIComponent(address)}`);
+    }
+    return axios.get(`/api/s/t/${encodeURIComponent(tagsParameter)}`);
 }
 
 export function searchLocations(search: string): AxiosPromise {

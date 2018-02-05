@@ -7,6 +7,8 @@ import { socialLinks } from "../../common/data/socialLinks";
 import { normalizeAllTags, processTagsForSearch } from "../helpers/tagHelper";
 import { UserProfileStatus } from "../../common/typings";
 import { deleteFile, getCvFileKeyForUser, uploadFile } from "./s3Service";
+import { DeveloperSearchResult } from "../typings/dbTypes";
+import { getDataFromFormattedAddress } from "../../common/helpers/locationFormatHelper";
 
 /**
  * Extracts the user name from the user's e-mail
@@ -110,7 +112,8 @@ export async function saveProfile(db: serverTypes.AboutDevsDatabase, userId: num
         infoGroups: profile.infoGroups,
     };
 
-    const city = await googlePlacesService.getAndSaveCity(db, profile.formattedAddress);
+    const {placeId} = getDataFromFormattedAddress(profile.formattedAddress);
+    const city = await googlePlacesService.getAndSaveLocation(db, placeId);
     if (city) {
         user.google_place_id = city.id;
         user.google_place_formatted_address = city.formatted_address;
@@ -195,18 +198,25 @@ export async function saveProfile(db: serverTypes.AboutDevsDatabase, userId: num
 /**
  * Searches developers
  */
-export async function searchDevelopers(db: serverTypes.AboutDevsDatabase, tags: string, googlePlaceId: string, page: number): Promise<commonTypes.DeveloperSearchProfile[]> {
+export async function searchDevelopers(db: serverTypes.AboutDevsDatabase, tags: string, googlePlaceId: string = null): Promise<commonTypes.DeveloperSearchProfile[]> {
     // This is a temporary hack. Search results will bring 80 developers until paging is properly sorted
     const staticPage = 2;
 
-    // find the place
-    const place = await db.google_place.findOne({google_place_id: googlePlaceId});
-    if (!place || !tags) {
-        return Promise.resolve([]);
-    }
-    const {longitude, latitude} = place;
+    let searchResult: DeveloperSearchResult[] = null;
     const tagsNormalized = processTagsForSearch(tags);
-    const searchResult = await db._aboutdevs_search_developers(tagsNormalized, longitude, latitude, staticPage);
+
+    if (googlePlaceId) {
+        // find the place
+        const place = await db.google_place.findOne({google_place_id: googlePlaceId});
+        if (!place || !tags) {
+            return Promise.resolve([]);
+        }
+        const {longitude, latitude} = place;
+        searchResult = await db._aboutdevs_search_developers(tagsNormalized, longitude, latitude, staticPage);
+    } else {
+        searchResult = await db._aboutdevs_search_developers_anywhere(tagsNormalized, staticPage);
+    }
+
     return searchResult.map((d) => ({
         name: d.name,
         displayName: d.display_name,

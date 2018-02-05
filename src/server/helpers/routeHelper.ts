@@ -1,11 +1,15 @@
-import { getDataFromFormattedAddress } from "../../common/helpers/googlePlacesFormatHelper";
+import { getDataFromFormattedAddress } from "../../common/helpers/locationFormatHelper";
 import { createTagsParameter } from "./tagHelper";
 import { normalizeParameter } from "../../common/helpers/urlHelper";
 
 export function getDeveloperSearchUrl(tags: string[], formattedAddress: string): string {
-    const {placeId, address} = getDataFromFormattedAddress(formattedAddress);
+    if (!tags) throw Error("Argument is null or undefined. Argument: tags");
     const tagParameter = createTagsParameter(tags);
-    return `/s/t/${normalizeParameter(tagParameter)}/l/${normalizeParameter(placeId)}/${normalizeParameter(address)}`;
+    if (formattedAddress) {
+        const {placeId, address} = getDataFromFormattedAddress(formattedAddress);
+        return `/s/t/${normalizeParameter(tagParameter)}/l/${normalizeParameter(placeId)}/${normalizeParameter(address)}`;
+    }
+    return `/s/t/${normalizeParameter(tagParameter)}`;
 }
 
 export function getHomeUrl() {

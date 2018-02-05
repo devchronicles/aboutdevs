@@ -4,7 +4,7 @@ import * as ReactRedux from "react-redux";
 import { ProfileList } from "./ProfileList";
 import * as searchActions from "../redux/search/searchActions";
 import { distillTagsParameter } from "../../server/helpers/tagHelper";
-import { getDataFromFormattedAddress } from "../helpers/googlePlacesFormatHelper";
+import { getDataFromFormattedAddress } from "../helpers/locationFormatHelper";
 import { SearchState } from "../typings";
 
 interface SearchResultStateProps {
@@ -16,7 +16,7 @@ interface SearchResultDispatchProps {
 }
 
 interface SearchResultOwnProps {
-    formattedAddress: string;
+    formattedAddress?: string;
     tags: string;
 }
 
@@ -43,7 +43,6 @@ class SearchResult extends React.Component <SearchResultProps> {
 
     public render() {
         const {searchState, formattedAddress, tags} = this.props;
-        const {address} = getDataFromFormattedAddress(formattedAddress);
 
         const tagComponents = distillTagsParameter(tags).map((tagName, i) => (
             <span
@@ -54,13 +53,26 @@ class SearchResult extends React.Component <SearchResultProps> {
             </span>
         ));
 
+        let locationComponent: React.ReactNode;
+        if (formattedAddress) {
+            const {address} = getDataFromFormattedAddress(formattedAddress);
+            locationComponent = (
+                <span>
+                    <span> near</span>
+                    <i className={"fa fa-map-marker"}/>
+                    <span className="location">{address}</span>
+                </span>
+            );
+        } else {
+            locationComponent = null;
+        }
+
         return (
             <ul className="search-result">
                 <div className="search-result-header">
                     {tagComponents}
-                    <span className="developers-near">developers near</span>
-                    <i className={"fa fa-map-marker"}/>
-                    <span className="location">{address}</span>
+                    <span className="developers-near">developers</span>
+                    {locationComponent}
                 </div>
                 <ProfileList searchState={searchState}/>
             </ul>

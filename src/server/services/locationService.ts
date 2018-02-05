@@ -3,11 +3,7 @@ import config from "../../../config/config";
 import * as serverTypes from "../../server/typings";
 import * as geocodeApiHelper from "../helpers/geocodeApiHelper";
 import * as stringHelper from "../../common/helpers/stringHelper";
-import {
-    formatAddress,
-    getDataFromFormattedAddress,
-    validateFormattedAddress,
-} from "../../common/helpers/googlePlacesFormatHelper";
+import { formatAddress } from "../../common/helpers/locationFormatHelper";
 
 /**
  * Saves the given {search, location} to the cache and returns the location if everything goes fine
@@ -27,7 +23,7 @@ async function saveCitySearch(db: serverTypes.AboutDevsDatabase, searchTerm: str
         });
         // save each individual place
         for (const city of citySearchCache.results) {
-            await getAndSaveCity(db, formatAddress(city.place_id, city.formatted_address));
+            await getAndSaveLocation(db, city.place_id);
         }
     }
 }
@@ -43,7 +39,7 @@ async function saveCityDetails(db: serverTypes.AboutDevsDatabase, placeId: strin
         const cityData = cityDetails.result;
         const {longitude, latitude} = geocodeApiHelper.getLongitudeLatitude(cityData.geometry);
         googlePlace = await db.google_place.insert({
-            formatted_address: formatAddress(placeId, cityData.formatted_address),
+            formatted_address: formatAddress(placeId, cityData.formatted_address || cityData.name),
             longitude,
             latitude,
             google_place_id: placeId,
@@ -107,12 +103,9 @@ async function searchCitiesAndSave(db: serverTypes.AboutDevsDatabase, searchTerm
     return cities;
 }
 
-export async function getAndSaveCity(db: serverTypes.AboutDevsDatabase, formattedAddress: string): Promise<serverTypes.GooglePlace> {
+export async function getAndSaveLocation(db: serverTypes.AboutDevsDatabase, placeId: string): Promise<serverTypes.GooglePlace> {
     if (!db) throw Error("Argument is null or undefined. Argument: db");
-    if (!formattedAddress) throw Error("Argument is null or undefined. Argument: formattedAddress");
-    if (!validateFormattedAddress(formattedAddress)) throw Error(`Address is not formatted. Address: ${formattedAddress}`);
-
-    const {placeId} = getDataFromFormattedAddress(formattedAddress);
+    if (!placeId) throw Error("Argument is null or undefined. Argument: placeId");
 
     let googlePlace = await db.google_place.findOne({google_place_id: placeId});
 
@@ -131,7 +124,12 @@ export async function searchLocationsFormatted(db: serverTypes.AboutDevsDatabase
     if (!searchTerm) return defaultResult;
     const apiResult = await searchCitiesAndSave(db, searchTerm);
     if (searchTerm && apiResult && apiResult.results && apiResult.results.length) {
-        return apiResult.results.map((r) => formatAddress(r.place_id, r.formatted_address));
+        const result = [];
+        for (const location of apiResult.results) {
+            const locationResult = await getAndSaveLocation(db, location.place_id);
+            result.push(locationResult.formatted_address);
+        }
+        return result;
     }
     return defaultResult;
 }

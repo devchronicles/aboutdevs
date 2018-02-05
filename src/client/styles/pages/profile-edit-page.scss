@@ -22,7 +22,7 @@
         width: 100%;
         box-sizing: border-box;
         @media (min-width: $breakpoint-xl) {
-            width: 550px;
+            width: 600px;
             height: calc(100vh - #{$header-height});
         }
         .document {

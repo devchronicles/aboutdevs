@@ -31,7 +31,6 @@ export interface Geometry {
 }
 
 export interface GooglePlacesTextSearchApiResultData {
-    formatted_address: string;
     geometry: Geometry;
     icon: string;
     id: string;

@@ -35,7 +35,6 @@ const exactNameValidators: ValidationCollection = {
     bio: [validateRequired, validateMaxLength5000],
     // search
     searchTags: [validateSearchTags],
-    searchFormattedAddress: [validateSearchLocation],
 };
 
 const regexValidators: Array<{ pattern: RegExp, validators: Array<(value: any, user?: commonTypes.UserProfile) => string> }> = [

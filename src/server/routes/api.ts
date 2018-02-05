@@ -127,8 +127,21 @@ router.route("/s/t/:tags/l/:googlePlaceId/:placeString").get(async (req, res) =>
     }
     await apiHelper.sendDbConnectedPromise(res,
         async (db) => {
-            const page = parseInt(req.query.page || "1", 10) || 1;
-            return userService.searchDevelopers(db, tags, googlePlaceId, page);
+            // const page = parseInt(req.query.page || "1", 10) || 1;
+            return userService.searchDevelopers(db, tags, googlePlaceId);
+        });
+});
+
+router.route("/s/t/:tags").get(async (req, res) => {
+    const tags = req.params.tags;
+    if (!tags) {
+        apiHelper.sendError(res, "Tags must be specified");
+        return;
+    }
+    await apiHelper.sendDbConnectedPromise(res,
+        async (db) => {
+            // const page = parseInt(req.query.page || "1", 10) || 1;
+            return userService.searchDevelopers(db, tags);
         });
 });
 
