@@ -1,7 +1,7 @@
 {
   "name": "aboutdevs",
   "description": "Freelancer job search made ridiculously easy",
-  "version": "2018.1.10",
+  "version": "2018.1.11",
   "author": "Andre Pena",
   "bugs": {
     "url": "https://github.com/andrerpena/radiscope/issues"
@@ -101,7 +101,7 @@
     "tslint": "^5.8.0",
     "tslint-react": "^3.3.3",
     "typescript": "^2.6.2",
-    "uglifyjs-webpack-plugin": "^1.1.5",
+    "uglifyjs-webpack-plugin": "^1.1.8",
     "webpack": "^3.10.0",
     "webpack-dev-server": "^2.9.7"
   },
