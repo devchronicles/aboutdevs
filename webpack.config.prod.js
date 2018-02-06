@@ -55,7 +55,13 @@ module.exports = {
 
     plugins: [
         new ExtractTextPlugin(`bundle.${packageJson.version}.css`),
-        new UglifyJsPlugin(),
+        new UglifyJsPlugin({
+            uglifyOptions: {
+                mangle: {
+                    safari10: true,
+                }
+            }
+        }),
         new webpack.DefinePlugin({
             'process.env': {
                 'NODE_ENV': JSON.stringify('production')
