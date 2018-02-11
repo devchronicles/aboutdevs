@@ -20,7 +20,10 @@
     width: 100%;
     flex-grow: 1;
     flex-shrink: 0;
+    background-color: $color-gray-lightest;
+
     .search-result-header {
+        background-color: $color-white;
         line-height: 1.5em;
         padding: $gutter-md;
         box-sizing: border-box;
@@ -37,7 +40,6 @@
             }
         }
         .developers-near {
-
         }
         .fa {
             margin-left: $gutter-sm;
@@ -60,7 +62,7 @@
             align-items: center;
             margin: 2 * $gutter-lg auto;
             .icon {
-                color: $color-gray-light;
+                color: $color-gray-dark;
                 font-size: 100px;
             }
             p.ask-help {
