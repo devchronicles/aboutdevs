@@ -90,6 +90,30 @@ $$;
 ALTER FUNCTION public._aboutdevs_cleanup_db() OWNER TO aboutdevs;
 
 --
+-- Name: _aboutdevs_discover_developers(integer); Type: FUNCTION; Schema: public; Owner: aboutdevs
+--
+
+CREATE FUNCTION _aboutdevs_discover_developers(page integer) RETURNS TABLE(name character varying, display_name character varying, photo_url character varying, title character varying, company_name character varying, google_place_formatted_address character varying, tags character varying, distance double precision)
+    LANGUAGE sql
+    AS $$
+SELECT
+  u.name,
+  u.display_name,
+  u.photo_url,
+  u.title,
+  u.company_name,
+  u.google_place_formatted_address,
+  u.tags,
+  0::DOUBLE PRECISION AS distance
+FROM "user" u
+ORDER BY created_at DESC
+LIMIT 40 * page
+$$;
+
+
+ALTER FUNCTION public._aboutdevs_discover_developers(page integer) OWNER TO aboutdevs;
+
+--
 -- Name: _aboutdevs_is_user_name_taken(character varying, integer); Type: FUNCTION; Schema: public; Owner: aboutdevs
 --
 
