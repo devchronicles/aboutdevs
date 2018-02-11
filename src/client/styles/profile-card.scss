@@ -14,8 +14,19 @@ $cardsPerRowXl: 4;
 
     box-sizing: border-box;
     font-size: 14px;
-
     width: calc((100% - (#{$cardsPerRowSm * 2} * #{$gutter-md / 2})) / #{$cardsPerRowSm});
+    margin: $gutter-md / 2;
+    background-color: $color-white;
+    border-radius: $radius-md;
+    border: 1px solid $color-gray-light;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    transition: all .1s ease-in-out;
+
+    &:hover {
+        border: 1px solid $color-gray-dark;
+    }
 
     // small
     @media (min-width: $breakpoint-md) {
@@ -32,16 +43,11 @@ $cardsPerRowXl: 4;
         width: calc((100% - (#{$cardsPerRowXl * 2} * #{$gutter-md / 2})) / #{$cardsPerRowXl});
     }
 
-    margin: $gutter-md / 2;
-    background-color: $color-white;
-    border-radius: $radius-md;
-    border: 1px solid $color-gray-light;
-    position: relative;
+    &:hover {
+        transform: scale(1.02);
+        z-index: 1000;
+    }
 
-    display: flex;
-    flex-direction: column;
-
-    transition: all .1s ease-in-out;
 
     .star-wrapper {
         position: absolute;
@@ -114,10 +120,5 @@ $cardsPerRowXl: 4;
                 margin-right: $gutter-sm;
             }
         }
-    }
-
-    &:hover {
-        transform: scale(1.02);
-        z-index: 1000;
     }
 }
