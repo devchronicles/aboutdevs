@@ -1,5 +1,4 @@
 import * as React from "react";
-import ReactMde, { ReactMdeCommands, ReactMdeTypes } from "react-mde";
 import * as ReduxForm from "redux-form";
 
 interface MarkdownEditorProps extends ReduxForm.WrappedFieldProps {
