@@ -219,7 +219,7 @@ class ProfileEditForm extends React.Component<ProfileEditorFormProps, ProfileEdi
                                     component={FormField}
                                     innerComponent={TextArea}
                                     innerComponentProps={{
-                                        rows: 40,
+                                        rows: 60,
                                     }}
                                     help={"Markdown supported. Don't forget to use absolute URLs in links. Example: like https://foo.com"}
                                 />
