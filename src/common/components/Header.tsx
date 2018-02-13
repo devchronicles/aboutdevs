@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import * as commonTypes from "../../common/typings";
 import { LoggedUserDropdown } from "./LoggedUserDropdown";
 import { Logo } from "./Logo";
-import { CommunityDropdown } from "./CommunityDropdown";
+import { HeaderMenu } from "./HeaderMenu";
 import { getLoginUrl } from "../../server/helpers/routeHelper";
 
 interface HeaderProps {
@@ -23,11 +23,8 @@ const Header: React.SFC<HeaderProps> = ({loggedUser}) => {
                         <Logo/>
                     </Link>
                     <ul className="header-content-list">
-                        <li className="important-item">
-                            <Link to="/d/docs">Docs</Link>
-                        </li>
                         <li>
-                            <CommunityDropdown/>
+                            <HeaderMenu/>
                         </li>
                         <li className="important-item">
                             {rightComponent}

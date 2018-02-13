@@ -198,23 +198,25 @@ export async function saveProfile(db: serverTypes.AboutDevsDatabase, userId: num
 /**
  * Searches developers
  */
-export async function searchDevelopers(db: serverTypes.AboutDevsDatabase, tags: string, googlePlaceId: string = null): Promise<commonTypes.DeveloperSearchProfile[]> {
+export async function searchDevelopers(db: serverTypes.AboutDevsDatabase, tags: string = null, googlePlaceId: string = null): Promise<commonTypes.DeveloperSearchProfile[]> {
     // This is a temporary hack. Search results will bring 80 developers until paging is properly sorted
     const staticPage = 2;
 
     let searchResult: DeveloperSearchResult[] = null;
     const tagsNormalized = processTagsForSearch(tags);
 
-    if (googlePlaceId) {
+    if (tags && googlePlaceId) {
         // find the place
         const place = await db.google_place.findOne({google_place_id: googlePlaceId});
-        if (!place || !tags) {
+        if (!place) {
             return Promise.resolve([]);
         }
         const {longitude, latitude} = place;
         searchResult = await db._aboutdevs_search_developers(tagsNormalized, longitude, latitude, staticPage);
-    } else {
+    } else if (tags) {
         searchResult = await db._aboutdevs_search_developers_anywhere(tagsNormalized, staticPage);
+    } else {
+        searchResult = await db._aboutdevs_discover_developers(staticPage);
     }
 
     return searchResult.map((d) => ({
@@ -244,7 +246,7 @@ export async function validateProfile(db: serverTypes.AboutDevsDatabase, profile
         ...profile,
     };
 
-    const errors = fieldValidationHelper.validate(updatedProfile);
+    const errors = fieldValidationHelper.validateUserProfile(updatedProfile);
 
     // validate social links
     if (profile.socialLinks) {

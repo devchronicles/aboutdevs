@@ -13,8 +13,6 @@ export const SEARCH_LOAD_ERROR = "SEARCH_LOAD_ERROR";
  * @returns {(dispatch: Dispatch<ReduxState>) => Promise<any>}
  */
 export const searchLoad = (tags: string[], formattedAddress: string) => {
-    if (!tags) throw Error("search should be truthy");
-
     return async (dispatch: ReactRedux.Dispatch<commonTypes.ReduxState>) => {
         dispatch({type: SEARCH_LOAD_STARTED});
         try {

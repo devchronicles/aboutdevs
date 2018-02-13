@@ -105,13 +105,13 @@ router.route("/u/:user_name").get(async (req, res) => {
         apiHelper.sendError(res, "User name should not be empty");
         return;
     }
-    const lowecaseUserName = userName.toLowerCase();
+    const lowercaseUserName = userName.toLowerCase();
     await apiHelper.sendDbConnectedPromise(res,
         async (db) => {
             const currentUserId = apiHelper.getUserId(req);
-            const user = await userService.getUserByName(db, lowecaseUserName, currentUserId);
+            const user = await userService.getUserByName(db, lowercaseUserName, currentUserId);
             if (!user) {
-                apiHelper.sendError(res, `Could not find user. User name: ${lowecaseUserName}`);
+                apiHelper.sendError(res, `Could not find user. User name: ${lowercaseUserName}`);
                 return;
             }
             return userService.getUserProfile(db, user);
@@ -142,6 +142,14 @@ router.route("/s/t/:tags").get(async (req, res) => {
         async (db) => {
             // const page = parseInt(req.query.page || "1", 10) || 1;
             return userService.searchDevelopers(db, tags);
+        });
+});
+
+router.route("/s").get(async (req, res) => {
+    await apiHelper.sendDbConnectedPromise(res,
+        async (db) => {
+            // const page = parseInt(req.query.page || "1", 10) || 1;
+            return userService.searchDevelopers(db);
         });
 });
 

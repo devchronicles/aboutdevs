@@ -3,13 +3,14 @@ import { createTagsParameter } from "./tagHelper";
 import { normalizeParameter } from "../../common/helpers/urlHelper";
 
 export function getDeveloperSearchUrl(tags: string[], formattedAddress: string): string {
-    if (!tags) throw Error("Argument is null or undefined. Argument: tags");
     const tagParameter = createTagsParameter(tags);
-    if (formattedAddress) {
+    if (tagParameter && formattedAddress) {
         const {placeId, address} = getDataFromFormattedAddress(formattedAddress);
         return `/s/t/${normalizeParameter(tagParameter)}/l/${normalizeParameter(placeId)}/${normalizeParameter(address)}`;
+    } else if (tagParameter) {
+        return `/s/t/${normalizeParameter(tagParameter)}`;
     }
-    return `/s/t/${normalizeParameter(tagParameter)}`;
+    return `/s`;
 }
 
 export function getHomeUrl() {

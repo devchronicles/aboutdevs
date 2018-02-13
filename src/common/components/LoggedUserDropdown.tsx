@@ -13,7 +13,7 @@ class LoggedUserDropdown extends React.Component<LoggedUserDropdownProps> {
         const {loggedUser: {displayName, photoUrl, name, activated}} = this.props;
 
         return (
-            <Dropdown button={<img className="avatar" src={photoUrl}/>}>
+            <Dropdown outerButtonClasses={"discrete"} button={<img className="avatar" src={photoUrl}/>}>
                 <DropdownHeader>
                     Signed in as <strong className="css-truncate-target">{displayName}</strong>
                 </DropdownHeader>

@@ -15,11 +15,9 @@ export class DocsPage extends React.Component<DocsPageProps, DocsPageState> {
     render() {
         return (
             <div className="page-wrapper">
-                <div className="background-page-wrapper">
-                    <div className="docs-page-wrapper">
-                        <Logo/>
-                        <Markdown markdown={getDocsMarkdown()}/>
-                    </div>
+                <div className="docs-page-wrapper">
+                    <Logo/>
+                    <Markdown markdown={getDocsMarkdown()}/>
                 </div>
             </div>
         );

@@ -118,6 +118,27 @@
         "description": ""
       },
       "response": []
+    },
+    {
+      "name": "Search Developers (discover)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {},
+        "url": {
+          "raw": "localhost:4000/api/s",
+          "host": [
+            "localhost"
+          ],
+          "port": "4000",
+          "path": [
+            "api",
+            "s"
+          ]
+        },
+        "description": ""
+      },
+      "response": []
     }
   ]
 }

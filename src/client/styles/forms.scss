@@ -52,6 +52,13 @@ button, a.button {
     &.discrete {
         text-transform: none;
         font-weight: normal;
+        &:hover {
+            color: $color-font-normal;
+        }
+    }
+
+    &.outline {
+        border: 1px solid $color-gray-dark;
     }
 
     &:disabled {
@@ -83,11 +90,12 @@ button, a.button {
         }
     }
 
-    &.no-border {
-        border: 1px solid $color-white;
-        &:focus {
-            outline: 0;
+    &.discrete {
+        border: 0;
+        &:hover {
+            background-image: none;
         }
+        outline: transparent;
     }
 
     &.big {

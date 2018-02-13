@@ -1,21 +1,32 @@
 import * as React from "react";
-import { Dropdown, DropdownItem } from "./Dropdown";
+import { Dropdown, DropdownDivider, DropdownItem } from "./Dropdown";
 
-interface CommunityDropdownProps {
+interface HeaderMenuProps {
 }
 
-class CommunityDropdown extends React.Component<CommunityDropdownProps> {
-
-    handleOnClick = (e: any) => {
-        e.preventDefault();
-    }
+class HeaderMenu extends React.Component<HeaderMenuProps> {
 
     public render() {
         return (
             <Dropdown
-                button={"Community"}
-                outerButtonClasses={"discrete"}
+                button={"Menu"}
+                outerButtonClasses={"outline"}
             >
+                <DropdownItem
+                    href="/s"
+                    content={<span>
+                        <i className="fa fa-search"/>
+                        <span>Discover developers</span>
+                    </span>}
+                />
+                <DropdownItem
+                    href="/d/docs"
+                    content={<span>
+                        <i className="fa fa-book"/>
+                        <span>About us</span>
+                    </span>}
+                />
+                <DropdownDivider/>
                 <DropdownItem
                     href="https://www.reddit.com/r/AboutDevs/"
                     content={<span>
@@ -45,4 +56,4 @@ class CommunityDropdown extends React.Component<CommunityDropdownProps> {
     }
 }
 
-export { CommunityDropdown };
+export { HeaderMenu };

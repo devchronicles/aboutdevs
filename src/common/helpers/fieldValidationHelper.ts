@@ -1,5 +1,6 @@
 import * as commonTypes from "../typings/commonTypes";
 import { isUrl } from "./urlHelper";
+import { SearchFormModel } from "../typings";
 
 // Generic
 export const REQUIRED = "required";
@@ -19,7 +20,7 @@ export const REQUIRED_SEARCH_LOCATION = "required-search-location";
 export const ALL_GROUPS_MUST_HAVE_BETWEEN_1_AND_10_ITEMS = "all-groups-must-have-between-1-and-10-items";
 
 interface ValidationCollection {
-    [key: string]: Array<(value: any, user?: commonTypes.UserProfile) => string>;
+    [key: string]: Array<(value: any, allValues?: any) => string>;
 }
 
 const exactNameValidators: ValidationCollection = {
@@ -60,7 +61,7 @@ export function getValidatorsForField(fieldName: keyof commonTypes.UserProfile):
     return validators;
 }
 
-export function validate(user: commonTypes.UserProfile) {
+export function validateUserProfile(user: commonTypes.UserProfile) {
     const errors: { [key: string]: string } = {};
     for (const key in user) {
         if (user.hasOwnProperty(key)) {
@@ -124,12 +125,11 @@ export function validateUrl(value: string) {
 
 // Specific validators
 
-export function validateSearchTags(value: any): string {
-    return (value === null || value === undefined || value === "" || value.length === 0) ? REQUIRED_SEARCH_TAGS : undefined;
-}
-
-export function validateSearchLocation(value: any): string {
-    return (value === null || value === undefined || value === "") ? REQUIRED_SEARCH_LOCATION : undefined;
+export function validateSearchTags(value: string, searchForm: SearchFormModel): string {
+    if (searchForm.searchFormattedAddress) {
+        return (value === null || value === undefined || value === "") ? REQUIRED_SEARCH_TAGS : undefined;
+    }
+    return undefined;
 }
 
 export function validateTags(value: any): string {

@@ -14,7 +14,7 @@ import { getPageTitleDefault, getPageTitleForProfile } from "../../common/helper
 const router = express.Router();
 
 // These are the first level paths (e.g, /something) that don't have SSR
-const firstLevelNonSsrPaths = ["404"];
+const firstLevelNonSsrPaths = ["s", "404"];
 
 /**
  * Function  that actually sends the application to the client

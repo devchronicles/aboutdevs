@@ -41,8 +41,8 @@ class SearchPage extends React.Component<SearchPageProps> {
 
     public render() {
         const {tags, googlePlaceId, placeString} = this.props.match.params;
-        const tagsDecoded = decodeURIComponent(tags);
-        const tagsDistilled = distillTagsParameter(tagsDecoded);
+        const tagsDecoded = tags ? decodeURIComponent(tags) : null;
+        const tagsDistilled = tags ? distillTagsParameter(tagsDecoded) : null;
         const formattedAddress = googlePlaceId ? formatAddress(googlePlaceId, decodeURIComponent(placeString)) : "";
 
         const initialValues: SearchFormModel = {
@@ -57,7 +57,7 @@ class SearchPage extends React.Component<SearchPageProps> {
                         <SearchForm onSubmit={this.handleFormSubmit} initialValues={initialValues}/>
                     </div>
                 </div>
-                <SearchResult tags={tagsDecoded} formattedAddress={formattedAddress}/>
+                <SearchResult tags={tagsDistilled} formattedAddress={formattedAddress}/>
                 <Footer position={"bottom"}/>
             </div>
         );

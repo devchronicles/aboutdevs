@@ -66,6 +66,7 @@ class Layout extends React.Component<LayoutProps> {
                         <Route exact={true} path="/" component={IndexPage}/>
                         <Route path="/s/t/:tags/l/:googlePlaceId/:placeString" component={SearchPage}/>
                         <Route path="/s/t/:tags" component={SearchPage}/>
+                        <Route path="/s" component={SearchPage}/>
                         <Route exact={true} path="/:userName" component={ProfileViewPage}/>
                         <Route component={NotFoundPage}/>
                     </Switch>

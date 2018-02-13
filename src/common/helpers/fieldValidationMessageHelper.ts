@@ -21,9 +21,7 @@ export function getErrorMessage(error: string) {
             return "Invalid URL.";
         // Specific
         case fieldValidation.REQUIRED_SEARCH_TAGS:
-            return "Please specify the technologies";
-        case fieldValidation.REQUIRED_SEARCH_LOCATION:
-            return "Please specify the location";
+            return "When the location is specified, the expertise is required";
         case fieldValidation.ALL_GROUPS_MUST_HAVE_BETWEEN_1_AND_10_ITEMS:
             return "Every list must have at least 1 item and no more than 10.";
         case fieldValidation.TOO_MANY_TAGS:

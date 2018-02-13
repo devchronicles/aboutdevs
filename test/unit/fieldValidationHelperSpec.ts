@@ -18,7 +18,7 @@ describe("fieldValidationHelper", () => {
     describe("validate", () => {
         it("Validate empty object - User normal", () => {
             const profile = createProfile({type: commonTypes.UserProfileType.DEVELOPER});
-            const errors = fieldValidationHelper.validate(profile);
+            const errors = fieldValidationHelper.validateUserProfile(profile);
             assert.deepEqual(errors, {
                 name: "required",
                 displayName: "required",

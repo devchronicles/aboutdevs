@@ -6,7 +6,8 @@
     padding: 0 $gutter-md;
     box-sizing: border-box;
     @include elastic-width($max-container-width + 2 * $gutter-md);
-    color: $color-white;
+    font-size: $font-size-big;
+    line-height: 2em;
 
     a {
         color: $color-white;
@@ -14,7 +15,6 @@
     }
 
     .logo {
-        color: $color-white;
         font-size: 40px;
         margin: $gutter-md 0;
 
@@ -26,19 +26,19 @@
 
     .markdown-body {
         margin-top: $gutter-md;
-        border-top: 1px solid #4d739a;
+        border-top: 1px solid $color-gray-medium;
         padding-top: $gutter-md;
 
         h1 {
-            padding-top: ($header-height + $gutter-md * 3);
+            padding-top: ($header-height + $gutter-md * 4);
             margin-top: -($header-height);
         }
         h2 {
-            padding-top: ($header-height + $gutter-sm);
-            margin-top: -($header-height + $gutter-sm);
+            padding-top: ($header-height + $gutter-lg);
+            margin-top: -($header-height);
         }
         h1, h2, h3, h4, h5, h6 {
-            border-bottom: 1px solid #4d739a;
+            border-bottom: 1px solid $color-gray-medium;
         }
     }
 }

@@ -3,9 +3,9 @@ import * as commonTypes from "../../common/typings";
 import * as ReactRedux from "react-redux";
 import { ProfileList } from "./ProfileList";
 import * as searchActions from "../redux/search/searchActions";
-import { distillTagsParameter } from "../../server/helpers/tagHelper";
 import { getDataFromFormattedAddress } from "../helpers/locationFormatHelper";
 import { SearchState } from "../typings";
+import { areArraysEqual } from "../helpers/arrayHelper";
 
 interface SearchResultStateProps {
     searchState: SearchState;
@@ -17,7 +17,7 @@ interface SearchResultDispatchProps {
 
 interface SearchResultOwnProps {
     formattedAddress?: string;
-    tags: string;
+    tags?: string[];
 }
 
 declare type SearchResultProps = SearchResultStateProps & SearchResultDispatchProps & SearchResultOwnProps;
@@ -26,8 +26,7 @@ class SearchResult extends React.Component <SearchResultProps> {
 
     reloadResults() {
         const {loadSearchResults, tags, formattedAddress} = this.props;
-        const tagsDistilled = distillTagsParameter(tags);
-        loadSearchResults(tagsDistilled, formattedAddress);
+        loadSearchResults(tags, formattedAddress);
     }
 
     componentDidMount() {
@@ -36,7 +35,7 @@ class SearchResult extends React.Component <SearchResultProps> {
 
     componentDidUpdate(prevProps: SearchResultProps) {
         const {tags, formattedAddress} = this.props;
-        if (prevProps.tags !== tags || prevProps.formattedAddress !== formattedAddress) {
+        if (!areArraysEqual(prevProps.tags, tags) || prevProps.formattedAddress !== formattedAddress) {
             this.reloadResults();
         }
     }
@@ -44,7 +43,7 @@ class SearchResult extends React.Component <SearchResultProps> {
     public render() {
         const {searchState, formattedAddress, tags} = this.props;
 
-        const tagComponents = distillTagsParameter(tags).map((tagName, i) => (
+        const tagComponents = (!tags || tags.length === 0) ? null : tags.map((tagName, i) => (
             <span
                 className="tag"
                 key={`tag-${i}`}
@@ -67,12 +66,23 @@ class SearchResult extends React.Component <SearchResultProps> {
             locationComponent = null;
         }
 
-        return (
-            <ul className="search-result">
-                <div className="search-result-header">
+        let headerComponent: React.ReactNode;
+        if (tagComponents || locationComponent) {
+            headerComponent = (
+                <>
                     {tagComponents}
                     <span className="developers-near">developers</span>
                     {locationComponent}
+                </>
+            );
+        } else {
+            headerComponent = <span>Last registered developers</span>;
+        }
+
+        return (
+            <ul className="search-result">
+                <div className="search-result-header">
+                    {headerComponent}
                 </div>
                 <ProfileList searchState={searchState}/>
             </ul>

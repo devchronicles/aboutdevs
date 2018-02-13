@@ -36,7 +36,7 @@
                 align-items: center;
                 justify-content: flex-end;
                 > li {
-                    padding-left: $gutter-md;
+                    padding-left: $gutter-sm;
                     display: none;
                     justify-content: center;
                     @media (min-width: $breakpoint-lg) {

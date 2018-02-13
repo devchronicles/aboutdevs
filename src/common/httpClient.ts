@@ -41,13 +41,15 @@ export function checkUserName(userName: string): AxiosPromise {
 // SEARCH
 
 export function searchDevelopers(tags: string[], formattedAddress: string): AxiosPromise {
-    if (!tags) throw Error("search should be truthy");
     const tagsParameter = createTagsParameter(tags);
-    if (formattedAddress) {
+    if (tagsParameter && formattedAddress) {
         const {placeId, address} = getDataFromFormattedAddress(formattedAddress);
         return axios.get(`/api/s/t/${encodeURIComponent(tagsParameter)}/l/${encodeURIComponent(placeId)}/${encodeURIComponent(address)}`);
     }
-    return axios.get(`/api/s/t/${encodeURIComponent(tagsParameter)}`);
+    if (tags) {
+        return axios.get(`/api/s/t/${encodeURIComponent(tagsParameter)}`);
+    }
+    return axios.get(`/api/s/`);
 }
 
 export function searchLocations(search: string): AxiosPromise {
