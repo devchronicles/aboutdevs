@@ -107,6 +107,7 @@ class ProfileEditForm extends React.Component<ProfileEditorFormProps, ProfileEdi
                                     component={FormField}
                                     innerComponent={ProfilePictureComponent}
                                     addOnBefore={<FaIcon icon="camera"/>}
+                                    help={"Changes in the Gravatar picture will not reflect instantly on the preview"}
                                 />
                             </FormRow>
                             <FormRow>
