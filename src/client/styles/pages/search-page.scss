@@ -50,7 +50,7 @@
         @extend .flex-row;
         @include elastic-width($max-container-width + 2 * $gutter-md);
         flex-wrap: wrap;
-        padding: $gutter-sm $gutter-sm 2 * $gutter-sm $gutter-sm;
+        padding: $gutter-sm/2;
         box-sizing: border-box;
         margin: 0 auto;
 

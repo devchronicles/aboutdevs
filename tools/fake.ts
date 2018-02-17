@@ -129,11 +129,14 @@ buildDb()
 
                 const userProfile = await userService.getUserProfile(db, insertedUser);
 
-                const tagSearchResult1 = await tagService.searchTagsFormatted(db, getRandomArrayItem(randomTags));
-                const tagSearchResult2 = await tagService.searchTagsFormatted(db, getRandomArrayItem(randomTags));
-                const tagSearchResult3 = await tagService.searchTagsFormatted(db, getRandomArrayItem(randomTags));
+                userProfile.tags = [];
 
-                userProfile.tags = [getRandomArrayItem(tagSearchResult1), getRandomArrayItem(tagSearchResult2), getRandomArrayItem(tagSearchResult3)];
+                const tagCount = Math.floor(Math.random() * 12) + 1;
+
+                for (var x = 0; x < tagCount; x++) {
+                    const tagSearchResult1 = await tagService.searchTagsFormatted(db, getRandomArrayItem(randomTags));
+                    userProfile.tags.push(getRandomArrayItem(tagSearchResult1));
+                }
 
                 await userService.saveProfile(db, insertedUser.id, userProfile, null);
             }

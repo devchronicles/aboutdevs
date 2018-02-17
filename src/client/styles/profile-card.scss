@@ -1,9 +1,11 @@
-@import '_variables';
+@import "_variables";
+@import "flex";
 
 $cardsPerRowSm: 1;
 $cardsPerRowMd: 2;
 $cardsPerRowLg: 3;
 $cardsPerRowXl: 4;
+$card-spacing: $gutter-sm/2;
 
 .profile-card {
     a.card-body {
@@ -13,9 +15,8 @@ $cardsPerRowXl: 4;
     }
 
     box-sizing: border-box;
-    font-size: 14px;
-    width: calc((100% - (#{$cardsPerRowSm * 2} * #{$gutter-md / 2})) / #{$cardsPerRowSm});
-    margin: $gutter-md / 2;
+    width: calc((100% - (#{$cardsPerRowSm * 2} * #{$card-spacing})) / #{$cardsPerRowSm});
+    margin: $card-spacing;
     background-color: $color-white;
     border-radius: $radius-md;
     border: 1px solid $color-gray-light;
@@ -30,17 +31,17 @@ $cardsPerRowXl: 4;
 
     // small
     @media (min-width: $breakpoint-md) {
-        width: calc((100% - (#{$cardsPerRowMd * 2} * #{$gutter-md / 2})) / #{$cardsPerRowMd});
+        width: calc((100% - (#{$cardsPerRowMd * 2} * #{$card-spacing})) / #{$cardsPerRowMd});
     }
 
     // large
     @media (min-width: $breakpoint-lg) {
-        width: calc((100% - (#{$cardsPerRowLg * 2} * #{$gutter-md / 2})) / #{$cardsPerRowLg});
+        width: calc((100% - (#{$cardsPerRowLg * 2} * #{$card-spacing})) / #{$cardsPerRowLg});
     }
 
     // big
     @media (min-width: $breakpoint-xl) {
-        width: calc((100% - (#{$cardsPerRowXl * 2} * #{$gutter-md / 2})) / #{$cardsPerRowXl});
+        width: calc((100% - (#{$cardsPerRowXl * 2} * #{$card-spacing})) / #{$cardsPerRowXl});
     }
 
     .star-wrapper {
@@ -65,8 +66,8 @@ $cardsPerRowXl: 4;
         padding: $gutter-lg $gutter-md;
 
         .image {
-            width: 80px;
-            height: 80px;
+            width: 100px;
+            height: 100px;
             border-radius: 50px;
             background-size: cover;
         }
@@ -79,10 +80,10 @@ $cardsPerRowXl: 4;
             text-overflow: ellipsis;
             max-width: 100%;
             font-weight: 700;
+            color: $color-blue-dark;
         }
 
         .title {
-            font-size: 12px;
             margin: $gutter-xs 0 0 0;
             overflow: hidden;
             text-align: center;
@@ -91,6 +92,7 @@ $cardsPerRowXl: 4;
             box-sizing: border-box;
             height: 40px;
             position: relative;
+            font-weight: bold;
             &:after {
                 content: "";
                 text-align: right;
@@ -103,10 +105,26 @@ $cardsPerRowXl: 4;
             }
         }
 
+        .tags {
+            @extend .flex-row;
+            flex-wrap: wrap;
+            justify-content: center;
+            .tag {
+                font-size: 12px;
+                padding: 1px 4px;
+                margin: 2px;
+                white-space: nowrap;
+                border-radius: $radius-md;
+                border: 1px solid $color-gray-dark;
+
+                &.more {
+                    border: 1px dotted $color-gray-dark;
+                }
+            }
+        }
+
         .location {
-            font-size: 12px;
-            padding: $input-padding-vertical/2 $input-padding-horizontal/2;
-            margin: $gutter-xs 0 0 0;
+            margin: 0 0 $input-padding-vertical/2 0;
             width: 100%;
             box-sizing: border-box;
             text-align: center;

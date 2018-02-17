@@ -76,14 +76,14 @@ class SearchResult extends React.Component <SearchResultProps> {
                 </>
             );
         } else {
-            headerComponent = <span>Last registered developers</span>;
+            headerComponent = null;
         }
 
         return (
             <ul className="search-result">
-                <div className="search-result-header">
+                {headerComponent && <div className="search-result-header">
                     {headerComponent}
-                </div>
+                </div>}
                 <ProfileList searchState={searchState}/>
             </ul>
         );
