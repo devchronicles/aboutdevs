@@ -1,7 +1,7 @@
 {
   "name": "aboutdevs",
   "description": "Freelancer job search made ridiculously easy",
-  "version": "2018.1.18",
+  "version": "2018.1.19",
   "author": "Andre Pena",
   "bugs": {
     "url": "https://github.com/andrerpena/radiscope/issues"
@@ -30,6 +30,7 @@
     "@types/react-router": "^4.0.20",
     "@types/react-router-dom": "^4.2.3",
     "@types/react-select": "^1.1.0",
+    "@types/react-youtube": "^7.4.1",
     "@types/redux-form": "^7.0.12",
     "@types/serve-favicon": "^2.2.30",
     "@types/showdown": "^1.7.2",
@@ -87,6 +88,7 @@
     "react-select": "^1.1.0",
     "react-share": "^1.19.0",
     "react-toggle-button": "^2.2.0",
+    "react-youtube": "^7.5.0",
     "reactcss": "^1.2.3",
     "redux": "^3.7.2",
     "redux-form": "^7.2.0",
