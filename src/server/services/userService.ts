@@ -7,7 +7,7 @@ import { socialLinks } from "../../common/data/socialLinks";
 import { normalizeAllTags, processTagsForSearch } from "../helpers/tagHelper";
 import { UserProfileStatus } from "../../common/typings";
 import { deleteFile, getCvFileKeyForUser, uploadFile } from "./s3Service";
-import { DeveloperSearchResult } from "../typings/dbTypes";
+import { DeveloperSearchResult } from "../typings";
 import { getDataFromFormattedAddress } from "../../common/helpers/locationFormatHelper";
 
 /**

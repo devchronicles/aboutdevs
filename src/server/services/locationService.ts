@@ -11,7 +11,7 @@ import { formatAddress } from "../../common/helpers/locationFormatHelper";
  * @param {object} citySearchCache The location to be saved in the cache
  * @param {object} db The db object
  */
-async function saveCitySearch(db: serverTypes.AboutDevsDatabase, searchTerm: string, citySearchCache: serverTypes.GooglePlacesTextSearchApiResult): Promise<void> {
+async function saveCitySearch(db: serverTypes.AboutDevsDatabase, searchTerm: string, citySearchCache: serverTypes.GooglePlacesAutocompleteApiResult): Promise<void> {
     if (searchTerm === null || searchTerm === undefined) throw Error("Argument 'search' should be null or undefined");
     if (citySearchCache === null || citySearchCache === undefined) throw Error("Argument 'location' should be null or undefined");
     // this should be a in a transaction
@@ -22,13 +22,13 @@ async function saveCitySearch(db: serverTypes.AboutDevsDatabase, searchTerm: str
             cache: citySearchCache,
         });
         // save each individual place
-        for (const city of citySearchCache.results) {
+        for (const city of citySearchCache.predictions) {
             await getAndSaveLocation(db, city.place_id);
         }
     }
 }
 
-async function saveCityDetails(db: serverTypes.AboutDevsDatabase, placeId: string, cityDetails: serverTypes.GooglePlacesDetailsApiResult): Promise<serverTypes.GooglePlace> {
+async function saveCityDetails(db: serverTypes.AboutDevsDatabase, placeId: string, cityDetails: serverTypes.GooglePlacesLocationDetailsApiResult): Promise<serverTypes.GooglePlace> {
     if (!db) throw Error("Argument is null or undefined. Argument: db");
     if (!placeId) throw Error("Argument is null or undefined. Argument: placeId");
     if (!cityDetails) throw Error("Argument is null or undefined. Argument: cityDetails");
@@ -50,7 +50,7 @@ async function saveCityDetails(db: serverTypes.AboutDevsDatabase, placeId: strin
     return googlePlace;
 }
 
-async function searchCitiesFromDatabase(db: serverTypes.AboutDevsDatabase, searchTerm: string): Promise<serverTypes.GooglePlacesTextSearchApiResult> {
+async function searchCitiesFromDatabase(db: serverTypes.AboutDevsDatabase, searchTerm: string): Promise<serverTypes.GooglePlacesAutocompleteApiResult> {
     if (!db) throw Error("Argument is null or undefined. Argument: db");
     if (!searchTerm) throw Error("Argument is null or undefined. Argument: searchTerm");
 
@@ -58,27 +58,31 @@ async function searchCitiesFromDatabase(db: serverTypes.AboutDevsDatabase, searc
     return result ? result.cache : undefined;
 }
 
-async function searchCitiesFromGoogle(searchTerm: string): Promise<serverTypes.GooglePlacesTextSearchApiResult> {
+async function searchCitiesFromGoogle(searchTerm: string): Promise<serverTypes.GooglePlacesAutocompleteApiResult> {
     if (!searchTerm) throw Error("Argument is null or undefined. Argument: searchTerm");
 
     const encodedLocation = encodeURIComponent(searchTerm);
     const key: string = config.google.geocodeApiKey;
+    // const googleApiUrl
+    //     = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${encodedLocation}&key=${key}&type=regions`;
     const googleApiUrl
-        = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${encodedLocation}&key=${key}&type=regions`;
+          = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${encodedLocation}&types=(cities)&key=${key}`;
 
-    const res = await axios.get(googleApiUrl);
-    if (res.data.errorMessage) {
-        throw Error(res.data.errorMessage);
+    const res = await axios.get<serverTypes.GooglePlacesAutocompleteApiResult>(googleApiUrl);
+    if (res.data.status !== "OK") {
+        throw Error(res.data.error_message);
     }
     return res.data;
 }
 
-async function getCityDetailsFromGoogle(placeId: string): Promise<serverTypes.GooglePlacesDetailsApiResult> {
+async function getCityDetailsFromGoogle(placeId: string): Promise<serverTypes.GooglePlacesLocationDetailsApiResult> {
     if (!placeId) throw Error("Argument is null or undefined. Argument: searchTerm");
 
     const key: string = config.google.geocodeApiKey;
+  // const googleApiUrl
+  //     = `https://maps.googleapis.com/maps/api/place/details/json?placeid=${placeId}&key=${key}`;
     const googleApiUrl
-        = `https://maps.googleapis.com/maps/api/place/details/json?placeid=${placeId}&key=${key}`;
+    = `https://maps.googleapis.com/maps/api/place/details/json?placeid=${placeId}&fields=name,place_id,formatted_address,geometry&key=${key}`;
 
     const res = await axios.get(googleApiUrl);
     if (res.data.errorMessage) {
@@ -87,10 +91,10 @@ async function getCityDetailsFromGoogle(placeId: string): Promise<serverTypes.Go
     return res.data;
 }
 
-async function searchCitiesAndSave(db: serverTypes.AboutDevsDatabase, searchTerm: string): Promise<serverTypes.GooglePlacesTextSearchApiResult> {
+async function searchCitiesAndSave(db: serverTypes.AboutDevsDatabase, searchTerm: string): Promise<serverTypes.GooglePlacesAutocompleteApiResult> {
     const normalizedSearchTerm = stringHelper.normalizeForSearch(searchTerm);
     if (!normalizedSearchTerm) {
-        return Promise.resolve<serverTypes.GooglePlacesTextSearchApiResult>(undefined);
+        return Promise.resolve<serverTypes.GooglePlacesAutocompleteApiResult>(undefined);
     }
 
     let cities = await searchCitiesFromDatabase(db, normalizedSearchTerm);
@@ -123,9 +127,9 @@ export async function searchLocationsFormatted(db: serverTypes.AboutDevsDatabase
     const defaultResult = Promise.resolve([]);
     if (!searchTerm) return defaultResult;
     const apiResult = await searchCitiesAndSave(db, searchTerm);
-    if (searchTerm && apiResult && apiResult.results && apiResult.results.length) {
+    if (searchTerm && apiResult && apiResult.predictions && apiResult.predictions.length) {
         const result = [];
-        for (const location of apiResult.results) {
+        for (const location of apiResult.predictions) {
             const locationResult = await getAndSaveLocation(db, location.place_id);
             result.push(locationResult.formatted_address);
         }

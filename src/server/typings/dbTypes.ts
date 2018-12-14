@@ -9,13 +9,13 @@ export interface GooglePlace {
     longitude: number;
     latitude: number;
     google_place_id: string;
-    google_place_details: serverTypes.GooglePlacesDetailsApiResult;
+    google_place_details: serverTypes.GooglePlacesLocationDetailsApiResult;
 }
 
 export interface GooglePlacesTextSearchCache {
     id: number;
     search: string;
-    cache: serverTypes.GooglePlacesTextSearchApiResult;
+    cache: serverTypes.GooglePlacesAutocompleteApiResult;
 }
 
 export interface User {

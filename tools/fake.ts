@@ -120,7 +120,7 @@ buildDb()
                             user.google_place_formatted_address = location.formatted_address;
                         }
                     } catch (ex) {
-                        throw Error(`Could not save location ${userLocation}`);
+                        throw Error(`Could not save location ${userLocation}. Error: ${ex}`);
                     }
                 }
 
